@@ -29,6 +29,10 @@ setup:
     extends: .dependencies_cache
     cache:
         policy: pull-push
+    artifacts:
+        expire_in: 1h
+        paths:
+            - node_modules
 
 test:
     stage: test
