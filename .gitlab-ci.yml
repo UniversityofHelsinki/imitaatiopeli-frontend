@@ -1,22 +1,46 @@
 image: quay.io/tike/alpine-oc-node
 
 stages:
+    - setup
     - test
     - build
-
 
 variables:
     PROJECT_NAME: "imitaatiopeli-frontend"
     PROJECT_VERSION: "1.0.0"
 
+.dependencies_cache:
+    cache:
+        key:
+            files:
+                - package-lock.json
+        paths:
+            - .npm
+        policy: pull
+
+
+setup:
+    stage: setup
+    tags:
+        - ohtu-build-3
+    script:
+        - npm ci
+    extends: .dependencies_cache
+    cache:
+        policy: pull-push
+    artifacts:
+        expire_in: 1h
+        paths:
+            - node_modules
+
 test:
     stage: test
     image: node:22-alpine
     tags:
-        - ohtu-build-4
+        - ohtu-build-3
     script:
-        - npm ci
         - npm run test:coverage
+    extends: .dependencies_cache
     artifacts:
         name: coverage-test
         paths:
@@ -28,9 +52,9 @@ build_stage_dev:
     only:
         - main
     tags:
-        - ohtu-build-4
+        - ohtu-build-3
+    extends: .dependencies_cache
     script:
-        - npm ci --omit=dev
         - npm run build -- --mode development
         - CI=false NODE_ENV=production npm run build
     artifacts:
