@@ -70,10 +70,10 @@ build_stage_test:
     only:
         - test
     tags:
-        - ohtu-build-4
+        - ohtu-build-3
     script:
         - npm ci --omit=dev
-        - yes | cp -f -v .env.test .env.production || true
+        - npm run build -- --mode test
         - CI=false NODE_ENV=production npm run build
     artifacts:
         name: imitaatiopeli-build
@@ -87,9 +87,10 @@ build_stage-prod:
     only:
         - prod
     tags:
-        - ohtu-build-4
+        - ohtu-build-3
     script:
         - npm ci --omit=dev
+        - npm run build -- --mode production
         - CI=false NODE_ENV=production npm run build
     artifacts:
         name: imitaatiopeli-build
