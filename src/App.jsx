@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { thunk } from 'redux-thunk';
 import reducer from '../../imitaatiopeli-frontend/src/reducers';
-import { DEFAULT_LANGUAGE } from '../../imitaatiopeli-frontend/src/Constants';
+import { DEFAULT_LANGUAGE } from './Constants.js';
 import {
     createBrowserRouter,
     createRoutesFromElements,
@@ -18,8 +18,9 @@ import {
 } from 'react-router-dom';
 import Imitation from '../../imitaatiopeli-frontend/src/Imitation';
 import ErrorPage from '../../imitaatiopeli-frontend/src/Error';
-import {AuthProvider} from "../../imitaatiopeli-frontend/src/AuthContext";
+import {AuthProvider} from './AuthContext.js';
 import ProtectedRoute from "../../imitaatiopeli-frontend/src/ProtectedRoute";
+import Protected from "../../imitaatiopeli-frontend/src/Protected";
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -41,22 +42,33 @@ i18n.use(initReactI18next).init({
     resources: translations,
     lng: defaultLanguage(),
     fallbackLng: 'cimode',
-    supportedLngs: ['fi', 'en', 'sv', 'et'],
+    supportedLngs: ['fi', 'en', 'sv'],
 });
 
 const App = () => {
     const router = createBrowserRouter(
         createRoutesFromElements(
-            <Route path="/" element={<Imitation />} errorElement={<ErrorPage />}></Route>,
+            <Route path="/" element={<Outlet />} errorElement={<ErrorPage />}>
+                {/* Public routes - components that make /public api calls */}
+                <Route index element={<Imitation />} />
+
+                {/* Protected routes - components that DO make /api api calls */}
+                <Route path="admin" element={
+                    <ProtectedRoute>
+                        <Outlet />
+                    </ProtectedRoute>
+                }>
+                    {/* Add all components that use /api calls here */}
+                    <Route path="protected" element={<Protected />} />
+                </Route>
+            </Route>
         ),
     );
 
     return (
         <Provider store={store}>
             <AuthProvider>
-                <ProtectedRoute component={Imitation}>
-                    <RouterProvider router={router} />
-                </ProtectedRoute>
+                <RouterProvider router={router} />
             </AuthProvider>
         </Provider>
     );

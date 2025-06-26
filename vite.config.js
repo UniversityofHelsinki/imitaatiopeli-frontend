@@ -15,5 +15,23 @@ export default defineConfig({
         '.js': 'jsx'
       }
     }
-  }
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.js',
+    coverage: {
+      enabled: true,
+      provider: 'v8',
+      reporter: ['lcov', 'text', 'json'],
+      reportsDirectory: 'coverage',
+      exclude: [
+        'node_modules/',
+        'src/test/',
+        '**/*.d.ts',
+        'vite.config.js',
+        'dist/',
+      ],
+    },
+  },
 })
