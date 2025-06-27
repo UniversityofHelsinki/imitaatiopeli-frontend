@@ -44,11 +44,10 @@ const App = () => {
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/" element={<Outlet />} errorElement={<ErrorPage />}>
-                {/* Public routes - components that make /public api calls */}
+                {/* Public routes here */}
                 <Route index element={<Imitation />} />
                 <Route path="player" element={<Player playerId={'1'} />} />
 
-                {/* Protected routes - components that DO make /api api calls */}
                 <Route path="admin" element={
                     <AuthProvider>
                         <ProtectedRoute>
@@ -56,7 +55,7 @@ const App = () => {
                         </ProtectedRoute>
                     </AuthProvider>
                 }>
-                    {/* Add all components that use /api calls here */}
+                    {/* Protected routes under admin route here */}
                     <Route index element={<Protected />} />
                 </Route>
             </Route>
