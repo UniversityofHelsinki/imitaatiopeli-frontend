@@ -57,7 +57,7 @@ const App = () => {
                     </AuthProvider>
                 }>
                     {/* Add all components that use /api calls here */}
-                    <Route path="protected" element={<Protected />} />
+                    <Route index element={<Protected />} />
                 </Route>
             </Route>
         ),
