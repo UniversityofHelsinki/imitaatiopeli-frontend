@@ -5,7 +5,7 @@ import { useGET } from './useHttp';
 const usePlayer = (playerId) => {
     const [response, error, reload] = useGET({
         path: `/api/getPlayerById/${playerId}`,
-        tag: 'PLAYER_DATA_${playerId}',
+        tag: `PLAYER_DATA_${playerId}`,
     });
     const dispatch = useDispatch();
     const player = useSelector((state) => state.players.player);
@@ -13,13 +13,13 @@ const usePlayer = (playerId) => {
     useEffect(() => {
         if (player !== response) {
             dispatch({
-                type: 'GET_PLAYER_COURSE',
+                type: 'GET_PLAYER',
                 payload: response,
             });
         }
     }, [response]);
 
-    return [player, error, reload()];
+    return [player, error, reload];
 };
 
 export default usePlayer;
