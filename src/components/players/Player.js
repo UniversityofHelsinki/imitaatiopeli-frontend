@@ -9,7 +9,7 @@ const Player = (playerId) => {
     return (
         <>
             <div>Player ...</div>
-            <div>{t(player?.message)}</div>
+            <div>{t(player?.message)}, playerId = {playerId.playerId}</div>
         </>
     )
 }
