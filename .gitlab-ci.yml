@@ -108,7 +108,7 @@ generate-sbom:
     only:
         - schedules
     tags:
-        - ohtu-build-4
+        - ohtu-build-3
     script:
         - npm ci
         - npx @cyclonedx/cyclonedx-npm --output-file sbom.xml
@@ -123,7 +123,7 @@ submit-sbom:
     only:
         - schedules
     tags:
-        - ohtu-build-4
+        - ohtu-build-3
     dependencies:
         - generate-sbom
     before_script:
