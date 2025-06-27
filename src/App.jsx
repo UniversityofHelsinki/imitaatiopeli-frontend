@@ -9,19 +9,13 @@ import { applyMiddleware, createStore } from 'redux';
 import { thunk } from 'redux-thunk';
 import reducer from '../../imitaatiopeli-frontend/src/reducers';
 import { DEFAULT_LANGUAGE } from './Constants.js';
-import {
-    createBrowserRouter,
-    createRoutesFromElements,
-    RouterProvider,
-    Route,
-    Outlet,
-} from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Outlet, Route, RouterProvider } from 'react-router-dom';
 import Imitation from './Imitation';
 import ErrorPage from '../src/Error';
-import {AuthProvider} from './AuthContext.js';
-import ProtectedRoute from "../src/ProtectedRoute";
-import Protected from "../src/Protected";
-import Player from "./components/players/Player.js";
+import { AuthProvider } from './AuthContext.js';
+import ProtectedRoute from '../src/ProtectedRoute';
+import Protected from '../src/Protected';
+import Player from './components/players/Player.js';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -56,9 +50,11 @@ const App = () => {
 
                 {/* Protected routes - components that DO make /api api calls */}
                 <Route path="admin" element={
-                    <ProtectedRoute>
-                        <Outlet />
-                    </ProtectedRoute>
+                    <AuthProvider>
+                        <ProtectedRoute>
+                            <Outlet />
+                        </ProtectedRoute>
+                    </AuthProvider>
                 }>
                     {/* Add all components that use /api calls here */}
                     <Route path="protected" element={<Protected />} />
@@ -69,9 +65,7 @@ const App = () => {
 
     return (
         <Provider store={store}>
-            <AuthProvider>
-                <RouterProvider router={router} />
-            </AuthProvider>
+            <RouterProvider router={router} />
         </Provider>
     );
 };
