@@ -19,7 +19,7 @@ const usePlayer = (playerId) => {
         }
     }, [response]);
 
-    return [player, error, reload()];
+    return [player, error, reload];
 };
 
 export default usePlayer;
