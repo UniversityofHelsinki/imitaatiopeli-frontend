@@ -16,11 +16,12 @@ import {
     Route,
     Outlet,
 } from 'react-router-dom';
-import Imitation from '../../imitaatiopeli-frontend/src/Imitation';
-import ErrorPage from '../../imitaatiopeli-frontend/src/Error';
+import Imitation from './Imitation';
+import ErrorPage from '../src/Error';
 import {AuthProvider} from './AuthContext.js';
-import ProtectedRoute from "../../imitaatiopeli-frontend/src/ProtectedRoute";
-import Protected from "../../imitaatiopeli-frontend/src/Protected";
+import ProtectedRoute from "../src/ProtectedRoute";
+import Protected from "../src/Protected";
+import Player from "./components/players/Player.js";
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -51,6 +52,7 @@ const App = () => {
             <Route path="/" element={<Outlet />} errorElement={<ErrorPage />}>
                 {/* Public routes - components that make /public api calls */}
                 <Route index element={<Imitation />} />
+                <Route path="player" element={<Player playerId={'1'} />} />
 
                 {/* Protected routes - components that DO make /api api calls */}
                 <Route path="admin" element={
