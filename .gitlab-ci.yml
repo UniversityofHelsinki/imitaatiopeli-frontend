@@ -181,7 +181,7 @@ deploy_dev:
         # list environment variables here
         - oc set env deploy/imitaatiopeli-frontend-dev TZ="Europe/Helsinki"
         # start build process in OpenShift
-        - oc start-build imitaatiopeli-db-dev --from-dir=. --follow
+        - oc start-build imitaatiopeli-frontend-dev --from-dir=. --follow
         # patch openshift buildConfig file
-        - oc patch bc/imitaatiopeli-db-dev --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
-        - oc patch bc/imitaatiopeli-db-dev --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
+        - oc patch bc/imitaatiopeli-frontend-dev --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
+        - oc patch bc/imitaatiopeli-frontend-dev --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
