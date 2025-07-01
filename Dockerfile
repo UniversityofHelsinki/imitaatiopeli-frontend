@@ -4,39 +4,26 @@ FROM nginx:alpine
 # Set the working directory
 WORKDIR /app
 
-# Copy the dist files into the working directory
-COPY dist /usr/share/nginx/html
-
-# Update the package list and install dependencies
+# Update packages, install dependencies, and configure directories
 RUN apk update && \
-    apk add --no-cache tzdata
-
-# Ensure /app directories exist and have the correct permissions
-RUN mkdir -p /app/logs /var/cache/nginx /usr/share/nginx/html
-
-# Remove the default Nginx configuration file
-RUN rm -rf /etc/nginx/conf.d/default.conf
+    apk add --no-cache tzdata && \
+    mkdir -p /app/logs /var/cache/nginx /usr/share/nginx/html && \
+    rm -rf /etc/nginx/conf.d/default.conf
 
 # Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Create a non-root user and group
+# Copy the dist files into the working directory
+COPY dist /usr/share/nginx/html
+
+# Create a non-root user and group, configure permissions for OpenShift
 RUN addgroup -S nginxgroup && \
-    adduser -S nginxuser -G nginxgroup
-
-# Create nginx.pid file and set permissions
-RUN touch /var/run/nginx.pid && \
-    chown nginxuser:nginxgroup /var/run/nginx.pid && \
-    chmod 660 /var/run/nginx.pid
-
-# Set ownership and permissions for /app directories to be writable by nginxuser
-RUN chown -R nginxuser:nginxgroup /app/logs /usr/share/nginx/html /var/cache/nginx && \
-    chmod -R 755 /app/logs /usr/share/nginx/html /var/cache/nginx
-
-# Ensure /tmp directory has correct permissions
-RUN mkdir -p /tmp && \
-    chown -R nginxuser:nginxgroup /tmp && \
-    chmod 755 /tmp
+    adduser -S nginxuser -G nginxgroup && \
+    # Set permissions for directories that need to be writable
+    chmod -R 777 /app/logs /var/cache/nginx /tmp && \
+    chmod -R 755 /usr/share/nginx/html && \
+    # Make nginx.conf readable by all users
+    chmod 644 /etc/nginx/nginx.conf
 
 # Switch to the non-root user
 USER nginxuser
