@@ -48,7 +48,7 @@ const App = () => {
                 <Route index element={<Imitation />} />
                 <Route path="player" element={<Player playerId={'1'} />} />
 
-                <Route path="admin" element={
+                <Route path="admin/*" element={
                     <AuthProvider>
                         <ProtectedRoute>
                             <Outlet />
