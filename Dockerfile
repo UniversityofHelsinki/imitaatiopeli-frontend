@@ -19,11 +19,13 @@ COPY dist /usr/share/nginx/html
 # Create a non-root user and group, configure permissions for OpenShift
 RUN addgroup -S nginxgroup && \
     adduser -S nginxuser -G nginxgroup && \
-    # Set permissions for directories that need to be writable
-    chmod -R 777 /app/logs /var/cache/nginx /tmp && \
+    # Set group ownership and group-writable permissions (OpenShift compatible)
+    chown -R nginxuser:root /app/logs /var/cache/nginx && \
+    chmod -R 775 /app/logs /var/cache/nginx && \
+    # Static files should be readable by all
     chmod -R 755 /usr/share/nginx/html && \
-    # Make nginx.conf readable by all users
     chmod 644 /etc/nginx/nginx.conf
+
 
 # Switch to the non-root user
 USER nginxuser
