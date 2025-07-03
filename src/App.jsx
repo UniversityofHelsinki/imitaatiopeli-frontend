@@ -2,12 +2,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import translations from '../../imitaatiopeli-frontend/src/translations';
+import translations from './translations';
+import { defineCustomElements } from '@uh-design-system/component-library/dist/esm/loader';
 import './App.css';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { thunk } from 'redux-thunk';
-import reducer from '../../imitaatiopeli-frontend/src/reducers';
+import reducer from './reducers';
 import { DEFAULT_LANGUAGE } from './Constants.js';
 import { createBrowserRouter, createRoutesFromElements, Outlet, Route, RouterProvider } from 'react-router-dom';
 import Imitation from './Imitation';
@@ -16,6 +17,8 @@ import { AuthProvider } from './AuthContext.js';
 import ProtectedRoute from '../src/ProtectedRoute';
 import Protected from '../src/Protected';
 import Player from './components/players/Player.js';
+
+defineCustomElements();
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -43,9 +46,9 @@ i18n.use(initReactI18next).init({
 const App = () => {
     const router = createBrowserRouter(
         createRoutesFromElements(
-            <Route path="/" element={<Outlet />} errorElement={<ErrorPage />}>
+            <Route path="/" element={<Imitation />} errorElement={<ErrorPage />}>
                 {/* Public routes here */}
-                <Route index element={<Imitation />} />
+                <Route index element={<div>content</div>} />
                 <Route path="player" element={<Player playerId={'1'} />} />
 
                 <Route path="admin/*" element={

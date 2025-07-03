@@ -1,0 +1,28 @@
+.hy-menu-label {
+  display: flex;
+  align-items: center;
+}
+
+.hy-menu-label-icon {
+  display: flex;
+}
+
+.hy-menu-label-caret {
+  display: flex;
+}
+
+.hy-menu-label:hover {
+  color: var(--ds-bgColor-primary);
+}
+
+.hy-menu-label-content {
+  margin-left: var(--ds-spacing-xxs);
+  margin-right: var(--ds-spacing-xxxs);
+}
+
+@media (max-width: 768px) {
+  .hy-menu-label-content {
+    display: none;
+  }
+
+}

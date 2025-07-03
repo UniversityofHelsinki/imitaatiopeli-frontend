@@ -1,0 +1,26 @@
+.imitation-game {
+  display: flex;
+  flex-direction: column;
+}
+
+.imitation-game > div:first-of-type {
+  height: 100dvh;
+  min-height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
+
+  margin-left: var(--ds-spacing-layout-base);
+  margin-right: var(--ds-spacing-layout-base);
+}
+
+@media (max-width: 20rem) {
+  .imitation-game > div:first-of-type {
+    height: unset;
+    min-height: unset;
+  }
+}
+
+.main-content {
+  flex-grow: 1;
+}
