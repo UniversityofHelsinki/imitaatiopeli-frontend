@@ -6,7 +6,7 @@ import HyMenu from '../misc/HyMenu';
 import HyMenuLabel from '../misc/HyMenuLabel';
 import Icon from '../misc/ds/Icon';
 import './Languages.css';
-import localStorage from '../misc/localStorage';
+import localStorage from '../../utilities/localStorage';
 
 const GlobeIcon = () => <Icon name="public" size="1.2rem" />;
 
