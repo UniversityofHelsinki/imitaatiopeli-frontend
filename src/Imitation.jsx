@@ -8,14 +8,16 @@ const Imitation = () => {
   return (
     <div className="imitation-game">
       <div>
-        <Header />
-        <div className="main-content">
+        <header>
+          <Header />
+        </header>
+        <main className="main-content">
           <Outlet />
-        </div>
+        </main>
       </div>
-      <div className="footer-container">
+      <footer className="footer-container">
         <Footer />
-      </div>
+      </footer>
     </div>
   );
 

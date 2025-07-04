@@ -5,7 +5,7 @@ import Languages from './Languages';
 const Header = () => {
   
   return (
-    <div>
+    <>
       <div className="header">
         <div className="header-left">
           <Logo />
@@ -15,7 +15,7 @@ const Header = () => {
         </div>
       </div>
       <div aria-hidden className="header-bottom-border"></div>
-    </div>
+    </>
   );
 };
 
