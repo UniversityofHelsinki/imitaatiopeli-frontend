@@ -85,18 +85,13 @@
   --ds-borderColor-disabled-onLight: var(--ds-overlay-black-15);
   --ds-borderColor-disabled-onDark: var(--ds-overlay-white-15);
 
+  font-family: var(--ds-fontFamily-body);
+
   --ds-default-fontSize: var(--ds-fontSize-16);
 
   font-size: var(--ds-default-fontSize);
 
   --ds-spacing-base: calc(1rem / 2);
-
-  --ds-spacing-xs: var(--ds-spacing-xSmall);
-  --ds-spacing-xxs: var(--ds-spacing-2xSmall);
-  --ds-spacing-xxxs: var(--ds-spacing-3xSmall);
-  --ds-spacing-xxxxs: var(--ds-spacing-4xSmall);
-
-  --ds-spacing-xl: var(--ds-spacing-xLarge);
 
   --ds-spacing-layout-base: 1rem;
 
