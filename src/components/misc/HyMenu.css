@@ -15,10 +15,10 @@
   border-radius: 4px;
   box-shadow: 0px 2px 8px var(--ds-bgColor-white-hover);
 
-  padding-left: var(--ds-spacing-xxs);
-  padding-right: var(--ds-spacing-xxs);
-  padding-top: var(--ds-spacing-xxxs);
-  padding-bottom: var(--ds-spacing-xxxs);
+  padding-left: var(--ds-spacing-2xSmall);
+  padding-right: var(--ds-spacing-2xSmall);
+  padding-top: var(--ds-spacing-3xSmall);
+  padding-bottom: var(--ds-spacing-3xSmall);
 
   top: 80%;
   z-index: 2;
@@ -47,7 +47,7 @@
 
 .hy-menu-item {
   min-width: 120px;
-  margin-bottom: var(--ds-spacing-xxxs);
+  margin-bottom: var(--ds-spacing-3xSmall);
 }
 
 .hy-menu-item > button {
@@ -68,7 +68,7 @@
 }
 
 .hy-menu-item-disabled > span {
-  color: var(--hy-silver);
+  color: var(--ds-textColor-disabled-onLight);
   text-align: start;
   text-transform: uppercase;
   font-weight: 600;
@@ -76,7 +76,7 @@
 }
 
 .hy-menu-item-disabled:hover {
-  color: var(--hy-silver);
+  color: var(--ds-textColor-disabled-onLight);
   background-color: unset;
 }
 

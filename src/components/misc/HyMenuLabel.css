@@ -16,8 +16,8 @@
 }
 
 .hy-menu-label-content {
-  margin-left: var(--ds-spacing-xxs);
-  margin-right: var(--ds-spacing-xxxs);
+  margin-left: var(--ds-spacing-2xSmall);
+  margin-right: var(--ds-spacing-3xSmall);
 }
 
 @media (max-width: 768px) {
