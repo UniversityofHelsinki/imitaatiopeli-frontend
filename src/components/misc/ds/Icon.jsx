@@ -16,8 +16,7 @@ const Icon = ({
     dsTitle={title}
     dsHidden={hidden}
     dsColour={colour}
-    dsSize={size}>
-  </ds-icon>
+    dsSize={size} />
 };
 
 Icon.propTypes = {
@@ -25,7 +24,7 @@ Icon.propTypes = {
   role: PropTypes.string,
   title: PropTypes.string,
   hidden: PropTypes.bool,
-  colour: PropTypes.colour,
+  colour: PropTypes.string,
   size: PropTypes.string
 };
 
