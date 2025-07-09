@@ -60,8 +60,7 @@ build_stage_dev:
         - ohtu-build-3
     extends: .dependencies_cache
     script:
-        - npm run build -- --mode development
-        - CI=false NODE_ENV=production npm run build
+        - npm run build
     artifacts:
         name: imitaatiopeli-build
         paths:
@@ -75,14 +74,13 @@ build_stage_test:
         - test
     tags:
         - ohtu-build-3
+    extends: .dependencies_cache
     script:
-        - npm ci --omit=dev
-        - npm run build -- --mode test
-        - CI=false NODE_ENV=production npm run build
+        - npm run build
     artifacts:
         name: imitaatiopeli-build
         paths:
-            - build
+            - dist
         expire_in: 1 hour
 
 build_stage-prod:
