@@ -12,6 +12,9 @@
 
 .logo-text {
   flex-grow: 1;
+
+  font-size: var(--logo-size);
+  margin: unset;
 }
 
 .logo svg {

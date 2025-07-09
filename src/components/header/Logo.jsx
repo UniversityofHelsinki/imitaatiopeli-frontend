@@ -5,8 +5,8 @@ import './Logo.css';
 const Logo = () => {
   return (
     <div className="logo">
-      <HyLogo />
-      <span className="logo-text">Imitaatiopeli</span>
+      <HyLogo aria-hidden />
+      <h1 className="logo-text">Imitaatiopeli</h1>
     </div>
   )
 };
