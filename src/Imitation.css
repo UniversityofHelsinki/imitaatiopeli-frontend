@@ -4,7 +4,6 @@
 }
 
 .imitation-game > div:first-of-type {
-  height: 100dvh;
   min-height: 100dvh;
 
   display: flex;
