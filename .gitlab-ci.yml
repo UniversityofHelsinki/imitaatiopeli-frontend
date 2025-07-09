@@ -186,3 +186,37 @@ deploy_dev:
         # patch openshift buildConfig file
         - oc patch bc/imitaatiopeli-frontend-dev --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
         - oc patch bc/imitaatiopeli-frontend-dev --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
+
+deploy_test:
+    stage: deploy
+    tags:
+        - ohtu-build-3
+    environment:
+        name: test
+    only:
+        - test
+    except:
+        # Skip deploy when scheduled npm audit and outdated scans are executed.
+        - schedules
+    script:
+        # set home path for openshift 1001 user
+        - export HOME=/home/1001
+        - mv nginx-test.conf nginx.conf
+        # before any action, I connect to the OpenShift server with the appropriate credentials
+        - oc login https://$OPENSHIFT_ADDR_TEST:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_TEST
+        - oc project imitaatiopeli
+        # create application if it does not exist
+        - |
+            if oc get deploy/imitaatiopeli-frontend-test; then 
+              echo "The application already exists."
+            else 
+              oc new-app . --name=imitaatiopeli-frontend-test --strategy=docker
+              echo "The application has been created."
+            fi
+        # list environment variables here
+        - oc set env deploy/imitaatiopeli-frontend-test TZ="Europe/Helsinki"
+        # start build process in OpenShift
+        - oc start-build imitaatiopeli-frontend-test --from-dir=. --follow
+        # patch openshift buildConfig file
+        - oc patch bc/imitaatiopeli-frontend-test --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
+        - oc patch bc/imitaatiopeli-frontend-test --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
