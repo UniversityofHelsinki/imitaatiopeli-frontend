@@ -6,7 +6,8 @@ const Icon = ({
   title = '', 
   hidden = false, 
   colour = 'ds-palette-black', 
-  size = '1.5rem' 
+  size = '1.5rem',
+  ...rest
 }) => {
 
   return <ds-icon 
@@ -16,7 +17,9 @@ const Icon = ({
     dsTitle={title}
     dsHidden={hidden}
     dsColour={colour}
-    dsSize={size} />
+    dsSize={size} 
+    { ...rest }
+  />
 };
 
 Icon.propTypes = {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const Tag = ({
@@ -12,12 +12,12 @@ const Tag = ({
 }) => {
   
   const dsProps = {
-    dsText: text,
-    dsColour: colour,
-    dsHref: href,
-    dsIcon: icon,
-    dsIconPosition: iconPosition,
-    dsTarget: target,
+    'ds-text': text,
+    'ds-colour': colour,
+    'ds-href': href,
+    'ds-icon': icon,
+    'ds-icon-position': iconPosition,
+    'ds-target': target,
     ...rest
   };
 

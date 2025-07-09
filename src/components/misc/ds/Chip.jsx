@@ -10,9 +10,9 @@ const Chip = ({
   const ref = useRef();
 
   const dsProps = {
-    dsIndex: index,
-    dsText: text,
-    dsIcon: icon,
+    index,
+    'ds-text': text,
+    'ds-icon': icon,
     ...rest
   };
 
