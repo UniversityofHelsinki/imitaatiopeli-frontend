@@ -8,6 +8,8 @@
   justify-content: space-between;
   align-items: center;
 
+  max-width: 100dvw;
+
 }
 
 .header-left {
@@ -25,7 +27,7 @@
 }
 
 .header-bottom-border {
-  background-color: black;
+  background-color: var(--ds-borderColor-light);
   height: 1px;
 
   margin: calc(var(--ds-spacing-layout-base) / 2);
