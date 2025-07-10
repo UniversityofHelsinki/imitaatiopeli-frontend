@@ -1,4 +1,17 @@
 .footer {
   background-color: var(--ds-bgColor-black);
   color: var(--ds-textColor-white);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.footer-column {
+  padding: var(--ds-spacing-layout-base);
+  word-break: break-all;
+}
+
+.footer-external-links ul {
+  list-style: none;
+  margin: unset;
+  padding: unset;
 }
