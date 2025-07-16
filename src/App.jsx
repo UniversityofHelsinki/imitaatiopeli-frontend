@@ -3,7 +3,7 @@ import React from 'react';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import translations from './translations';
-import { defineCustomElements } from '@uh-design-system/component-library/dist/esm/loader';
+import { defineCustomElements } from '@uh-design-system/component-library/dist/loader/index';
 import './App.css';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
