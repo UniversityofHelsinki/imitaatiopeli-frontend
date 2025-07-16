@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@uh-design-system/component-library/dist/index';
 import React from 'react';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
