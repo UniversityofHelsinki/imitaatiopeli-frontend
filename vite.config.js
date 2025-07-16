@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     viteStaticCopy({
       targets: [{
-        src: './node_modules/@uh-design-system/component-library/dist/component-library/*',
+        src: './node_modules/@uh-design-system/component-library/dist/esm/*',
         dest: 'assets/'
       }]
     })
