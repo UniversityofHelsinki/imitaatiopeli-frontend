@@ -18,7 +18,7 @@ import ProtectedRoute from '../src/ProtectedRoute';
 import Protected from '../src/Protected';
 import Player from './components/players/Player.js';
 
-defineCustomElements();
+defineCustomElements(window);
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
