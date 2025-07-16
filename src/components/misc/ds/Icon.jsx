@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import '@uh-design-system/component-library/dist/component-library/ds-icon.entry';
 
 const Icon = ({ 
   name, 
