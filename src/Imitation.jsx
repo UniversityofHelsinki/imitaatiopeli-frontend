@@ -1,7 +1,9 @@
+import React from 'react';
 import { Outlet } from 'react-router';
-import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
+import Header from './components/header/Header';
 import './Imitation.css';
+import NotificationArea from './components/notification/NotificationArea';
 
 const Imitation = () => {
 
@@ -13,6 +15,9 @@ const Imitation = () => {
         </header>
         <main className="main-content">
           <Outlet />
+          <div className="notification-area-container">
+            <NotificationArea />
+          </div>
         </main>
       </div>
       <footer className="footer-container">

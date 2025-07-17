@@ -1,0 +1,26 @@
+.ds-form-label {
+  font-family: var(--ds-fontFamily-body);
+  font-size: var(--ds-fontSize-16);
+  font-weight: var(--ds-fontWeight-semibold);
+  letter-spacing: var(--ds-letterSpacing-wide);
+  line-height: var(--ds-lineHeight-large);
+  color: var(--ds-palette-black-95);
+
+  word-break: break-all;
+}
+
+.ds-form-label:hover {
+  cursor: text;
+}
+
+.ds-form-label:hover ~ textarea {
+  background-color: unset !important;
+}
+
+.ds-form-label:hover ~ textarea:active {
+  background-color: unset !important;
+}
+
+.ds-form-label:hover ~ textarea:disabled {
+  background-color: var(--ds-bgColor-disabled-onLight) !important;
+}

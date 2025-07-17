@@ -1,0 +1,89 @@
+.notification-area {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    box-shadow: 0px 2px 8px var(--ds-borderColor-light);
+    border-radius: 4px;
+    background-color: var(--ds-bgColor-white);
+}
+
+.notification-area-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@keyframes notification-success {
+    from {
+        background-color: var(--ds-palette-green-30);
+    }
+
+    to {
+        background-color: var(--ds-bgColor-white);
+    }
+}
+
+@keyframes notification-error {
+    from {
+        background-color: var(--ds-palette-red-30);
+    }
+
+    to {
+        background-color: var(--ds-bgColor-white);
+    }
+}
+
+@keyframes notification-closing {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
+
+.notification-area-success {
+    animation-duration: 2s;
+    animation-name: notification-success;
+}
+
+.notification-area-error {
+    animation-duration: 2s;
+    animation-name: notification-error;
+}
+
+.notification-area-closing {
+    width: 0%;
+    background-color: black;
+    height: 3px;
+    animation-name: notification-closing;
+    animation-duration: 4s;
+}
+
+.notification-area-closing-success {
+    background-color: var(--ds-palette-green-20);
+}
+
+.notification-area-closing-error {
+    background-color: var(--ds-palette-red-40);
+}
+
+.notification-area-close-button button {
+    border: unset;
+    padding: unset;
+    background-color: unset;
+    max-height: min-content;
+}
+
+.notification-area .notification {
+}
+
+.notification-area-close-button-icon {
+    display: inline-block;
+}
+
+.notification-area-close-button-icon svg {
+    min-width: 1em;
+    min-height: 1em;
+}

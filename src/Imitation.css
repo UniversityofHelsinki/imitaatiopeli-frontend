@@ -11,6 +11,13 @@
 
   margin-left: var(--ds-spacing-layout-base);
   margin-right: var(--ds-spacing-layout-base);
+
+  padding-bottom: var(--ds-spacing-layout-base);
+}
+
+.imitation-game main {
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 @media (max-width: 20rem) {
@@ -18,8 +25,23 @@
     height: unset;
     min-height: unset;
   }
+
+}
+
+@media (max-width: 40rem) {
+  .imitation-game main {
+    margin-left: var(--ds-spacing-layout-base);
+    margin-right: var(--ds-spacing-layout-base);
+  }
 }
 
 .main-content {
   flex-grow: 1;
+}
+
+.notification-area-container {
+    position: fixed;
+    max-width: fit-content;
+    bottom: 2dvh;
+    z-index: 1;
 }

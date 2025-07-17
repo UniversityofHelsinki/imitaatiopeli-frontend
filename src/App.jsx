@@ -16,6 +16,9 @@ import { AuthProvider } from './AuthContext.js';
 import ProtectedRoute from '../src/ProtectedRoute';
 import Protected from '../src/Protected';
 import Player from './components/players/Player.js';
+import CreateGameForm from './components/game/form/CreateGameForm';
+import NotificationProvider from './components/notification/NotificationContext';
+import EditGameForm from './components/game/form/EditGameForm';
 
 import { defineCustomElements } from '@uh-design-system/component-library/dist/loader/index';
 
@@ -63,6 +66,10 @@ const App = () => {
                 }>
                     {/* Protected routes under admin route here */}
                     <Route index element={<Protected />} />
+                    <Route path="game">
+                      <Route path="create" element={<CreateGameForm />} />
+                      <Route path=":id" element={<EditGameForm />} />
+                    </Route>
                 </Route>
             </Route>
         ),
@@ -70,7 +77,9 @@ const App = () => {
 
     return (
         <Provider store={store}>
+          <NotificationProvider>
             <RouterProvider router={router} />
+          </NotificationProvider>
         </Provider>
     );
 };

@@ -96,3 +96,29 @@
   --ds-spacing-layout-base: 1rem;
 
 }
+
+.small-margin {
+  margin: var(--ds-spacing-4xSmall);
+}
+
+.medium-margin {
+  margin:  var(--ds-spacing-medium);
+}
+
+.margin {
+  margin: var(--ds-spacing-2xSmall);
+}
+
+.screenreader-only {
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
+}
+
+.horizontal-divider {
+  height: 1px;
+  margin: var(--ds-spacing-layout-base);
+  padding: 0px var(--ds-spacing-layout-base);
+  background-color: var(--ds-borderColor-light);
+}
