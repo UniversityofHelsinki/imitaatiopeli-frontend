@@ -3,7 +3,6 @@ import React from 'react';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import translations from './translations';
-import { defineCustomElements } from '@uh-design-system/component-library/dist/loader/index';
 import './App.css';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
@@ -18,7 +17,11 @@ import ProtectedRoute from '../src/ProtectedRoute';
 import Protected from '../src/Protected';
 import Player from './components/players/Player.js';
 
+import { defineCustomElements } from '@uh-design-system/component-library/dist/loader/index';
+
+
 defineCustomElements(window);
+
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
