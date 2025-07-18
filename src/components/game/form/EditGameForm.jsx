@@ -64,6 +64,9 @@ const EditGameForm = () => {
   return (
     <div className="edit-game-form">
       <h2>{t('edit_game_form_heading')}</h2>
+      <p className="edit-game-form-details">
+        {t('edit_game_form_details_game_code', { game_code: modifiedGame.game_code})}
+      </p>
       <GameForm 
         game={modifiedGame} 
         onChange={onChange} 

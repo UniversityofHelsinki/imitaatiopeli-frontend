@@ -15,5 +15,6 @@
   "game_form_research_permission_field_label": "Saa käyttää",
   "game_form_bottom_row_saving": "Tallennetaan",
   "edit_game_form_heading": "Muokkaa peliä",
-  "edit_game_form_loading_game": "Ladataan peliä"
+  "edit_game_form_loading_game": "Ladataan peliä",
+  "edit_game_form_details_game_code": "Pelin koodi: {{ game_code }}"
 }
