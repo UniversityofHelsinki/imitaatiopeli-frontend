@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { DsLink } from '@uh-design-system/component-library-react';
 
 const Link = ({
   label = '',
@@ -27,7 +28,7 @@ const Link = ({
     ...rest
   };
 
-  return <ds-link { ...dsProps } />;
+  return <DsLink { ...dsProps } />;
 
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { DsRadioButtonGroup } from "@uh-design-system/component-library-react";
 
 const RadioButtonGroup = ({
   children,
@@ -21,7 +22,7 @@ const RadioButtonGroup = ({
     ...rest
   };
   
-  return <ds-radio-button-group { ...dsProps }>{children}</ds-radio-button-group>
+  return <DsRadioButtonGroup { ...dsProps }>{children}</DsRadioButtonGroup>
 };
 
 RadioButtonGroup.propTypes = {

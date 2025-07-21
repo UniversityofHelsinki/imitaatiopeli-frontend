@@ -11,7 +11,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@uh-design-system/component-library": "^0.7.1",
+    "@uh-design-system/component-library-react": "^0.7.1",
     "bootstrap": "^5.3.7",
     "date-fns": "^4.1.0",
     "i18next": "^25.2.1",

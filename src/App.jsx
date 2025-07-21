@@ -1,30 +1,28 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
 import i18n from 'i18next';
+import React from 'react';
 import { initReactI18next } from 'react-i18next';
-import translations from './translations';
-import './App.css';
 import { Provider } from 'react-redux';
+import { createBrowserRouter, createRoutesFromElements, Outlet, Route, RouterProvider } from 'react-router-dom';
 import { applyMiddleware, createStore } from 'redux';
 import { thunk } from 'redux-thunk';
-import reducer from './reducers';
-import { DEFAULT_LANGUAGE } from './Constants.js';
-import { createBrowserRouter, createRoutesFromElements, Outlet, Route, RouterProvider } from 'react-router-dom';
-import Imitation from './Imitation';
 import ErrorPage from '../src/Error';
-import { AuthProvider } from './AuthContext.js';
-import ProtectedRoute from '../src/ProtectedRoute';
 import Protected from '../src/Protected';
-import Player from './components/players/Player.js';
+import ProtectedRoute from '../src/ProtectedRoute';
+import './App.css';
+import { AuthProvider } from './AuthContext.js';
 import CreateGameForm from './components/game/form/CreateGameForm';
-import NotificationProvider from './components/notification/NotificationContext';
 import EditGameForm from './components/game/form/EditGameForm';
+import NotificationProvider from './components/notification/NotificationContext';
+import Player from './components/players/Player.js';
+import { DEFAULT_LANGUAGE } from './Constants.js';
+import Imitation from './Imitation';
+import reducer from './reducers';
+import translations from './translations';
 
-import { defineCustomElements } from '@uh-design-system/component-library/dist/loader/index';
-
+import { defineCustomElements } from '@uh-design-system/component-library/dist/esm/loader';
 
 defineCustomElements(window);
-
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -54,7 +52,7 @@ const App = () => {
         createRoutesFromElements(
             <Route path="/" element={<Imitation />} errorElement={<ErrorPage />}>
                 {/* Public routes here */}
-                <Route index element={<div>content</div>} />
+                <Route index element={<div></div>} />
                 <Route path="player" element={<Player playerId={'1'} />} />
 
                 <Route path="admin/*" element={

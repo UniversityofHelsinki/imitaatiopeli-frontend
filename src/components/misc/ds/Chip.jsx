@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { DsChip } from '@uh-design-system/component-library-react';
 
 const Chip = ({
   index = 0,
@@ -25,7 +26,7 @@ const Chip = ({
     ...rest
   };
 
-  return <ds-chip ref={ref} { ...dsProps } />;
+  return <DsChip ref={ref} { ...dsProps } />;
 
 };
 

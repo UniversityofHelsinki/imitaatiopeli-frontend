@@ -28,7 +28,7 @@
 
 }
 
-@media (max-width: 40rem) {
+@media (max-width: 50rem) {
   .imitation-game main {
     margin-left: var(--ds-spacing-layout-base);
     margin-right: var(--ds-spacing-layout-base);

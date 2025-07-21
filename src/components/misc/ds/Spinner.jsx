@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { DsSpinner } from '@uh-design-system/component-library-react';
 
 const Spinner = ({
   size = 'medium',
@@ -17,7 +18,7 @@ const Spinner = ({
     ...rest
   };
 
-  return <ds-spinner { ...dsProps } />;
+  return <DsSpinner { ...dsProps } />;
 
 };
 
