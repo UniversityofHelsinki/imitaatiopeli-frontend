@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import FormLabel from '../../form/FormLabel';
 import AssistiveText from '../../form/AssistiveText';
 import './TextArea.css';
+import ErrorText from './ErrorText';
 
-const TextArea = ({ label, placeholder, assistiveText, value, required, ...rest }) => {
+const TextArea = ({ label, placeholder, assistiveText, value, required, errorText, ...rest }) => {
   const id = useId();
   const assistiveTextId = useId();
   const textAreaRef = useRef(null);
@@ -29,6 +30,9 @@ const TextArea = ({ label, placeholder, assistiveText, value, required, ...rest 
         onKeyUp={onKeyUp}
         {...rest}
       />
+      {errorText && (
+        <ErrorText text={errorText} />
+      )}
     </div>
   );
 
@@ -39,6 +43,7 @@ TextArea.propTypes = {
   value: PropTypes.string,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
+  errorText: PropTypes.string,
 };
 
 export default TextArea;

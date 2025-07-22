@@ -39,6 +39,7 @@ const GameForm = ({
   onChange,
   onSubmit,
   onReset,
+  validations
 }) => {
 
   const handleSubmit = async (event) => {
@@ -70,6 +71,7 @@ const GameForm = ({
             game_name: e.target.value
           })}
           disabled={saving}
+          validation={validations?.configuration?.game_name}
         />
       </div>
       <div className="form-field game-form-field">
@@ -80,6 +82,7 @@ const GameForm = ({
             ai_prompt: e.target.value
           })}
           disabled={saving}
+          validation={validations?.configuration?.ai_prompt}
         />
       </div>
       <div className="form-field game-form-field">
@@ -112,6 +115,7 @@ GameForm.propTypes = {
   onSubmit: PropTypes.func,
   onReset: PropTypes.func,
   saving: PropTypes.bool,
+  validations: PropTypes.object,
 };
 
 export default GameForm;

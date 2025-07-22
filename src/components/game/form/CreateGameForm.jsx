@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import useSaveGameConfiguration from '../../../hooks/useSaveGameConfiguration';
+import validate from '../../../utilities/validation/game/gameValidation';
+import { useNotification } from '../../notification/NotificationContext';
 import './CreateGameForm.css';
 import GameForm from './GameForm';
-import { useNotification } from '../../notification/NotificationContext';
-import useSaveGameConfiguration from '../../../hooks/useSaveGameConfiguration';
-import { useNavigate } from 'react-router-dom';
 
 const emptyGame = {
   configuration: {
@@ -20,23 +21,23 @@ const CreateGameForm = () => {
   const save = useSaveGameConfiguration();
   const navigate = useNavigate();
   const { setNotification } = useNotification();
-  const [disabled, setDisabled] = useState(false);
   const [saving, setSaving] = useState(false);
-
-  const onChange = (key, value) => {
-    setGame({
-      ...game,
-      [key]: value
-    });
+  const [validations, setValidations] = useState({});
+  
+  const onChange = async (key, value) => {
+    const changed = { ...game, [key]: value };
+    setValidations(await validate(changed));
+    setGame(changed);
   };
 
-  const onReset = () => {
+  const onReset = async () => {
+    setValidations({});
     setGame({ ...emptyGame });
   };
 
   const onSubmit = async () => {
     setSaving(true);
-    setDisabled(true);
+    setValidations(await validate(game));
     try {
       const saved = await save(game);
       navigate(`/admin/game/${saved.game_id}`);
@@ -44,7 +45,6 @@ const CreateGameForm = () => {
     } catch (error) {
       setNotification(error.cause?.status, 'error');
     }
-    setDisabled(false);
     setSaving(false);
   };
 
@@ -57,6 +57,7 @@ const CreateGameForm = () => {
         onReset={onReset}
         onSubmit={onSubmit}
         saving={saving}
+        validations={validations}
       />
     </div>
   );

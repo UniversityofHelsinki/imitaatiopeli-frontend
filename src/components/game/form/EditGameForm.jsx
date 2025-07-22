@@ -7,6 +7,7 @@ import './EditGameForm.css';
 import GameForm from './GameForm';
 import useEditGame from '../../../hooks/useEditGame';
 import { useNotification } from '../../notification/NotificationContext';
+import validate from '../../../utilities/validation/game/gameValidation';
 
 const EditGameForm = () => {
   const { id: gameId } = useParams();
@@ -18,6 +19,8 @@ const EditGameForm = () => {
   const [game, setGame] = useState(null);
   const [modifiedGame, setModifiedGame] = useState(null)
   const [saving, setSaving] = useState(false);
+
+  const [validations, setValidations] = useState({});
   
   useEffect(() => {
     (async () => {
@@ -31,15 +34,18 @@ const EditGameForm = () => {
     })();
   }, []);
   
-  const onChange = (key, value) => {
-    setModifiedGame({
+  const onChange = async (key, value) => {
+    const changed = {
       ...modifiedGame,
       [key]: value
-    });
+    };
+    setValidations(await validate(changed))
+    setModifiedGame(changed);
   };
 
-  const onReset = () => {
+  const onReset = async () => {
     setModifiedGame({ ...game });
+    setValidations(await validate({ ...game }))
   };
 
   const onSubmit = async () => {
@@ -73,6 +79,7 @@ const EditGameForm = () => {
         onReset={onReset} 
         onSubmit={onSubmit} 
         saving={saving}
+        validations={validations}
       />
     </div>
   );
