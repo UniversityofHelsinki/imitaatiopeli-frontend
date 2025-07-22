@@ -17,7 +17,7 @@ const EditGameForm = () => {
 
   const [loading, setLoading] = useState(true);
   const [game, setGame] = useState(null);
-  const [modifiedGame, setModifiedGame] = useState(null)
+  const [modifiedGame, setModifiedGame] = useState(null);
   const [saving, setSaving] = useState(false);
 
   const [validations, setValidations] = useState({});
@@ -53,6 +53,9 @@ const EditGameForm = () => {
       setSaving(true);
       const saved = await save(modifiedGame);
       setNotification(t('edit_game_form_game_saved_notification'), 'success', true);
+      setModifiedGame(saved);
+      setGame(saved);
+      setValidations(await validate(saved));
     } catch (error) {
       setNotification(error?.cause.status, 'error');
     }
