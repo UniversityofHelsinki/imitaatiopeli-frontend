@@ -20,10 +20,6 @@ import Imitation from './Imitation';
 import reducer from './reducers';
 import translations from './translations';
 
-import { defineCustomElements } from '@uh-design-system/component-library/dist/esm/loader';
-
-defineCustomElements(window);
-
 const store = createStore(reducer, applyMiddleware(thunk));
 
 const defaultLanguage = () => {
