@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import useSaveGameConfiguration from '../../../hooks/useSaveGameConfiguration';
@@ -23,6 +23,12 @@ const CreateGameForm = () => {
   const { setNotification } = useNotification();
   const [saving, setSaving] = useState(false);
   const [validations, setValidations] = useState({});
+
+  
+  useEffect(() => {
+    validate(game).then(setValidations);
+  }, []);
+  
   
   const onChange = async (key, value) => {
     const changed = { ...game, [key]: value };
