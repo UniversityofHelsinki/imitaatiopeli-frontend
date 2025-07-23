@@ -33,7 +33,7 @@ const TextInput = ({
   pattern,
   ...rest
 }) => {
-  
+
   const dsProps = {
     dsLabel: label,
     dsPlaceholder: placeholder,

@@ -5,6 +5,7 @@
 
 .ds-text-area textarea {
   resize: both;
+  border: 2px solid;
   border-color: var(--ds-borderColor-default);
   padding: var(--ds-spacing-2xSmall) var(--ds-spacing-xSmall);
   margin: unset;
@@ -15,6 +16,15 @@
   letter-spacing: var(--ds-letterSpacing-wide);
 
   max-width: 100%;
+}
+
+.ds-text-area textarea[aria-invalid=true] {
+  background-color: var(--ds-palette-red-05);
+  border-color: var(--ds-palette-red-50) !important;
+}
+
+.ds-text-area textarea[aria-invalid=true]:hover {
+  background-color: var(--ds-palette-red-10);
 }
 
 .ds-text-area textarea::placeholder {

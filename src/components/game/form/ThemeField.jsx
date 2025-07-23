@@ -15,7 +15,7 @@ const ThemeField = ({ value, onChange, disabled, validation }) => {
         id={id}
         label={t('game_form_theme_field_label')}
         value={value}
-        onChange={onChange}
+        onInput={onChange}
         placeholder={t('game_form_theme_field_placeholder')}
         assistiveText={t('game_form_theme_field_assistive_text')}
         disabled={disabled}
