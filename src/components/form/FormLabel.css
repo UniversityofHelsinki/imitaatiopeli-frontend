@@ -24,3 +24,11 @@
 .ds-form-label:hover ~ textarea:disabled {
   background-color: var(--ds-bgColor-disabled-onLight) !important;
 }
+
+.ds-form-label:hover ~ textarea[aria-invalid=true] {
+  background-color: var(--ds-palette-red-05) !important;
+}
+
+.ds-form-label:hover ~ textarea[aria-invalid=true]:active {
+  background-color: var(--ds-palette-red-05) !important;
+}

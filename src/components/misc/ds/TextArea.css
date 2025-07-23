@@ -23,8 +23,20 @@
   border-color: var(--ds-palette-red-50) !important;
 }
 
+.ds-text-area textarea[aria-invalid=true]:active {
+  background-color: var(--ds-palette-red-20) !important;
+}
+
 .ds-text-area textarea[aria-invalid=true]:hover {
   background-color: var(--ds-palette-red-10);
+}
+
+.ds-text-area textarea[aria-invalid=true]:focus-visible {
+  background-color: var(--ds-palette-red-05);
+}
+
+.ds-text-area textarea[aria-invalid=true]:focus-visible:hover {
+  background-color: var(--ds-palette-red-05);
 }
 
 .ds-text-area textarea::placeholder {
