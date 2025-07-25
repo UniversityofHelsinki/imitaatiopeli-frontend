@@ -20,6 +20,7 @@ import translations from './translations';
 import CreateGame from './components/page/admin/CreateGame';
 import EditGame from './components/page/admin/EditGame';
 import GameListing from './components/page/admin/GameListing';
+import StartGame from './components/page/admin/StartGame';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -68,6 +69,7 @@ const App = () => {
                     <Route path="game">
                       <Route path="create" element={<CreateGame />} />
                       <Route path=":id" element={<EditGame />} />
+                      <Route path=":id/start" element={<StartGame />} />
                     </Route>
                 </Route>
             </Route>

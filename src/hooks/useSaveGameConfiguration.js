@@ -2,7 +2,8 @@ import { usePOST } from "./useHttp";
 
 const useSaveGameConfiguration = () => {
   const post = usePOST({
-    path: '/api/game/create'
+    path: '/api/game/create',
+    invalidates: ['GAMES']
   });
 
   const save = async (game) => {

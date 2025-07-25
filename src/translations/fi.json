@@ -19,5 +19,9 @@
   "edit_game_form_details_game_code": "Pelin koodi: {{ game_code }}",
   "edit_game_form_game_saved_notification": "Tallennettu",
   "loading_page": "Ladataan sivua",
-  "game_listing_page_heading": "Pelit"
+  "game_listing_page_heading": "Pelit",
+  "game_tag_started": "Käynnissä",
+  "game_tag_ended": "Päättynyt",
+  "start_game_page_heading": "Aloita peli",
+  "start_game_form_submit_button": "Aloita"
 }

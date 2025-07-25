@@ -29,7 +29,7 @@ const GameListing = () => {
     >
       <GameList games={games} />
     </Page>
-  )
+  );
 
 };
 

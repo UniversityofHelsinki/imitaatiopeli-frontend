@@ -3,7 +3,7 @@ import { usePUT } from "./useHttp";
 const useEditGame = (id) => {
   const put = usePUT({
     path: `/api/game/edit`,
-    invalidates: [`GAME_${id}`]
+    invalidates: [`GAME_${id}`, `GAMES`]
   });
 
   const edit = async (game) => {

@@ -13,7 +13,7 @@ const CreateGame = () => {
       heading={t('create_game_form_heading')}> 
       <CreateGameForm />
     </Page>
-  )
+  );
 };
 
 CreateGame.propTypes = {

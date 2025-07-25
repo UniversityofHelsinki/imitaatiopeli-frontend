@@ -1,17 +1,36 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import './Game.css'
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Accordion from '../../misc/ds/Accordion';
-import Tag from '../../misc/ds/Tag';
-import Button from '../../misc/ds/Button';
 import Link from '../../misc/ds/Link';
+import Tag from '../../misc/ds/Tag';
+import './Game.css';
 
 const Header = ({ game }) => {
+  const { t } = useTranslation();
+
+  const startTag = (
+    <Tag text={t('game_tag_started')} colour="success" />
+  );
+
+  const endTag = (
+    <Tag text={t('game_tag_ended')} colour="danger" />
+  );
+
+  const tag = (() => {
+    if (game.start_time && game.end_time) {
+      return endTag;
+    } else if (game.start_time) {
+      return startTag;
+    }
+    return <></>;
+  })();
+
   return (
     <div className="game-header">
       <span className="game-header-title">{game.configuration.game_name}</span>
       <div className="game-header-state">
-        <Tag text="moro" />
+        {tag}
       </div>
     </div>
   );
