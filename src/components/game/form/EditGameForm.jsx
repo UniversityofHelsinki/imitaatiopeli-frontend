@@ -9,31 +9,29 @@ import useEditGame from '../../../hooks/useEditGame';
 import { useNotification } from '../../notification/NotificationContext';
 import validate from '../../../utilities/validation/game/gameValidation';
 
-const EditGameForm = () => {
-  const { id: gameId } = useParams();
+const EditGameForm = ({ 
+  game,
+  saveGame 
+}) => {
   const { t } = useTranslation();
-  const save = useEditGame(gameId);
   const { setNotification } = useNotification();
-
-  const [loading, setLoading] = useState(true);
-  const [game, setGame] = useState(null);
   const [modifiedGame, setModifiedGame] = useState(null);
   const [saving, setSaving] = useState(false);
 
   const [validations, setValidations] = useState({});
   
   useEffect(() => {
+    const newGame = { ...game };
+    setModifiedGame(newGame);
     (async () => {
-      const response = await get({ 
-        path: `/api/game/${gameId}`, 
-        tag: `GAME_${gameId}` 
-      });
-      setGame({ ...response.body });
-      setModifiedGame({ ...response.body });
-      setLoading(false);
+      setValidations(await validate(newGame));
     })();
-  }, []);
-  
+  }, [game]);
+
+  if (!modifiedGame) {
+    return <></>;
+  }
+
   const onChange = async (key, value) => {
     const changed = {
       ...modifiedGame,
@@ -51,28 +49,16 @@ const EditGameForm = () => {
   const onSubmit = async () => {
     try {
       setSaving(true);
-      const saved = await save(modifiedGame);
+      await saveGame(modifiedGame);
       setNotification(t('edit_game_form_game_saved_notification'), 'success', true);
-      setModifiedGame(saved);
-      setGame(saved);
-      setValidations(await validate(saved));
     } catch (error) {
       setNotification(error?.cause.status, 'error');
     }
     setSaving(false);
   };
 
-  if (loading) {
-    return (
-      <LoadingPage>
-        <span>{t('edit_game_form_loading_game')}</span>
-      </LoadingPage>
-    );
-  }
-
   return (
     <div className="edit-game-form">
-      <h2>{t('edit_game_form_heading')}</h2>
       <p className="edit-game-form-details">
         {t('edit_game_form_details_game_code', { game_code: modifiedGame.game_code})}
       </p>

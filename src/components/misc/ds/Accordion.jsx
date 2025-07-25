@@ -2,6 +2,7 @@ import React, { useId } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { DsAccordion } from '@uh-design-system/component-library-react';
+import './Accordion.css';
 
 const Accordion = ({
   header = '',
@@ -34,21 +35,21 @@ const Accordion = ({
     ...rest
   };
 
-  return <DsAccordion { ...dsProps }>
-    <span 
-      role="heading" 
-      aria-level={headingLevel} 
-      className="accordion-header" 
+  return (<DsAccordion {...dsProps}>
+    <span
+      role="heading"
+      aria-level={headingLevel}
+      className="accordion-header"
       slot="header">
       {header}
     </span>
-    <p slot="content">{content}</p>
-  </DsAccordion>;
+    <div slot="content">{content}</div>
+  </DsAccordion>);
 };
 
 Accordion.propTypes = {
-  header: PropTypes.string,
-  content: PropTypes.string,
+  header: PropTypes.node,
+  content: PropTypes.node,
   variant: PropTypes.oneOf([
     'compact',
     'default'

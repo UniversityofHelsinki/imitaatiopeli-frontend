@@ -56,7 +56,6 @@ const CreateGameForm = () => {
 
   return (
     <div className="create-game-form">
-      <h2>{t('create_game_form_heading')}</h2>
       <GameForm
         game={game}
         onChange={onChange}

@@ -1,0 +1,31 @@
+.game {
+  word-break: break-all;
+}
+
+.game-header {
+  display: flex;
+  flex-wrap: wrap;
+  word-break: break-all;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.game-content-divider {
+  background-color: var(--ds-palette-black-10);
+  margin: var(--ds-spacing-layout-base);
+  margin-left: unset;
+  margin-bottom: unset;
+  content: "";
+  height: 0px;
+  width: 100%;
+}
+
+.game [slot=content] {
+  margin-bottom: unset;
+}
+
+.game-content-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-base);
+}
