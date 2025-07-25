@@ -38,6 +38,38 @@ const Header = ({ game }) => {
 };
 
 const Content = ({ game }) => {
+
+
+  const stateLink = (() => {
+    const gameNotStarted = !game.start_time && !game.end_time;
+    const gameStarted = game.start_time && !game.end_time;
+    if (gameNotStarted) {
+      return (
+        <Link
+          label="Aloita peli"
+          variant="standalone"
+          icon="play_arrow"
+          size="2xLarge"
+          colour="black"
+          href={`/admin/game/${game.game_id}/start`}
+          internal
+        />
+      );
+    } else if (gameStarted) {
+      return (
+        <Link
+          label="Lopeta peli"
+          variant="standalone"
+          icon="pause"
+          size="2xLarge"
+          colour="black"
+          href={`/admin/game/${game.game_id}/end`}
+          internal
+        />
+      );
+    }
+  })();
+
   return (
     <div className="game-content">
       <div className="game-content-data">
@@ -46,19 +78,11 @@ const Content = ({ game }) => {
       <div className="game-content-divider"></div>
       <div className="game-content-bottom-row">
         <div className="game-content-actions">
-          <Link 
-            label="Aloita peli" 
-            variant="standalone" 
-            icon="play_arrow" 
-            size="2xLarge"
-            colour="black"
-            href={`/admin/game/${game.game_id}/start`}
-            internal
-          />
-          <Link 
-            label="Muokkaa peliä" 
-            variant="standalone" 
-            icon="edit" 
+          {stateLink}
+          <Link
+            label="Muokkaa peliä"
+            variant="standalone"
+            icon="edit"
             size="2xLarge"
             colour="black"
             href={`/admin/game/${game.game_id}`}
@@ -74,9 +98,9 @@ const Game = ({ game }) => {
 
   return (
     <div className="game">
-      <Accordion 
-        header={<Header game={game} />} 
-        content={<Content game={game} />} 
+      <Accordion
+        header={<Header game={game} />}
+        content={<Content game={game} />}
         variant="compact"
       />
     </div>

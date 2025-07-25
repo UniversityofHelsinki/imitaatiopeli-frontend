@@ -22,6 +22,8 @@
   "game_listing_page_heading": "Pelit",
   "game_tag_started": "Käynnissä",
   "game_tag_ended": "Päättynyt",
-  "start_game_page_heading": "Aloita peli",
-  "start_game_form_submit_button": "Aloita"
+  "start_game_page_heading": "Pelin aloittaminen",
+  "start_game_form_submit_button": "Aloita",
+  "end_game_page_heading": "Pelin lopettaminen",
+  "end_game_form_submit_button": "Lopeta"
 }

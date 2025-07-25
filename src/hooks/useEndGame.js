@@ -1,12 +1,12 @@
 import { usePUT } from "./useHttp";
 
-const useStartGame = (id) => {
+const useEndGame = (id) => {
   const put = usePUT({
-    path: `/api/game/${id}/start`,
+    path: `/api/game/${id}/end`,
     invalidates: [`GAME_${id}`, `GAMES`]
   });
 
   return put;
 };
 
-export default useStartGame;
+export default useEndGame;
