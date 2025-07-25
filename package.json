@@ -11,7 +11,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@uh-design-system/component-library": "^0.7.1",
+    "@uh-design-system/component-library-react": "^0.7.1",
     "bootstrap": "^5.3.7",
     "date-fns": "^4.1.0",
     "i18next": "^25.2.1",
@@ -26,7 +26,6 @@
     "react-router-dom": "^7.6.2",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
-    "vite-plugin-static-copy": "^3.1.1",
     "web-vitals": "^5.0.3"
   },
   "devDependencies": {

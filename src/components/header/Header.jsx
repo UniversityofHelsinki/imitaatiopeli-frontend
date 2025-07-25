@@ -1,6 +1,7 @@
-import Logo from './Logo';
+import React from 'react';
 import './Header.css';
 import Languages from './Languages';
+import Logo from './Logo';
 
 const Header = () => {
   

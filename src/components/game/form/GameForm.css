@@ -1,0 +1,19 @@
+.game-form-bottom-row {
+  display: flex;
+}
+
+.game-form-bottom-row-state-text {
+  flex-grow: 1;
+  align-content: center;
+}
+
+.game-form {
+  max-width: 100%;
+  word-break: break-all;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field {
+  margin-bottom: var(--ds-spacing-small);
+}

@@ -1,0 +1,9 @@
+.ds-assistive-text {
+  font-family: var(--ds-fontFamily-body);
+  font-size: var(--ds-fontSize-14);
+  font-weight: var(--ds-fontWeight-regular);
+  letter-spacing: var(--ds-letterSpacing-wide);
+  line-height: var(--ds-lineLeight-large);
+  margin-block-start: var(--ds-spacing-3xSmall);
+  color: var(--ds-palette-black-70);
+}

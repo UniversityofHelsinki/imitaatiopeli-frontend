@@ -1,0 +1,6 @@
+.ds-error-text {
+  color: var(--ds-palette-red-70);
+  display: flex;
+  gap: var(--ds-spacing-2xSmall);
+  margin-top: var(--ds-spacing-2xSmall);
+}

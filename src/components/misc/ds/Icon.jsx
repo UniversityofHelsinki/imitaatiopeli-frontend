@@ -1,5 +1,5 @@
+import { DsIcon } from "@uh-design-system/component-library-react";
 import PropTypes from "prop-types";
-import '@uh-design-system/component-library/dist/component-library/ds-icon.entry';
 
 const Icon = ({ 
   name, 
@@ -11,7 +11,7 @@ const Icon = ({
   ...rest
 }) => {
 
-  return <ds-icon 
+  return <DsIcon
     aria-hidden
     dsName={name} 
     dsRole={role}

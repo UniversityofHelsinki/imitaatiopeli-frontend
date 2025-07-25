@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './TextInput.css';
+import { DsTextInput } from '@uh-design-system/component-library-react';
 
 const TextInput = ({
   label,
@@ -15,6 +17,7 @@ const TextInput = ({
   prefixText,
   suffixText,
   errorText,
+  successText,
   icon,
   type = 'text',
   autocomplete,
@@ -30,7 +33,7 @@ const TextInput = ({
   pattern,
   ...rest
 }) => {
-  
+
   const dsProps = {
     dsLabel: label,
     dsPlaceholder: placeholder,
@@ -45,6 +48,7 @@ const TextInput = ({
     dsPrefixText: prefixText,
     dsSuffixText: suffixText,
     dsErrorText: errorText,
+    dsSuccessText: successText,
     dsIcon: icon,
     dsType: type,
     dsAutocomplete: autocomplete,
@@ -61,7 +65,7 @@ const TextInput = ({
     ...rest
   };
   
-  return <ds-text-input { ...dsProps }></ds-text-input>;
+  return <DsTextInput { ...dsProps } />;
 };
 
 TextInput.propTypes = {
