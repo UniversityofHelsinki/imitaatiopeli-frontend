@@ -42,7 +42,7 @@ const EndGame = () => {
   );
 
   return (
-    <Page loading={loading} heading={t('start_game_page_heading')}>
+    <Page loading={loading} heading={t('end_game_page_heading')}>
       {isAlreadyEnded 
         && alreadyEnded 
         || <EndGameForm game={game} endGame={endGame} />}

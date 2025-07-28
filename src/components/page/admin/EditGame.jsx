@@ -32,9 +32,29 @@ const EditGame = () => {
     return saved;
   };
 
+  const crumbs = [
+    {
+      label: 'bread_crumb_home',
+      href: '/'
+    },
+    {
+      label: 'bread_crumb_admin',
+      href: '/admin/'
+    },
+    {
+      label: 'bread_crumb_game_listing',
+      href: '/admin/games/'
+    },
+    {
+      label: 'bread_crumb_admin_games_edit',
+      href: `/admin/games/${gameId}`
+    }
+  ]
+
   return <Page 
     loading={loading}
-    heading={t('edit_game_form_heading')}>
+    heading={t('edit_game_form_heading')}
+    crumbs={crumbs}>
       <EditGameForm 
         game={game} 
         saveGame={saveGame}

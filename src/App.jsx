@@ -66,8 +66,6 @@ const App = () => {
                     <Route index element={<Protected />} />
                     <Route path="games">
                       <Route index element={<GameListing />} />
-                    </Route>
-                    <Route path="game">
                       <Route path="create" element={<CreateGame />} />
                       <Route path=":id" element={<EditGame />} />
                       <Route path=":id/start" element={<StartGame />} />

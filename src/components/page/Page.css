@@ -4,10 +4,34 @@
   word-break: break-all;
 }
 
-.page-heading {
+.navigation-divider::after {
+  display: block;
+  content: "";
+  height: 1px;
+  background-color: var(--ds-borderColor-light);
+  margin: var(--ds-spacing-base);
+}
 
+.page-heading {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: var(--ds-spacing-layout-base);
+  margin-bottom: var(--ds-spacing-layout-base);
 }
 
 .page-content {
+  margin-left: 10%;
+  margin-right: 10%;
+}
 
+@media (max-width: 50rem) {
+  .page-heading {
+    margin-left: var(--ds-spacing-layout-base);
+    margin-right: var(--ds-spacing-layout-base);
+  }
+
+  .page-content {
+    margin-left: var(--ds-spacing-layout-base);
+    margin-right: var(--ds-spacing-layout-base);
+  }
 }

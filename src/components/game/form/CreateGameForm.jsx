@@ -46,7 +46,7 @@ const CreateGameForm = () => {
     setValidations(await validate(game));
     try {
       const saved = await save(game);
-      navigate(`/admin/game/${saved.game_id}`);
+      navigate(`/admin/games/${saved.game_id}`);
       setNotification(t('create_game_form_game_created_notification'), 'success', true);
     } catch (error) {
       setNotification(error.cause?.status, 'error');

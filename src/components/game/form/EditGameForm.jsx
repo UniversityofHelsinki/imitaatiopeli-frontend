@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
-import { get } from '../../../hooks/useHttp';
-import LoadingPage from '../../misc/LoadingPage';
+import validate from '../../../utilities/validation/game/gameValidation';
+import { useNotification } from '../../notification/NotificationContext';
 import './EditGameForm.css';
 import GameForm from './GameForm';
-import useEditGame from '../../../hooks/useEditGame';
-import { useNotification } from '../../notification/NotificationContext';
-import validate from '../../../utilities/validation/game/gameValidation';
 
 const EditGameForm = ({ 
   game,

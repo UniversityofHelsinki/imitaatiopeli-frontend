@@ -122,3 +122,7 @@
   padding: 0px var(--ds-spacing-layout-base);
   background-color: var(--ds-borderColor-light);
 }
+
+.hidden {
+  display: none !important;
+}

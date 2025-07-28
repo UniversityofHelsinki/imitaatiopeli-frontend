@@ -51,7 +51,7 @@ const Content = ({ game }) => {
           icon="play_arrow"
           size="2xLarge"
           colour="black"
-          href={`/admin/game/${game.game_id}/start`}
+          href={`/admin/games/${game.game_id}/start`}
           internal
         />
       );
@@ -63,7 +63,7 @@ const Content = ({ game }) => {
           icon="pause"
           size="2xLarge"
           colour="black"
-          href={`/admin/game/${game.game_id}/end`}
+          href={`/admin/games/${game.game_id}/end`}
           internal
         />
       );
@@ -85,7 +85,7 @@ const Content = ({ game }) => {
             icon="edit"
             size="2xLarge"
             colour="black"
-            href={`/admin/game/${game.game_id}`}
+            href={`/admin/games/${game.game_id}`}
             internal
           />
         </div>

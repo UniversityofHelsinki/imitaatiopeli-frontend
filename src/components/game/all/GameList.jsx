@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import './GameList.css'
+import React from 'react';
 import Game from './Game';
-import { get } from '../../../hooks/useHttp';
+import './GameList.css';
 
 const GameList = ({ games = [] }) => {
 

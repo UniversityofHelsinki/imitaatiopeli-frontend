@@ -1,0 +1,4 @@
+.crumb {
+  word-break: keep-all;
+  padding: var(--ds-spacing-base);
+}

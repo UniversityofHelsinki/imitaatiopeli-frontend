@@ -42,8 +42,28 @@ const StartGame = () => {
     </div>
   );
 
+  const crumbs = [
+    {
+      label: 'bread_crumb_home',
+      href: '/'
+    },
+    {
+      label: 'bread_crumb_admin',
+      href: '/admin/',
+    },
+    {
+      label: 'bread_crumb_admin_games',
+      href: '/admin/games/'
+    },
+    {
+      label: 'bread_crumb_admin_games_start',
+      href: `/admin/games/start/${id}`,
+      current: true
+    }
+  ];
+
   return (
-    <Page loading={loading} heading={t('start_game_page_heading')}>
+    <Page loading={loading} heading={t('start_game_page_heading')} crumbs={crumbs}>
       {isAlreadyStarted 
         && alreadyStarted 
         || <StartGameForm game={game} startGame={startGame} />}

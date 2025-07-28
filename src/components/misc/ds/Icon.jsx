@@ -5,7 +5,7 @@ const Icon = ({
   name, 
   role = 'img',
   title = '', 
-  hidden = false, 
+  hidden = true, 
   colour = 'ds-palette-black', 
   size = '1.5rem',
   ...rest

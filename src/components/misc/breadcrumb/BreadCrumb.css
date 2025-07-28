@@ -1,0 +1,44 @@
+.bread-crumbs-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bread-crumbs {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--ds-spacing-base);
+
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+}
+
+.bread-crumb-scroll-button {
+  background-color: var(--ds-bgColor-white);
+  display: flex;
+  align-items: center;
+}
+
+.bread-crumb-scroll-button:focus-within {
+  outline: var(--ds-spacing-4xSmall) solid var(--ds-borderColor-black);
+  outline-offset: var(--ds-spacing-4xSmall);
+}
+
+.bread-crumb-scroll-button:hover {
+  cursor: pointer;
+}
+
+.bread-crumb-scroll-button button {
+  all: unset;
+  display: flex;
+}
+
+.bread-crumb-scroll-button-left {
+  border: 1px solid black;
+}
+
+.bread-crumb-scroll-button-right {
+  border: 1px solid black;
+}

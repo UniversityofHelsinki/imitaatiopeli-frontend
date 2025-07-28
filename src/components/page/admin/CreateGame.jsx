@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import './CreateGame.css'
-import Page from '../Page';
 import { useTranslation } from 'react-i18next';
 import CreateGameForm from '../../game/form/CreateGameForm';
+import Page from '../Page';
+import './CreateGame.css';
 
 const CreateGame = () => {
   const { t } = useTranslation();

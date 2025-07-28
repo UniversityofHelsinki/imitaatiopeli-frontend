@@ -22,10 +22,27 @@ const GameListing = () => {
     })();
   }, []);
 
+  const crumbs = [
+    {
+      label: 'bread_crumb_home',
+      href: '/'
+    },
+    {
+      label: 'bread_crumb_admin',
+      href: '/admin/'
+    },
+    {
+      label: 'bread_crumb_game_listing',
+      href: '/admin/games',
+      current: true
+    }
+  ];
+
   return (
     <Page 
       heading={t('game_listing_page_heading')}
       loading={loading}
+      crumbs={crumbs}
     >
       <GameList games={games} />
     </Page>
