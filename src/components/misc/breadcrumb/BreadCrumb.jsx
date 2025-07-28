@@ -56,9 +56,9 @@ const BreadCrumb = ({ crumbs }) => {
       const toggleButtons = (matches) => {
         const btns = containerRef.current?.querySelectorAll('.bread-crumb-scroll-button');
         if (matches && btns) {
-          btns.forEach(btn => btn.classList.add('hidden'));
+          btns.forEach(btn => btn.setAttribute('hidden', ''));
         } else if (btns) {
-          btns.forEach(btn => btn.classList.remove('hidden'));
+          btns.forEach(btn => btn.removeAttribute('hidden'));
           lastRef.current.scrollIntoView(false);
         }
       };

@@ -26,13 +26,15 @@
   outline-offset: var(--ds-spacing-4xSmall);
 }
 
-.bread-crumb-scroll-button:hover {
-  cursor: pointer;
-}
-
 .bread-crumb-scroll-button button {
   all: unset;
   display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.bread-crumb-scroll-button:hover {
+  cursor: pointer;
 }
 
 .bread-crumb-scroll-button-left {
