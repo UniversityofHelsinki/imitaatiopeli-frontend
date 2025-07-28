@@ -14,7 +14,7 @@ const move = (() => {
       return;
     }
     const difference = currentX - lastTouch.clientX;
-    const breadCrumbContainer = event.target.parentElement;
+    const breadCrumbContainer = event.currentTarget;
     if (difference > 0) {
       breadCrumbContainer.scrollBy({ left: -30, behavior: 'instant' });
     } else if (difference < 0) {
@@ -47,17 +47,17 @@ const BreadCrumb = ({ crumbs }) => {
 
 
   useEffect(() => {
-    if (firstRef.current && lastRef.current) {
+    if (firstRef.current && lastRef.current && containerRef.current) {
       const firstLeft = Math.abs(firstRef.current.getBoundingClientRect().left);
       const lastRight = Math.abs(lastRef.current.getBoundingClientRect().right);
       const minWidth = firstLeft + lastRight;
       const mediaQuery = window.matchMedia(`(min-width: ${minWidth + 32}px)`);
 
       const toggleButtons = (matches) => {
-        const btns = containerRef.current.querySelectorAll('.bread-crumb-scroll-button');
-        if (matches) {
+        const btns = containerRef.current?.querySelectorAll('.bread-crumb-scroll-button');
+        if (matches && btns) {
           btns.forEach(btn => btn.classList.add('hidden'));
-        } else {
+        } else if (btns) {
           btns.forEach(btn => btn.classList.remove('hidden'));
           lastRef.current.scrollIntoView(false);
         }
@@ -69,7 +69,7 @@ const BreadCrumb = ({ crumbs }) => {
 
       toggleButtons(mediaQuery.matches);
     }
-  }, [firstRef.current, lastRef.current]);
+  }, [firstRef.current, lastRef.current, containerRef.current]);
 
   const scroll = (event, direction) => {
     switch (direction) {

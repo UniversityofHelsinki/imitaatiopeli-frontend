@@ -41,8 +41,27 @@ const EndGame = () => {
     </div>
   );
 
+  const crumbs = [
+    {
+      label: 'bread_crumb_home',
+      href: '/'
+    },
+    {
+      label: 'bread_crumb_admin',
+      href: '/admin/',
+    },
+    {
+      label: 'bread_crumb_admin_games',
+      href: '/admin/games/'
+    },
+    {
+      label: 'bread_crumb_admin_games_end',
+      href: `/admin/games/${id}/end`
+    }
+  ];
+
   return (
-    <Page loading={loading} heading={t('end_game_page_heading')}>
+    <Page loading={loading} heading={t('end_game_page_heading')} crumbs={crumbs}>
       {isAlreadyEnded 
         && alreadyEnded 
         || <EndGameForm game={game} endGame={endGame} />}

@@ -42,7 +42,7 @@ const EditGame = () => {
       href: '/admin/'
     },
     {
-      label: 'bread_crumb_game_listing',
+      label: 'bread_crumb_admin_games',
       href: '/admin/games/'
     },
     {
