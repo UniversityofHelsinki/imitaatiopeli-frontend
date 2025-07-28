@@ -23,8 +23,12 @@ const Page = ({
   return (
     <div className="page">
       <div className="page-navigation">
-        {crumbs.length > 0 && <BreadCrumb crumbs={crumbs} />}
-        <div className="navigation-divider"></div>
+        {crumbs.length > 0 && 
+          <>
+            <BreadCrumb crumbs={crumbs} />
+            <div className="navigation-divider"></div>
+          </>
+        }
       </div>
       <div className="page-heading">
         <h2>{heading}</h2>

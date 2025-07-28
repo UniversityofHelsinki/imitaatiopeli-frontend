@@ -26,13 +26,6 @@
 
 }
 
-@media (max-width: 50rem) {
-  .imitation-game main {
-    margin-left: var(--ds-spacing-layout-base);
-    margin-right: var(--ds-spacing-layout-base);
-  }
-}
-
 .main-content {
   flex-grow: 1;
 }
