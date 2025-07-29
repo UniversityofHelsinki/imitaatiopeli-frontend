@@ -31,4 +31,5 @@
   height: 1px;
 
   margin: calc(var(--ds-spacing-layout-base) / 2);
+  margin-bottom: unset;
 }

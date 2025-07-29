@@ -4,12 +4,17 @@
   word-break: break-all;
 }
 
+.page-navigation {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
 .navigation-divider::after {
   display: block;
   content: "";
   height: 1px;
   background-color: var(--ds-borderColor-light);
-  margin: var(--ds-spacing-base);
+  margin-bottom: 0 0 var(--ds-spacing-base) 0;
 }
 
 .page-heading {

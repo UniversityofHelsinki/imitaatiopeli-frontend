@@ -10,9 +10,16 @@
   align-items: center;
   gap: var(--ds-spacing-base);
 
-  overflow-x: hidden;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scroll-snap-type: x mandatory;
+
   max-width: 100%;
   width: 100%;
+}
+
+.bread-crumbs > .crumb {
+  scroll-snap-align: start;
 }
 
 .bread-crumb-scroll-button {
