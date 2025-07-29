@@ -61,7 +61,6 @@ const App = () => {
                         </ProtectedRoute>
                     </AuthProvider>
                 }>
-                    <Route element={<div>hei</div>}></Route>
                     {/* Protected routes under admin route here */}
                     <Route index element={<Protected />} />
                     <Route path="games">

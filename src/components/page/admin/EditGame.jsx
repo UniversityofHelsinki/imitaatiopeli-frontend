@@ -47,7 +47,8 @@ const EditGame = () => {
     },
     {
       label: 'bread_crumb_admin_games_edit',
-      href: `/admin/games/${gameId}`
+      href: `/admin/games/${gameId}`,
+      current: true
     }
   ]
 

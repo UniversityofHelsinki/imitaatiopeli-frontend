@@ -38,7 +38,7 @@ const StartGame = () => {
   const isAlreadyStarted = game?.start_time;
   const alreadyStarted = (
     <div className="start-game-page-already-started">
-      peli on jo aloitettu
+      {t('start_game_page_already_started')}
     </div>
   );
 

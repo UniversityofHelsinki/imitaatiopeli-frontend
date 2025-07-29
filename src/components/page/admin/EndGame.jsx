@@ -36,8 +36,8 @@ const EndGame = () => {
 
   const isAlreadyEnded = game?.end_time;
   const alreadyEnded = (
-    <div className="start-game-page-already-started">
-      peli on jo lopetettu
+    <div className="end-game-page-already-ended">
+      {t('end_game_page_already_ended')}
     </div>
   );
 
@@ -56,7 +56,8 @@ const EndGame = () => {
     },
     {
       label: 'bread_crumb_admin_games_end',
-      href: `/admin/games/${id}/end`
+      href: `/admin/games/${id}/end`,
+      current: true
     }
   ];
 
