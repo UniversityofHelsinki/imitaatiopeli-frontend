@@ -22,28 +22,6 @@ const BreadCrumb = ({ crumbs }) => {
     }
   }, [lastRef.current]);
 
-
-  useEffect(() => {
-    if (firstRef.current && lastRef.current) {
-      const firstLeft = Math.abs(firstRef.current.getBoundingClientRect().left);
-      const lastRight = Math.abs(lastRef.current.getBoundingClientRect().right);
-      const minWidth = firstLeft + lastRight;
-      const mediaQuery = window.matchMedia(`(min-width: ${minWidth}px)`);
-
-      const scrollToLastOne = (matches) => {
-        if (!matches) {
-          lastRef.current.scrollIntoView(false);
-        }
-      };
-
-      mediaQuery.addEventListener("change", (e) => {
-        scrollToLastOne(e.matches);
-      });
-
-      scrollToLastOne(mediaQuery.matches);
-    }
-  }, [firstRef.current, lastRef.current]);
-
   return (
     <div ref={containerRef} className="bread-crumbs-container">
       <nav ref={navRef} className="bread-crumbs">
