@@ -25,3 +25,7 @@
   color: unset;
   text-decoration: unset;
 }
+
+.logo a:hover {
+  text-decoration: underline;
+}
