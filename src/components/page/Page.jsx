@@ -9,7 +9,7 @@ import { propType as CrumbPropType } from '../misc/breadcrumb/Crumb';
 const Page = ({
   children,
   heading,
-  headingExtras,
+  headingExtras = <></>,
   crumbs = [],
   loading = false
 }) => {

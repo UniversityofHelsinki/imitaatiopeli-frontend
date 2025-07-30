@@ -22,6 +22,7 @@ import EditGame from './components/page/admin/EditGame';
 import GameListing from './components/page/admin/GameListing';
 import StartGame from './components/page/admin/StartGame';
 import EndGame from './components/page/admin/EndGame';
+import JoinGame from './components/page/public/JoinGame';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -53,6 +54,11 @@ const App = () => {
                 {/* Public routes here */}
                 <Route index element={<div></div>} />
                 <Route path="player" element={<Player playerId={'1'} />} />
+                <Route path="games">
+                  <Route path=":code">
+                    <Route path="join" element={<JoinGame />} />
+                  </Route>
+                </Route>
 
                 <Route path="admin/*" element={
                     <AuthProvider>

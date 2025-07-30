@@ -1,37 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import Spinner from '../../misc/ds/Spinner';
 import './GameForm.css';
-import GameFormButtons from './GameFormButtons';
 import PromptField from './PromptField';
 import ResearchPermissionField from './ResearchPermissionField';
 import ThemeField from './ThemeField';
-
-const BottomRow = ({ saving, disabled }) => {
-  const { t } = useTranslation();
-
-  const content = (() => {
-    if (saving) {
-      return <Spinner
-        position="side"
-        size="large"
-        text={t('game_form_bottom_row_saving')}
-      />;
-    }
-    return <></>;
-  })();
-
-  return <>
-    <div className="game-form-bottom-row-state-text">{content}</div>
-    <GameFormButtons disabled={disabled} />
-  </>
-};
-
-BottomRow.propTypes = {
-  saving: PropTypes.bool,
-  disabled: PropTypes.bool,
-};
+import { BottomRow } from './BottomRow';
+import FormButtons from './FormButtons';
 
 const GameForm = ({
   game,
@@ -93,11 +67,10 @@ const GameForm = ({
         />
       </div>
       <div className="horizontal-divider"></div>
-      <div className="form-bottom-row game-form-bottom-row">
-        <BottomRow
-          saving={saving}
-          disabled={saving}
-        />
+      <div className="game-form-bottom-row">
+        <BottomRow saving={saving}>
+          <FormButtons disabled={saving} />
+        </BottomRow>
       </div>
     </form>
   );

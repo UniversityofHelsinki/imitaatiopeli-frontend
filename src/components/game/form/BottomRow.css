@@ -1,0 +1,8 @@
+.form-bottom-row {
+  display: flex;
+}
+
+.bottom-row-state-text {
+  flex-grow: 1;
+  align-content: center;
+}
