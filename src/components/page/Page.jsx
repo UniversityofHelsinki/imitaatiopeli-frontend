@@ -9,6 +9,7 @@ import { propType as CrumbPropType } from '../misc/breadcrumb/Crumb';
 const Page = ({
   children,
   heading,
+  headingExtras,
   crumbs = [],
   loading = false
 }) => {
@@ -32,6 +33,9 @@ const Page = ({
       </div>
       <div className="page-heading">
         <h2>{heading}</h2>
+        <div className="page-heading-extras">
+          {headingExtras}
+        </div>
       </div>
       <div className="page-content">
         {children}
@@ -44,6 +48,7 @@ const Page = ({
 Page.propTypes = {
   children: PropTypes.node,
   heading: PropTypes.string,
+  headingExtras: PropTypes.node,
   crumbs: PropTypes.arrayOf(PropTypes.shape(CrumbPropType)),
   loading: PropTypes.bool,
 };

@@ -11,7 +11,7 @@ const Link = ({
   icon,
   iconPosition = 'start',
   weight = 'regular',
-  target,
+  target = '_self',
   size = 'medium',
   variant = '',
   internal = false,

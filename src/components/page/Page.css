@@ -22,6 +22,19 @@
   margin-right: 10%;
   margin-top: var(--ds-spacing-layout-base);
   margin-bottom: var(--ds-spacing-layout-base);
+
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-heading h2 {
+  flex-grow: 1;
+}
+
+.page-heading .page-heading-extras {
+  flex-shrink: 1;
 }
 
 .page-content {

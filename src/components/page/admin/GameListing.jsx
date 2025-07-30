@@ -5,6 +5,7 @@ import GameList from '../../game/all/GameList';
 import { get } from '../../../hooks/useHttp';
 import Page from '../Page';
 import { useTranslation } from 'react-i18next';
+import Link from '../../misc/ds/Link';
 
 const GameListing = () => {
   const { t } = useTranslation();
@@ -38,9 +39,22 @@ const GameListing = () => {
     }
   ];
 
+  const createGameLink = (
+    <Link 
+      label={t('game_listing_page_create_game')} 
+      href="/admin/games/create"
+      icon="list_alt_add"
+      colour="black"
+      variant="standalone"
+      size="2xLarge"
+      internal 
+    />
+  );
+
   return (
     <Page 
       heading={t('game_listing_page_heading')}
+      headingExtras={createGameLink}
       loading={loading}
       crumbs={crumbs}
     >

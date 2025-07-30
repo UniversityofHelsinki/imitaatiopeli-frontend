@@ -1,4 +1,7 @@
 {
+  "language_select_fi": "suomi",
+  "language_select_sv": "ruotsi",
+  "language_select_en": "englanti",
   "error-player-not-in-database": "Henkilöä ei löydy kannasta",
   "game_form_theme_field_label": "Teema",
   "game_form_theme_field_assistive_text": "Mistä aiheesta haluat keskustella?",
@@ -34,5 +37,6 @@
   "bread_crumb_admin_games_edit": "Muokkaa peliä",
   "bread_crumb_admin_games_create": "Luo peli",
   "bread_crumb_admin_games_start": "Aloita peli",
-  "bread_crumb_admin_games_end": "Lopeta peli"
+  "bread_crumb_admin_games_end": "Lopeta peli",
+  "game_listing_page_create_game": "Uusi peli"
 }

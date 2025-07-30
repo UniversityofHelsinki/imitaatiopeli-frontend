@@ -20,3 +20,8 @@
 .logo svg {
   margin: var(--ds-spacing-2xSmall);
 }
+
+.logo a {
+  color: unset;
+  text-decoration: unset;
+}
