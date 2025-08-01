@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next';
 import useJoinGame from '../../../hooks/useJoinGame';
 import BottomRow from './BottomRow';
 import FormButtons from './FormButtons';
+import localStorage from '../../../utilities/localStorage';
+import { useNavigate } from 'react-router-dom';
 
 const emptyJoining = {
   nickname: '',
@@ -18,6 +20,7 @@ const JoinGameForm = ({ game }) => {
   const [player, setPlayer] = useState(emptyJoining);
   const join = useJoinGame(game);
   const [saving, setSaving] = useState(false);
+  const navigate = useNavigate();
 
   const onChange = (key, value) => {
     setPlayer({ ...player, [key]: value });
@@ -26,8 +29,10 @@ const JoinGameForm = ({ game }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSaving(true);
-    await join({ ...player, code: game.game_code });
+    const response = await join({ ...player, code: game.game_code });
+    localStorage.set("player", JSON.stringify(await response.json()));
     setSaving(false);
+    navigate(`/games/${game.game_code}`);
   };
 
   const handleReset = (event) => {

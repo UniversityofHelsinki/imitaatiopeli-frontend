@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import './JoinGame.css'
-import Page from '../Page';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import JoinGameForm from '../../game/form/JoinGameForm';
 import { get } from '../../../hooks/useHttp';
+import JoinGameForm from '../../game/form/JoinGameForm';
+import Page from '../Page';
+import './JoinGame.css';
+import localStorage from '../../../utilities/localStorage';
 
 const JoinGame = () => {
   const { t } = useTranslation();
   const { code } = useParams();
   const [loading, setLoading] = useState(true);
   const [game, setGame] = useState();
+  const [alreadyJoined, setAlreadyJoined] = useState(false);
   
   useEffect(() => {
     (async () => {
@@ -20,10 +21,10 @@ const JoinGame = () => {
         tag: `GAME_${code}`
       });
       setGame(response.body);
+      setAlreadyJoined(JSON.parse(localStorage.get('player'))?.game_id === response.body.game_id);
       setLoading(false);
     })();
   }, []);
-  
 
   const crumbs = [
     {
@@ -43,7 +44,7 @@ const JoinGame = () => {
 
   return (
     <Page loading={loading} heading={t('join_game_page_heading')} crumbs={crumbs}>
-      <JoinGameForm game={game} />
+      {alreadyJoined && <span>{t('join_game_player_already_joined')}</span> || <JoinGameForm game={game} />}
     </Page>
   );
 
