@@ -35,11 +35,11 @@ const GameLobby = () => {
       href: '/'
     },
     {
-      label: 'bread_crumb_public_games',
+      label: 'bread_crumb_games',
       href: '/games'
     },
     {
-      label: 'bread_crumb_public_game_lobby',
+      label: 'bread_crumb_games_lobby',
       href: `/games/${code}`,
       current: true
     }
@@ -47,7 +47,7 @@ const GameLobby = () => {
 
   return (
     <Page loading={loading} heading={t('game_lobby_heading')} crumbs={crumbs}>
-      {hasJoined && <span>he</span> || <span>{t('game_lobby_player_not_joined')}</span>}
+      {hasJoined && <span>???</span> || <span>{t('game_lobby_player_not_joined')}</span>}
     </Page>
   )
 
