@@ -6,6 +6,7 @@ import ResearchPermissionField from './ResearchPermissionField';
 import ThemeField from './ThemeField';
 import { BottomRow } from './BottomRow';
 import FormButtons from './FormButtons';
+import NameField from "./NameField.jsx";
 
 const GameForm = ({
   game,
@@ -38,14 +39,25 @@ const GameForm = ({
       method="POST"
     >
       <div className="form-field game-form-field">
+        <NameField
+            value={game.configuration.game_name}
+            onChange={e => onChange('configuration', {
+              ...game.configuration,
+              game_name: e.target.value
+            })}
+            disabled={saving}
+            validation={validations?.configuration?.game_name}
+        />
+      </div>
+      <div className="form-field game-form-field">
         <ThemeField
-          value={game.configuration.game_name}
+          value={game.configuration.theme_description}
           onChange={e => onChange('configuration', { 
-            ...game.configuration, 
-            game_name: e.target.value
+            ...game.configuration,
+            theme_description: e.target.value
           })}
           disabled={saving}
-          validation={validations?.configuration?.game_name}
+          validation={validations?.configuration?.theme_description}
         />
       </div>
       <div className="form-field game-form-field">
