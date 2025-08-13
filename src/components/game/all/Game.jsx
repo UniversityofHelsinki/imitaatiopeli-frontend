@@ -8,7 +8,6 @@ import './Game.css';
 import Icon from "../../misc/ds/Icon.jsx";
 import useDeleteGame from '../../../hooks/useDeleteGame.js';
 import {useNotification} from "../../notification/NotificationContext.js";
-import {navigate} from "jsdom/lib/jsdom/living/window/navigation.js";
 
 const Header = ({ game }) => {
   const { t } = useTranslation();
@@ -54,6 +53,9 @@ const Content = ({ game }) => {
     setNotification(t('game_tag_copy_notification'), 'success', true);
   }
 
+  //Poistoa varten on tehtävä "popUp", jossa kysytään halutaanko peli varmasti poistaa.
+  //Kys. sivulle välitetään url:iin game_id. Sivulla pystytään lukemaan  useParams() metodilla game_id
+  //ja välittämään useDeleteGame:lle
   const [ remove ]= useDeleteGame();
 
   const removeGame = async (...game) => {

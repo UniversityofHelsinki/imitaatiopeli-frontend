@@ -1,7 +1,9 @@
 import {useDELETE} from "./useHttp.js";
 
 const useDeleteGame = (id) => {
-    //id ei välity tähän. Game komponenttia muutettava
+    //id ei välity tähän. Game komponentin kutsuttava "popup" näyttöä, jossa varmistetaan, että peli halutaan poistaa
+    //PopUp näytön url:iin välitetään game_id, useParams() metodilla se saadaan luettua ja välitettyö tälle hookille.
+    //Katso mallia EditGame komponentista
     const post = useDELETE({
         path: `/api/game/deleteGame`,
         invalidates: [`GAME_${id}`, `GAMES`]
