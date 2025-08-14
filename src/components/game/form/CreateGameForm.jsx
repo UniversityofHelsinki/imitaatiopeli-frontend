@@ -26,7 +26,7 @@ const CreateGameForm = () => {
 
   
   useEffect(() => {
-    validate(game).then(setValidations);
+    validate(game, t).then(setValidations);
   }, []);
   
   
