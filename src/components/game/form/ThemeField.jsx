@@ -7,7 +7,7 @@ const ThemeField = ({ value, onChange, disabled, validation }) => {
   const { t } = useTranslation();
   const id = useId();
 
-  const errorText = validation && !validation.isValid && validation.message || '';
+  const errorText = validation && !validation.isValid && t(validation.message) || '';
   
   return (
     <div className="theme-field">

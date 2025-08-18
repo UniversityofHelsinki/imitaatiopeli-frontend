@@ -8,3 +8,11 @@
 .form-field {
   margin-bottom: var(--ds-spacing-small);
 }
+
+.form-field-text-field {
+  display: flex;
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: bolder;
+  margin-bottom: var(--ds-spacing-base);
+}

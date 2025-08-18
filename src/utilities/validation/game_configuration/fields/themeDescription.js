@@ -1,12 +1,12 @@
 import { isEmpty } from "../../common";
 
-export const validateThemeDescription = (game, property, t) => {
+export const validateThemeDescription = (game, property) => {
     const themeDescription = game[property];
 
     if (isEmpty(themeDescription)) {
         return {
             isValid: false,
-            message: t('theme_description_field_is_required')
+            message: 'theme_description_field_is_required'
         };
     }
 
