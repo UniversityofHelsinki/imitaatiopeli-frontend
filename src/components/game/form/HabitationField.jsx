@@ -1,6 +1,6 @@
 import React from 'react';
 import CheckBox from '../../misc/ds/CheckBox';
-import './Habitation.css';
+import './HabitationField.css';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
