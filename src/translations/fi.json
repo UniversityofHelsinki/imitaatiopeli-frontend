@@ -46,5 +46,12 @@
   "nickname_field_label": "Nimimerkki",
   "nickname_field_placeholder": "Syötä nimimerkki",
   "join_game_form_submit_button": "Liity",
-  "game_lobby_heading": "Aula"
+  "game_lobby_heading": "Aula",
+  "admin_game_lobby_heading": "Aula",
+  "admin_game_lobby_details_theme": "Teema",
+  "admin_game_lobby_details_name": "Nimi",
+  "admin_game_lobby_details_join_link": "Liittymislinkki",
+  "admin_game_lobby_no_game_data": "Pelin tietoja ei löytynyt",
+  "admin_game_button_end_game": "Päätä peli",
+  "admin_game_button_start_game": "Käynnistä peli"
 }

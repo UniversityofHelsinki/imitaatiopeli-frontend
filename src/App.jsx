@@ -24,6 +24,7 @@ import StartGame from './components/page/admin/StartGame';
 import EndGame from './components/page/admin/EndGame';
 import JoinGame from './components/page/public/JoinGame';
 import GameLobby from './components/page/public/GameLobby';
+import AdminGameLobby from "./components/page/admin/AdminGameLobby.jsx";
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -75,6 +76,7 @@ const App = () => {
                       <Route path=":id" element={<EditGame />} />
                       <Route path=":id/start" element={<StartGame />} />
                       <Route path=":id/end" element={<EndGame />} />
+                      <Route path=":id/lobby" element={<AdminGameLobby />} />
                     </Route>
                 </Route>
             </Route>
