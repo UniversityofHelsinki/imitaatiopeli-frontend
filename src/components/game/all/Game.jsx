@@ -10,6 +10,8 @@ import useDeleteGame from '../../../hooks/useDeleteGame.js';
 import {useNotification} from "../../notification/NotificationContext.js";
 
 const Header = ({ game }) => {
+  console.log(game);
+
   const { t } = useTranslation();
 
   const waitingTag = (
@@ -112,7 +114,6 @@ const Content = ({ game }) => {
     <div className="game-content">
       <div className="game-content-data">
         <div className="game-inline-row">
-          <div className="game-header-font">{t('game_tag_theme')}</div>
           <div>{t('game_tag_access_code')} {game.game_code}</div>
         </div>
         <div>{t('game_tag_name')}  {game.configuration.game_name}</div>
