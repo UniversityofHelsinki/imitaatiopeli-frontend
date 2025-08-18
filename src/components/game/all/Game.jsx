@@ -1,3 +1,4 @@
+
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,8 +11,6 @@ import useDeleteGame from '../../../hooks/useDeleteGame.js';
 import {useNotification} from "../../notification/NotificationContext.js";
 
 const Header = ({ game }) => {
-  console.log(game);
-
   const { t } = useTranslation();
 
   const waitingTag = (
@@ -19,11 +18,11 @@ const Header = ({ game }) => {
   );
 
   const startTag = (
-    <Tag text={t('game_tag_started')} colour="success" />
+      <Tag text={t('game_tag_started')} colour="success" />
   );
 
   const endTag = (
-    <Tag text={t('game_tag_ended')} colour="black" />
+      <Tag text={t('game_tag_ended')} colour="black" />
   );
 
   const tag = (() => {
@@ -36,12 +35,12 @@ const Header = ({ game }) => {
   })();
 
   return (
-    <div className="game-header">
-      <span className="game-header-title">{game.configuration.theme_description}</span>
-      <div className="game-header-state">
-        {tag}
+      <div className="game-header">
+        <span className="game-header-title">{game.configuration.theme_description}</span>
+        <div className="game-header-state">
+          {tag}
+        </div>
       </div>
-    </div>
   );
 
 };
@@ -69,27 +68,27 @@ const Content = ({ game }) => {
     const gameStarted = game.start_time && !game.end_time;
     if (gameNotStarted) {
       return (
-        <Link
-          label={t('game_tag_start_game')}
-          variant="standalone"
-          icon="play_arrow"
-          size="2xLarge"
-          colour="black"
-          href={`/admin/games/${game.game_id}/start`}
-          internal
-        />
+          <Link
+              label={t('game_tag_start_game')}
+              variant="standalone"
+              icon="play_arrow"
+              size="2xLarge"
+              colour="black"
+              href={`/admin/games/${game.game_id}/start`}
+              internal
+          />
       );
     } else if (gameStarted) {
       return (
-        <Link
-            label={t('game_tag_end_game')}
-          variant="standalone"
-          icon="pause"
-          size="2xLarge"
-          colour="black"
-          href={`/admin/games/${game.game_id}/end`}
-          internal
-        />
+          <Link
+              label={t('game_tag_end_game')}
+              variant="standalone"
+              icon="pause"
+              size="2xLarge"
+              colour="black"
+              href={`/admin/games/${game.game_id}/end`}
+              internal
+          />
       );
     }
   })();
@@ -107,72 +106,118 @@ const Content = ({ game }) => {
     return sign + parts.join(' ');
   }
 
-  const truncate = (text, max = 80) =>
-      text ? (text.length > max ? `${text.slice(0, max)}…` : text) : '';
+  const truncate = (text, max = 80) => {
+    if (!text) {
+      return '';
+    }
+    if (text.length > max) {
+      return `${text.slice(0, max)}…`;
+    }
+    return text;
+  };
+
 
   return (
-    <div className="game-content">
-      <div className="game-content-data">
-        <div className="game-inline-row">
-          <div>{t('game_tag_access_code')} {game.game_code}</div>
+      <div className="game-content">
+        <div className="game-content-data">
+          <div className="game-inline-row">
+            <div>{t('game_tag_access_code')} {game.game_code}</div>
+          </div>
+          <div>{t('game_tag_name')}  {game.configuration.game_name}</div>
+          <div>{t('game_tag_prompt')}  {truncate(game.configuration.ai_prompt)}</div>
+          <div>{t('game_tag_research')} {t('game_tag_research_allowed')}</div>
+          <div>{t('game_tag_time_nbr_questions')} {minutesToHMin(game.configuration.max_duration_minutes)} {game.configuration.max_questions} kierrosta</div>
         </div>
-        <div>{t('game_tag_name')}  {game.configuration.game_name}</div>
-        <div>{t('game_tag_prompt')}  {truncate(game.configuration.ai_prompt)}</div>
-        <div>{t('game_tag_research')} {t('game_tag_research_allowed')}</div>
-        <div>{t('game_tag_time_nbr_questions')} {minutesToHMin(game.configuration.max_duration_minutes)} {game.configuration.max_questions} kierrosta</div>
-      </div>
-      <div className="game-content-divider"></div>
-      <div className="game-content-bottom-row">
-        <div className="game-content-actions">
-          {stateLink}
-          <Link
-            label={t('game_tag_edit_game')}
-            variant="standalone"
-            icon="edit"
-            size="2xLarge"
-            colour="black"
-            href={`/admin/games/${game.game_id}`}
-            internal
-          />
-          <div>
-            <button className="button-plain game-button" onClick={() => copyToClipboard(game.game_code)}>
+        <div className="game-content-divider"></div>
+        <div className="game-content-bottom-row">
+          <div className="game-content-actions">
+            {stateLink}
+            <Link
+                label={t('game_tag_edit_game')}
+                variant="standalone"
+                icon="edit"
+                size="2xLarge"
+                colour="black"
+                href={`/admin/games/${game.game_id}`}
+                internal
+            />
+            <div>
+              <button className="button-plain game-button" onClick={() => copyToClipboard(game.game_code)}>
                 <Icon name="link" aria-hidden="true" />
                 <span>{t('game_tag_copy_code')} </span>
-            </button>
-          </div>
-          <div>
-            <button className="button-plain game-button" onClick={() => removeGame(game)}>
-              <Icon name="delete" aria-hidden="true" />
-              <span>{t('game_tag_delete_game')} </span>
-            </button>
+              </button>
+            </div>
+            <div>
+              <button className="button-plain game-button" onClick={() => removeGame(game)}>
+                <Icon name="delete" aria-hidden="true" />
+                <span>{t('game_tag_delete_game')} </span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   )
 };
 
 const Game = ({ game }) => {
 
   return (
-    <div className="game">
-      <Accordion
-        header={<Header game={game} />}
-        content={<Content game={game} />}
-        variant="compact"
-      />
-    </div>
+      <div className="game">
+        <Accordion
+            header={<Header game={game} />}
+            content={<Content game={game} />}
+            variant="compact"
+        />
+      </div>
   );
+};
 
+Header.propTypes = {
+  game: PropTypes.shape({
+    game_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    game_code: PropTypes.string.isRequired,
+    start_time: PropTypes.string,
+    end_time: PropTypes.string,
+    configuration: PropTypes.shape({
+      theme_description: PropTypes.string.isRequired,
+      game_name: PropTypes.string.isRequired,
+      ai_prompt: PropTypes.string.isRequired,
+      max_duration_minutes: PropTypes.number.isRequired,
+      max_questions: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
+};
+
+Content.propTypes = {
+  game: PropTypes.shape({
+    game_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    game_code: PropTypes.string.isRequired,
+    start_time: PropTypes.string,
+    end_time: PropTypes.string,
+    configuration: PropTypes.shape({
+      theme_description: PropTypes.string.isRequired,
+      game_name: PropTypes.string.isRequired,
+      ai_prompt: PropTypes.string.isRequired,
+      max_duration_minutes: PropTypes.number.isRequired,
+      max_questions: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 Game.propTypes = {
   game: PropTypes.shape({
-    id: PropTypes.number,
+    game_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    game_code: PropTypes.string.isRequired,
+    start_time: PropTypes.string,
+    end_time: PropTypes.string,
     configuration: PropTypes.shape({
-      ai_prompt: PropTypes.string,
-    })
-  })
+      theme_description: PropTypes.string.isRequired,
+      game_name: PropTypes.string.isRequired,
+      ai_prompt: PropTypes.string.isRequired,
+      max_duration_minutes: PropTypes.number.isRequired,
+      max_questions: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default Game;
