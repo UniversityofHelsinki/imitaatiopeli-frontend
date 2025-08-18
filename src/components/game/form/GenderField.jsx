@@ -8,7 +8,7 @@ const GenderField = ({ checked, onChange, disabled }) => {
     const { t } = useTranslation();
 
     return (
-        <div className="research-permission-field">
+        <div className="gender-field">
             <CheckBox
                 label={t('game_form_gender_field_label')}
                 checked={checked}

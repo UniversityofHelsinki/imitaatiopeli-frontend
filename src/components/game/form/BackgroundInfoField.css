@@ -1,0 +1,12 @@
+.backgroundinfo-field {
+    width: 100%;
+}
+
+.backgroundinfo-field-container {
+    position: relative;
+    display: flex;
+    align-items: flex-start; /* top-align textarea and button */
+    gap: 0rem;
+    flex-wrap: nowrap;       /* keep them on the same line */
+    width: 100%;
+}

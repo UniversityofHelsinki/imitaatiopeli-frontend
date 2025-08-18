@@ -8,7 +8,7 @@ const AgeField = ({ checked, onChange, disabled }) => {
     const { t } = useTranslation();
 
     return (
-        <div className="research-permission-field">
+        <div className="age-field">
             <CheckBox
                 label={t('game_form_age_field_label')}
                 checked={checked}

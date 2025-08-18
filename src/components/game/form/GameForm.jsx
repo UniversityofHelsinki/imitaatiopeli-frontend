@@ -12,7 +12,7 @@ import {useTranslation} from "react-i18next";
 import InstructionsField from "./InstructionsField.jsx";
 import ResearchField from "./ResearchField.jsx";
 import ResearchDescriptionField from "./ResearchDescriptionField.jsx";
-import HabitationField from './HabitationField.jsx';
+import LocationField from './LocationField.jsx';
 import GenderField from "./GenderField.jsx";
 import AgeField from "./AgeField.jsx";
 import BackgroundInfoField from "./BackgroundInfoField.jsx";
@@ -132,7 +132,7 @@ const GameForm = ({
             {t('game_players_background_info')}
       </div>
       <div className="game-form-field">
-        <HabitationField
+        <LocationField
           checked={game.is_habitation_mandatory}
           onChange={e => onChange('is_habitation_mandatory', e.target.checked)}
           disabled={saving}
