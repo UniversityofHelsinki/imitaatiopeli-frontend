@@ -16,6 +16,8 @@ import LocationField from './LocationField.jsx';
 import GenderField from "./GenderField.jsx";
 import AgeField from "./AgeField.jsx";
 import BackgroundInfoField from "./BackgroundInfoField.jsx";
+import RelevantBackgroundField from "./RelevantBackgroundField.jsx";
+import CustomFields from "./CustomFields.jsx";
 
 const GameForm = ({
   game,
@@ -133,29 +135,60 @@ const GameForm = ({
       </div>
       <div className="game-form-field">
         <LocationField
-          checked={game.is_habitation_mandatory}
-          onChange={e => onChange('is_habitation_mandatory', e.target.checked)}
-          disabled={saving}
+            value={game.background_info.is_location_mandatory}
+            onChange={e => onChange('background_info',  {
+                ...game.background_info,
+                is_location_mandatory: e.target.value === true
+            })}
+            disabled={saving}
         />
       </div>
       <div className="game-form-field">
         <GenderField
-            checked={game.is_gender_mandatory}
-            onChange={e => onChange('is_gender_mandatory', e.target.checked)}
+            value={game.background_info.is_gender_mandatory}
+            onChange={e => onChange('background_info',  {
+              ...game.background_info,
+              is_gender_mandatory: e.target.value === true
+            })}
             disabled={saving}
         />
       </div>
       <div className="game-form-field">
         <AgeField
-            checked={game.is_age_mandatory}
-            onChange={e => onChange('is_age_mandatory', e.target.checked)}
+            value={game.background_info.is_age_mandatory}
+            onChange={e => onChange('background_info',  {
+              ...game.background_info,
+              is_age_mandatory: e.target.value === true
+            })}
             disabled={saving}
         />
       </div>
       <div className="game-form-field">
-        <BackgroundInfoField
-            checked={game.is_background_info_mandatory}
-            onChange={e => onChange('is_background_info_mandatory', e.target.checked)}
+        <div className="backgroundinfo-field">
+          <div className="backgroundinfo-field-container" >
+              <BackgroundInfoField
+                  value={game.background_info.is_background_info_mandatory}
+                  onChange={e => onChange('background_info',  {
+                      ...game.background_info,
+                      is_background_info_mandatory: e.target.value === true
+                  })}
+                  disabled={saving}
+              />
+              <RelevantBackgroundField onChange={e => onChange('background_info', {
+                                           ...game.background_info,
+                                           relevant_background: e.target.value
+                                       })}
+              />
+              </div>
+        </div>
+      </div>
+      <div className="game-form-field">
+        <CustomFields
+            onChange={e => onChange('custom_fields', {
+              ...game.custom_background_info,
+              custom_fields: e.target.value
+            })}
+            checked={game.custom_background_info.custom_fields}
             disabled={saving}
         />
       </div>

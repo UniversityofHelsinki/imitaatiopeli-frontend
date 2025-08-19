@@ -1,12 +1,14 @@
 .backgroundinfo-field {
-    width: 100%;
+    width: auto;           /* was 100% */
+    margin: 0;
+    flex: 0 0 auto;
 }
 
 .backgroundinfo-field-container {
     position: relative;
     display: flex;
-    align-items: flex-start; /* top-align textarea and button */
-    gap: 0rem;
-    flex-wrap: nowrap;       /* keep them on the same line */
+    align-items: center;   /* align baseline/center for a tighter look */
+    gap: 0.5rem;           /* reduce the space between items */
+    flex-wrap: nowrap;
     width: 100%;
 }

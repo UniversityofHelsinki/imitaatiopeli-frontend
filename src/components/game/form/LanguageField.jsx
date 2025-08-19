@@ -56,6 +56,7 @@ LanguageField.propTypes = {
     onChange: PropTypes.func,
     disabled: PropTypes.bool,
     validation: PropTypes.object,
+    languages: PropTypes.array,
 };
 
 export default LanguageField;

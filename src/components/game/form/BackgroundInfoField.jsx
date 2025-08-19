@@ -4,33 +4,37 @@ import './BackgroundInfoField.css';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-const BackgroundInfoField = ({ checked, onChange, disabled }) => {
+const BackgroundInfoField = ({ value, onChange, disabled, validation  }) => {
     const { t } = useTranslation();
+
+    const errorText = validation && !validation.isValid && t(validation.message) || '';
+
+    const handleChange = (e) => {
+        onChange?.({ target: { value: e.target.checked } });
+    };
 
     return (
         <div className="backgroundinfo-field">
-            <div className="backgroundinfo-field-container" >
                 <CheckBox
+                    id="backgroundinfo-field"
+                    name="backgroundinfo-field"
                     label={t('game_form_backgroundinfo_field_label')}
-                    checked={checked}
-                    onChange={onChange}
+                    checked={value}
+                    onChange={handleChange}
                     disabled={disabled}
+                    errorText={errorText}
                     required={false}
                     optional={false}
                 />
-                <div>
-                    Koulutus
-                </div>
-            </div>
         </div>
     );
-
 };
 
 BackgroundInfoField.propTypes = {
-    checked: PropTypes.bool,
-    onChange: PropTypes.func,
+    value: PropTypes.string,
     disabled: PropTypes.bool,
+    onChange: PropTypes.func,
+    validation: PropTypes.object,
 };
 
 export default BackgroundInfoField;
