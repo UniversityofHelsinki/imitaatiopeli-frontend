@@ -6,7 +6,6 @@ import ThemeField from './ThemeField';
 import { BottomRow } from './BottomRow';
 import FormButtons from './FormButtons';
 import NameField from "./NameField.jsx";
-import NameField from "./NameField.jsx";
 import LanguageField from "./LanguageField.jsx";
 import Button from "../../misc/ds/Button.jsx";
 import {useTranslation} from "react-i18next";
