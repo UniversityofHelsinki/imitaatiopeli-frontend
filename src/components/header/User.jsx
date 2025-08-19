@@ -20,7 +20,7 @@ const Username = () => {
                 <HyMenu
                     buttonLabel={
                         <HyMenuLabel Icon={LogoutIcon} caretUp={menuOpen}>
-                            {user?.displayName} ({user?.displayName})
+                            {user?.displayName}
                         </HyMenuLabel>
                     }
                     onSelect={() => onLogoutPress()}
