@@ -2,9 +2,10 @@ import React from 'react';
 import './Header.css';
 import Languages from './Languages';
 import Logo from './Logo';
+import Username from './User';
 
 const Header = () => {
-  
+
   return (
     <>
       <div className="header">
@@ -12,7 +13,8 @@ const Header = () => {
           <Logo />
         </div>
         <div className="header-right">
-          <Languages />
+            <Username />
+            <Languages />
         </div>
       </div>
       <div aria-hidden className="header-bottom-border"></div>
