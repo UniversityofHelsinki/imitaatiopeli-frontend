@@ -10,7 +10,7 @@ const Username = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const { t } = useTranslation();
 
-    const LogoutIcon = () => <Icon name="logout" size="1.2rem" />;
+    const PersonIcon = () => <Icon name="person" size="1.2rem" />;
 
     const onLogoutPress = () => logout();
 
@@ -19,7 +19,7 @@ const Username = () => {
             <div className="user">
                 <HyMenu
                     buttonLabel={
-                        <HyMenuLabel Icon={LogoutIcon} caretUp={menuOpen}>
+                        <HyMenuLabel Icon={PersonIcon} caretUp={menuOpen}>
                             {user?.displayName}
                         </HyMenuLabel>
                     }
