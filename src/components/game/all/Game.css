@@ -10,6 +10,52 @@
   width: 100%;
 }
 
+.game-inline-row {
+  display: flex;
+  flex-wrap: nowrap;               /* keep on one line */
+  gap: 6rem;
+  align-items: baseline;
+  word-break: normal;
+
+}
+
+.game-header-font {
+  font-size: var(--ds-fontSize-22);
+  font-weight: bold;
+  flex-wrap: nowrap;
+}
+
+.button-plain {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-spacing-base, 0.5rem); /* fallback included */
+  cursor: pointer;
+
+  appearance: none;           /* standard */
+  -webkit-appearance: none;   /* Safari */
+  text-decoration: none;
+}
+
+.button-plain:hover {
+  text-decoration: underline; /* optional */
+}
+
+.game-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-spacing-base); /* adjust spacing as needed */
+  font-size: var(--ds-fontSize-22);
+}
+
 .game-content-divider {
   background-color: var(--ds-palette-black-10);
   margin: var(--ds-spacing-layout-base);
