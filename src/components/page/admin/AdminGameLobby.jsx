@@ -51,25 +51,26 @@ const AdminGameLobby = () => {
     return (
         <Page loading={loading} heading={t('admin_game_lobby_heading')} crumbs={crumbs}>
             {game ? (
-                <div className="admin-game-lobby-details-container">
+                <div className="admin-game-lobby-container">
                         <div className="admin-game-details">
                             <p>
-                                <strong>{t('admin_game_lobby_details_join_link')}: </strong>
-                                {game.game_code || t('no_code')}
+                                <strong>{t('admin_game_lobby_details_join_link_label')}: </strong>
+                            </p>
+                            <span>{`${import.meta.env.VITE_PUBLIC_GAME_JOIN_LINK_URL_ROOT}/games/${game.game_code}/join`}</span>
+                            <p>
+                                <strong>{t('admin_game_lobby_details_theme')}: </strong>
+                                {game.configuration?.game_name || t('no_theme')}
                             </p>
                             <p>
                                 <strong>{t('admin_game_lobby_details_name')}: </strong>
-                                {game.configuration?.game_name || t('no_name')}
-                            </p>
-                            <p>
-                                <strong>{t('admin_game_lobby_details_theme')}: </strong>
-                                {game.configuration?.theme_description || t('no_theme')}
+                                {game.configuration?.theme_description || t('no_name')}
                             </p>
                         </div>
                     <div className="admin-game-lobby-players-container">
-                        <AdminGameLobbyPlayers game={game} onPlayerUpdate={fetchGame} />
+                        <AdminGameLobbyPlayers game={game} />
                     </div>
-                    <div className="game-form-bottom-row">
+                    <div className="admin-lobby-bottom-row">
+                        <div className="horizontal-divider" />
                         <BottomRow saving={null}>
                             <AdminGameButtons disabled={null} />
                         </BottomRow>

@@ -1,0 +1,9 @@
+.player-item {
+
+}
+
+.player-list-container > * ul {
+    list-style: none;
+    margin: unset;
+    padding: unset;
+}

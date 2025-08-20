@@ -4,7 +4,7 @@ import { useGET } from './useHttp';
 
 const usePlayer = (playerId = null, gameId = null) => {
     const [response, error, reload] = useGET({
-        path: playerId ? `/api/getPlayerById/${playerId}` :
+        path: playerId ? `/api/getplayerById/${playerId}` :
             gameId ? `/api/games/${gameId}/players` : null,
         tag: playerId ? `PLAYER_DATA_${playerId}` :
             gameId ? `GAME_PLAYERS_${gameId}` : null,
@@ -29,7 +29,7 @@ const usePlayer = (playerId = null, gameId = null) => {
                 });
             }
         }
-    }, [response]);
+    }, [response, playerId, gameId, player, players, dispatch]);
 
     return playerId ? [player, error, reload] : [players, error, reload];
 };
