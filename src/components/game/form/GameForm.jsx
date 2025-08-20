@@ -119,17 +119,18 @@ const GameForm = ({
             disabled={saving}
         />
       </div>
-      <div className="form-field game-form-field">
-        <ResearchDescriptionField
-            value={game.configuration.research_description}
-            onChange={e => onChange('configuration', {
-              ...game.configuration,
-                research_description: e.target.value
-            })}
-            disabled={saving}
-            validation={validations?.configuration?.research_description}
-        />
-      </div>
+        {game.configuration.isResearch &&
+          <div className="form-field game-form-field">
+            <ResearchDescriptionField
+                value={game.configuration.research_description}
+                onChange={e => onChange('configuration', {
+                  ...game.configuration,
+                    research_description: e.target.value
+                })}
+                disabled={saving}
+                validation={validations?.configuration?.research_description}
+            />
+       </div>}
       <div className="form-field-text-field">
             {t('game_players_background_info')}
       </div>
