@@ -94,6 +94,6 @@
   "game_validation_language_not_selected": "Kieli on valittava",
   "game_validation_instructions_is_required": "Ohjeet on kirjoitettava",
   "game_research_description_is_required": "Tutkimuslupateksti on kirjoitettava",
-  "game_players_background_info": "Tutkimukseen osallistuvalta kysyttävät taustatiedot"
+  "game_players_background_info": "Tutkimukseen osallistuvalta kysyttävät taustatiedot",
   "game_lobby_player_not_joined": "Pelaaja ei ole liittynyt peliin"
 }
