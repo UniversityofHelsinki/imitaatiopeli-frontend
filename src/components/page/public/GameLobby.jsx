@@ -53,7 +53,7 @@ const GameLobby = () => {
         <br/>
         <br/>
         <div className="game-lobby-page-instructions">
-          {playerConfiguration && playerConfiguration.instructions_for_players}
+          {playerConfiguration?.instructions_for_players}
         </div>
 
       </Page>
