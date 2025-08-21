@@ -13,6 +13,7 @@ const GameLobby = () => {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [hasJoined, setJoined] = useState(false);
+  const [playerConfiguration, setPlayerConfiguration] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -25,7 +26,8 @@ const GameLobby = () => {
 
       const player = JSON.parse(localStorage.get("player"));
       const hasJoined = player?.game_id === response.body.game_id;
-      setJoined(hasJoined);
+      setPlayerConfiguration(response.body.configuration[0]);
+
     })();
   }, []);
 
@@ -46,9 +48,15 @@ const GameLobby = () => {
   ]
 
   return (
-    <Page loading={loading} heading={t('game_lobby_heading')} crumbs={crumbs}>
-      {hasJoined && <span>???</span> || <span>{t('game_lobby_player_not_joined')}</span>}
-    </Page>
+      <Page loading={loading} heading={t('game_lobby_heading')} crumbs={crumbs}>
+        {hasJoined && <span>???</span> || <span>{t('game_lobby_player_not_joined')}</span>}
+        <br/>
+        <br/>
+        <div className="game-lobby-page-instructions">
+          {playerConfiguration && playerConfiguration.instructions_for_players}
+        </div>
+
+      </Page>
   )
 
 };

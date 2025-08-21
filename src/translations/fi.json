@@ -64,5 +64,6 @@
   "nickname_field_label": "Nimimerkki",
   "nickname_field_placeholder": "Syötä nimimerkki",
   "join_game_form_submit_button": "Liity",
-  "game_lobby_heading": "Aula"
+  "game_lobby_heading": "Aula",
+  "game_lobby_player_not_joined": "Pelaaja ei ole liittynyt peliin"
 }
