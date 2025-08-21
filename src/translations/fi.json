@@ -92,5 +92,13 @@
   "game_validation_language_not_selected": "Kieli on valittava",
   "game_validation_instructions_is_required": "Ohjeet on kirjoitettava",
   "game_research_description_is_required": "Tutkimuslupateksti on kirjoitettava",
-  "game_players_background_info": "Tutkimukseen osallistuvalta kysyttävät taustatiedot"
+  "game_players_background_info": "Tutkimukseen osallistuvalta kysyttävät taustatiedot",
+  "ai_prompt_test_dialog_title": "Testaa tekoälyn vastauksia",
+  "current_prompt": "Prompti",
+  "test_question": "Kysymys",
+  "enter_test_question_placeholder": "Kysymyksen placeholder",
+  "ai_response" : "Vastaus",
+  "test_prompt": "Kysy",
+  "clear": "Tyhjää",
+  "close": "Sulje"
 }
