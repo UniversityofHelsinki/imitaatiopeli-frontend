@@ -1,10 +1,10 @@
 import validateObject from '../validation';
 import validateGameConfiguration from '../game_configuration/gameConfigurationValidation';
 
-const validate = async (game) => {
+const validate = async (game, t) => {
 
   const validations = {
-    configuration: () => validateGameConfiguration(game.configuration)
+    configuration: () => validateGameConfiguration(game.configuration, t)
   };
 
   return await validateObject(game, validations);

@@ -1,0 +1,34 @@
+
+.instructions-field {
+    width: 100%;
+}
+
+.instructions-field-container {
+    position: relative;
+    display: flex;
+    align-items: flex-start; /* top-align textarea and button */
+    gap: 0rem;
+    flex-wrap: nowrap;       /* keep them on the same line */
+    width: 100%;
+}
+
+/* Let the TextArea grow and shrink as needed */
+.instructions-field-container > *:first-child {
+    flex: 1 1 auto;
+    min-width: 0;            /* allow shrinking without overflow */
+}
+
+/* Ensure the underlying textarea uses full width of its flex area */
+.instructions-field-container textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Keep the button at natural size, on the same line */
+.instructions-field-container .undo-button {
+    margin-top: 0;           /* remove vertical offset */
+    flex: 0 0 auto;
+    margin-top: 5.5rem;
+}
+
+

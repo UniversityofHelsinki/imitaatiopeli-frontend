@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 const PromptField = ({ value, onChange, disabled, validation }) => {
   const { t } = useTranslation();
 
-  const errorText = validation && !validation.isValid && validation.message || '';
+  const errorText = validation && !validation.isValid && t(validation.message) || '';
 
   return (
     <div className="prompt-field">
