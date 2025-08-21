@@ -1,0 +1,123 @@
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.dialog {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    overflow: hidden;
+}
+
+/* Dialog sizes */
+.dialog--small {
+    width: 100%;
+    max-width: 400px;
+}
+
+.dialog--medium {
+    width: 100%;
+    max-width: 600px;
+}
+
+.dialog--large {
+    width: 100%;
+    max-width: 800px;
+}
+
+.dialog--extra-large {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.dialog__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+.dialog__title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.dialog__close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.dialog__close-btn:hover:not(:disabled) {
+    background-color: #f0f0f0;
+}
+
+.dialog__close-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.dialog__content {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.dialog__footer {
+    padding: 20px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .dialog-overlay {
+        padding: 10px;
+    }
+
+    .dialog {
+        max-height: 95vh;
+    }
+
+    .dialog__header,
+    .dialog__content,
+    .dialog__footer {
+        padding: 15px;
+    }
+
+    .dialog--small,
+    .dialog--medium,
+    .dialog--large,
+    .dialog--extra-large {
+        width: 100%;
+        max-width: none;
+    }
+}
