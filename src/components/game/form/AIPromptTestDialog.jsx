@@ -122,11 +122,7 @@ const AIPromptTestDialog = ({ isOpen, onClose, prompt }) => {
                 <div className="form-field game-form-field">
                     <h3>{t('ai_response')}:</h3>
                     <div className="response-content">
-                        <TextArea
-                            value={response?.answer}
-                            readOnly
-                            rows={10}
-                        />
+                       {response?.answer}
                     </div>
                 </div>
             )}
