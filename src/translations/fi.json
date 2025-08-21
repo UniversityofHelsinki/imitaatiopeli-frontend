@@ -33,6 +33,8 @@
   "create_game_form_heading": "Uusi peli",
   "create_game_form_game_created_notification": "Peli luotu!",
   "game_form_research_permission_field_legend": "Tutkimuslupa",
+  "game_form_research_permission_field_assistive_text": "Saako pelin tietoja käyttää tutkimuksessa?",
+  "game_form_research_permission_field_label": "Saa käyttää",
   "game_form_location_field_label": "Asuinpaikka",
   "game_form_gender_field_label": "Sukupuoli",
   "game_form_age_field_label": "Ikä",
@@ -100,5 +102,6 @@
   "ai_response" : "Vastaus",
   "test_prompt": "Kysy",
   "clear": "Tyhjää",
-  "close": "Sulje"
+  "close": "Sulje",
+  "game_lobby_player_not_joined": "Pelaaja ei ole liittynyt peliin"
 }

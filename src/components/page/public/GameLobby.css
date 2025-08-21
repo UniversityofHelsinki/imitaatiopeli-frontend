@@ -1,0 +1,8 @@
+
+.game-lobby-page-instructions {
+    display: flex;
+    font-size: 16px;
+    line-height: 1.5;
+    /*font-weight: bolder;*/
+    margin-bottom: var(--ds-spacing-base);
+}
