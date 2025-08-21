@@ -9,6 +9,7 @@ import AdminGameLobbyPlayers from './AdminGameLobbyPlayers';
 import {useNotification} from "../../notification/NotificationContext.js";
 import BottomRow from "../../game/form/BottomRow.jsx";
 import AdminGameButtons from "./AdminGameButtons.jsx";
+import CopyGameUrlButton from "./CopyGameUrlButton.jsx";
 
 const AdminGameLobby = () => {
     const { id: gameId } = useParams();
@@ -53,17 +54,19 @@ const AdminGameLobby = () => {
             {game ? (
                 <div className="admin-game-lobby-container">
                         <div className="admin-game-details">
-                            <p>
+                            <p className="game-link-paragraph">
                                 <strong>{t('admin_game_lobby_details_join_link_label')}: </strong>
                             </p>
-                            <span>{`${import.meta.env.VITE_PUBLIC_GAME_JOIN_LINK_URL_ROOT}/games/${game.game_code}/join`}</span>
-                            <p>
-                                <strong>{t('admin_game_lobby_details_theme')}: </strong>
-                                {game.configuration?.game_name || t('no_theme')}
-                            </p>
+                            <div>
+                                <CopyGameUrlButton game={game} />
+                            </div>
                             <p>
                                 <strong>{t('admin_game_lobby_details_name')}: </strong>
-                                {game.configuration?.theme_description || t('no_name')}
+                                {game.configuration?.theme_description || ''}
+                            </p>
+                            <p>
+                                <strong>{t('admin_game_lobby_details_theme')}: </strong>
+                                {game.configuration?.game_name || ''}
                             </p>
                         </div>
                     <div className="admin-game-lobby-players-container">

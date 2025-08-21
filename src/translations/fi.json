@@ -50,7 +50,7 @@
   "admin_game_lobby_heading": "Aula",
   "admin_game_lobby_details_name": "Nimi",
   "admin_game_lobby_details_theme": "Teema",
-  "admin_game_lobby_details_join_link_label": "Kopioi liittymislinkki",
+  "admin_game_lobby_details_join_link_label": "Littymislinkki",
   "admin_game_lobby_details_join_link": "",
   "admin_game_lobby_no_game_data": "Pelin tietoja ei löytynyt",
   "admin_game_button_end_game": "Päätä peli",
@@ -58,5 +58,7 @@
   "spinner_awaiting_players": "Odotetaan pelaajia...",
   "lobby_players_heading": "Pelaajat",
   "lobby_player_count": "Pelaajien lukumäärä",
-  "error_loading_data": "Virhe tietojen lataamisessa"
+  "error_loading_data": "Virhe tietojen lataamisessa",
+  "game_url_copy_button_aria_label": "Kopioi pelin liittymislinkki",
+  "game_url_copy_button_title": "Kopioi pelin liittymislinkki"
 }
