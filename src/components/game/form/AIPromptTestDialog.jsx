@@ -1,13 +1,14 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Dialog from '../../dialog/Dialog.jsx';
 import Button from '../../misc/ds/Button.jsx';
 import useAIPromptTest from '../../../hooks/useAIPromptTest.js';
 import TextArea from '../../misc/ds/TextArea';
+import Spinner from '../../misc/ds/Spinner.jsx';
+import  './AIPromptTestDialog.css';
 
-const AIPromptTestDialog = ({ isOpen, onClose, prompt }) => {
+const AIPromptTestDialog = ({ isOpen, onClose, prompt, temperature }) => {
     const { t } = useTranslation();
     const [question, setQuestion] = useState('');
 
@@ -32,7 +33,7 @@ const AIPromptTestDialog = ({ isOpen, onClose, prompt }) => {
         e.preventDefault();
         if (!question.trim()) return;
 
-        await testPrompt(prompt, question);
+        await testPrompt(prompt, question, temperature);
     };
 
     const handleClose = () => {
@@ -46,13 +47,16 @@ const AIPromptTestDialog = ({ isOpen, onClose, prompt }) => {
         clearResults();
     };
 
+    // Convert temperature to percentage for display
+    const temperaturePercentage = Math.round(temperature * 100);
+
     const footerActions = (
-            <Button
-                type="button"
-                label={t('close')}
-                onClick={handleClose}
-                variant="secondary"
-            />
+        <Button
+            type="button"
+            label={t('close')}
+            onClick={handleClose}
+            variant="secondary"
+        />
     );
 
     return (
@@ -70,6 +74,18 @@ const AIPromptTestDialog = ({ isOpen, onClose, prompt }) => {
                 <div className="prompt-text">{prompt || t('no_prompt_available')}</div>
             </div>
 
+            <div className="form-field game-form-field">
+                <label>{t('temperature_setting')}:</label>
+                <div className="temperature-display">
+                    {temperaturePercentage}%
+                    <span className="temperature-label">
+                        ({temperature < 0.3 ? t('temperature_conservative') :
+                        temperature > 0.7 ? t('temperature_creative') :
+                            t('temperature_balanced')})
+                    </span>
+                </div>
+            </div>
+
             <form onSubmit={handleSubmit} className="form game-form">
                 <div className="form-field game-form-field">
                     <label htmlFor="test-question">{t('test_question')}:</label>
@@ -84,7 +100,7 @@ const AIPromptTestDialog = ({ isOpen, onClose, prompt }) => {
                     />
                 </div>
 
-                <div className="form-field game-form-field">
+                <div className="form-field game-form-field button-group">
                     <Button
                         type="submit"
                         label={loading ? t('testing') : t('test_prompt')}
@@ -103,10 +119,10 @@ const AIPromptTestDialog = ({ isOpen, onClose, prompt }) => {
 
             {loading && (
                 <div className="form-field game-form-field">
-                    <div className="loading-indicator">
-                        <div className="spinner"></div>
-                        <span>{t('processing_request')}</span>
-                    </div>
+                    <Spinner
+                    position="side"
+                    size="large"
+                    text={t('receiving_ai_response')} />
                 </div>
             )}
 
@@ -122,7 +138,7 @@ const AIPromptTestDialog = ({ isOpen, onClose, prompt }) => {
                 <div className="form-field game-form-field">
                     <h3>{t('ai_response')}:</h3>
                     <div className="response-content">
-                       {response?.answer}
+                        {response?.answer}
                     </div>
                 </div>
             )}
@@ -134,6 +150,7 @@ AIPromptTestDialog.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     prompt: PropTypes.string,
+    temperature: PropTypes.number.isRequired,
 };
 
 export default AIPromptTestDialog;

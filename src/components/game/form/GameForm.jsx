@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import './GameForm.css';
 import PromptField from './PromptField';
 import ThemeField from './ThemeField';
@@ -29,8 +29,10 @@ const GameForm = ({
                       validations
                   }) => {
     const { t } = useTranslation();
-    const textRef = useRef(null);
     const [isTestDialogOpen, setIsTestDialogOpen] = useState(false);
+
+    // Get temperature from game configuration or default to 0.8 (80%)
+    const temperature = game.configuration.temperature ?? 0.8;
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -58,6 +60,17 @@ const GameForm = ({
     const handleCloseTestDialog = () => {
         setIsTestDialogOpen(false);
     };
+
+    const handleTemperatureChange = (e) => {
+        const newTemperature = parseFloat(e.target.value);
+        onChange('configuration', {
+            ...game.configuration,
+            temperature: newTemperature
+        });
+    };
+
+    // Convert temperature to percentage for display
+    const temperaturePercentage = Math.round(temperature * 100);
 
     return (
         <>
@@ -110,6 +123,26 @@ const GameForm = ({
                         disabled={saving}
                         validation={validations?.configuration?.ai_prompt}
                     />
+                </div>
+                <div className="form-field game-form-field">
+                    <label htmlFor="temperature-slider">
+                        {t('temperature_setting')}: {temperaturePercentage}%
+                    </label>
+                    <input
+                        id="temperature-slider"
+                        type="range"
+                        min="0.01"
+                        max="1"
+                        step="0.01"
+                        value={temperature}
+                        onChange={handleTemperatureChange}
+                        disabled={saving}
+                        className="temperature-slider"
+                    />
+                    <div className="temperature-slider-labels">
+                        <span>{t('more_focused')}</span>
+                        <span>{t('more_creative')}</span>
+                    </div>
                 </div>
                 <div className="form-field game-form-field">
                     <Button
@@ -226,6 +259,7 @@ const GameForm = ({
                 isOpen={isTestDialogOpen}
                 onClose={handleCloseTestDialog}
                 prompt={game.configuration.ai_prompt}
+                temperature={temperature}
             />
         </>
     );
@@ -236,6 +270,7 @@ GameForm.propTypes = {
         configuration: PropTypes.shape({
             game_name: PropTypes.string,
             ai_prompt: PropTypes.string,
+            temperature: PropTypes.number,
         }),
         researchPermission: PropTypes.bool
     }),
