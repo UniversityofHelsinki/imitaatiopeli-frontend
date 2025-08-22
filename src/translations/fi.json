@@ -111,5 +111,6 @@
   "more_focused": "Tarkempi",
   "more_creative": "Luovempi",
   "receiving_ai_response" : "Haetaan vastausta ...",
-  "test_ai_prompt": "Testaa tekoälyn vastauksia"
+  "test_ai_prompt": "Testaa tekoälyn vastauksia",
+  "no_prompt_available": "Ei promptia"
 }

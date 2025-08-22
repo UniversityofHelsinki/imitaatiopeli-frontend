@@ -139,7 +139,7 @@ const GameForm = ({
                             temperature={temperature}
                         />
                     }
-                    variant="default"
+                    variant="compact"
                     openByDefault={false}
                 />
             </div>
