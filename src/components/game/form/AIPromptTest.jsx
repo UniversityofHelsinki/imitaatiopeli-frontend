@@ -35,6 +35,7 @@ const AIPromptTest = ({ prompt, temperature }) => {
     };
 
     const temperaturePercentage = Math.round(temperature * 100);
+    const hasPrompt = prompt?.trim();
 
     return (
         <div className="ai-prompt-test">
@@ -61,19 +62,27 @@ const AIPromptTest = ({ prompt, temperature }) => {
                     id="test-question"
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
-                    placeholder={t('enter_test_question_placeholder')}
+                    placeholder={hasPrompt ? t('enter_test_question_placeholder') : t('add_prompt_first_placeholder')}
                     rows={4}
-                    disabled={loading}
+                    disabled={loading || !hasPrompt}
                     required
                 />
             </div>
+
+            {!hasPrompt && (
+                <div className="form-field game-form-field">
+                    <div className="info-message">
+                        <strong>{t('info')}:</strong> {t('prompt_required_message')}
+                    </div>
+                </div>
+            )}
 
             <div className="form-field game-form-field button-group">
                 <Button
                     type="button"
                     label={loading ? t('testing') : t('test_prompt')}
                     onClick={handleSubmit}
-                    disabled={loading || !question.trim() || !prompt?.trim()}
+                    disabled={loading || !question.trim() || !hasPrompt}
                     variant="primary"
                 />
                 <Button
