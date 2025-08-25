@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +13,7 @@ const LanguageModelField = ({ value, onChange, disabled, validation }) => {
         onChange({ target: { value: selectedUrl } });
     };
 
+    const errorText = validation && !validation.isValid && t(validation.message) || '';
 
     return (
         <div className="form-field">
@@ -28,8 +28,8 @@ const LanguageModelField = ({ value, onChange, disabled, validation }) => {
                 loadingText={t('loading_models')}
                 optionsError={!!error}
                 optionsErrorText={error ? `${t('failed_to_load_models')}: ${error}` : undefined}
-                invalid={validation?.hasError}
-                errorText={validation?.hasError ? validation.message : undefined}
+                invalid={validation && !validation.isValid}
+                errorText={errorText}
                 clearable={true}
             >
                 {models.map((model) => (
@@ -46,10 +46,7 @@ LanguageModelField.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
-    validation: PropTypes.shape({
-        hasError: PropTypes.bool,
-        message: PropTypes.string,
-    }),
+    validation: PropTypes.object, // Match other field components
 };
 
 export default LanguageModelField;

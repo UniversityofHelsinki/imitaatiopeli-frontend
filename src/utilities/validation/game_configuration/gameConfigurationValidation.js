@@ -5,6 +5,7 @@ import {validateThemeDescription} from "./fields/themeDescription";
 import {validateLanguage} from "./fields/language.js";
 import {validateInstructions} from "./fields/Instructions.js";
 import {validateResearchDescription} from "./fields/ResearchDescription.js";
+import { validateLanguageModelUrl } from './fields/model.js';
 const validate = async (configuration) => {
 
   const validations = {
@@ -13,8 +14,8 @@ const validate = async (configuration) => {
     ai_prompt: validatePrompt,
     language: validateLanguage,
     instructions: validateInstructions,
-    research_description: validateResearchDescription
-
+    research_description: validateResearchDescription,
+    language_model_url: validateLanguageModelUrl
   };
 
   return await validateObject(configuration, validations);
