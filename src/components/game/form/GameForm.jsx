@@ -7,6 +7,7 @@ import { BottomRow } from './BottomRow';
 import FormButtons from './FormButtons';
 import NameField from "./NameField.jsx";
 import LanguageField from "./LanguageField.jsx";
+import LanguageModelField from "./LanguageModelField.jsx";
 import { useTranslation } from "react-i18next";
 import InstructionsField from "./InstructionsField.jsx";
 import ResearchField from "./ResearchField.jsx";
@@ -32,6 +33,12 @@ const GameForm = ({
 
     // Get temperature from game configuration or default to 0.7
     const temperature = game.configuration.temperature ?? 0.7;
+
+    // Debug logging
+    console.log('Game object:', game);
+    console.log('Game configuration:', game.configuration);
+    console.log('Language model URL:', game.configuration.language_model_url);
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -96,6 +103,17 @@ const GameForm = ({
                 />
             </div>
             <div className="form-field game-form-field">
+                <LanguageModelField
+                    value={game.configuration.language_model_url}
+                    onChange={e => onChange('configuration', {
+                        ...game.configuration,
+                        language_model_url: e.target.value
+                    })}
+                    disabled={saving}
+                    validation={validations?.configuration?.language_model_url}
+                />
+            </div>
+            <div className="form-field game-form-field">
                 <PromptField
                     value={game.configuration.ai_prompt}
                     onChange={e => onChange('configuration', {
@@ -135,7 +153,6 @@ const GameForm = ({
                 </div>
             </div>
 
-
             <div className="form-field game-form-field">
                 <Accordion
                     header={t('test_ai_prompt')}
@@ -143,6 +160,7 @@ const GameForm = ({
                         <AIPromptTest
                             prompt={game.configuration.ai_prompt}
                             temperature={temperature}
+                            languageModelUrl={game.configuration.language_model_url}
                         />
                     }
                     variant="compact"
@@ -261,6 +279,7 @@ GameForm.propTypes = {
             game_name: PropTypes.string,
             ai_prompt: PropTypes.string,
             temperature: PropTypes.number,
+            language_model_url: PropTypes.string,
         }),
         researchPermission: PropTypes.bool
     }),
