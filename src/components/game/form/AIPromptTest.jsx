@@ -35,7 +35,6 @@ const AIPromptTest = ({ prompt, temperature }) => {
         clearResults();
     };
 
-    const temperaturePercentage = Math.round(temperature * 100);
     const hasPrompt = prompt?.trim();
 
     return (
@@ -48,7 +47,7 @@ const AIPromptTest = ({ prompt, temperature }) => {
             <div className="form-field game-form-field">
                 <label>{t('temperature_setting')}:</label>
                 <div className="temperature-display">
-                    {temperaturePercentage}%
+                    {temperature}
                     <span className="temperature-label">
                         ({temperature < 0.3 ? t('temperature_conservative') :
                         temperature > 0.7 ? t('temperature_creative') :

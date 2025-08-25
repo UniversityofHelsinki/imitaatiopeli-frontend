@@ -24,11 +24,12 @@
 }
 
 .temperature-slider {
-  width: 100%;
+  width: 50%;
   margin-top: 8px;
 }
 
 .temperature-slider-labels {
+  width: 50%;
   display: flex;
   justify-content: space-between;
   font-size: 0.8em;
