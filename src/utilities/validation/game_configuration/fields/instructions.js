@@ -4,7 +4,7 @@ export const validateInstructions = async (game, property) => {
 
     const instructions = game[property];
 
-    if (isTooLong(instructions, 2000)) {
+    if (isTooLong(instructions, 4000)) {
         return {
             isValid: false,
             message: 'game_instructions_is_too_long'

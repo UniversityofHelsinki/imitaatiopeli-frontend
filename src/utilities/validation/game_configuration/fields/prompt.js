@@ -5,7 +5,7 @@ export const validatePrompt = async (game, property) => {
   const prompt = game[property];
 
 
-  if (isTooLong(prompt, 2000)) {
+  if (isTooLong(prompt, 4000)) {
     return {
       isValid: false,
       message: 'game_ai_prompt_is_too_long'
