@@ -3,8 +3,8 @@ import { validatePrompt } from "./fields/prompt";
 import validateObject from '../validation';
 import {validateThemeDescription} from "./fields/themeDescription";
 import {validateLanguage} from "./fields/language.js";
-import {validateInstructions} from "./fields/Instructions.js";
-import {validateResearchDescription} from "./fields/ResearchDescription.js";
+import {validateInstructions} from "./fields/instructions.js";
+import {validateResearchDescription} from "./fields/researchDescription.js";
 const validate = async (configuration) => {
 
   const validations = {

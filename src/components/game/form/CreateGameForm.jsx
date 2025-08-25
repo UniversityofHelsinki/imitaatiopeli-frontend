@@ -17,19 +17,7 @@ const createEmptyGame = (t) => ({
     instructions: t('game_form_instructions_field_text'),
     isResearch: false,
     research_description: t('game_form_research_description_field_text')
-  },
-  background_info: {
-    relevant_background: '',
-    is_habitation_mandatory: false,
-    is_gender_mandatory: false,
-    is_age_mandatory: false,
-    is_background_info_mandatory: false,
-  },
-  custom_background_info: {
-    custom_fields: '',
-    info_id: ''
-  },
-  researchPermission: false,
+  }
 });
 
 const CreateGameForm = () => {

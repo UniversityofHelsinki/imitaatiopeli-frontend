@@ -12,12 +12,6 @@ import { useTranslation } from "react-i18next";
 import InstructionsField from "./InstructionsField.jsx";
 import ResearchField from "./ResearchField.jsx";
 import ResearchDescriptionField from "./ResearchDescriptionField.jsx";
-import LocationField from './LocationField.jsx';
-import GenderField from "./GenderField.jsx";
-import AgeField from "./AgeField.jsx";
-import BackgroundInfoField from "./BackgroundInfoField.jsx";
-import RelevantBackgroundField from "./RelevantBackgroundField.jsx";
-import CustomFields from "./CustomFields.jsx";
 import AIPromptTestDialog from "../../game/form/AIPromptTestDialog.jsx";
 
 const GameForm = ({
@@ -151,69 +145,8 @@ const GameForm = ({
                             disabled={saving}
                             validation={validations?.configuration?.research_description}
                         />
-                    </div>}
-                <div className="form-field-text-field">
-                    {t('game_players_background_info')}
-                </div>
-                <div className="game-form-field">
-                    <LocationField
-                        value={game.background_info.is_location_mandatory}
-                        onChange={e => onChange('background_info',  {
-                            ...game.background_info,
-                            is_location_mandatory: e.target.value === true
-                        })}
-                        disabled={saving}
-                    />
-                </div>
-                <div className="game-form-field">
-                    <GenderField
-                        value={game.background_info.is_gender_mandatory}
-                        onChange={e => onChange('background_info',  {
-                            ...game.background_info,
-                            is_gender_mandatory: e.target.value === true
-                        })}
-                        disabled={saving}
-                    />
-                </div>
-                <div className="game-form-field">
-                    <AgeField
-                        value={game.background_info.is_age_mandatory}
-                        onChange={e => onChange('background_info',  {
-                            ...game.background_info,
-                            is_age_mandatory: e.target.value === true
-                        })}
-                        disabled={saving}
-                    />
-                </div>
-                <div className="game-form-field">
-                    <div className="backgroundinfo-field">
-                        <div className="backgroundinfo-field-container" >
-                            <BackgroundInfoField
-                                value={game.background_info.is_background_info_mandatory}
-                                onChange={e => onChange('background_info',  {
-                                    ...game.background_info,
-                                    is_background_info_mandatory: e.target.value === true
-                                })}
-                                disabled={saving}
-                            />
-                            <RelevantBackgroundField onChange={e => onChange('background_info', {
-                                ...game.background_info,
-                                relevant_background: e.target.value
-                            })}
-                            />
-                        </div>
                     </div>
-                </div>
-                <div className="game-form-field">
-                    <CustomFields
-                        onChange={e => onChange('custom_fields', {
-                            ...game.custom_background_info,
-                            custom_fields: e.target.value
-                        })}
-                        checked={game.custom_background_info.custom_fields}
-                        disabled={saving}
-                    />
-                </div>
+                }
                 <div className="horizontal-divider"></div>
                 <div className="game-form-bottom-row">
                     <BottomRow saving={saving}>
