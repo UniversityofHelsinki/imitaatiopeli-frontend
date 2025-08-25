@@ -22,8 +22,6 @@ const AIPromptTest = ({ prompt, temperature, languageModelUrl }) => {
         clearResults
     } = useAIPromptTest();
 
-    console.log(languageModelUrl);
-
     const selectedModel = models.find(model => model.url === languageModelUrl);
     const modelName = selectedModel ? selectedModel.name : languageModelUrl || t('no_model_selected');
 
