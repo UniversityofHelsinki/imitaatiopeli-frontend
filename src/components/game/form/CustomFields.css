@@ -1,0 +1,18 @@
+
+.custom-fields-add-button {
+    background: transparent;   /* remove grey background */
+    border: none;              /* remove border */
+    box-shadow: none;          /* ensure no shadow */
+    padding: 0;                /* optional: remove default padding */
+    margin: 0;
+    margin-left: 0.5em;
+    font-size: 1.1em;
+    color: dodgerblue;
+    cursor: pointer;
+    appearance: none;          /* reset native appearance */
+    -webkit-appearance: none;
+}
+
+.custom-fields-add-button::before {
+    content: '+ ';
+}

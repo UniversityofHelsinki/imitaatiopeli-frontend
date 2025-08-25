@@ -23,6 +23,11 @@ const getUser = async () => {
     }
 };
 
+const logout = (url = '/Shibboleth.sso/Logout') => {
+    console.log("HIT");
+    window.location.replace(url);
+};
+
 const useUser = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users.user);
@@ -39,7 +44,7 @@ const useUser = () => {
         }
     };
 
-    return [user, loadUser];
+    return [user, loadUser, logout];
 };
 
 export default useUser;

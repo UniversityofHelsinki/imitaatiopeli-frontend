@@ -7,7 +7,7 @@ export const validatePrompt = async (game, property) => {
   if (isEmpty(prompt)) {
     return {
       isValid: false,
-      message: 'game_validation_ai_prompt_is_empty',
+      message: 'game_validation_ai_prompt_is_required'
     };
   }
 
