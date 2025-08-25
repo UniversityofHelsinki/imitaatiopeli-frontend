@@ -30,8 +30,8 @@ const GameForm = ({
                   }) => {
     const { t } = useTranslation();
 
-    // Get temperature from game configuration or default to 0.8 (80%)
-    const temperature = game.configuration.temperature ?? 0.8;
+    // Get temperature from game configuration or default to 0.7
+    const temperature = game.configuration.temperature ?? 0.7;
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -54,9 +54,6 @@ const GameForm = ({
             temperature: newTemperature
         });
     };
-
-    // Convert temperature to percentage for display
-    const temperaturePercentage = Math.round(temperature * 100);
 
     return (
         <form
@@ -111,24 +108,33 @@ const GameForm = ({
             </div>
             <div className="form-field game-form-field">
                 <label htmlFor="temperature-slider">
-                    {t('temperature_setting')}: {temperaturePercentage}%
+                    {t('temperature_setting')}: {temperature}
+                    <span className="temperature-label">
+            ({temperature < 0.3 ? t('temperature_conservative') :
+                        temperature > 0.7 ? t('temperature_creative') :
+                            t('temperature_balanced')})
+        </span>
                 </label>
-                <input
-                    id="temperature-slider"
-                    type="range"
-                    min="0.01"
-                    max="1"
-                    step="0.01"
-                    value={temperature}
-                    onChange={handleTemperatureChange}
-                    disabled={saving}
-                    className="temperature-slider"
-                />
-                <div className="temperature-slider-labels">
-                    <span>{t('more_focused')}</span>
-                    <span>{t('more_creative')}</span>
+                <div className="temperature-slider-wrapper">
+                    <input
+                        id="temperature-slider"
+                        type="range"
+                        min="0.05"
+                        max="1"
+                        step="0.05"
+                        value={temperature}
+                        onChange={handleTemperatureChange}
+                        disabled={saving}
+                        className="temperature-slider"
+                    />
+                    <div className="temperature-slider-labels">
+                        <span>{t('more_focused')}</span>
+                        <span>{t('temperature_balanced')}</span>
+                        <span>{t('more_creative')}</span>
+                    </div>
                 </div>
             </div>
+
 
             <div className="form-field game-form-field">
                 <Accordion

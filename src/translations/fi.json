@@ -114,6 +114,7 @@
   "test_ai_prompt": "Testaa tekoälyn vastauksia",
   "no_prompt_available": "Ei promptia",
   "prompt_required_message" : "Anna prompt ennen kuin voit kysyä",
+  "test_question_placeholder": "Kirjoita kysymys",
   "admin_game_lobby_heading": "Aula",
   "admin_game_lobby_details_name": "Nimi",
   "admin_game_lobby_details_theme": "Teema",
