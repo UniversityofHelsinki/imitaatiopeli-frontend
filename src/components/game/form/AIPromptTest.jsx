@@ -6,6 +6,7 @@ import useAIPromptTest from '../../../hooks/useAIPromptTest.js';
 import TextArea from '../../misc/ds/TextArea';
 import Spinner from '../../misc/ds/Spinner.jsx';
 import './AIPromptTest.css';
+import { DsIcon } from '@uh-design-system/component-library-react';
 
 const AIPromptTest = ({ prompt, temperature }) => {
     const { t } = useTranslation();
@@ -62,7 +63,7 @@ const AIPromptTest = ({ prompt, temperature }) => {
                     id="test-question"
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
-                    placeholder={hasPrompt ? t('enter_test_question_placeholder') : t('add_prompt_first_placeholder')}
+                    placeholder={t('test_question_placeholder')}
                     rows={4}
                     disabled={loading || !hasPrompt}
                     required
@@ -72,7 +73,7 @@ const AIPromptTest = ({ prompt, temperature }) => {
             {!hasPrompt && (
                 <div className="form-field game-form-field">
                     <div className="info-message">
-                        <strong>{t('info')}:</strong> {t('prompt_required_message')}
+                        <DsIcon  dsName={'info'} dsSize={'1.5rem'} />{t('prompt_required_message')}
                     </div>
                 </div>
             )}

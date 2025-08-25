@@ -113,5 +113,6 @@
   "receiving_ai_response" : "Haetaan vastausta ...",
   "test_ai_prompt": "Testaa tekoälyn vastauksia",
   "no_prompt_available": "Ei promptia",
-  "prompt_required_message" : "Anna prompt ennen kuin voit kysyä"
+  "prompt_required_message" : "Anna prompt ennen kuin voit kysyä",
+  "test_question_placeholder": "Kirjoita kysymys"
 }
