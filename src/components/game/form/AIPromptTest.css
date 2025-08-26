@@ -1,0 +1,10 @@
+.button-group {
+    display: flex;
+    gap: 12px;
+}
+
+.info-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

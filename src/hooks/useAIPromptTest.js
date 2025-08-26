@@ -10,7 +10,7 @@ const useAIPromptTest = () => {
         path: '/api/testAIPrompt',
     });
 
-    const testPrompt = useCallback(async (prompt, question) => {
+    const testPrompt = useCallback(async (prompt, question, temperature) => {
         if (!prompt?.trim() || !question?.trim()) {
             setError('Both prompt and question are required');
             return null;
@@ -23,7 +23,8 @@ const useAIPromptTest = () => {
         try {
             const apiResponse = await post({
                 prompt: prompt,
-                question: question
+                question: question,
+                temperature: temperature
             });
 
             if (apiResponse.status === 200) {

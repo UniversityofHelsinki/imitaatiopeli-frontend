@@ -101,5 +101,16 @@
   "test_prompt": "Kysy",
   "clear": "Tyhjää",
   "close": "Sulje",
-  "game_lobby_player_not_joined": "Pelaaja ei ole liittynyt peliin"
+  "temperature_setting": "lämpötila-asetus",
+  "game_lobby_player_not_joined": "Pelaaja ei ole liittynyt peliin",
+  "temperature_conservative": "Konservatiivinen",
+  "temperature_creative": "Luova",
+  "temperature_balanced": "Maltillinen",
+  "more_focused": "Tarkempi",
+  "more_creative": "Luovempi",
+  "receiving_ai_response" : "Haetaan vastausta ...",
+  "test_ai_prompt": "Testaa tekoälyn vastauksia",
+  "no_prompt_available": "Ei promptia",
+  "prompt_required_message" : "Anna prompt ennen kuin voit kysyä",
+  "test_question_placeholder": "Kirjoita kysymys"
 }

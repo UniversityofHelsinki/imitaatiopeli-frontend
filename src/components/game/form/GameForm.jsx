@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import './GameForm.css';
 import PromptField from './PromptField';
 import ThemeField from './ThemeField';
@@ -7,12 +7,16 @@ import { BottomRow } from './BottomRow';
 import FormButtons from './FormButtons';
 import NameField from "./NameField.jsx";
 import LanguageField from "./LanguageField.jsx";
-import Button from "../../misc/ds/Button.jsx";
 import { useTranslation } from "react-i18next";
 import InstructionsField from "./InstructionsField.jsx";
 import ResearchField from "./ResearchField.jsx";
 import ResearchDescriptionField from "./ResearchDescriptionField.jsx";
-import AIPromptTestDialog from "../../game/form/AIPromptTestDialog.jsx";
+import LocationField from './LocationField.jsx';
+import GenderField from "./GenderField.jsx";
+import AgeField from "./AgeField.jsx";
+import BackgroundInfoField from "./BackgroundInfoField.jsx";
+import RelevantBackgroundField from "./RelevantBackgroundField.jsx";
+import CustomFields from "./CustomFields.jsx";
 
 const GameForm = ({
                       game,
@@ -23,8 +27,9 @@ const GameForm = ({
                       validations
                   }) => {
     const { t } = useTranslation();
-    const textRef = useRef(null);
-    const [isTestDialogOpen, setIsTestDialogOpen] = useState(false);
+
+    // Get temperature from game configuration or default to 0.7
+    const temperature = game.configuration.temperature ?? 0.7;
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -40,17 +45,12 @@ const GameForm = ({
         }
     };
 
-    const handleTestPrompt = (event) => {
-        event.preventDefault(); // Prevent form submission
-        if (!game.configuration.ai_prompt?.trim()) {
-            alert(t('please_enter_prompt_first'));
-            return;
-        }
-        setIsTestDialogOpen(true);
-    };
-
-    const handleCloseTestDialog = () => {
-        setIsTestDialogOpen(false);
+    const handleTemperatureChange = (e) => {
+        const newTemperature = parseFloat(e.target.value);
+        onChange('configuration', {
+            ...game.configuration,
+            temperature: newTemperature
+        });
     };
 
     return (
@@ -106,11 +106,46 @@ const GameForm = ({
                     />
                 </div>
                 <div className="form-field game-form-field">
-                    <Button
-                        type="button"
-                        label={t('game_form_prompt_field_button')}
-                        onClick={handleTestPrompt}
-                        disabled={saving || !game.configuration.ai_prompt?.trim()}
+                    <label htmlFor="temperature-slider">
+                        {t('temperature_setting')}: {temperature}
+                        <span className="temperature-label">
+            ({temperature < 0.3 ? t('temperature_conservative') :
+                            temperature > 0.7 ? t('temperature_creative') :
+                                t('temperature_balanced')})
+        </span>
+                    </label>
+                    <div className="temperature-slider-wrapper">
+                        <input
+                            id="temperature-slider"
+                            type="range"
+                            min="0.05"
+                            max="1"
+                            step="0.05"
+                            value={temperature}
+                            onChange={handleTemperatureChange}
+                            disabled={saving}
+                            className="temperature-slider"
+                        />
+                    <div className="temperature-slider-labels">
+                        <span>{t('more_focused')}</span>
+                        <span>{t('temperature_balanced')}</span>
+                        <span>{t('more_creative')}</span>
+                    </div>
+                </div>
+                </div>
+
+
+                <div className="form-field game-form-field">
+                    <Accordion
+                        header={t('test_ai_prompt')}
+                        content={
+                            <AIPromptTest
+                                prompt={game.configuration.ai_prompt}
+                                temperature={temperature}
+                            />
+                        }
+                        variant="compact"
+                        openByDefault={false}
                     />
                 </div>
                 <div className="form-field game-form-field">
@@ -155,11 +190,6 @@ const GameForm = ({
                 </div>
             </form>
 
-            <AIPromptTestDialog
-                isOpen={isTestDialogOpen}
-                onClose={handleCloseTestDialog}
-                prompt={game.configuration.ai_prompt}
-            />
         </>
     );
 };
@@ -169,6 +199,7 @@ GameForm.propTypes = {
         configuration: PropTypes.shape({
             game_name: PropTypes.string,
             ai_prompt: PropTypes.string,
+            temperature: PropTypes.number,
         }),
         researchPermission: PropTypes.bool
     }),
