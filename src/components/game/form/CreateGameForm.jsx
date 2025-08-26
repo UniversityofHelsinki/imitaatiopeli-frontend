@@ -13,9 +13,9 @@ const createEmptyGame = (t) => ({
     ai_prompt: '',
     game_name: '',
     theme_description: '',
-    language: '',
-    instructions: t('game_form_instructions_field_text'),
-    isResearch: false,
+    language_used: '',
+    instructions_for_players: t('game_form_instructions_field_text'),
+    is_research_game: false,
     research_description: t('game_form_research_description_field_text')
   }
 });

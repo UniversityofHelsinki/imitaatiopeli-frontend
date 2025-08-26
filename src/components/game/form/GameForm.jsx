@@ -85,13 +85,13 @@ const GameForm = ({
                 </div>
                 <div className="form-field game-form-field">
                     <LanguageField
-                        value={game.configuration.language}
+                        value={game.configuration.language_used}
                         onChange={e => onChange('configuration', {
                             ...game.configuration,
-                            language: e.target.value
+                            language_used: e.target.value
                         })}
                         disabled={saving}
-                        validation={validations?.configuration?.language}
+                        validation={validations?.configuration?.language_used}
                     />
                 </div>
                 <div className="form-field game-form-field">
@@ -115,26 +115,26 @@ const GameForm = ({
                 </div>
                 <div className="form-field game-form-field">
                     <InstructionsField
-                        value={game.configuration.instructions}
+                        value={game.configuration.instructions_for_players}
                         onChange={e => onChange('configuration', {
                             ...game.configuration,
-                            instructions: e.target.value
+                            instructions_for_players: e.target.value
                         })}
                         disabled={saving}
-                        validation={validations?.configuration?.instructions}
+                        validation={validations?.configuration?.instructions_for_players}
                     />
                 </div>
                 <div className="form-field game-form-field">
                     <ResearchField
-                        value={game.configuration.isResearch}
+                        value={game.configuration.is_research_game}
                         onChange={e => onChange('configuration',  {
                             ...game.configuration,
-                            isResearch: e.target.value === true
+                            is_research_game: e.target.value === true
                         })}
                         disabled={saving}
                     />
                 </div>
-                {game.configuration.isResearch &&
+                {game.configuration.is_research_game &&
                     <div className="form-field game-form-field">
                         <ResearchDescriptionField
                             value={game.configuration.research_description}

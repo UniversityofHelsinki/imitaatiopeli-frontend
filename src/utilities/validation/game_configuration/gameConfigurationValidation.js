@@ -11,8 +11,8 @@ const validate = async (configuration) => {
     game_name: validateGameName,
     theme_description: validateThemeDescription,
     ai_prompt: validatePrompt,
-    language: validateLanguage,
-    instructions: validateInstructions,
+    language_used: validateLanguage,
+    instructions_for_players: validateInstructions,
     research_description: validateResearchDescription
 
   };
