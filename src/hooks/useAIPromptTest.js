@@ -10,14 +10,14 @@ const useAIPromptTest = () => {
         path: '/api/testAIPrompt',
     });
 
-    const testPrompt = useCallback(async (prompt, question, temperature, languageModelUrl) => {
+    const testPrompt = useCallback(async (prompt, question, temperature, languageModel) => {
         if (!prompt?.trim() || !question?.trim()) {
             setError('Both prompt and question are required');
             return null;
         }
 
-        if (!languageModelUrl?.trim()) {
-            setError('Language model URL is required');
+        if (!languageModel) {
+            setError('Language model is required');
             return null;
         }
 
@@ -30,7 +30,7 @@ const useAIPromptTest = () => {
                 prompt: prompt,
                 question: question,
                 temperature: temperature,
-                languageModelUrl: languageModelUrl
+                languageModelId: languageModel
             });
 
             if (apiResponse.status === 200) {

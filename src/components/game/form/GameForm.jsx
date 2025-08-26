@@ -98,13 +98,13 @@ const GameForm = ({
             </div>
             <div className="form-field game-form-field">
                 <LanguageModelField
-                    value={game.configuration.language_model_url}
+                    value={game.configuration.language_model}
                     onChange={e => onChange('configuration', {
                         ...game.configuration,
-                        language_model_url: e.target.value
+                        language_model: e.target.value
                     })}
                     disabled={saving}
-                    validation={validations?.configuration?.language_model_url}
+                    validation={validations?.configuration?.language_model}
                 />
             </div>
             <div className="form-field game-form-field">
@@ -154,7 +154,7 @@ const GameForm = ({
                         <AIPromptTest
                             prompt={game.configuration.ai_prompt}
                             temperature={temperature}
-                            languageModelUrl={game.configuration.language_model_url}
+                            languageModel={game.configuration.language_model}
                         />
                     }
                     variant="compact"

@@ -9,8 +9,8 @@ const LanguageModelField = ({ value, onChange, disabled, validation }) => {
     const { models, loading, error } = useLanguageModels();
 
     const handleChange = (e) => {
-        const selectedUrl = e.detail || e.target?.value;
-        onChange({ target: { value: selectedUrl } });
+        const selectedId = e.detail || e.target?.value;
+        onChange({ target: { value: selectedId } });
     };
 
     const errorText = validation && !validation.isValid && t(validation.message) || '';
@@ -33,7 +33,7 @@ const LanguageModelField = ({ value, onChange, disabled, validation }) => {
                 clearable={true}
             >
                 {models.map((model) => (
-                    <Option key={model.url} value={model.url}>
+                    <Option key={model.model_id} value={model.model_id}>
                         {model.name}
                     </Option>
                 ))}

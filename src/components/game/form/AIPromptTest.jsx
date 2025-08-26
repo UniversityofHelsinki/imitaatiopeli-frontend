@@ -9,7 +9,7 @@ import Spinner from '../../misc/ds/Spinner.jsx';
 import './AIPromptTest.css';
 import { DsIcon } from '@uh-design-system/component-library-react';
 
-const AIPromptTest = ({ prompt, temperature, languageModelUrl }) => {
+const AIPromptTest = ({ prompt, temperature, languageModel }) => {
     const { t } = useTranslation();
     const [question, setQuestion] = useState('');
     const { models } = useLanguageModels();
@@ -22,15 +22,18 @@ const AIPromptTest = ({ prompt, temperature, languageModelUrl }) => {
         clearResults
     } = useAIPromptTest();
 
-    const selectedModel = models.find(model => model.url === languageModelUrl);
-    const modelName = selectedModel ? selectedModel.name : languageModelUrl || t('no_model_selected');
+    const selectedModel = models.find(model => {
+        return model.model_id === Number(languageModel);
+    });
+
+    const modelName = selectedModel ? selectedModel.name : t('no_model_selected');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         e.stopPropagation();
-        if (!question.trim() || !languageModelUrl) return;
+        if (!question.trim() || !languageModel) return;
 
-        await testPrompt(prompt, question, temperature, languageModelUrl);
+        await testPrompt(prompt, question, temperature, languageModel);
     };
 
     const handleClear = (e) => {
@@ -41,7 +44,7 @@ const AIPromptTest = ({ prompt, temperature, languageModelUrl }) => {
     };
 
     const hasPrompt = prompt?.trim();
-    const hasModel = languageModelUrl?.trim();
+    const hasModel = languageModel;
 
     return (
         <div className="ai-prompt-test">

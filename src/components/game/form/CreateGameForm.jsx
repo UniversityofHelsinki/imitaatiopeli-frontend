@@ -17,7 +17,7 @@ const createEmptyGame = (t) => ({
     instructions: t('game_form_instructions_field_text'),
     isResearch: false,
     research_description: t('game_form_research_description_field_text'),
-    language_model_url: '',
+    language_model: null,
   },
   background_info: {
     relevant_background: '',
