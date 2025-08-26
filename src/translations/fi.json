@@ -119,5 +119,5 @@
   "prompt_and_model_required_message": "Anna prompt sekä kielimalli ennen kuin voit kysyä",
   "language_model" : "Kielimalli",
   "select_language_model": "Valitse kielimalli",
-  "game_validation_language_model_url_is_required": "Kielimalli on pakollinen"
+  "game_validation_language_model_is_required": "Kielimalli on pakollinen"
 }

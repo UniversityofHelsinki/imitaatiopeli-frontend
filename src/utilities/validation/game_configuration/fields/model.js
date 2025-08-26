@@ -1,12 +1,12 @@
-import { isEmpty } from "../../common";
+import { isNull } from '../../common';
 
-export const validateLanguageModelUrl = async (game, property) => {
-    const languageModelUrl = game[property];
+export const validateLanguageModel = async (game, property) => {
+    const languageModel = game[property];
 
-    if (isEmpty(languageModelUrl)) {
+    if (isNull(languageModel)) {
         return {
             isValid: false,
-            message: 'game_validation_language_model_url_is_required'
+            message: 'game_validation_language_model_is_required'
         };
     }
 
