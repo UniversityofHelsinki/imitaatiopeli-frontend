@@ -34,12 +34,6 @@ const GameForm = ({
     // Get temperature from game configuration or default to 0.7
     const temperature = game.configuration.temperature ?? 0.7;
 
-    // Debug logging
-    console.log('Game object:', game);
-    console.log('Game configuration:', game.configuration);
-    console.log('Language model URL:', game.configuration.language_model_url);
-
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (onSubmit) {
