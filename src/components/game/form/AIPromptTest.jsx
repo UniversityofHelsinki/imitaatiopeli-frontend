@@ -23,7 +23,7 @@ const AIPromptTest = ({ prompt, temperature, languageModel }) => {
     } = useAIPromptTest();
 
     const selectedModel = models.find(model => {
-        return model.model_id === Number(languageModel);
+        return model.model_id === languageModel;
     });
 
     const modelName = selectedModel ? selectedModel.name : t('no_model_selected');
@@ -147,7 +147,7 @@ const AIPromptTest = ({ prompt, temperature, languageModel }) => {
 AIPromptTest.propTypes = {
     prompt: PropTypes.string,
     temperature: PropTypes.number.isRequired,
-    languageModelUrl: PropTypes.string,
+    languageModel: PropTypes.number.isRequired,
 };
 
 export default AIPromptTest;

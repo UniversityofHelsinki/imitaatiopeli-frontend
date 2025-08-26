@@ -273,7 +273,7 @@ GameForm.propTypes = {
             game_name: PropTypes.string,
             ai_prompt: PropTypes.string,
             temperature: PropTypes.number,
-            language_model_url: PropTypes.string,
+            language_model: PropTypes.number,
         }),
         researchPermission: PropTypes.bool
     }),

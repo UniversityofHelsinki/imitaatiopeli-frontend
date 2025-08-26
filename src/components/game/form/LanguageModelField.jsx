@@ -10,7 +10,8 @@ const LanguageModelField = ({ value, onChange, disabled, validation }) => {
 
     const handleChange = (e) => {
         const selectedId = e.detail || e.target?.value;
-        onChange({ target: { value: selectedId } });
+        const numericId = selectedId ? parseInt(selectedId, 10) : null;
+        onChange({ target: { value: numericId } });
     };
 
     const errorText = validation && !validation.isValid && t(validation.message) || '';
