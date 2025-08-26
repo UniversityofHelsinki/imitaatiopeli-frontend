@@ -117,7 +117,7 @@
   "test_question_placeholder": "Kirjoita kysymys",
   "admin_game_lobby_heading": "Aula",
   "admin_game_lobby_details_name": "Nimi",
-  "admin_game_lobby_details_theme": "Teema",
+  "admin_game_lobby_details_theme": "Aihe",
   "admin_game_lobby_details_join_link_label": "Littymislinkki",
   "admin_game_lobby_details_join_link": "",
   "admin_game_lobby_no_game_data": "Pelin tietoja ei löytynyt",

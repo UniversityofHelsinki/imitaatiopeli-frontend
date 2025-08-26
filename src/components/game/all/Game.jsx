@@ -74,7 +74,7 @@ const Content = ({ game }) => {
               icon="play_arrow"
               size="2xLarge"
               colour="black"
-              href={`/admin/games/${game.game_id}/start`}
+              href={`/admin/games/${game.game_id}/lobby`}
               internal
           />
       );
