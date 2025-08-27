@@ -37,6 +37,7 @@ const InstructionsField = ({ value, onChange, disabled, validation }) => {
                     value={value}
                     onChange={handleChange}
                     disabled={disabled}
+                    assistiveText={t('game_form_instructions_field_assistive_text')}
                     errorText={errorText}
                     required
                 />
