@@ -19,7 +19,7 @@
   "game_form_prompt_field_placeholder": "Syötä prompti",
   "game_form_prompt_field_button":"Testaa",
   "game_form_instructions_field_label": "Ohjeet",
-  "game_form_instructions_field_text": "Tämän kokeen aikana pelaat rooleissa Tuomari (C) ja Aito (B).\n# Tuomarin roolissa a) kysyt kysymyksiä, joiden avulla uskot, että pystyt tunnistamaan aidon <aihe/ryhmä> ja b) arvioit vastauksista, onko ne kirjoittanut ihminen vai tekoäly.\n# Aidon roolissa vastaat muiden osallistujien keksimiin kysymyksiin omana itsenäsi.",
+  "game_form_instructions_field_text": "Tämän kokeen aikana pelaat rooleissa Tuomari (C) ja Aito (B).\n1. Tuomarin roolissa a) kysyt kysymyksiä, joiden avulla uskot, että pystyt tunnistamaan aidon <aihe/ryhmä> ja b) arvioit vastauksista, onko ne kirjoittanut ihminen vai tekoäly.\n2. Aidon roolissa vastaat muiden osallistujien keksimiin kysymyksiin omana itsenäsi.",
   "game_form_instructions_field_placeholder": "Syötä ohjeet",
   "game_form_instructions_button_reset": "Palauta",
   "game_form_research_field_legend": "Onko kyseessä tutkimus?",

@@ -11,12 +11,8 @@ import { useTranslation } from "react-i18next";
 import InstructionsField from "./InstructionsField.jsx";
 import ResearchField from "./ResearchField.jsx";
 import ResearchDescriptionField from "./ResearchDescriptionField.jsx";
-import LocationField from './LocationField.jsx';
-import GenderField from "./GenderField.jsx";
-import AgeField from "./AgeField.jsx";
-import BackgroundInfoField from "./BackgroundInfoField.jsx";
-import RelevantBackgroundField from "./RelevantBackgroundField.jsx";
-import CustomFields from "./CustomFields.jsx";
+import AIPromptTest from "../../game/form/AIPromptTest.jsx";
+import Accordion from "../../misc/ds/Accordion.jsx";
 
 const GameForm = ({
                       game,
@@ -112,7 +108,7 @@ const GameForm = ({
             ({temperature < 0.3 ? t('temperature_conservative') :
                             temperature > 0.7 ? t('temperature_creative') :
                                 t('temperature_balanced')})
-        </span>
+                        </span>
                     </label>
                     <div className="temperature-slider-wrapper">
                         <input
