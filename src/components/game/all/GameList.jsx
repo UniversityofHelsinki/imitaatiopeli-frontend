@@ -8,7 +8,7 @@ const GameList = ({ games = [] }) => {
   return (
     <div className="game-list-container">
       <ul className="game-list">
-        {games.map(game => (
+        {games.toSorted((a, b) => b.game_id - a.game_id).map(game => (
           <Game key={game.game_id} game={game} />
         ))}
       </ul>
