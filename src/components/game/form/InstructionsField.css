@@ -1,4 +1,3 @@
-
 .instructions-field {
     width: 100%;
 }
@@ -6,7 +5,7 @@
 .instructions-field-container {
     position: relative;
     display: flex;
-    align-items: flex-start; /* top-align textarea and button */
+    align-items: flex-end;
     gap: 0rem;
     flex-wrap: nowrap;       /* keep them on the same line */
     width: 100%;
@@ -24,11 +23,8 @@
     box-sizing: border-box;
 }
 
-/* Keep the button at natural size, on the same line */
-.instructions-field-container .undo-button {
-    margin-top: 0;           /* remove vertical offset */
-    flex: 0 0 auto;
-    margin-top: 5.5rem;
+.instructions-field-container button {
+    margin-left: var(--ds-spacing-2xSmall);
 }
 
 

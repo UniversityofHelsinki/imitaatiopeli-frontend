@@ -4,6 +4,7 @@ import TextArea from '../../misc/ds/TextArea';
 import { useTranslation } from 'react-i18next';
 import './InstructionsField.css';
 import Button from "../../misc/ds/Button.jsx";
+import Icon from "../../misc/ds/Icon.jsx";
 
 const InstructionsField = ({ value, onChange, disabled, validation }) => {
     const { t } = useTranslation();
@@ -16,7 +17,9 @@ const InstructionsField = ({ value, onChange, disabled, validation }) => {
         }
     }, [value, hasChanged]);
 
-    const errorText = validation && !validation.isValid && t(validation.message) || '';
+    const isEmptyOrDefaultText = !value || value.trim() === '' || value === t('game_form_instructions_field_text');
+
+    const errorText = validation && !validation.isValid && t(validation.message) || isEmptyOrDefaultText;
 
     const handleChange = (e) => {
         setHasChanged(true);
@@ -41,15 +44,14 @@ const InstructionsField = ({ value, onChange, disabled, validation }) => {
                     errorText={errorText}
                     required
                 />
-                <Button
+                <button
+                    aria-label={t('game_form_instructions_undo_button_aria_label')}
+                    className="button-plain undo-button"
                     onClick={handleUndo}
                     disabled={disabled || !hasChanged || value === originalValue}
-                    variant="standalone"
-                    icon="rotate_left"
-                    size="2xLarge"
-                    colour="black"
-                    className="undo-button"
-                />
+                >
+                    <Icon name="rotate-left" aria-hidden="true" />
+                </button>
             </div>
         </div>
     );
