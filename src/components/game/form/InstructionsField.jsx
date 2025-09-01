@@ -17,9 +17,7 @@ const InstructionsField = ({ value, onChange, disabled, validation }) => {
         }
     }, [value, hasChanged]);
 
-    const isEmptyOrDefaultText = !value || value.trim() === '' || value === t('game_form_instructions_field_text');
-
-    const errorText = validation && !validation.isValid && t(validation.message) || isEmptyOrDefaultText;
+    const errorText = validation && !validation.isValid && t(validation.message) || '';
 
     const handleChange = (e) => {
         setHasChanged(true);
