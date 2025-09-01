@@ -1,4 +1,3 @@
-
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +6,6 @@ import Link from '../../misc/ds/Link';
 import Tag from '../../misc/ds/Tag';
 import './Game.css';
 import Icon from "../../misc/ds/Icon.jsx";
-import useDeleteGame from '../../../hooks/useDeleteGame.js';
 import {useNotification} from "../../notification/NotificationContext.js";
 
 const Header = ({ game }) => {
@@ -36,7 +34,7 @@ const Header = ({ game }) => {
 
   return (
       <div className="game-header">
-        <span className="game-header-title">{game.configuration.theme_description}</span>
+        <span className="game-header-title">{game.configuration.game_name}</span>
         <div className="game-header-state">
           {tag}
         </div>
@@ -48,63 +46,53 @@ const Header = ({ game }) => {
 const Content = ({ game }) => {
   const { t } = useTranslation();
   const { setNotification } = useNotification();
+  const joinUrl = `${window.location.origin}/games/${game.game_code}/join`;
+  const gameWaiting = !game.start_time && !game.end_time;
 
-  const copyToClipboard = (value) => {
-    navigator.clipboard.writeText(value);
-    setNotification(t('game_tag_copy_notification'), 'success', true);
-  }
-
-  //Poistoa varten on tehtävä "popUp", jossa kysytään halutaanko peli varmasti poistaa.
-  //Kys. sivulle välitetään url:iin game_id. Sivulla pystytään lukemaan  useParams() metodilla game_id
-  //ja välittämään useDeleteGame:lle
-  const [ remove ]= useDeleteGame();
-
-  const removeGame = async (...game) => {
-    await remove(game);
-  }
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(joinUrl);
+      setNotification(t('game_content_join_link_copied_notification'), 'success', true);
+    } catch (error) {
+      setNotification(error.cause?.status, 'error');
+      console.error(error);
+    }
+  };
 
   const stateLink = (() => {
-    const gameNotStarted = !game.start_time && !game.end_time;
+    const gameWaiting = !game.start_time && !game.end_time;
     const gameStarted = game.start_time && !game.end_time;
-    if (gameNotStarted) {
+
+    if (gameWaiting) {
       return (
           <Link
-              label={t('game_tag_start_game')}
+              label={t('game_content_move_to_game_link_label')}
               variant="standalone"
               icon="play_arrow"
               size="2xLarge"
               colour="black"
-              href={`/admin/games/${game.game_id}/start`}
+              href={`/admin/games/${game.game_id}/lobby`}
               internal
           />
       );
     } else if (gameStarted) {
       return (
           <Link
-              label={t('game_tag_end_game')}
+              label={t('game_content_move_to_monitor_link_label')}
               variant="standalone"
-              icon="pause"
+              icon="play_arrow"
               size="2xLarge"
               colour="black"
-              href={`/admin/games/${game.game_id}/end`}
+              href={`/admin/games/${game.game_id}/monitor`}
               internal
           />
       );
+    } else {
+      return (
+          <></>
+      );
     }
   })();
-
-  const  minutesToHMin = (totalMinutes, { dropZeroHours = true, hLabel = 'h', mLabel = 'min' } = {}) => {
-    const sign = totalMinutes < 0 ? '-' : '';
-    const abs = Math.abs(totalMinutes);
-    const h = Math.floor(abs / 60);
-    const m = abs % 60;
-
-    const parts = [];
-    if (!(dropZeroHours && h === 0)) parts.push(`${h} ${hLabel}`);
-    parts.push(`${m} ${mLabel}`);
-
-    return sign + parts.join(' ');
-  }
 
   const truncate = (text, max = 80) => {
     if (!text) {
@@ -120,44 +108,37 @@ const Content = ({ game }) => {
   return (
       <div className="game-content">
         <div className="game-content-data">
-          <div className="game-inline-row">
-            <div>{t('game_tag_access_code')} {game.game_code}</div>
-          </div>
-          <div>{t('game_tag_name')}  {game.configuration.game_name}</div>
-          <div>{t('game_tag_prompt')}  {truncate(game.configuration.ai_prompt)}</div>
-          <div>{t('game_tag_research')} {t('game_tag_research_allowed')}</div>
-          <div>{t('game_tag_time_nbr_questions')} {minutesToHMin(game.configuration.max_duration_minutes)} {game.configuration.max_questions} kierrosta</div>
+          <div>{t('game_content_theme')}  {game.configuration.theme_description}</div>
         </div>
         <div className="game-content-divider"></div>
         <div className="game-content-bottom-row">
           <div className="game-content-actions">
             {stateLink}
-            <Link
-                label={t('game_tag_edit_game')}
-                variant="standalone"
-                icon="edit"
-                size="2xLarge"
-                colour="black"
-                href={`/admin/games/${game.game_id}`}
-                internal
-            />
-            <div>
-              <button className="button-plain game-button" onClick={() => copyToClipboard(game.game_code)}>
-                <Icon name="link" aria-hidden="true" />
-                <span>{t('game_tag_copy_code')} </span>
-              </button>
-            </div>
-            <div>
-              <button className="button-plain game-button" onClick={() => removeGame(game)}>
-                <Icon name="delete" aria-hidden="true" />
-                <span>{t('game_tag_delete_game')} </span>
-              </button>
-            </div>
+            {gameWaiting && (
+                <>
+                  <Link
+                      label={t('game_content_edit_game_link_label')}
+                      variant="standalone"
+                      icon="edit"
+                      size="2xLarge"
+                      colour="black"
+                      href={`/admin/games/${game.game_id}`}
+                      internal
+                  />
+                  <div>
+                    <button className="button-plain game-button" onClick={handleCopy}>
+                      <Icon name="link" aria-hidden="true" />
+                      <span>{t('game_content_join_link_button')} </span>
+                    </button>
+                  </div>
+                </>
+            )}
           </div>
         </div>
       </div>
   )
 };
+
 
 const Game = ({ game }) => {
 
