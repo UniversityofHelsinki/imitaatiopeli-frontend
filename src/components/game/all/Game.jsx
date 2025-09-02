@@ -142,20 +142,15 @@ const Content = ({ game }) => {
 
 
 const Game = ({ game }) => {
-  const gameEnded = Boolean(game.end_time);
 
   return (
-      <>
-        {!gameEnded ? (
-            <div className="game">
-              <Accordion
-                  header={<Header game={game} />}
-                  content={<Content game={game} />}
-                  variant="compact"
-              />
-            </div>
-        ): null}
-      </>
+      <div className="game">
+        <Accordion
+            header={<Header game={game} />}
+            content={<Content game={game} />}
+            variant="compact"
+        />
+      </div>
   );
 };
 

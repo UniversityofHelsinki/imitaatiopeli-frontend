@@ -12,7 +12,8 @@ const GameListing = () => {
   const { t } = useTranslation();
   const [games, setGames] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+  const [showEnded, setShowEnded] = useState(false);
+
   useEffect(() => {
     (async () => {
       const response = await get({
@@ -23,6 +24,15 @@ const GameListing = () => {
       setLoading(false);
     })();
   }, []);
+
+  const handleShowEndedChecked = (event) => {
+    setShowEnded(event.target.checked);
+  };
+
+  const filteredGames = games?.filter(game =>
+      showEnded ? Boolean(game.end_time) : !game.end_time
+  );
+
 
   const crumbs = [
     {
@@ -55,22 +65,34 @@ const GameListing = () => {
   const showEndedGames = (
     <Checkbox
       name="showEndedGames"
-      id="show-ended-games-radio-button"
-      value=''
+      id="show-ended-games-checkbox"
+      checked={showEnded}
+      onChange={handleShowEndedChecked}
       label={t('game_listing_page_show_ended_games')}
-
-    >
-    </Checkbox>
+      optional={false}
+    />
   );
+
+  const headingExtras = (
+      <div className="heading-extras-container">
+        <span className="ended-games">
+          {showEndedGames}
+        </span>
+        <span className="create-game-link">
+          {createGameLink}
+        </span>
+      </div>
+  );
+
 
   return (
     <Page 
       heading={t('game_listing_page_heading')}
-      headingExtras={showEndedGames}
+      headingExtras={headingExtras}
       loading={loading}
       crumbs={crumbs}
     >
-      <GameList games={games} />
+      <GameList games={filteredGames} />
     </Page>
   );
 
