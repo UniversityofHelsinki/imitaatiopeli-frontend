@@ -1,0 +1,5 @@
+.admin-game-lobby-container > * p {
+    font-family: var(--ds-fontFamily-body);
+    margin-block-start: var(--ds-spacing-2xSmall);
+    margin-block-end: var(--ds-spacing-2xSmall);
+}

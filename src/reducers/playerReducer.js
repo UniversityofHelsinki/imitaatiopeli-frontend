@@ -1,8 +1,36 @@
+const initialState = {
+    player: null,
+    players: [],
+    loadingPlayer: false,
+    error: null
+};
 
-const playerReducer = (state = { loadingPlayer: false }, action) => {
+const playerReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'GET_PLAYER':
-            return { ...state, player: action.payload, loadingPlayer: false };
+            return {
+                ...state,
+                player: action.payload,
+                loadingPlayer: false
+            };
+        case 'GET_PLAYERS':
+            return {
+                ...state,
+                players: action.payload,
+                loadingPlayer: false
+            };
+        case 'SET_LOADING':
+            return {
+                ...state,
+                loadingPlayer: true,
+                error: null
+            };
+        case 'SET_ERROR':
+            return {
+                ...state,
+                loadingPlayer: false,
+                error: action.payload
+            };
         default:
             return state;
     }

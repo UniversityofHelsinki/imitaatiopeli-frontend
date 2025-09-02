@@ -115,5 +115,20 @@
   "language_model" : "Kielimalli",
   "select_language_model": "Valitse kielimalli",
   "game_validation_language_model_is_required": "Kielimalli on pakollinen",
-  "game_form_instructions_undo_button_aria_label": "Kumoa ohjetekstin muutokset ja palauta alkuperäinen teksti"
+  "game_form_instructions_undo_button_aria_label": "Kumoa ohjetekstin muutokset ja palauta alkuperäinen teksti",
+  "test_question_placeholder": "Kirjoita kysymys",
+  "admin_game_lobby_heading": "Aula",
+  "admin_game_lobby_details_name": "Nimi",
+  "admin_game_lobby_details_theme": "Aihe",
+  "admin_game_lobby_details_join_link_label": "Littymislinkki",
+  "admin_game_lobby_details_join_link": "",
+  "admin_game_lobby_no_game_data": "Pelin tietoja ei löytynyt",
+  "admin_game_button_end_game": "Päätä peli",
+  "admin_game_button_start_game": "Käynnistä peli",
+  "spinner_awaiting_players": "Odotetaan pelaajia...",
+  "lobby_players_heading": "Pelaajat",
+  "lobby_player_count": "Pelaajien lukumäärä",
+  "error_loading_data": "Virhe tietojen lataamisessa",
+  "game_url_copy_button_aria_label": "Kopioi pelin liittymislinkki",
+  "game_url_copy_button_title": "Kopioi pelin liittymislinkki"
 }
