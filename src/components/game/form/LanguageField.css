@@ -1,0 +1,35 @@
+/* LanguageField.css */
+.language-field {}
+
+.language-radio-group {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.language-legend {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.language-assistive-text {
+    color: var(--uh-color-muted, #6b7280);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.language-radio-options {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.language-radio-option {
+    display: flex;
+    align-items: center;
+}
+
+.language-radio-label {
+    margin-left: 0.35rem;
+}

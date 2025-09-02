@@ -6,7 +6,7 @@ export const validateLanguage = (game, property) => {
     if (isEmpty(gameLanguage)) {
         return {
             isValid: false,
-            message: 'game_validation_language_not_selected'
+            message: 'game_language_not_selected'
         };
     }
 

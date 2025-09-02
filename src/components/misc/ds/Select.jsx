@@ -52,7 +52,7 @@ const Select = ({
     if (ref.current && onChange) {
       ref.current.addEventListener('dsChange', onChange);
     }
-  }, [ref.current]);
+  }, [ref.current, onChange]);
   
   const dsProps = {
     dsTitle: title,

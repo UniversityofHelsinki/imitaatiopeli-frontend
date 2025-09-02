@@ -4,15 +4,22 @@ import { useTranslation } from 'react-i18next';
 import useLanguageModels from '../../../hooks/useLanguageModels.js';
 import Select, { Option } from '../../../components/misc/ds/Select.jsx';
 
-const LanguageModelField = ({ value, onChange, disabled, validation }) => {
+const LanguageModelField = ({ value, onChange, disabled, validation}) => {
     const { t } = useTranslation();
     const { models, loading, error } = useLanguageModels();
 
+    // Normalize to strings for Select/Option matching
+    const selectValue = value == null ? '' : String(value);
+
+    // Optional: find selected label (can be used for debugging or if your Select supports a prop for it)
+    const selectedModel = models.find(m => String(m.model_id) === selectValue);
+    const selectedLabel = selectedModel?.name ?? '';
+
     const handleChange = (e) => {
-        const selectedId = e.detail || e.target?.value;
-        const numericId = selectedId ? parseInt(selectedId, 10) : null;
-        onChange({ target: { value: numericId } });
+        const model = e?.detail;
+        onChange?.(parseInt(model));
     };
+
 
     const errorText = validation && !validation.isValid && t(validation.message) || '';
 
@@ -21,8 +28,8 @@ const LanguageModelField = ({ value, onChange, disabled, validation }) => {
             <Select
                 id="language-model-select"
                 title={t('language_model')}
-                placeholder={t('select_language_model')}
-                value={value || ''}
+                placeholder={selectedLabel ? selectedLabel : t('select_language_model')}
+                value={selectValue}
                 onChange={handleChange}
                 disabled={disabled}
                 loading={loading}
@@ -34,7 +41,7 @@ const LanguageModelField = ({ value, onChange, disabled, validation }) => {
                 clearable={true}
             >
                 {models.map((model) => (
-                    <Option key={model.model_id} value={model.model_id}>
+                    <Option key={model.model_id} value={String(model.model_id)}>
                         {model.name}
                     </Option>
                 ))}
@@ -44,7 +51,7 @@ const LanguageModelField = ({ value, onChange, disabled, validation }) => {
 };
 
 LanguageModelField.propTypes = {
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
     validation: PropTypes.object, // Match other field components
