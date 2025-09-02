@@ -6,7 +6,7 @@ import { get } from '../../../hooks/useHttp';
 import Page from '../Page';
 import { useTranslation } from 'react-i18next';
 import Link from '../../misc/ds/Link';
-import Checkbox from '../../misc/ds/Checkbox';
+import CheckBox from '../../misc/ds/CheckBox';
 
 const GameListing = () => {
   const { t } = useTranslation();
@@ -63,7 +63,7 @@ const GameListing = () => {
   );
 
   const showEndedGames = (
-    <Checkbox
+    <CheckBox
       name="showEndedGames"
       id="show-ended-games-checkbox"
       checked={showEnded}
