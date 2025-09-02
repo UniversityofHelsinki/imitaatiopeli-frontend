@@ -16,6 +16,7 @@ const ResearchDescriptionField = ({ value, onChange, disabled, validation }) => 
                     label={t('game_form_research_description_label')}
                     value={value}
                     onChange={onChange}
+                    assistiveText={t('game_form_research_description_assistive_text')}
                     disabled={disabled}
                     errorText={errorText}
                     required
