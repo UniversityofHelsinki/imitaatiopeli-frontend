@@ -6,6 +6,7 @@ import { get } from '../../../hooks/useHttp';
 import Page from '../Page';
 import { useTranslation } from 'react-i18next';
 import Link from '../../misc/ds/Link';
+import Checkbox from '../../misc/ds/Checkbox';
 
 const GameListing = () => {
   const { t } = useTranslation();
@@ -51,10 +52,21 @@ const GameListing = () => {
     />
   );
 
+  const showEndedGames = (
+    <Checkbox
+      name="showEndedGames"
+      id="show-ended-games-radio-button"
+      value=''
+      label={t('game_listing_page_show_ended_games')}
+
+    >
+    </Checkbox>
+  );
+
   return (
     <Page 
       heading={t('game_listing_page_heading')}
-      headingExtras={createGameLink}
+      headingExtras={showEndedGames}
       loading={loading}
       crumbs={crumbs}
     >
