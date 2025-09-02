@@ -93,10 +93,12 @@ const GameForm = ({
             <div className="form-field game-form-field">
                 <LanguageModelField
                     value={game.configuration.language_model}
-                    onChange={e => onChange('configuration', {
-                        ...game.configuration,
-                        language_model: e.target.value
-                    })}
+                    onChange={(modelId) =>
+                        onChange('configuration', {
+                            ...game.configuration,
+                            language_model: modelId
+                        })
+                    }
                     disabled={saving}
                     validation={validations?.configuration?.language_model}
                 />
@@ -140,8 +142,6 @@ const GameForm = ({
                     </div>
                 </div>
             </div>
-
-
             <div className="form-field game-form-field">
                 <Accordion
                     header={t('test_ai_prompt')}
@@ -188,15 +188,15 @@ const GameForm = ({
                         })}
                         disabled={saving}
                         validation={validations?.configuration?.research_description}
-                    />
+                        />
                 </div>
             }
-            <div className="horizontal-divider"></div>
-            <div className="game-form-bottom-row">
-                <BottomRow saving={saving}>
-                    <FormButtons disabled={saving} />
-                </BottomRow>
-            </div>
+                <div className="horizontal-divider"></div>
+                <div className="game-form-bottom-row">
+                    <BottomRow saving={saving}>
+                        <FormButtons disabled={saving} />
+                    </BottomRow>
+                </div>
         </form>
     );
 };

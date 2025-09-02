@@ -7,7 +7,6 @@ import { useNotification } from '../../notification/NotificationContext';
 import './CreateGameForm.css';
 import GameForm from './GameForm';
 
-
 const createEmptyGame = (t) => ({
   configuration: {
     ai_prompt: '',
@@ -34,7 +33,6 @@ const CreateGameForm = () => {
   useEffect(() => {
     validate(game).then(setValidations);
   }, []);
-
 
   const onChange = async (key, value) => {
     const changed = { ...game, [key]: value };
