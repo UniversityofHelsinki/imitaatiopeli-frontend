@@ -1,0 +1,4 @@
+.admin-game-buttons-row {
+    display: flex;
+    flex-direction: row;
+}

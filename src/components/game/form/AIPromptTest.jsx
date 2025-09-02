@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Button from '../../misc/ds/Button.jsx';
 import useAIPromptTest from '../../../hooks/useAIPromptTest.js';
+import useLanguageModels from '../../../hooks/useLanguageModels.js';
 import TextArea from '../../misc/ds/TextArea';
 import Spinner from '../../misc/ds/Spinner.jsx';
 import './AIPromptTest.css';
+import { DsIcon } from '@uh-design-system/component-library-react';
 
-const AIPromptTest = ({ prompt, temperature }) => {
+const AIPromptTest = ({ prompt, temperature, languageModel }) => {
     const { t } = useTranslation();
     const [question, setQuestion] = useState('');
+    const { models } = useLanguageModels();
 
     const {
         testPrompt,
@@ -19,12 +22,18 @@ const AIPromptTest = ({ prompt, temperature }) => {
         clearResults
     } = useAIPromptTest();
 
+    const selectedModel = models.find(model => {
+        return model.model_id === languageModel;
+    });
+
+    const modelName = selectedModel ? selectedModel.name : t('no_model_selected');
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         e.stopPropagation();
-        if (!question.trim()) return;
+        if (!question.trim() || !languageModel) return;
 
-        await testPrompt(prompt, question, temperature);
+        await testPrompt(prompt, question, temperature, languageModel);
     };
 
     const handleClear = (e) => {
@@ -34,8 +43,8 @@ const AIPromptTest = ({ prompt, temperature }) => {
         clearResults();
     };
 
-    const temperaturePercentage = Math.round(temperature * 100);
     const hasPrompt = prompt?.trim();
+    const hasModel = languageModel;
 
     return (
         <div className="ai-prompt-test">
@@ -45,9 +54,14 @@ const AIPromptTest = ({ prompt, temperature }) => {
             </div>
 
             <div className="form-field game-form-field">
+                <label>{t('selected_language_model')}:</label>
+                <div className="model-display">{modelName}</div>
+            </div>
+
+            <div className="form-field game-form-field">
                 <label>{t('temperature_setting')}:</label>
                 <div className="temperature-display">
-                    {temperaturePercentage}%
+                    {temperature}
                     <span className="temperature-label">
                         ({temperature < 0.3 ? t('temperature_conservative') :
                         temperature > 0.7 ? t('temperature_creative') :
@@ -62,17 +76,23 @@ const AIPromptTest = ({ prompt, temperature }) => {
                     id="test-question"
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
-                    placeholder={hasPrompt ? t('enter_test_question_placeholder') : t('add_prompt_first_placeholder')}
+                    placeholder={t('test_question_placeholder')}
                     rows={4}
-                    disabled={loading || !hasPrompt}
+                    disabled={loading || !hasPrompt || !hasModel}
                     required
                 />
             </div>
 
-            {!hasPrompt && (
+            {(!hasPrompt || !hasModel) && (
                 <div className="form-field game-form-field">
                     <div className="info-message">
-                        <strong>{t('info')}:</strong> {t('prompt_required_message')}
+                        <DsIcon dsName={'info'} dsSize={'1.5rem'} />
+                        {!hasPrompt && !hasModel
+                            ? t('prompt_and_model_required_message')
+                            : !hasPrompt
+                                ? t('prompt_required_message')
+                                : t('model_required_message')
+                        }
                     </div>
                 </div>
             )}
@@ -82,7 +102,7 @@ const AIPromptTest = ({ prompt, temperature }) => {
                     type="button"
                     label={loading ? t('testing') : t('test_prompt')}
                     onClick={handleSubmit}
-                    disabled={loading || !question.trim() || !hasPrompt}
+                    disabled={loading || !question.trim() || !hasPrompt || !hasModel}
                     variant="primary"
                 />
                 <Button
@@ -127,6 +147,7 @@ const AIPromptTest = ({ prompt, temperature }) => {
 AIPromptTest.propTypes = {
     prompt: PropTypes.string,
     temperature: PropTypes.number.isRequired,
+    languageModel: PropTypes.number.isRequired,
 };
 
 export default AIPromptTest;
