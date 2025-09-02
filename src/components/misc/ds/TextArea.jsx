@@ -29,6 +29,7 @@ const TextArea = ({ label, placeholder, assistiveText, value, required, errorTex
         aria-describedby={assistiveTextId}
         onKeyUp={onKeyUp}
         aria-invalid={Boolean(errorText)}
+        rows={5}
         {...rest}
       />
       {errorText && (

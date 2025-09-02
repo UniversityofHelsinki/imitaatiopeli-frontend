@@ -12,12 +12,6 @@ import { useTranslation } from "react-i18next";
 import InstructionsField from "./InstructionsField.jsx";
 import ResearchField from "./ResearchField.jsx";
 import ResearchDescriptionField from "./ResearchDescriptionField.jsx";
-import LocationField from './LocationField.jsx';
-import GenderField from "./GenderField.jsx";
-import AgeField from "./AgeField.jsx";
-import BackgroundInfoField from "./BackgroundInfoField.jsx";
-import RelevantBackgroundField from "./RelevantBackgroundField.jsx";
-import CustomFields from "./CustomFields.jsx";
 import AIPromptTest from "../../game/form/AIPromptTest.jsx";
 import Accordion from "../../misc/ds/Accordion.jsx";
 
@@ -87,22 +81,24 @@ const GameForm = ({
             </div>
             <div className="form-field game-form-field">
                 <LanguageField
-                    value={game.configuration.language}
+                    value={game.configuration.language_used}
                     onChange={e => onChange('configuration', {
                         ...game.configuration,
-                        language: e.target.value
+                        language_used: e.target.value
                     })}
                     disabled={saving}
-                    validation={validations?.configuration?.language}
+                    validation={validations?.configuration?.language_used}
                 />
             </div>
             <div className="form-field game-form-field">
                 <LanguageModelField
                     value={game.configuration.language_model}
-                    onChange={e => onChange('configuration', {
-                        ...game.configuration,
-                        language_model: e.target.value
-                    })}
+                    onChange={(modelId) =>
+                        onChange('configuration', {
+                            ...game.configuration,
+                            language_model: modelId
+                        })
+                    }
                     disabled={saving}
                     validation={validations?.configuration?.language_model}
                 />
@@ -146,7 +142,6 @@ const GameForm = ({
                     </div>
                 </div>
             </div>
-
             <div className="form-field game-form-field">
                 <Accordion
                     header={t('test_ai_prompt')}
@@ -164,26 +159,26 @@ const GameForm = ({
 
             <div className="form-field game-form-field">
                 <InstructionsField
-                    value={game.configuration.instructions}
+                    value={game.configuration.instructions_for_players}
                     onChange={e => onChange('configuration', {
                         ...game.configuration,
-                        instructions: e.target.value
+                        instructions_for_players: e.target.value
                     })}
                     disabled={saving}
-                    validation={validations?.configuration?.instructions}
+                    validation={validations?.configuration?.instructions_for_players}
                 />
             </div>
             <div className="form-field game-form-field">
                 <ResearchField
-                    value={game.configuration.isResearch}
+                    value={game.configuration.is_research_game}
                     onChange={e => onChange('configuration',  {
                         ...game.configuration,
-                        isResearch: e.target.value === true
+                        is_research_game: e.target.value === true
                     })}
                     disabled={saving}
                 />
             </div>
-            {game.configuration.isResearch &&
+            {game.configuration.is_research_game &&
                 <div className="form-field game-form-field">
                     <ResearchDescriptionField
                         value={game.configuration.research_description}
@@ -193,76 +188,15 @@ const GameForm = ({
                         })}
                         disabled={saving}
                         validation={validations?.configuration?.research_description}
-                    />
-                </div>}
-            <div className="form-field-text-field">
-                {t('game_players_background_info')}
-            </div>
-            <div className="game-form-field">
-                <LocationField
-                    value={game.background_info.is_location_mandatory}
-                    onChange={e => onChange('background_info',  {
-                        ...game.background_info,
-                        is_location_mandatory: e.target.value === true
-                    })}
-                    disabled={saving}
-                />
-            </div>
-            <div className="game-form-field">
-                <GenderField
-                    value={game.background_info.is_gender_mandatory}
-                    onChange={e => onChange('background_info',  {
-                        ...game.background_info,
-                        is_gender_mandatory: e.target.value === true
-                    })}
-                    disabled={saving}
-                />
-            </div>
-            <div className="game-form-field">
-                <AgeField
-                    value={game.background_info.is_age_mandatory}
-                    onChange={e => onChange('background_info',  {
-                        ...game.background_info,
-                        is_age_mandatory: e.target.value === true
-                    })}
-                    disabled={saving}
-                />
-            </div>
-            <div className="game-form-field">
-                <div className="backgroundinfo-field">
-                    <div className="backgroundinfo-field-container" >
-                        <BackgroundInfoField
-                            value={game.background_info.is_background_info_mandatory}
-                            onChange={e => onChange('background_info',  {
-                                ...game.background_info,
-                                is_background_info_mandatory: e.target.value === true
-                            })}
-                            disabled={saving}
                         />
-                        <RelevantBackgroundField onChange={e => onChange('background_info', {
-                            ...game.background_info,
-                            relevant_background: e.target.value
-                        })}
-                        />
-                    </div>
                 </div>
-            </div>
-            <div className="game-form-field">
-                <CustomFields
-                    onChange={e => onChange('custom_fields', {
-                        ...game.custom_background_info,
-                        custom_fields: e.target.value
-                    })}
-                    checked={game.custom_background_info.custom_fields}
-                    disabled={saving}
-                />
-            </div>
-            <div className="horizontal-divider"></div>
-            <div className="game-form-bottom-row">
-                <BottomRow saving={saving}>
-                    <FormButtons disabled={saving} />
-                </BottomRow>
-            </div>
+            }
+                <div className="horizontal-divider"></div>
+                <div className="game-form-bottom-row">
+                    <BottomRow saving={saving}>
+                        <FormButtons disabled={saving} />
+                    </BottomRow>
+                </div>
         </form>
     );
 };

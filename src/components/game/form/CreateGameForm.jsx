@@ -7,30 +7,17 @@ import { useNotification } from '../../notification/NotificationContext';
 import './CreateGameForm.css';
 import GameForm from './GameForm';
 
-
 const createEmptyGame = (t) => ({
   configuration: {
     ai_prompt: '',
     game_name: '',
     theme_description: '',
-    language: '',
-    instructions: t('game_form_instructions_field_text'),
-    isResearch: false,
-    research_description: t('game_form_research_description_field_text'),
-    language_model: null,
-  },
-  background_info: {
-    relevant_background: '',
-    is_habitation_mandatory: false,
-    is_gender_mandatory: false,
-    is_age_mandatory: false,
-    is_background_info_mandatory: false,
-  },
-  custom_background_info: {
-    custom_fields: '',
-    info_id: ''
-  },
-  researchPermission: false,
+    language_used: '',
+    instructions_for_players: t('game_form_instructions_field_text'),
+    is_research_game: false,
+    research_description: '',
+      language_model: null,
+  }
 });
 
 const CreateGameForm = () => {
@@ -46,7 +33,6 @@ const CreateGameForm = () => {
   useEffect(() => {
     validate(game).then(setValidations);
   }, []);
-
 
   const onChange = async (key, value) => {
     const changed = { ...game, [key]: value };
