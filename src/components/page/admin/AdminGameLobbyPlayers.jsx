@@ -1,15 +1,27 @@
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect} from 'react';
 import usePlayer from '../../../hooks/usePlayer.js';
 import './AdminGameLobbyPlayers.css';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../../components/misc/ds/Spinner.jsx';
+import {invalidate} from "../../../hooks/useHttp.js";
 
 const AdminGameLobbyPlayers = ({ game }) => {
     const { t } = useTranslation();
     const [players= [], error, reload] = usePlayer(null, game.game_id);
 
+    useEffect(() => {
+        const schedule = () => {
+            setTimeout( () => {
+                invalidate([`GAME_PLAYERS_${game.game_id}`]);
+                reload().then(schedule) // recursively reload players
+            }, 15000);
+        };
+
+        schedule();
+
+    }, []);
 
     if (!players || error) {
         return (
