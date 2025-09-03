@@ -34,9 +34,6 @@ const AdminGameLobbyPlayers = ({ game }) => {
     return (
         <div className="player-list-container">
             <h3>{t('lobby_players_heading')}</h3>
-            {players.length === 0 ? (
-                <Spinner text={t('spinner_awaiting_players')} position="side" size="medium" />
-            ) : (
                 <div>
                     <span className="player-count">{t('lobby_player_count')}: {players.length}</span>
                     <ul className="player-list">
@@ -47,7 +44,7 @@ const AdminGameLobbyPlayers = ({ game }) => {
                         ))}
                     </ul>
                 </div>
-            )}
+                <Spinner text={t('spinner_awaiting_players')} position="side" size="medium" />
         </div>
     );
 };
