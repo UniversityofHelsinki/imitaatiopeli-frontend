@@ -1,6 +1,6 @@
 .copy-game-url-button {
     align-items: center;
     justify-items: center;
-    display: flex;
+    display: inline-flex;
     gap: var(--ds-spacing-base);
 }
