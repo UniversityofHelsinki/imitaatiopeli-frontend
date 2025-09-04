@@ -77,7 +77,6 @@
   "nickname_field_label": "Nimimerkki",
   "nickname_field_placeholder": "Syötä nimimerkki",
   "join_game_form_submit_button": "Liity",
-  "game_lobby_heading": "Aula",
   "game_theme_description_is_required": "Aihe on annettava",
   "game_theme_description_is_too_long": "Aiheen maksimipituus 255 merkkiä",
   "game_name_is_required": "Nimimerkki on annettava",

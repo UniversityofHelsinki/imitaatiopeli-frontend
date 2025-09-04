@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import './GameLobby.css'
 import { useParams } from 'react-router-dom';
 import Page from '../Page';
@@ -32,7 +31,6 @@ const GameLobby = () => {
       const hasJoined = player?.game_id === response.body.game_id;
       setJoined(hasJoined);
       setPlayerConfiguration(response.body.configuration[0]);
-
     })();
   }, []);
 
@@ -80,13 +78,13 @@ const GameLobby = () => {
   ]
 
   return (
-      <Page loading={loading} heading={t('game_lobby_heading')} crumbs={crumbs}>
+      <Page className="page-heading" loading={loading} heading={playerConfiguration?.theme_description} crumbs={crumbs}>
+        <div className="game-lobby-double-rule" />
         {hasJoined ? (<span>{t('game_lobby_player_joined')}</span>) : (<span>{t('game_lobby_player_not_joined')}</span>)}
-        <br/>
-        <br/>
-        <div className="game-lobby-page-instructions">
-          {playerConfiguration?.instructions_for_players}
-        </div>
+        <br /><br />
+          <div className="game-lobby-page-instructions">
+              {playerConfiguration?.instructions_for_players}
+          </div>
         <div>
             {joinedGame?.start_time == null
                 ? <Spinner text={t('spinner_awaiting_game_starting')} position="side" size="medium" /> :
