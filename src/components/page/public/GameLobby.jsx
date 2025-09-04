@@ -45,7 +45,6 @@ const GameLobby = () => {
                         tag: `GAME_DATA_${game.game_id}`
                     });
                     setJoindedGame({ ...response.body });
-                    console.log("gameData:", response?.body.start_time);
                 } catch (error) {
                     console.error('Error fetching game:', error);
                     setNotification(t('game_fetch_error'), 'error');
@@ -57,8 +56,8 @@ const GameLobby = () => {
             const schedule = () => {
                 setTimeout(() => {
                     invalidate([`GAME_DATA_${game?.game_id}`]);
-                    fetchGame().then(schedule) // recursively reload players
-                }, 5000);
+                    fetchGame().then(schedule) // recursively reload game
+                }, 15000);
             };
             schedule();
         }
@@ -82,7 +81,7 @@ const GameLobby = () => {
 
   return (
       <Page loading={loading} heading={t('game_lobby_heading')} crumbs={crumbs}>
-        {hasJoined ? <span>{t('game_lobby_player_joined')}</span> : <span>{t('game_lobby_player_not_joined')}</span>}
+        {hasJoined ? (<span>{t('game_lobby_player_joined')}</span>) : (<span>{t('game_lobby_player_not_joined')}</span>)}
         <br/>
         <br/>
         <div className="game-lobby-page-instructions">
@@ -91,7 +90,7 @@ const GameLobby = () => {
         <div>
             {joinedGame?.start_time == null
                 ? <Spinner text={t('spinner_awaiting_game_starting')} position="side" size="medium" /> :
-                <div>{t('game_lobby_game_started')}</div>
+                <div className="game-lobby-font-size">{t('game_lobby_game_started')}</div>
             }
         </div>
 

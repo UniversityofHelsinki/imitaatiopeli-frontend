@@ -6,3 +6,8 @@
     /*font-weight: bolder;*/
     margin-bottom: var(--ds-spacing-base);
 }
+
+.game-lobby-font-size {
+    font-size: var(--ds-fontSize-18);
+    font-weight: bold;
+}
