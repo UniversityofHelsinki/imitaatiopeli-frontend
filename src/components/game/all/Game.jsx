@@ -7,6 +7,7 @@ import Tag from '../../misc/ds/Tag';
 import './Game.css';
 import Icon from "../../misc/ds/Icon.jsx";
 import {useNotification} from "../../notification/NotificationContext.js";
+import CopyGameUrlButton from "../../page/admin/CopyGameUrlButton.jsx";
 
 const Header = ({ game }) => {
   const { t } = useTranslation();
@@ -110,6 +111,10 @@ const Content = ({ game }) => {
         <div className="game-content-data">
           <div>{t('game_content_theme')}  {game.configuration.theme_description}</div>
         </div>
+          {gameWaiting && <div className="game-content-data">
+            <div>{t('game_content_join_link_label')} <CopyGameUrlButton game={game} />
+            </div>
+        </div>}
         <div className="game-content-divider"></div>
         <div className="game-content-bottom-row">
           <div className="game-content-actions">
@@ -125,12 +130,6 @@ const Content = ({ game }) => {
                       href={`/admin/games/${game.game_id}`}
                       internal
                   />
-                  <div>
-                    <button className="button-plain game-button" onClick={handleCopy}>
-                      <Icon name="link" aria-hidden="true" />
-                      <span>{t('game_content_join_link_button')} </span>
-                    </button>
-                  </div>
                 </>
             )}
           </div>
