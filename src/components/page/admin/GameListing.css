@@ -1,0 +1,5 @@
+.heading-extras-container {
+    display: flex;
+    gap: var(--ds-spacing-medium);
+    align-items: center;
+}

@@ -140,6 +140,7 @@ const Content = ({ game }) => {
 };
 
 
+
 const Game = ({ game }) => {
 
   return (
