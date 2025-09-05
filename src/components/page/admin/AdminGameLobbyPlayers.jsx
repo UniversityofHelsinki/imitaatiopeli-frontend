@@ -6,6 +6,7 @@ import './AdminGameLobbyPlayers.css';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../../components/misc/ds/Spinner.jsx';
 import {invalidate} from "../../../hooks/useHttp.js";
+import TextArea from "../../misc/ds/TextArea.jsx";
 
 const AdminGameLobbyPlayers = ({ game }) => {
     const { t } = useTranslation();
@@ -34,6 +35,9 @@ const AdminGameLobbyPlayers = ({ game }) => {
     return (
         <div className="player-list-container">
             <h3>{t('lobby_players_heading')}</h3>
+                <div className="player-list-players-info">
+                    {t('lobby_player_start')}
+                </div>
                 <div>
                     <span className="player-count">{t('lobby_player_count')}: {players.length}</span>
                     <ul className="player-list">
@@ -44,7 +48,6 @@ const AdminGameLobbyPlayers = ({ game }) => {
                         ))}
                     </ul>
                 </div>
-                <Spinner text={t('spinner_awaiting_players')} position="side" size="medium" />
         </div>
     );
 };
