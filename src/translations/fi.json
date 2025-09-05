@@ -75,6 +75,7 @@
   "bread_crumb_games_lobby": "Aula",
   "game_listing_page_create_game": "Uusi peli",
   "join_game_page_heading": "Liity peliin",
+  "join_game_player_already_joined": "Pelaaja on jo liittynyt peliin",
   "nickname_field_label": "Nimimerkki",
   "nickname_field_placeholder": "Syötä nimimerkki",
   "join_game_form_submit_button": "Liity",
@@ -127,11 +128,15 @@
   "admin_game_lobby_no_game_data": "Pelin tietoja ei löytynyt",
   "admin_game_button_end_game": "Päätä peli",
   "admin_game_button_start_game": "Käynnistä peli",
-  "spinner_awaiting_players": "Odotetaan pelaajia...",
   "lobby_players_heading": "Pelaajat",
   "lobby_player_count": "Pelaajien lukumäärä",
+  "lobby_player_start": "Odotetaan pelaajia",
+  "lobby_player_instructions": "Ohjeteksti ...",
   "error_loading_data": "Virhe tietojen lataamisessa",
   "game_url_copy_button_aria_label": "Kopioi pelin liittymislinkki",
   "game_url_copy_button_title": "Kopioi pelin liittymislinkki",
-  "game_listing_page_show_ended_games": "Näytä päättyneet pelit"
+  "game_listing_page_show_ended_games": "Näytä päättyneet pelit",
+  "research_permission_page_heading": "Tutkimusluvan hyväksyminen",
+  "research_permission_form_acceptance_label": "Hyväksyn tietojeni käyttämisen tutkimukseen",
+  "research_permission_form_acceptance_is_required": "Tutkimuslupa on annettava"
 }

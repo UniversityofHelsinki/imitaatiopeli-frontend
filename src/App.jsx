@@ -12,19 +12,18 @@ import ProtectedRoute from '../src/ProtectedRoute';
 import './App.css';
 import { AuthProvider } from './AuthContext.js';
 import NotificationProvider from './components/notification/NotificationContext';
-import Player from './components/players/Player.js';
+import AdminGameLobby from "./components/page/admin/AdminGameLobby.jsx";
+import CreateGame from './components/page/admin/CreateGame';
+import EditGame from './components/page/admin/EditGame';
+import EndGame from './components/page/admin/EndGame';
+import GameListing from './components/page/admin/GameListing';
+import StartGame from './components/page/admin/StartGame';
+import GameLobby from './components/page/public/GameLobby';
+import JoinGame from './components/page/public/JoinGame';
 import { DEFAULT_LANGUAGE } from './Constants.js';
 import Imitation from './Imitation';
 import reducer from './reducers';
 import translations from './translations';
-import CreateGame from './components/page/admin/CreateGame';
-import EditGame from './components/page/admin/EditGame';
-import GameListing from './components/page/admin/GameListing';
-import StartGame from './components/page/admin/StartGame';
-import EndGame from './components/page/admin/EndGame';
-import JoinGame from './components/page/public/JoinGame';
-import GameLobby from './components/page/public/GameLobby';
-import AdminGameLobby from "./components/page/admin/AdminGameLobby.jsx";
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
