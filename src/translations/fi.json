@@ -75,6 +75,7 @@
   "bread_crumb_games_lobby": "Aula",
   "game_listing_page_create_game": "Uusi peli",
   "join_game_page_heading": "Liity peliin",
+  "join_game_player_already_joined": "Pelaaja on jo liittynyt peliin",
   "nickname_field_label": "Nimimerkki",
   "nickname_field_placeholder": "Syötä nimimerkki",
   "join_game_form_submit_button": "Liity",
