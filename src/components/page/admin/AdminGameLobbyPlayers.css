@@ -3,3 +3,7 @@
     margin: unset;
     padding: unset;
 }
+
+.player-list-players-info {
+    margin-bottom: 0.5rem;
+}
