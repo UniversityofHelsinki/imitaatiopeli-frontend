@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import './GameLobby.css'
 import { useParams } from 'react-router-dom';
 import Page from '../Page';
 import { useTranslation } from 'react-i18next';
-import { get } from '../../../hooks/useHttp';
+import {get, invalidate, useGET} from '../../../hooks/useHttp';
 import localStorage from '../../../utilities/localStorage';
+import Spinner from "../../misc/ds/Spinner.jsx";
+import {useNotification} from "../../notification/NotificationContext.js";
 
 const GameLobby = () => {
   const { code } = useParams();
@@ -14,6 +15,8 @@ const GameLobby = () => {
   const [loading, setLoading] = useState(true);
   const [hasJoined, setJoined] = useState(false);
   const [playerConfiguration, setPlayerConfiguration] = useState(null);
+  const [joinedGame, setJoindedGame] = useState(null);
+  const { setNotification } = useNotification();
 
   useEffect(() => {
     (async () => {
@@ -26,10 +29,37 @@ const GameLobby = () => {
 
       const player = JSON.parse(localStorage.get("player"));
       const hasJoined = player?.game_id === response.body.game_id;
+      setJoined(hasJoined);
       setPlayerConfiguration(response.body.configuration[0]);
-
     })();
   }, []);
+
+    useEffect(() => {
+        if (game && game.game_id) {
+            const fetchGame = async () => {
+                try {
+                    const response = await get({
+                        path: `/public/game/${game.game_id}`,
+                        tag: `GAME_DATA_${game.game_id}`
+                    });
+                    setJoindedGame({ ...response.body });
+                } catch (error) {
+                    console.error('Error fetching game:', error);
+                    setNotification(t('game_fetch_error'), 'error');
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            const schedule = () => {
+                setTimeout(() => {
+                    invalidate([`GAME_DATA_${game?.game_id}`]);
+                    fetchGame().then(schedule) // recursively reload game
+                }, 15000);
+            };
+            schedule();
+        }
+    }, [game]);
 
   const crumbs = [
     {
@@ -48,12 +78,18 @@ const GameLobby = () => {
   ]
 
   return (
-      <Page loading={loading} heading={t('game_lobby_heading')} crumbs={crumbs}>
-        {hasJoined && <span>???</span> || <span>{t('game_lobby_player_not_joined')}</span>}
-        <br/>
-        <br/>
-        <div className="game-lobby-page-instructions">
-          {playerConfiguration?.instructions_for_players}
+      <Page className="page-heading" loading={loading} heading={playerConfiguration?.theme_description} crumbs={crumbs}>
+        <div className="game-lobby-double-rule" />
+        {hasJoined ? (<span>{t('game_lobby_player_joined')}</span>) : (<span>{t('game_lobby_player_not_joined')}</span>)}
+        <br /><br />
+          <div className="game-lobby-page-instructions">
+              {playerConfiguration?.instructions_for_players}
+          </div>
+        <div>
+            {joinedGame?.start_time == null
+                ? <Spinner text={t('spinner_awaiting_game_starting')} position="side" size="medium" /> :
+                <div className="game-lobby-font-size">{t('game_lobby_game_started')}</div>
+            }
         </div>
 
       </Page>
