@@ -10,12 +10,12 @@ import {useNotification} from "../../notification/NotificationContext.js";
 
 const GameLobby = () => {
   const { code } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n} = useTranslation();
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [hasJoined, setJoined] = useState(false);
   const [playerConfiguration, setPlayerConfiguration] = useState(null);
-  const [joinedGame, setJoindedGame] = useState(null);
+  const [joinedGame, setJoinedGame] = useState(null);
   const { setNotification } = useNotification();
 
   useEffect(() => {
@@ -27,10 +27,18 @@ const GameLobby = () => {
       setGame({ ...response.body });
       setLoading(false);
 
+        if (response.body?.configuration) {
+            const configurationArray = response.body.configuration[0];
+            if (configurationArray.language_used) {
+                await i18n.changeLanguage(configurationArray.language_used);
+                document.documentElement.lang = configurationArray.language_used;
+            }
+        }
+
       const player = JSON.parse(localStorage.get("player"));
       const hasJoined = player?.game_id === response.body.game_id;
       setJoined(hasJoined);
-      setPlayerConfiguration(response.body.configuration[0]);
+      setPlayerConfiguration(response.body.configuration?.[0]);
     })();
   }, []);
 
@@ -42,7 +50,7 @@ const GameLobby = () => {
                         path: `/public/game/${game.game_id}`,
                         tag: `GAME_DATA_${game.game_id}`
                     });
-                    setJoindedGame({ ...response.body });
+                    setJoinedGame({ ...response.body });
                 } catch (error) {
                     console.error('Error fetching game:', error);
                     setNotification(t('game_fetch_error'), 'error');

@@ -44,7 +44,7 @@ const defaultLanguage = () => {
 i18n.use(initReactI18next).init({
     resources: translations,
     lng: defaultLanguage(),
-    fallbackLng: 'cimode',
+    fallbackLng: 'fi',
     supportedLngs: ['fi', 'en', 'sv'],
 });
 
