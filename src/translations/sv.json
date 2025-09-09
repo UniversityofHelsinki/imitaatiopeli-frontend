@@ -1,4 +1,4 @@
 {
-  "game_lobby_player_joined": "game_lobby_player_joined",
-  "spinner_awaiting_game_starting": "spinner_awaiting_game_starting"
+  "game_lobby_player_joined": "sv",
+  "spinner_awaiting_game_starting": "sv spinner"
 }
