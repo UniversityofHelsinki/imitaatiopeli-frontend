@@ -60,6 +60,8 @@
   "start_game_page_heading": "Pelin aloittaminen",
   "start_game_form_submit_button": "Aloita",
   "end_game_page_heading": "Pelin lopettaminen",
+  "end_game_page_already_ended": "Peli on lopetettu",
+  "end_game_move_to_gamelist": "Palaa pelilistaan",
   "end_game_form_submit_button": "Lopeta",
   "start_game_page_success_notification": "Peli käynnistetty!",
   "end_game_page_success_notification": "Peli lopetettu!",

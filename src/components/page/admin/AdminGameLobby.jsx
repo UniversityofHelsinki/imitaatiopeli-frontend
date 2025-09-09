@@ -75,7 +75,7 @@ const AdminGameLobby = () => {
                     <div className="admin-lobby-bottom-row">
                         <div className="horizontal-divider" />
                         <BottomRow saving={null}>
-                            <AdminGameButtons disabled={null} />
+                            <AdminGameButtons disabled={null} game={game} />
                         </BottomRow>
                     </div>
                 </div>
