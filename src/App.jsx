@@ -24,6 +24,7 @@ import { DEFAULT_LANGUAGE } from './Constants.js';
 import Imitation from './Imitation';
 import reducer from './reducers';
 import translations from './translations';
+import EndOfGame from "./components/page/public/EndOfGame.js";
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -58,6 +59,7 @@ const App = () => {
                   <Route path=":code" element={<GameLobby />}>
                   </Route>
                   <Route path=":code/join" element={<JoinGame />} />
+                  <Route path=":id/end" element={<EndOfGame />} />
                 </Route>
 
                 <Route path="admin/*" element={

@@ -7,6 +7,7 @@ import {get, invalidate, useGET} from '../../../hooks/useHttp';
 import localStorage from '../../../utilities/localStorage';
 import Spinner from "../../misc/ds/Spinner.jsx";
 import {useNotification} from "../../notification/NotificationContext.js";
+import {useNavigate} from "react-router-dom";
 
 const GameLobby = () => {
   const { code } = useParams();
@@ -17,8 +18,9 @@ const GameLobby = () => {
   const [playerConfiguration, setPlayerConfiguration] = useState(null);
   const [joinedGame, setJoindedGame] = useState(null);
   const { setNotification } = useNotification();
+  const navigate = useNavigate();
 
-  useEffect(() => {
+    useEffect(() => {
     (async () => {
       const response = await get({
         path: `/public/games/${code}`,
@@ -60,6 +62,12 @@ const GameLobby = () => {
             schedule();
         }
     }, [game]);
+
+    useEffect(() => {
+        if (joinedGame?.end_time && game?.game_id) {
+            navigate(`/games/${game.game_id}/end`);
+        }
+    }, [joinedGame?.end_time, game?.game_id, navigate]);
 
   const crumbs = [
     {
