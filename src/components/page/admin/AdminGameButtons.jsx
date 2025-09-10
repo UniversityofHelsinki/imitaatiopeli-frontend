@@ -10,7 +10,6 @@ const AdminGameButtons = ({ disabled, game }) => {
     const navigate = useNavigate();
 
     const handleEndGameClick = () => {
-        if (disabled) return;
         if (!game?.config_id) return;
         navigate(`/admin/games/${game.config_id}/end`);
     };
