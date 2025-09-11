@@ -1,13 +1,16 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 import { useTranslation } from 'react-i18next';
 import Accordion from '../../misc/ds/Accordion';
 import Link from '../../misc/ds/Link';
 import Tag from '../../misc/ds/Tag';
 import './Game.css';
-import Icon from "../../misc/ds/Icon.jsx";
 import {useNotification} from "../../notification/NotificationContext.js";
 import CopyGameUrlButton from "../../page/admin/CopyGameUrlButton.jsx";
+import Button from '../../misc/ds/Button';
+import useDeleteGame from "../../../hooks/useDeleteGame.js";
+import ConfirmDialog from "../../../utilities/ConfirmDialog.js";
+import {useNavigate} from "react-router-dom";
 
 const Header = ({ game }) => {
   const { t } = useTranslation();
@@ -44,19 +47,22 @@ const Header = ({ game }) => {
 
 };
 
-const Content = ({ game }) => {
+const Content = ({ game, reload }) => {
   const { t } = useTranslation();
   const { setNotification } = useNotification();
   const joinUrl = `${window.location.origin}/games/${game.game_code}/join`;
   const gameWaiting = !game.start_time && !game.end_time;
+  const gameEnded = (game.start_time && game.end_time) || (!game.start_time && game.end_time);
+  const [removeGame, ] = useDeleteGame(game.game_id);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(joinUrl);
-      setNotification(t('game_content_join_link_copied_notification'), 'success', true);
+      setNotification(t('game_content_delete_done'), 'success', true);
     } catch (error) {
       setNotification(error.cause?.status, 'error');
-      console.error(error);
     }
   };
 
@@ -105,8 +111,31 @@ const Content = ({ game }) => {
     return text;
   };
 
+  const deleteGame = async () => {
+      const resp = await removeGame(game);
+      console.log("resp:", resp);
+      if (resp.status === 200) {
+          setConfirmOpen(false);
+          setNotification(t('game_content_delete_done'), 'success', true);
+          reload();
+      } else {
+          setNotification(resp.status, 'error');
+      }
+  }
 
-  return (
+    const renderDeleteConfirm = () => (
+        <ConfirmDialog
+            open={confirmOpen}
+            message={t('game_content_delete_confirm_message')}
+            confirmLabel={t('game_content_confirm_delete')}
+            cancelLabel={t('game_content_cancel_delete')}
+            onCancel={() => setConfirmOpen(false)}
+            onConfirm={deleteGame}
+        />
+    );
+
+
+    return (
       <div className="game-content">
         <div className="game-content-data">
           <div>{t('game_content_theme')}  {game.configuration.theme_description}</div>
@@ -132,6 +161,19 @@ const Content = ({ game }) => {
                   />
                 </>
             )}
+              {gameEnded &&  (
+                  <>
+                      <Button
+                          variant="standalone"
+                          icon="delete"
+                          type="button"
+                          size={"medium"}
+                          label={t('game_content_delete_game_link_label')}
+                          onClick={() => setConfirmOpen(true)}
+                      />
+                      {renderDeleteConfirm()}
+                  </>
+              )}
           </div>
         </div>
       </div>
@@ -140,13 +182,13 @@ const Content = ({ game }) => {
 
 
 
-const Game = ({ game }) => {
+const Game = ({ game, reload }) => {
 
   return (
       <div className="game">
         <Accordion
             header={<Header game={game} />}
-            content={<Content game={game} />}
+            content={<Content game={game} reload={reload} />}
             variant="compact"
         />
       </div>

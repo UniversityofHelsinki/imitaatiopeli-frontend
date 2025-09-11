@@ -1,0 +1,4 @@
+.confirm-dialog .confirm-dialog-actions {
+    display: flex;
+    gap: 0.5rem; /* space between buttons */
+}
