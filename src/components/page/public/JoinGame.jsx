@@ -13,6 +13,7 @@ const JoinGame = () => {
   const [loading, setLoading] = useState(true);
   const [game, setGame] = useState();
   const [alreadyJoined, setAlreadyJoined] = useState(false);
+  const [playerConfiguration, setPlayerConfiguration] = useState(null);
   
   useEffect(() => {
     (async () => {
@@ -21,10 +22,11 @@ const JoinGame = () => {
         tag: `GAME_${code}`
       });
       setGame(response.body);
+      setPlayerConfiguration(response.body.configuration?.[0]);
       setAlreadyJoined(JSON.parse(localStorage.get('player'))?.game_id === response.body.game_id);
       setLoading(false);
     })();
-  }, []);
+  }, [code]);
 
   const crumbs = [
     {
@@ -43,7 +45,12 @@ const JoinGame = () => {
   ];
 
   return (
-    <PublicPage loading={loading} heading={t('join_game_page_heading')} crumbs={crumbs}>
+    <PublicPage
+      loading={loading}
+      heading={t('join_game_page_heading')}
+      crumbs={crumbs}
+      configuration={playerConfiguration}
+    >
       {alreadyJoined && <span>{t('join_game_player_already_joined')}</span> || <JoinGameForm game={game} />}
     </PublicPage>
   );

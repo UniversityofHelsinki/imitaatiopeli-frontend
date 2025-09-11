@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import HyLogo from '../misc/HyLogo';
 import './Logo.css';
+import {useTranslation} from "react-i18next";
 
 const Logo = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const onClick = (event) => {
     event.preventDefault();
@@ -14,7 +16,7 @@ const Logo = () => {
     <div className="logo">
       <HyLogo aria-hidden />
       <h1 className="logo-text">
-        <a href="/" onClick={onClick}>Imitaatiopeli</a>
+        <a href="/" onClick={onClick}>{t('imitation_game_logo_name')}</a>
       </h1>
     </div>
   )
