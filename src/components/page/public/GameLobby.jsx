@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import './GameLobby.css'
 import { useParams } from 'react-router-dom';
-import Page from '../Page';
 import { useTranslation } from 'react-i18next';
-import {get, invalidate, useGET} from '../../../hooks/useHttp';
+import { get, invalidate } from '../../../hooks/useHttp';
 import localStorage from '../../../utilities/localStorage';
 import Spinner from "../../misc/ds/Spinner.jsx";
-import {useNotification} from "../../notification/NotificationContext.js";
+import { useNotification } from "../../notification/NotificationContext.js";
+import PublicPage from "./PublicPage.jsx";
 
 const GameLobby = () => {
   const { code } = useParams();
-  const { t } = useTranslation();
+  const { t} = useTranslation();
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [hasJoined, setJoined] = useState(false);
   const [playerConfiguration, setPlayerConfiguration] = useState(null);
-  const [joinedGame, setJoindedGame] = useState(null);
+  const [joinedGame, setJoinedGame] = useState(null);
   const { setNotification } = useNotification();
 
   useEffect(() => {
@@ -30,9 +30,9 @@ const GameLobby = () => {
       const player = JSON.parse(localStorage.get("player"));
       const hasJoined = player?.game_id === response.body.game_id;
       setJoined(hasJoined);
-      setPlayerConfiguration(response.body.configuration[0]);
+      setPlayerConfiguration(response.body.configuration?.[0]);
     })();
-  }, []);
+  }, [code]);
 
     useEffect(() => {
         if (game && game.game_id) {
@@ -42,7 +42,7 @@ const GameLobby = () => {
                         path: `/public/game/${game.game_id}`,
                         tag: `GAME_DATA_${game.game_id}`
                     });
-                    setJoindedGame({ ...response.body });
+                    setJoinedGame({ ...response.body });
                 } catch (error) {
                     console.error('Error fetching game:', error);
                     setNotification(t('game_fetch_error'), 'error');
@@ -78,7 +78,12 @@ const GameLobby = () => {
   ]
 
   return (
-      <Page className="page-heading" loading={loading} heading={playerConfiguration?.theme_description} crumbs={crumbs}>
+      <PublicPage className="page-heading"
+        loading={loading}
+        heading={playerConfiguration?.theme_description}
+        crumbs={crumbs}
+        configuration={playerConfiguration}
+      >
         <div className="game-lobby-double-rule" />
         {hasJoined ? (<span>{t('game_lobby_player_joined')}</span>) : (<span>{t('game_lobby_player_not_joined')}</span>)}
         <br /><br />
@@ -91,8 +96,7 @@ const GameLobby = () => {
                 <div className="game-lobby-font-size">{t('game_lobby_game_started')}</div>
             }
         </div>
-
-      </Page>
+      </PublicPage>
   )
 
 };
