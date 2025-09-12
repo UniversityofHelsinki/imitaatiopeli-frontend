@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import BottomRow from './BottomRow';
 import FormButtons from './FormButtons';
 
-const ResearchPermissionForm = ({ game, onSubmit, saving }) => {
+const ResearchPermissionForm = ({ onSubmit, saving, configuration }) => {
   const id = useId();
   const [checked, setChecked] = useState(false);
   const { t } = useTranslation();
@@ -26,12 +26,12 @@ const ResearchPermissionForm = ({ game, onSubmit, saving }) => {
   return (
     <div className="research-permission-form-container">
       <p>
-        {game.configuration[0].research_description}
+        {configuration.research_description}
       </p>
       <form className="research-permission-form" onReset={onReset} onSubmit={onSubmit}>
-        <CheckBox 
+        <CheckBox
           id={id}
-          name="research-permission-acceptance" 
+          name="research-permission-acceptance"
           label={t('research_permission_form_acceptance_label')}
           errorText={errorText}
           checked={checked}
@@ -51,7 +51,9 @@ const ResearchPermissionForm = ({ game, onSubmit, saving }) => {
 };
 
 ResearchPermissionForm.propTypes = {
-  game: PropTypes.object,
+  configuration: PropTypes.object,
+  onSubmit: PropTypes.func,
+  saving: PropTypes.bool,
 };
 
 export default ResearchPermissionForm;

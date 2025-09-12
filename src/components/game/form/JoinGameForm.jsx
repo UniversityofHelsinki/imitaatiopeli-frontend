@@ -66,7 +66,12 @@ const JoinGameForm = ({ game }) => {
 
   const form = (() => {
     if (phase === 'research-permission') {
-      return <ResearchPermissionForm game={game} onSubmit={handleSubmit} saving={saving} />
+      return <ResearchPermissionForm
+        game={game}
+        onSubmit={handleSubmit}
+        saving={saving}
+        configuration={game.configuration[0]}
+      />
     }
     return basicForm;
   })();
