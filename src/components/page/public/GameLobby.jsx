@@ -22,11 +22,13 @@ const GameLobby = () => {
 
     // Test the websocket connection
     useEffect(() => {
-        if (isConnected) {
+        if (isConnected && game && game.configuration?.[0]?.game_name) {
             console.log('Socket.IO is ready to use!');
-            emit('test-message', { message: 'Hello from frontend!' });
+            emit('test-message', { message: `Hello ${game.configuration[0]?.game_name}!` });
         }
-    }, [isConnected, emit]);
+    }, [isConnected, emit, game]);
+
+
 
     // Listen for messages from backend
     useEffect(() => {
