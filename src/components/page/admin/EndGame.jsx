@@ -4,10 +4,10 @@ import Page from '../Page';
 import './EndGame.css';
 import useEndGame from '../../../hooks/useEndGame';
 import { useNotification } from '../../notification/NotificationContext';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { get } from '../../../hooks/useHttp';
-import Button from '../../misc/ds/Button';
+import Link from "../../misc/ds/Link.jsx";
 
 
 const EndGame = () => {
@@ -15,7 +15,6 @@ const EndGame = () => {
   const { t } = useTranslation();
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
   const { setNotification } = useNotification();
   const end = useEndGame(id);
   
@@ -34,10 +33,6 @@ const EndGame = () => {
     await end();
     setNotification(t('end_game_page_success_notification'), 'success', true);
   };
-
-  const navigateToGameList = () => {
-      navigate('/admin/games');
-  }
 
   const isAlreadyEnded = game?.end_time;
 
@@ -66,11 +61,17 @@ const EndGame = () => {
       {!isAlreadyEnded && <EndGameForm game={game} endGame={endGame} />}
         {isAlreadyEnded &&
             <div>
-                <Button type="submit" label={t('end_game_move_to_gamelist')}
-                        onClick={navigateToGameList}
-                />
-            </div>}
-
+              <Link
+                  label={t('end_game_move_to_gamelist')}
+                  variant="standalone"
+                  icon="home"
+                  size="2xLarge"
+                  colour="black"
+                  href={`/admin/games`}
+                  internal
+              />
+            </div>
+        }
     </Page>
   );
 };
