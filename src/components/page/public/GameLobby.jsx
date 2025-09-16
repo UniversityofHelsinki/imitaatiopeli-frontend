@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './GameLobby.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { get, invalidate } from '../../../hooks/useHttp';
 import localStorage from '../../../utilities/localStorage';
@@ -8,7 +8,6 @@ import Spinner from '../../misc/ds/Spinner.jsx';
 import { useNotification } from '../../notification/NotificationContext.js';
 import { useSocket } from '../../../contexts/SocketContext.jsx';
 import PublicPage from './PublicPage.jsx';
-import {useNavigate} from "react-router-dom";
 
 const GameLobby = () => {
     const { isConnected, emit, on, off } = useSocket();
@@ -22,14 +21,6 @@ const GameLobby = () => {
     const { setNotification } = useNotification();
     const navigate = useNavigate();
 
-    useEffect(() => {
-    (async () => {
-      const response = await get({
-        path: `/public/games/${code}`,
-        tag: `GAME_${code}`
-      });
-      setGame({ ...response.body });
-      setLoading(false);
     // Test the websocket connection
     useEffect(() => {
         if (isConnected && game && game.configuration?.[0]?.game_name) {
@@ -37,8 +28,6 @@ const GameLobby = () => {
             emit('test-message', { message: `Hello ${game.configuration[0]?.game_name}!` });
         }
     }, [isConnected, emit, game]);
-
-
 
     // Listen for messages from backend
     useEffect(() => {
@@ -54,6 +43,14 @@ const GameLobby = () => {
     }, [on, off]);
 
 
+    useEffect(() => {
+        (async () => {
+            const response = await get({
+                path: `/public/games/${code}`,
+                tag: `GAME_${code}`
+            });
+            setGame({ ...response.body });
+            setLoading(false);
             const player = JSON.parse(localStorage.get("player"));
             const hasJoined = player?.game_id === response.body.game_id;
             setJoined(hasJoined);
@@ -94,21 +91,21 @@ const GameLobby = () => {
         }
     }, [joinedGame?.end_time, game?.game_id, navigate]);
 
-  const crumbs = [
-    {
-      label: 'bread_crumb_home',
-      href: '/'
-    },
-    {
-      label: 'bread_crumb_games',
-      href: '/games'
-    },
-    {
-      label: 'bread_crumb_games_lobby',
-      href: `/games/${code}`,
-      current: true
-    }
-  ]
+    const crumbs = [
+        {
+            label: 'bread_crumb_home',
+            href: '/'
+        },
+        {
+            label: 'bread_crumb_games',
+            href: '/games'
+        },
+        {
+            label: 'bread_crumb_games_lobby',
+            href: `/games/${code}`,
+            current: true
+        }
+    ]
 
     return (
         <PublicPage className="page-heading"
