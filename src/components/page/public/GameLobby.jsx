@@ -8,6 +8,7 @@ import Spinner from '../../misc/ds/Spinner.jsx';
 import { useNotification } from '../../notification/NotificationContext.js';
 import { useSocket } from '../../../contexts/SocketContext.jsx';
 import PublicPage from './PublicPage.jsx';
+import {useNavigate} from "react-router-dom";
 
 const GameLobby = () => {
     const { isConnected, emit, on, off } = useSocket();
@@ -19,7 +20,16 @@ const GameLobby = () => {
     const [playerConfiguration, setPlayerConfiguration] = useState(null);
     const [joinedGame, setJoinedGame] = useState(null);
     const { setNotification } = useNotification();
+    const navigate = useNavigate();
 
+    useEffect(() => {
+    (async () => {
+      const response = await get({
+        path: `/public/games/${code}`,
+        tag: `GAME_${code}`
+      });
+      setGame({ ...response.body });
+      setLoading(false);
     // Test the websocket connection
     useEffect(() => {
         if (isConnected && game && game.configuration?.[0]?.game_name) {
@@ -43,15 +53,6 @@ const GameLobby = () => {
         };
     }, [on, off]);
 
-
-    useEffect(() => {
-        (async () => {
-            const response = await get({
-                path: `/public/games/${code}`,
-                tag: `GAME_${code}`
-            });
-            setGame({ ...response.body });
-            setLoading(false);
 
             const player = JSON.parse(localStorage.get("player"));
             const hasJoined = player?.game_id === response.body.game_id;
@@ -87,21 +88,27 @@ const GameLobby = () => {
         }
     }, [game]);
 
-    const crumbs = [
-        {
-            label: 'bread_crumb_home',
-            href: '/'
-        },
-        {
-            label: 'bread_crumb_games',
-            href: '/games'
-        },
-        {
-            label: 'bread_crumb_games_lobby',
-            href: `/games/${code}`,
-            current: true
+    useEffect(() => {
+        if (joinedGame?.end_time && game?.game_id) {
+            navigate(`/games/${game.game_id}/end`);
         }
-    ]
+    }, [joinedGame?.end_time, game?.game_id, navigate]);
+
+  const crumbs = [
+    {
+      label: 'bread_crumb_home',
+      href: '/'
+    },
+    {
+      label: 'bread_crumb_games',
+      href: '/games'
+    },
+    {
+      label: 'bread_crumb_games_lobby',
+      href: `/games/${code}`,
+      current: true
+    }
+  ]
 
     return (
         <PublicPage className="page-heading"
