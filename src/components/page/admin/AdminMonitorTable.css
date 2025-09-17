@@ -1,0 +1,33 @@
+.admin-monitor-table-container {
+    overflow: auto;
+}
+
+.admin-monitor-table {
+    width: 100%;
+    border: 2px solid rgb(140 140 140);
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.admin-monitor-table caption {
+    display: table-caption;
+}
+
+.admin-monitor-table th,
+.admin-monitor-table td {
+    border: 1px solid rgb(140 140 140);
+    padding: 8px 10px;
+}
+
+.responsive-margins {
+    margin: 0 auto;
+    max-width: 80%;
+    width: 80%;
+}
+
+.admin-monitor-button {
+    width: 8%;
+}

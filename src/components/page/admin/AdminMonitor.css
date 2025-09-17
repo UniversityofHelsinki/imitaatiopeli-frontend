@@ -1,0 +1,16 @@
+.admin-monitor-game {
+    margin-bottom: 1rem;
+}
+
+.admin-monitor-game-data {
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1.0rem;
+}
+
+.admin-monitor-game-data > div {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}

@@ -24,6 +24,7 @@ import { DEFAULT_LANGUAGE } from './Constants.js';
 import Imitation from './Imitation';
 import reducer from './reducers';
 import translations from './translations';
+import AdminMonitor from "./components/page/admin/AdminMonitor.jsx";
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -76,6 +77,7 @@ const App = () => {
                       <Route path=":id/start" element={<StartGame />} />
                       <Route path=":id/end" element={<EndGame />} />
                       <Route path=":id/lobby" element={<AdminGameLobby />} />
+                      <Route path=":id/monitor" element={<AdminMonitor />} />
                     </Route>
                 </Route>
             </Route>
