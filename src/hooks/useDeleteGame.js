@@ -1,7 +1,6 @@
 import {useDELETE} from "./useHttp.js";
 
 const useDeleteGame = (game_id) => {
-    console.log("useDeleteGame", game_id);
     const post = useDELETE({
         path: `/api/game/deleteGame`,
         invalidates: [`GAME_${game_id}`, `GAMES`]

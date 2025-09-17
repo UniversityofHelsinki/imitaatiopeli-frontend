@@ -113,7 +113,6 @@ const Content = ({ game, reload }) => {
 
   const deleteGame = async () => {
       const resp = await removeGame(game);
-      console.log("resp:", resp);
       if (resp.status === 200) {
           setConfirmOpen(false);
           setNotification(t('game_content_delete_done'), 'success', true);
