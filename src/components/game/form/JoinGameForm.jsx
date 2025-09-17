@@ -48,11 +48,11 @@ const JoinGameForm = ({ game }) => {
   const basicForm = (
     <form className="form join-game-form" onSubmit={handleSubmit} onReset={handleReset}>
       <div className="form-field join-game-form-field">
-        <NickNameField 
-          value={player.nickname} 
+        <NickNameField
+          value={player.nickname}
           disabled={saving}
           onChange={(value) => onChange('nickname', value)}
-          validation={undefined} 
+          validation={undefined}
         />
       </div>
       <div className="horizontal-divider"></div>
@@ -66,7 +66,12 @@ const JoinGameForm = ({ game }) => {
 
   const form = (() => {
     if (phase === 'research-permission') {
-      return <ResearchPermissionForm game={game} onSubmit={handleSubmit} saving={saving} />
+      return <ResearchPermissionForm
+        game={game}
+        onSubmit={handleSubmit}
+        saving={saving}
+        configuration={game.configuration[0]}
+      />
     }
     return basicForm;
   })();

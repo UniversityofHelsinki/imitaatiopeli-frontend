@@ -8,8 +8,8 @@ import { get } from '../../../hooks/useHttp';
 import AdminGameLobbyPlayers from './AdminGameLobbyPlayers';
 import {useNotification} from "../../notification/NotificationContext.js";
 import BottomRow from "../../game/form/BottomRow.jsx";
-import AdminGameButtons from "./AdminGameButtons.jsx";
 import CopyGameUrlButton from "./CopyGameUrlButton.jsx";
+import Link from '../../misc/ds/Link';
 
 const AdminGameLobby = () => {
     const { id: gameId } = useParams();
@@ -75,7 +75,25 @@ const AdminGameLobby = () => {
                     <div className="admin-lobby-bottom-row">
                         <div className="horizontal-divider" />
                         <BottomRow saving={null}>
-                            <AdminGameButtons disabled={null} />
+                          <Link
+                              label={t('admin_game_button_end_game')}
+                              variant="standalone"
+                              icon="stop"
+                              size="2xLarge"
+                              colour="black"
+                              href={`/admin/games/${game.game_id}/end`}
+                              internal
+                          />
+                          <div className="margin" />
+                          <Link
+                              label={t('admin_game_button_start_game')}
+                              variant="standalone"
+                              icon="play_arrow"
+                              size="2xLarge"
+                              colour="black"
+                              href={`/admin/games/${game.game_id}/start`}
+                              internal
+                          />
                         </BottomRow>
                     </div>
                 </div>
