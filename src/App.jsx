@@ -20,10 +20,12 @@ import GameListing from './components/page/admin/GameListing';
 import StartGame from './components/page/admin/StartGame';
 import GameLobby from './components/page/public/GameLobby';
 import JoinGame from './components/page/public/JoinGame';
+import { SocketProvider } from './contexts/SocketContext.jsx';
 import { DEFAULT_LANGUAGE } from './Constants.js';
 import Imitation from './Imitation';
 import reducer from './reducers';
 import translations from './translations';
+import EndOfGame from "./components/page/public/EndOfGame.js";
 import AdminMonitor from "./components/page/admin/AdminMonitor.jsx";
 
 const store = createStore(reducer, applyMiddleware(thunk));
@@ -59,6 +61,7 @@ const App = () => {
                   <Route path=":code" element={<GameLobby />}>
                   </Route>
                   <Route path=":code/join" element={<JoinGame />} />
+                  <Route path=":id/end" element={<EndOfGame />} />
                 </Route>
 
                 <Route path="admin/*" element={
@@ -87,7 +90,9 @@ const App = () => {
     return (
         <Provider store={store}>
           <NotificationProvider>
-            <RouterProvider router={router} />
+              <SocketProvider>
+                  <RouterProvider router={router} />
+              </SocketProvider>
           </NotificationProvider>
         </Provider>
     );

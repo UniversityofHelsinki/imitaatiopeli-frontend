@@ -25,7 +25,7 @@ const Header = ({ game }) => {
   );
 
   const tag = (() => {
-    if (game.start_time && game.end_time) {
+    if (game.end_time) {
       return endTag;
     } else if (game.start_time) {
       return startTag;
