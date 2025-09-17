@@ -123,14 +123,17 @@ const Content = ({ game, reload }) => {
   }
 
     const renderDeleteConfirm = () => (
-        <ConfirmDialog
-            open={confirmOpen}
-            message={t('game_content_delete_confirm_message')}
-            confirmLabel={t('game_content_confirm_delete')}
-            cancelLabel={t('game_content_cancel_delete')}
-            onCancel={() => setConfirmOpen(false)}
-            onConfirm={deleteGame}
-        />
+        <div className="confirm-dialog-container" id="delete-game-dialog-container" aria-live="assertive">
+          <ConfirmDialog
+              id="delete-game-dialog"
+              open={confirmOpen}
+              message={t('game_content_delete_confirm_message')}
+              confirmLabel={t('game_content_confirm_delete')}
+              cancelLabel={t('game_content_cancel_delete')}
+              onCancel={() => setConfirmOpen(false)}
+              onConfirm={deleteGame}
+          />
+        </div>
     );
 
 
@@ -163,12 +166,11 @@ const Content = ({ game, reload }) => {
               {gameEnded &&  (
                   <>
                       <Button
-                          variant="standalone"
                           icon="delete"
-                          type="button"
-                          size={"medium"}
                           label={t('game_content_delete_game_link_label')}
                           onClick={() => setConfirmOpen(true)}
+                          type="submit"
+                          size="small"
                       />
                       {renderDeleteConfirm()}
                   </>
