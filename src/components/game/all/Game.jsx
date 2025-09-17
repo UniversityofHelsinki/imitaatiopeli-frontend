@@ -10,7 +10,6 @@ import CopyGameUrlButton from "../../page/admin/CopyGameUrlButton.jsx";
 import Button from '../../misc/ds/Button';
 import useDeleteGame from "../../../hooks/useDeleteGame.js";
 import ConfirmDialog from "../../../utilities/ConfirmDialog.js";
-import {useNavigate} from "react-router-dom";
 
 const Header = ({ game }) => {
   const { t } = useTranslation();
@@ -50,21 +49,10 @@ const Header = ({ game }) => {
 const Content = ({ game, reload }) => {
   const { t } = useTranslation();
   const { setNotification } = useNotification();
-  const joinUrl = `${window.location.origin}/games/${game.game_code}/join`;
   const gameWaiting = !game.start_time && !game.end_time;
   const gameEnded = (game.start_time && game.end_time) || (!game.start_time && game.end_time);
   const [removeGame, ] = useDeleteGame(game.game_id);
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const navigate = useNavigate();
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(joinUrl);
-      setNotification(t('game_content_delete_done'), 'success', true);
-    } catch (error) {
-      setNotification(error.cause?.status, 'error');
-    }
-  };
 
   const stateLink = (() => {
     const gameWaiting = !game.start_time && !game.end_time;
