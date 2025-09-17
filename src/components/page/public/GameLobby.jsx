@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './GameLobby.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { get, invalidate } from '../../../hooks/useHttp';
 import localStorage from '../../../utilities/localStorage';
@@ -19,6 +19,7 @@ const GameLobby = () => {
     const [playerConfiguration, setPlayerConfiguration] = useState(null);
     const [joinedGame, setJoinedGame] = useState(null);
     const { setNotification } = useNotification();
+    const navigate = useNavigate();
 
     // Test the websocket connection
     useEffect(() => {
@@ -27,8 +28,6 @@ const GameLobby = () => {
             emit('test-message', { message: `Hello ${game.configuration[0]?.game_name}!` });
         }
     }, [isConnected, emit, game]);
-
-
 
     // Listen for messages from backend
     useEffect(() => {
@@ -52,7 +51,6 @@ const GameLobby = () => {
             });
             setGame({ ...response.body });
             setLoading(false);
-
             const player = JSON.parse(localStorage.get("player"));
             const hasJoined = player?.game_id === response.body.game_id;
             setJoined(hasJoined);
@@ -86,6 +84,12 @@ const GameLobby = () => {
             schedule();
         }
     }, [game]);
+
+    useEffect(() => {
+        if (joinedGame?.end_time && game?.game_id) {
+            navigate(`/games/${game.game_id}/end`);
+        }
+    }, [joinedGame?.end_time, game?.game_id, navigate]);
 
     const crumbs = [
         {
