@@ -13,6 +13,7 @@ const GameListing = () => {
   const [games, setGames] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showEnded, setShowEnded] = useState(false);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -23,7 +24,11 @@ const GameListing = () => {
       setGames(response.body);
       setLoading(false);
     })();
-  }, []);
+  }, [reload]);
+
+  const reloadGames = () => {
+      setReload(!reload);
+  }
 
   const handleShowEndedChecked = (event) => {
     setShowEnded(event.target.checked);
@@ -92,7 +97,7 @@ const GameListing = () => {
       loading={loading}
       crumbs={crumbs}
     >
-      <GameList games={filteredGames} />
+      <GameList games={filteredGames} reload={reloadGames} />
     </Page>
   );
 
