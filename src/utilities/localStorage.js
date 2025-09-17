@@ -1,20 +1,21 @@
 const get = (key) => {
-  try {
-    return localStorage.getItem(key);
-  } catch (error) {
-    console.error(error.message);
-    return null;
-  }
+    try {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : null;
+    } catch (error) {
+        console.error(error.message);
+        return null;
+    }
 };
 
 const set = (key, value) => {
-  try {
-    localStorage.setItem(key, value);
-  } catch (error) {
-    console.error(error.message);
-  }
+    try {
+        localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+        console.error(error.message);
+    }
 };
 
 export default {
-  get, set
+    get, set
 };

@@ -25,7 +25,8 @@ const GameLobby = () => {
     useEffect(() => {
         if (isConnected && game && game.configuration?.[0]?.game_name) {
             console.log('Socket.IO is ready to use!');
-            emit('test-message', { message: `Hello ${game.configuration[0]?.game_name}!` });
+            const player = localStorage.get("player");
+            emit('test-message', { message: `Hello game ${game.configuration[0]?.game_name} player ${player?.nickname} here` });
         }
     }, [isConnected, emit, game]);
 
@@ -51,7 +52,7 @@ const GameLobby = () => {
             });
             setGame({ ...response.body });
             setLoading(false);
-            const player = JSON.parse(localStorage.get("player"));
+            const player = localStorage.get("player");
             const hasJoined = player?.game_id === response.body.game_id;
             setJoined(hasJoined);
             setPlayerConfiguration(response.body.configuration?.[0]);
