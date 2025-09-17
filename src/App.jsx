@@ -20,6 +20,7 @@ import GameListing from './components/page/admin/GameListing';
 import StartGame from './components/page/admin/StartGame';
 import GameLobby from './components/page/public/GameLobby';
 import JoinGame from './components/page/public/JoinGame';
+import { SocketProvider } from './contexts/SocketContext.jsx';
 import { DEFAULT_LANGUAGE } from './Constants.js';
 import Imitation from './Imitation';
 import reducer from './reducers';
@@ -87,7 +88,9 @@ const App = () => {
     return (
         <Provider store={store}>
           <NotificationProvider>
-            <RouterProvider router={router} />
+              <SocketProvider>
+                  <RouterProvider router={router} />
+              </SocketProvider>
           </NotificationProvider>
         </Provider>
     );
