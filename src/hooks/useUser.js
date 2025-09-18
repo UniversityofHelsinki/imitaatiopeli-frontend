@@ -6,7 +6,6 @@ const getUser = async () => {
     const URL = `${IMITATION_BACKEND_SERVER}/api/user`;
     try {
         const response = await fetch(URL);
-        console.log(response);
         if (response.ok) {
             return await response.json();
         } else if (response.status === 401) {
