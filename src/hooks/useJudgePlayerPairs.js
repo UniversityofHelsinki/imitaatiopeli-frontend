@@ -11,14 +11,13 @@ const useJudgePlayerPairs = (gameId = null) => {
     const players = useSelector((state) => state.players.judgeplayerpairs);
 
     useEffect(() => {
-
-            if (players !== response) {
+            if (response !== null && players !== response) {
                 dispatch({
                     type: 'GET_JUDGEPLAYERPAIRS',
                     payload: response,
                 });
             }
-    }, [response, gameId, players, dispatch]);
+    }, [response, dispatch]);
 
     return [players, error, reload];
 };

@@ -22,7 +22,7 @@ const AdminMonitor = () => {
         direction: DESCENDING,
     });
     const comparators = {
-        judge_nickname: (direction) => (a, b) => direction * a.judge_nickname.localeCompare(b.judge_nickname),
+        judge_nickname: (direction) => (a, b) => direction * a?.judge_nickname?.localeCompare(b?.judge_nickname),
     };
 
     const sortDirections = {
@@ -45,6 +45,12 @@ const AdminMonitor = () => {
             setLoading(false);
         })();
     }, []);
+
+    // Force-refresh gamePlayers whenever the monitor is opened (or gameId changes)
+    useEffect(() => {
+        invalidate([`GAME_PLAYERS_${gameId}`]);
+        reload();
+    }, [gameId]);
 
     const crumbs = [
         {

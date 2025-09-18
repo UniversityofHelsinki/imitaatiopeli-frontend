@@ -56,8 +56,8 @@ const AdminMonitorTable = ({gamePlayers = [], sortOpts, onSortCriteria}) => {
                 <Header />
                 <tbody>
                 {Array.isArray(gamePlayers)
-                    && gamePlayers?.map((player) => (
-                    <TableRow key={player.judge_nickname} player={player} />))
+                    && gamePlayers?.map((player, i) => (
+                    <TableRow key={`${player.judge_nickname}-${i}`} player={player} />))
                         }
                 </tbody>
             </table>
