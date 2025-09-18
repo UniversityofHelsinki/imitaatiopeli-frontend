@@ -5,7 +5,7 @@ import { useGET } from './useHttp';
 const useJudgePlayerPairs = (gameId = null) => {
     const [response, error, reload] = useGET({
         path: gameId ? `/api/games/${gameId}/judgeplayerpairs` : null,
-        tag: gameId ? `GAME_PLAYERS_${gameId}` : null,
+        tag: gameId ? `JUDGE_PLAYER_PAIRS_${gameId}` : null,
     });
     const dispatch = useDispatch();
     const players = useSelector((state) => state.players.judgeplayerpairs);
@@ -13,7 +13,7 @@ const useJudgePlayerPairs = (gameId = null) => {
     useEffect(() => {
             if (response !== null && players !== response) {
                 dispatch({
-                    type: 'GET_JUDGEPLAYERPAIRS',
+                    type: 'GET_JUDGE_PLAYER_PAIRS',
                     payload: response,
                 });
             }

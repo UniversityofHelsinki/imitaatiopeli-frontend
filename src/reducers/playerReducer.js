@@ -19,7 +19,7 @@ const playerReducer = (state = initialState, action) => {
                 players: action.payload,
                 loadingPlayer: false
             };
-        case 'GET_JUDGEPLAYERPAIRS':
+        case 'GET_JUDGE_PLAYER_PAIRS':
             return {
                 ...state,
                 judgeplayerpairs: action.payload,

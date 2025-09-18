@@ -19,7 +19,7 @@ const AdminMonitor = () => {
     const DESCENDING = -1;
     const [sortOpts, setSortOpts] = useState({
         criteria: 'judge_nickname',
-        direction: DESCENDING,
+        direction: ASCENDING,
     });
     const comparators = {
         judge_nickname: (direction) => (a, b) => direction * a?.judge_nickname?.localeCompare(b?.judge_nickname),
@@ -48,7 +48,7 @@ const AdminMonitor = () => {
 
     // Force-refresh gamePlayers whenever the monitor is opened (or gameId changes)
     useEffect(() => {
-        invalidate([`GAME_PLAYERS_${gameId}`]);
+        invalidate([`JUDGE_PLAYER_PAIRS_${gameId}`]);
         reload();
     }, [gameId]);
 
