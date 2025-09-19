@@ -36,7 +36,7 @@ const JoinGameForm = ({ game }) => {
     }
     setSaving(true);
     const response = await join({ ...player, code: game.game_code });
-    localStorage.set("player", JSON.stringify(await response.json()));
+    localStorage.set("player", await response.json());
     setSaving(false);
     navigate(`/games/${game.game_code}`);
   };

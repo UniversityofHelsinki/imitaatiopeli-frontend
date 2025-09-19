@@ -14,7 +14,7 @@ const JoinGame = () => {
   const [game, setGame] = useState();
   const [alreadyJoined, setAlreadyJoined] = useState(false);
   const [playerConfiguration, setPlayerConfiguration] = useState(null);
-  
+
   useEffect(() => {
     (async () => {
       const response = await get({
@@ -23,7 +23,7 @@ const JoinGame = () => {
       });
       setGame(response.body);
       setPlayerConfiguration(response.body.configuration?.[0]);
-      setAlreadyJoined(JSON.parse(localStorage.get('player'))?.game_id === response.body.game_id);
+      setAlreadyJoined(localStorage.get('player')?.game_id === response.body.game_id);
       setLoading(false);
     })();
   }, [code]);

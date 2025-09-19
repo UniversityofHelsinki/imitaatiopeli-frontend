@@ -25,9 +25,6 @@ const GameForm = ({
                   }) => {
     const { t } = useTranslation();
 
-    // Get temperature from game configuration or default to 0.7
-    const temperature = game.configuration.temperature ?? 0.7;
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (onSubmit) {
@@ -46,7 +43,7 @@ const GameForm = ({
         const newTemperature = parseFloat(e.target.value);
         onChange('configuration', {
             ...game.configuration,
-            temperature: newTemperature
+            model_temperature: newTemperature
         });
     };
 
@@ -116,10 +113,10 @@ const GameForm = ({
             </div>
             <div className="form-field game-form-field">
                 <label htmlFor="temperature-slider">
-                    {t('temperature_setting')}: {temperature}
+                    {t('temperature_setting')}: {game.configuration.model_temperature}
                     <span className="temperature-label">
-            ({temperature < 0.3 ? t('temperature_conservative') :
-                        temperature > 0.7 ? t('temperature_creative') :
+            ({game.configuration.model_temperature < 0.3 ? t('temperature_conservative') :
+                        game.configuration.model_temperature > 0.7 ? t('temperature_creative') :
                             t('temperature_balanced')})
         </span>
                 </label>
@@ -130,7 +127,7 @@ const GameForm = ({
                         min="0.05"
                         max="1"
                         step="0.05"
-                        value={temperature}
+                        value={game.configuration.model_temperature}
                         onChange={handleTemperatureChange}
                         disabled={saving}
                         className="temperature-slider"
@@ -148,7 +145,7 @@ const GameForm = ({
                     content={
                         <AIPromptTest
                             prompt={game.configuration.ai_prompt}
-                            temperature={temperature}
+                            temperature={game.configuration.model_temperature}
                             languageModel={game.configuration.language_model}
                         />
                     }
@@ -206,7 +203,7 @@ GameForm.propTypes = {
         configuration: PropTypes.shape({
             game_name: PropTypes.string,
             ai_prompt: PropTypes.string,
-            temperature: PropTypes.number,
+            model_temperature: PropTypes.number,
             language_model: PropTypes.number,
         }),
         researchPermission: PropTypes.bool
