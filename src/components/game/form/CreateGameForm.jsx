@@ -48,16 +48,8 @@ const CreateGameForm = () => {
 
     const onSubmit = async () => {
         setSaving(true);
-
-        console.log('Submitting game:', game); // Debug log
-        console.log('Temperature before validation:', game.configuration.model_temperature); // Debug log
-
         const finalValidations = await validate(game);
         setValidations(finalValidations);
-
-        console.log('Game after validation:', game); // Debug log
-        console.log('Temperature after validation:', game.configuration.model_temperature); // Debug log
-
         try {
             const saved = await save(game);
             navigate(`/admin/games/${saved.game_id}`);
