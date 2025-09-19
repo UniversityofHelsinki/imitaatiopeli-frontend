@@ -82,6 +82,7 @@
   "bread_crumb_games": "Pelit",
   "bread_crumb_games_join": "Liity peliin",
   "bread_crumb_games_lobby": "Aula",
+  "bread_crumb_games_monitor": "Valvomo",
   "game_listing_page_create_game": "Uusi peli",
   "join_game_page_heading": "Liity peliin",
   "join_game_player_already_joined": "Pelaaja on jo liittynyt peliin",
@@ -147,5 +148,13 @@
   "game_listing_page_show_ended_games": "Näytä päättyneet pelit",
   "research_permission_page_heading": "Tutkimusluvan hyväksyminen",
   "research_permission_form_acceptance_label": "Hyväksyn tietojeni käyttämisen tutkimukseen",
-  "research_permission_form_acceptance_is_required": "Tutkimuslupa on annettava"
+  "research_permission_form_acceptance_is_required": "Tutkimuslupa on annettava",
+  "admin_monitor_description": "Aihe:",
+  "admin_monitor_start_time": "Käynnistysaika:",
+  "admin_monitor_table_judge": "Tuomari",
+  "admin_monitor_table_real": "Aito",
+  "admin_monitor_table_description":"Valvomo,tuomari ja pelaaja tiedot",
+  "admin_monitor_table_sort_button_title": "Järjestä",
+  "admin_monitor_table_sort_ascending": "Järjestä laskevasti nimimerkin mukaan",
+  "admin_monitor_table_sort_descending": "Järjestä nousevasti nimimerkin mukaan"
 }
