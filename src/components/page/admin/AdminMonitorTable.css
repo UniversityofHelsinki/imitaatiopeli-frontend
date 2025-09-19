@@ -4,7 +4,7 @@
 
 .admin-monitor-table {
     width: 100%;
-    border: 2px solid rgb(140 140 140);
+    border: 2px solid var(--ds-borderColor-light);
     font-family: sans-serif;
     font-size: 0.8rem;
     letter-spacing: 1px;
@@ -18,8 +18,8 @@
 
 .admin-monitor-table th,
 .admin-monitor-table td {
-    border: 1px solid rgb(140 140 140);
-    padding: 8px 10px;
+    border: 1px solid var(--ds-borderColor-light);
+    padding: var(--ds-spacing-base);
 }
 
 .responsive-margins {
@@ -28,6 +28,6 @@
     width: 80%;
 }
 
-.admin-monitor-button {
-    width: 8%;
+.admin-monitor-table-sort-button {
+
 }

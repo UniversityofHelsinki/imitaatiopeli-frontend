@@ -1,12 +1,12 @@
 import {useParams} from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import PublicPage from "../public/PublicPage.jsx";
 import {useEffect, useState} from "react";
 import { get, invalidate } from '../../../hooks/useHttp';
 import './AdminMonitor.css'
 import AdminMonitorTable from "./AdminMonitorTable.jsx";
 import {Row} from "react-bootstrap";
 import useJudgePlayerPairs from "../../../hooks/useJudgePlayerPairs.js";
+import Page from "../Page.jsx";
 
 const AdminMonitor = () => {
     const { id: gameId } = useParams();
@@ -83,14 +83,14 @@ const AdminMonitor = () => {
     const content = (() => {
         return (
             gamePlayers && <AdminMonitorTable gamePlayers={gamePlayers}
-                                              sortOpts={sortOpts}
-                                              onSortCriteria={setSortOptsCriteria}
+               sortOpts={sortOpts}
+               onSortCriteria={setSortOptsCriteria}
             />
         );
     })();
 
     return (
-        <PublicPage className="page-heading"
+        <Page className="page-heading"
                     loading={loading}
                     heading={game?.configuration?.game_name}
                     crumbs={crumbs}
@@ -108,7 +108,7 @@ const AdminMonitor = () => {
             <Row>
                 <div>{content}</div>
             </Row>
-        </PublicPage>
+        </Page>
     )
 }
 
