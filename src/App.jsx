@@ -9,6 +9,7 @@ import { thunk } from 'redux-thunk';
 import ErrorPage from '../src/Error';
 import Protected from '../src/Protected';
 import ProtectedRoute from '../src/ProtectedRoute';
+import { defineCustomElements } from '@uh-design-system/component-library/loader';
 import './App.css';
 import { AuthProvider } from './AuthContext.js';
 import NotificationProvider from './components/notification/NotificationContext';
@@ -26,6 +27,9 @@ import Imitation from './Imitation';
 import reducer from './reducers';
 import translations from './translations';
 import EndOfGame from "./components/page/public/EndOfGame.js";
+
+defineCustomElements(window);
+
 
 const store = createStore(reducer, applyMiddleware(thunk));
 

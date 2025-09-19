@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { DsOption } from '@uh-design-system/component-library-react';
 
 export const Option = ({
   children,
@@ -15,8 +14,8 @@ export const Option = ({
     ...rest
   };
 
-  return <DsOption { ...dsProps}>{children}</DsOption>
-  
+  return <ds-option { ...dsProps}>{children}</ds-option>
+
 };
 
 Option.propTypes = {
@@ -47,13 +46,13 @@ const Select = ({
 }) => {
 
   const ref = useRef();
-  
+
   useEffect(() => {
     if (ref.current && onChange) {
       ref.current.addEventListener('dsChange', onChange);
     }
   }, [ref.current, onChange]);
-  
+
   const dsProps = {
     dsTitle: title,
     dsPlaceholder: placeholder,
@@ -72,7 +71,7 @@ const Select = ({
     dsValue: value,
     ...rest
   };
-  
+
   return <ds-select ref={ref} { ...dsProps }>
     {children}
   </ds-select>

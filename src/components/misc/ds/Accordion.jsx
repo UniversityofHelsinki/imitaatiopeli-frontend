@@ -1,7 +1,6 @@
 import React, { useId } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { DsAccordion } from '@uh-design-system/component-library-react';
 import './Accordion.css';
 
 const Accordion = ({
@@ -35,7 +34,7 @@ const Accordion = ({
     ...rest
   };
 
-  return (<DsAccordion {...dsProps}>
+  return (<ds-accordion {...dsProps}>
     <span
       role="heading"
       aria-level={headingLevel}
@@ -44,7 +43,7 @@ const Accordion = ({
       {header}
     </span>
     <div slot="content">{content}</div>
-  </DsAccordion>);
+  </ds-accordion>);
 };
 
 Accordion.propTypes = {

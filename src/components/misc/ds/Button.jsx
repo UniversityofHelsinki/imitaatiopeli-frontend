@@ -1,4 +1,3 @@
-import { DsButton } from "@uh-design-system/component-library-react";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -38,7 +37,7 @@ const Button = ({
   };
 
   return (
-    <DsButton { ...dsProps } />
+    <ds-button { ...dsProps } />
   );
 };
 
@@ -50,8 +49,8 @@ Button.propTypes = {
     'small'
   ]),
   variant: PropTypes.oneOf([
-    'primary', 
-    'secondary', 
+    'primary',
+    'secondary',
     'supplementary'
   ]),
   colour: PropTypes.oneOf([
