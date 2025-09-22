@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './JoinGameForm.css'
+import './JoinGameForm.css';
 import NickNameField from './NickNameField';
 import { useTranslation } from 'react-i18next';
 import useJoinGame from '../../../hooks/useJoinGame';
@@ -9,79 +9,107 @@ import FormButtons from './FormButtons';
 import localStorage from '../../../utilities/localStorage';
 import { useNavigate } from 'react-router-dom';
 import ResearchPermissionForm from './ResearchPermissionForm';
+import { useSocket } from '../../../contexts/SocketContext.jsx';
 
 const emptyJoining = {
-  nickname: '',
+    nickname: '',
 };
 
 const JoinGameForm = ({ game }) => {
-  const { t } = useTranslation();
+    const { isConnected, emit, on, off } = useSocket();
+    const { t } = useTranslation();
 
-  const [player, setPlayer] = useState(emptyJoining);
-  const join = useJoinGame(game);
-  const [saving, setSaving] = useState(false);
-  const [phase, setPhase] = useState('nickname');
-  const navigate = useNavigate();
+    const [player, setPlayer] = useState(emptyJoining);
+    const join = useJoinGame(game);
+    const [saving, setSaving] = useState(false);
+    const [phase, setPhase] = useState('nickname');
+    const navigate = useNavigate();
 
-  const onChange = (key, value) => {
-    setPlayer({ ...player, [key]: value });
-  };
+    const onChange = (key, value) => {
+        setPlayer({ ...player, [key]: value });
+    };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const researchPermissionRequired = phase === 'nickname' && game.configuration[0].is_research_game;
-    if (researchPermissionRequired) {
-      setPhase('research-permission');
-      return;
-    }
-    setSaving(true);
-    const response = await join({ ...player, code: game.game_code });
-    localStorage.set("player", await response.json());
-    setSaving(false);
-    navigate(`/games/${game.game_code}`);
-  };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-  const handleReset = (event) => {
-    event.preventDefault();
-  };
+        const researchPermissionRequired = phase === 'nickname' && game.configuration[0].is_research_game;
+        if (researchPermissionRequired) {
+            setPhase('research-permission');
+            return;
+        }
 
-  const basicForm = (
-    <form className="form join-game-form" onSubmit={handleSubmit} onReset={handleReset}>
-      <div className="form-field join-game-form-field">
-        <NickNameField
-          value={player.nickname}
-          disabled={saving}
-          onChange={(value) => onChange('nickname', value)}
-          validation={undefined}
-        />
-      </div>
-      <div className="horizontal-divider"></div>
-      <div className="join-game-form-bottom-row">
-        <BottomRow saving={saving}>
-          <FormButtons disabled={saving} />
-        </BottomRow>
-      </div>
-    </form>
-  );
+        setSaving(true);
 
-  const form = (() => {
-    if (phase === 'research-permission') {
-      return <ResearchPermissionForm
-        game={game}
-        onSubmit={handleSubmit}
-        saving={saving}
-        configuration={game.configuration[0]}
-      />
-    }
-    return basicForm;
-  })();
+        try {
+            const response = await join({ ...player, code: game.game_code });
 
-  return form;
+            if (!response.ok) {
+                throw new Error(`Join request failed: ${response.status}`);
+            }
+
+            const playerData = await response.json();
+            localStorage.set("player", playerData);
+
+            console.log(playerData.player_id);
+            console.log(game.game_id);
+
+            if (isConnected && game?.game_id && playerData?.player_id) {
+                emit('join-game', {
+                    userId: playerData.player_id,
+                    gameId: game.game_id,
+                    nickname: playerData.nickname
+                });
+            }
+
+            navigate(`/games/${game.game_code}`);
+        } catch (error) {
+            console.error('Failed to join game:', error);
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    const handleReset = (event) => {
+        event.preventDefault();
+    };
+
+    const basicForm = (
+        <form className="form join-game-form" onSubmit={handleSubmit} onReset={handleReset}>
+            <div className="form-field join-game-form-field">
+                <NickNameField
+                    value={player.nickname}
+                    disabled={saving}
+                    onChange={(value) => onChange('nickname', value)}
+                    validation={undefined}
+                />
+            </div>
+            <div className="horizontal-divider"></div>
+            <div className="join-game-form-bottom-row">
+                <BottomRow saving={saving}>
+                    <FormButtons disabled={saving} />
+                </BottomRow>
+            </div>
+        </form>
+    );
+
+    const form = (() => {
+        if (phase === 'research-permission') {
+            return <ResearchPermissionForm
+                game={game}
+                onSubmit={handleSubmit}
+                saving={saving}
+                configuration={game.configuration[0]}
+            />
+        }
+        return basicForm;
+    })();
+
+    return form;
 
 };
 
 JoinGameForm.propTypes = {
-  game: PropTypes.object,
+    game: PropTypes.object,
 };
 
 export default JoinGameForm;

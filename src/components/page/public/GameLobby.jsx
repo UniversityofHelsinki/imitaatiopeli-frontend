@@ -22,13 +22,38 @@ const GameLobby = () => {
     const { setNotification } = useNotification();
     const navigate = useNavigate();
 
-    // Test the websocket connection
     useEffect(() => {
-        if (isConnected && game && game.configuration?.[0]?.game_name) {
-            console.log('Socket.IO is ready to use!');
-            const player = localStorage.get("player");
-            emit('test-message', { message: `Hello game ${game.configuration[0]?.game_name} player ${player?.nickname} here` });
-        }
+        const joinGameIfReady = async () => {
+            const localPlayer = localStorage.get("player");
+
+            if (isConnected && game && localPlayer?.player_id) {
+                try {
+                    const playerResponse = await get({
+                        path: `/public/getPlayerById/${localPlayer.player_id}`,
+                        tag: `PLAYER_${localPlayer.player_id}`
+                    });
+
+                    const playerFromBackend = playerResponse.body;
+
+                    console.log('playerFromBackend:', playerFromBackend);
+                    console.log('localPlayer:', localPlayer);
+
+                    if (game?.game_id && playerFromBackend?.player_id && localPlayer?.player_id) {
+                        if (playerFromBackend.player_id === localPlayer?.player_id && playerFromBackend?.gameId === game?.game_id) {
+                            emit('join-game', {
+                                userId: playerFromBackend.player_id,
+                                gameId: game.game_id,
+                                nickname: playerFromBackend.nickname
+                            });
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error fetching player from backend:', error);
+                }
+            }
+        };
+
+        joinGameIfReady();
     }, [isConnected, emit, game]);
 
     // Listen for messages from backend
