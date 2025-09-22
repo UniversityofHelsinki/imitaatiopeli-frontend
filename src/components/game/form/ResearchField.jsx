@@ -2,7 +2,6 @@ import React from 'react';
 import './ResearchField.css';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import RadioButton from "../../misc/ds/RadioButton.jsx";
 import CheckBox from "../../misc/ds/CheckBox.jsx";
 
 const ResearchField = ({ value, onChange, disabled, validation }) => {
