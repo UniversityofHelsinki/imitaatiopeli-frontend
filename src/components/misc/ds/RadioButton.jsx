@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { DsRadioButton } from "@uh-design-system/component-library-react";
 
 const RadioButton = ({
   id,
@@ -31,8 +30,8 @@ const RadioButton = ({
     dsErrorsDisabled: errorsDisabled,
     ...rest
   };
-  
-  return <DsRadioButton { ...dsProps } />;
+
+  return <ds-radio-button { ...dsProps } />;
 };
 
 RadioButton.propTypes = {

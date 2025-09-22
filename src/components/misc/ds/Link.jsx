@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DsLink } from '@uh-design-system/component-library-react';
 import { useNavigate } from 'react-router-dom';
 
 const Link = ({
@@ -40,7 +39,7 @@ const Link = ({
     ...rest
   };
 
-  return <DsLink { ...dsProps } onClick={onClick} />;
+  return <ds-link { ...dsProps } onClick={onClick} />;
 
 };
 

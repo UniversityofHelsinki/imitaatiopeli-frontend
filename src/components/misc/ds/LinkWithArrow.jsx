@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DsLinkWithArrow } from '@uh-design-system/component-library-react';
 
 const LinkWithArrow = ({
   text = '',
@@ -20,7 +19,7 @@ const LinkWithArrow = ({
     ...rest
   };
 
-  return <DsLinkWithArrow { ...dsProps } />;
+  return <ds-link-with-arrow { ...dsProps } />;
 
 };
 

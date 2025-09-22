@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DsCheckboxGroup } from '@uh-design-system/component-library-react';
 
 const CheckBoxGroup = ({
   children,
@@ -16,7 +15,7 @@ const CheckBoxGroup = ({
   optionalText = '',
   ...rest
 }) => {
-  
+
   const dsProps = {
     dsLegend: legend,
     dsAssistiveText: assistiveText,
@@ -31,7 +30,7 @@ const CheckBoxGroup = ({
     ...rest
   };
 
-  return <DsCheckboxGroup { ...dsProps }>{children}</DsCheckboxGroup>
+  return <ds-checkbox-group { ...dsProps }>{children}</ds-checkbox-group>
 };
 
 CheckBoxGroup.propTypes = {

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './TextInput.css';
-import { DsTextInput } from '@uh-design-system/component-library-react';
 
 const TextInput = ({
   label,
@@ -64,8 +63,8 @@ const TextInput = ({
     dsPattern: pattern,
     ...rest
   };
-  
-  return <DsTextInput { ...dsProps } />;
+
+  return <ds-text-input { ...dsProps } />;
 };
 
 TextInput.propTypes = {

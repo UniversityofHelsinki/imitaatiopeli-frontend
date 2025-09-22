@@ -8,6 +8,7 @@ import Spinner from '../../misc/ds/Spinner.jsx';
 import { useNotification } from '../../notification/NotificationContext.js';
 import { useSocket } from '../../../contexts/SocketContext.jsx';
 import PublicPage from './PublicPage.jsx';
+import usePlayer from '../../../hooks/usePlayer.js';
 
 const GameLobby = () => {
     const { isConnected, emit, on, off } = useSocket();
@@ -44,20 +45,42 @@ const GameLobby = () => {
     }, [on, off]);
 
 
+
     useEffect(() => {
         (async () => {
-            const response = await get({
-                path: `/public/games/${code}`,
-                tag: `GAME_${code}`
-            });
-            setGame({ ...response.body });
-            setLoading(false);
-            const player = localStorage.get("player");
-            const hasJoined = player?.game_id === response.body.game_id;
-            setJoined(hasJoined);
-            setPlayerConfiguration(response.body.configuration?.[0]);
+            try {
+                const gameResponse = await get({
+                    path: `/public/games/${code}`,
+                    tag: `GAME_${code}`
+                });
+
+                setGame({ ...gameResponse.body });
+                setPlayerConfiguration(gameResponse.body.configuration?.[0]);
+
+                const localPlayer = localStorage.get("player");
+
+                if (localPlayer?.player_id) {
+                    const playerResponse = await get({
+                        path: `/public/getPlayerById/${localPlayer.player_id}`,
+                        tag: `PLAYER_${localPlayer.player_id}`
+                    });
+                    const hasJoined = playerResponse.body?.gameId === gameResponse.body.game_id;
+                    setJoined(hasJoined);
+                } else {
+                    console.log("No player found in localStorage");
+                    setJoined(false);
+                }
+
+                setLoading(false);
+
+            } catch (error) {
+                console.error('Error loading game/player:', error);
+                setLoading(false);
+            }
         })();
     }, [code]);
+
+
 
     useEffect(() => {
         if (game && game.game_id) {
