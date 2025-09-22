@@ -1,0 +1,33 @@
+.admin-monitor-table-container {
+    overflow: auto;
+}
+
+.admin-monitor-table {
+    width: 100%;
+    border: 2px solid var(--ds-borderColor-light);
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.admin-monitor-table caption {
+    display: table-caption;
+}
+
+.admin-monitor-table th,
+.admin-monitor-table td {
+    border: 1px solid var(--ds-borderColor-light);
+    padding: var(--ds-spacing-base);
+}
+
+.responsive-margins {
+    margin: 0 auto;
+    max-width: 80%;
+    width: 80%;
+}
+
+.admin-monitor-table-sort-button {
+
+}
