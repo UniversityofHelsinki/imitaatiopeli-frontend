@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { DsTag } from '@uh-design-system/component-library-react';
 
 const Tag = ({
   text = '',
@@ -11,7 +10,7 @@ const Tag = ({
   target = '_self',
   ...rest
 }) => {
-  
+
   const dsProps = {
     'ds-text': text,
     'ds-colour': colour,
@@ -22,7 +21,7 @@ const Tag = ({
     ...rest
   };
 
-  return <DsTag { ...dsProps } />;
+  return <ds-tag { ...dsProps } />;
 };
 
 Tag.propTypes = {

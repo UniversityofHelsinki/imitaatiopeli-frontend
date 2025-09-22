@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { DsTagGroup } from '@uh-design-system/component-library-react';
 
 const TagGroup = ({
   children,
@@ -14,10 +13,10 @@ const TagGroup = ({
     dsLabel: label,
     ...rest
   };
-  
-  return <DsTagGroup { ...dsProps }>
+
+  return <ds-tag-group { ...dsProps }>
     {children}
-  </DsTagGroup>;
+  </ds-tag-group>;
 };
 
 TagGroup.propTypes = {

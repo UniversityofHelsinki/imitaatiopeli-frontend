@@ -1,24 +1,23 @@
-import { DsIcon } from "@uh-design-system/component-library-react";
 import PropTypes from "prop-types";
 
-const Icon = ({ 
-  name, 
+const Icon = ({
+  name,
   role = 'img',
-  title = '', 
-  hidden = true, 
-  colour = 'ds-palette-black', 
+  title = '',
+  hidden = true,
+  colour = 'ds-palette-black',
   size = '1.5rem',
   ...rest
 }) => {
 
-  return <DsIcon
+  return <ds-icon
     aria-hidden
-    dsName={name} 
+    dsName={name}
     dsRole={role}
     dsTitle={title}
     dsHidden={hidden}
     dsColour={colour}
-    dsSize={size} 
+    dsSize={size}
     { ...rest }
   />
 };

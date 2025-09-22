@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DsCard } from '@uh-design-system/component-library-react';
 
 const Card = ({
   heading,
@@ -18,7 +17,7 @@ const Card = ({
   footer,
   ...rest
 }) => {
-  
+
   const dsProps = {
     dsHeading: heading,
     dsDescription: description,
@@ -33,11 +32,11 @@ const Card = ({
     dsVariant: variant,
     ...rest
   };
-  
-  return <DsCard { ...dsProps }>
+
+  return <ds-card { ...dsProps }>
     <div slot="content">{children}</div>
     <div slot="footer">{footer}</div>
-  </DsCard>;
+  </ds-card>;
 };
 
 Card.propTypes = {

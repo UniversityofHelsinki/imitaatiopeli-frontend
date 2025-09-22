@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DsChipGroup } from '@uh-design-system/component-library-react';
 
 const ChipGroup = ({
   children,
@@ -15,9 +14,9 @@ const ChipGroup = ({
     ...rest,
   };
 
-  return <DsChipGroup { ...dsProps }>
+  return <ds-chip-group { ...dsProps }>
     {children}
-  </DsChipGroup>;
+  </ds-chip-group>;
 };
 
 ChipGroup.propTypes = {
