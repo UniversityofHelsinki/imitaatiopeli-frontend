@@ -35,17 +35,16 @@ const GameLobby = () => {
 
                     const playerFromBackend = playerResponse.body;
 
-                    console.log('playerFromBackend:', playerFromBackend);
-                    console.log('localPlayer:', localPlayer);
+                    const canJoinGame = game?.game_id &&
+                        playerFromBackend?.player_id === localPlayer?.player_id &&
+                        playerFromBackend?.gameId === game?.game_id;
 
-                    if (game?.game_id && playerFromBackend?.player_id && localPlayer?.player_id) {
-                        if (playerFromBackend.player_id === localPlayer?.player_id && playerFromBackend?.gameId === game?.game_id) {
-                            emit('join-game', {
-                                userId: playerFromBackend.player_id,
-                                gameId: game.game_id,
-                                nickname: playerFromBackend.nickname
-                            });
-                        }
+                    if (canJoinGame) {
+                        emit('join-game', {
+                            userId: playerFromBackend.player_id,
+                            gameId: game.game_id,
+                            nickname: playerFromBackend.nickname
+                        });
                     }
                 } catch (error) {
                     console.error('Error fetching player from backend:', error);
