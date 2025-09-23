@@ -10,6 +10,7 @@ import {useNotification} from "../../notification/NotificationContext.js";
 import BottomRow from "../../game/form/BottomRow.jsx";
 import CopyGameUrlButton from "./CopyGameUrlButton.jsx";
 import Link from '../../misc/ds/Link';
+import useStartGameValidation from "../../../hooks/useStartGameValidation.jsx";
 
 const AdminGameLobby = () => {
     const { id: gameId } = useParams();
@@ -17,6 +18,8 @@ const AdminGameLobby = () => {
     const { setNotification } = useNotification();
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [players, setPlayers] = useState([]);
+    const validate = useStartGameValidation(players);
 
     const fetchGame = async () => {
         try {
@@ -70,7 +73,7 @@ const AdminGameLobby = () => {
                             </p>
                         </div>
                     <div className="admin-game-lobby-players-container">
-                        <AdminGameLobbyPlayers game={game} />
+                        <AdminGameLobbyPlayers game={game} onPlayersUpdate={setPlayers} />
                     </div>
                     <div className="admin-lobby-bottom-row">
                         <div className="horizontal-divider" />
@@ -93,6 +96,7 @@ const AdminGameLobby = () => {
                               colour="black"
                               href={`/admin/games/${game.game_id}/start`}
                               internal
+                              validation={validate()}
                           />
                         </BottomRow>
                     </div>

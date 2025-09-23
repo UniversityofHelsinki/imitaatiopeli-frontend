@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import ErrorText from './../ds/ErrorText.jsx';
 
 const Link = ({
   label = '',
@@ -14,11 +15,16 @@ const Link = ({
   size = 'medium',
   variant = '',
   internal = false,
+  validation,
   ...rest
 }) => {
   const navigate = useNavigate();
 
   const onClick = (event) => {
+    if (validation && !validation.isValid) {
+      event.preventDefault();
+      return;
+    }
     if (internal) {
       event.preventDefault();
       navigate(href);
@@ -39,8 +45,16 @@ const Link = ({
     ...rest
   };
 
-  return <ds-link { ...dsProps } onClick={onClick} />;
-
+  return (
+      <div className="ds-link-container">
+        <ds-link {...dsProps} onClick={onClick} />
+        <div className="ds-link-error">
+        {validation && !validation.isValid && (
+            <ErrorText text={validation.message} />
+        )}
+        </div>
+      </div>
+  );
 };
 
 Link.propTypes = {
