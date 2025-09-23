@@ -54,7 +54,7 @@ const Select = ({
   }, [ref.current, onChange]);
 
   const dsProps = {
-    dsTitle: title,
+    dsLabel: title,
     dsPlaceholder: placeholder,
     dsVariant: variant,
     dsClearable: clearable,
