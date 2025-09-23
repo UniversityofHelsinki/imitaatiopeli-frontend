@@ -8,52 +8,60 @@ import localStorage from '../../../utilities/localStorage';
 import PublicPage from "./PublicPage.jsx";
 
 const JoinGame = () => {
-  const { t } = useTranslation();
-  const { code } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [game, setGame] = useState();
-  const [alreadyJoined, setAlreadyJoined] = useState(false);
-  const [playerConfiguration, setPlayerConfiguration] = useState(null);
+    const { t } = useTranslation();
+    const { code } = useParams();
+    const [loading, setLoading] = useState(true);
+    const [game, setGame] = useState();
+    const [alreadyJoined, setAlreadyJoined] = useState(false);
+    const [playerConfiguration, setPlayerConfiguration] = useState(null);
 
-  useEffect(() => {
-    (async () => {
-      const response = await get({
-        path: `/public/games/${code}`,
-        tag: `GAME_${code}`
-      });
-      setGame(response.body);
-      setPlayerConfiguration(response.body.configuration?.[0]);
-      setAlreadyJoined(localStorage.get('player')?.game_id === response.body.game_id);
-      setLoading(false);
-    })();
-  }, [code]);
+    useEffect(() => {
+        (async () => {
+            const response = await get({
+                path: `/public/games/${code}`,
+                tag: `GAME_${code}`
+            });
+            setGame(response.body);
+            setPlayerConfiguration(response.body.configuration?.[0]);
+            setAlreadyJoined(localStorage.get('player')?.game_id === response.body.game_id);
+            setLoading(false);
+        })();
+    }, [code]);
 
-  const crumbs = [
-    {
-      label: t('bread_crumb_home'),
-      href: '/'
-    },
-    {
-      label: t('bread_crumb_games'),
-      href: '/games'
-    },
-    {
-      label: t('bread_crumb_games_join'),
-      href: `/games/${code}/join`,
-      current: true
+    const crumbs = [
+        {
+            label: t('bread_crumb_home'),
+            href: '/'
+        },
+        {
+            label: t('bread_crumb_games'),
+            href: '/games'
+        },
+        {
+            label: t('bread_crumb_games_join'),
+            href: `/games/${code}/join`,
+            current: true
+        }
+    ];
+
+    const gameAlreadyStarted = () => {
+        return <div className="join-game-font-size">{t('join_game_player_cant_joined')} </div>
     }
-  ];
 
-  return (
-    <PublicPage
-      loading={loading}
-      heading={t('join_game_page_heading')}
-      crumbs={crumbs}
-      configuration={playerConfiguration}
-    >
-      {alreadyJoined && <span>{t('join_game_player_already_joined')}</span> || <JoinGameForm game={game} />}
-    </PublicPage>
-  );
+    return (
+        <>
+            {game?.start_time != null ? (gameAlreadyStarted()
+            ) : (
+                <PublicPage
+                    loading={loading}
+                    heading={t('join_game_page_heading')}
+                    crumbs={crumbs}
+                    configuration={playerConfiguration}
+                >
+                    {alreadyJoined && <span>{t('join_game_player_already_joined')}</span> || <JoinGameForm game={game} />}
+                </PublicPage>)}
+        </>
+    );
 
 };
 
