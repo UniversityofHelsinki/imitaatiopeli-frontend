@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@uh-design-system/component-library": "^1.0.0",
-    "@uh-design-system/component-library-react": "^1.0.0",
     "bootstrap": "^5.3.7",
     "date-fns": "^4.1.0",
     "i18next": "^25.2.1",
