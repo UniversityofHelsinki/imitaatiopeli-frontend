@@ -1,0 +1,20 @@
+.messenger-message-area {
+}
+
+.message-area-messages {
+  display: flex;
+  flex-direction: column;
+  padding: var(--ds-spacing-base);
+  gap: var(--ds-spacing-2xSmall);
+  list-style: none;
+  margin: unset;
+}
+
+.message-area-item {
+  min-width: 60%;
+  max-width: 60%;
+}
+
+.message-area-item-sent {
+  align-self: flex-end;
+}

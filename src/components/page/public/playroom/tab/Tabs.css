@@ -1,0 +1,63 @@
+.tabs {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100%;
+}
+
+.tabs-headings {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.tab-heading {
+  all: unset;
+
+  text-align: center;
+  padding: var(--ds-spacing-small);
+  width: 100%;
+  border-bottom: var(--ds-borderWidth-hairline) solid black;
+  background-color: var(--ds-bgColor-neutralLight);
+}
+
+.tab-heading:hover {
+  background-color: var(--ds-bgColor-white-hover);
+}
+
+.tab-heading:focus-visible {
+  outline: var(--ds-borderWidth-thin) solid var(--ds-palette-black-95);
+  outline-offset: var(--ds-spacing-4xSmall);
+}
+
+.tab-heading-active {
+  border-bottom: unset;
+  border-top: var(--ds-borderWidth-hairline) solid black;
+  border-left: var(--ds-borderWidth-hairline) solid black;
+  border-right: var(--ds-borderWidth-hairline) solid black;
+  background-color: var(--ds-palette-white);
+}
+
+.tabs-active-tab {
+  height: 100%;
+  max-height: 100%;
+  border: var(--ds-borderWidth-hairline) solid black;
+  border-top: unset;
+}
+
+.tab-heading-notify {
+  animation-name: pulse;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pulse {
+  from {
+    background-color: var(--ds-bgColor-attention-active);
+  }
+
+  to {
+    background-color: var(--ds-bgColor-neutralLight);
+  }
+}

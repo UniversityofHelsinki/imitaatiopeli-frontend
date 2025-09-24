@@ -1,0 +1,11 @@
+.messenger {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.messenger > .messenger-message-area {
+  flex: 1 1 0;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
