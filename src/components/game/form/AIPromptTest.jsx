@@ -7,7 +7,6 @@ import useLanguageModels from '../../../hooks/useLanguageModels.js';
 import TextArea from '../../misc/ds/TextArea';
 import Spinner from '../../misc/ds/Spinner.jsx';
 import './AIPromptTest.css';
-import { DsIcon } from '@uh-design-system/component-library-react';
 
 const AIPromptTest = ({ prompt, temperature, languageModel }) => {
     const { t } = useTranslation();
@@ -86,7 +85,7 @@ const AIPromptTest = ({ prompt, temperature, languageModel }) => {
             {(!hasPrompt || !hasModel) && (
                 <div className="form-field game-form-field">
                     <div className="info-message">
-                        <DsIcon dsName={'info'} dsSize={'1.5rem'} />
+                        <ds-icon dsName={'info'} dsSize={'1.5rem'} />
                         {!hasPrompt && !hasModel
                             ? t('prompt_and_model_required_message')
                             : !hasPrompt
