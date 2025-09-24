@@ -9,7 +9,7 @@ import FormButtons from './FormButtons';
 import localStorage from '../../../utilities/localStorage';
 import { useNavigate } from 'react-router-dom';
 import ResearchPermissionForm from './ResearchPermissionForm';
-import usePlayer from '../../../hooks/usePlayer.js';
+import usePublicPlayer from "../../../hooks/usePublicPlayer.js";
 
 const emptyJoining = {
     nickname: '',
@@ -17,7 +17,7 @@ const emptyJoining = {
 
 const JoinGameForm = ({ game }) => {
     const { t } = useTranslation();
-    const [players= []] = usePlayer(null, game?.game_id);
+    const [players= []] = usePublicPlayer(game?.game_id);
     const [player, setPlayer] = useState(emptyJoining);
     const join = useJoinGame(game);
     const [saving, setSaving] = useState(false);
