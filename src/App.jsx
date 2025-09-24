@@ -28,6 +28,7 @@ import reducer from './reducers';
 import translations from './translations';
 import EndOfGame from "./components/page/public/EndOfGame.js";
 import AdminMonitor from "./components/page/admin/AdminMonitor.jsx";
+import Playroom from './components/page/public/playroom/Playroom';
 
 defineCustomElements(window);
 
@@ -62,8 +63,8 @@ const App = () => {
                 {/* Public routes here */}
                 <Route index element={<div></div>} />
                 <Route path="games">
-                  <Route path=":code" element={<GameLobby />}>
-                  </Route>
+                  <Route path=":code" element={<GameLobby />} />
+                  <Route path=":code/play" element={<Playroom />} />
                   <Route path=":code/join" element={<JoinGame />} />
                   <Route path=":id/end" element={<EndOfGame />} />
                 </Route>

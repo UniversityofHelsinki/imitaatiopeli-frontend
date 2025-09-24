@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   word-break: break-all;
+
+  min-width: 100%;
 }
 
 .page-navigation {
@@ -38,6 +40,8 @@
 }
 
 .page-content {
+  height: 100%;
+
   margin-left: 10%;
   margin-right: 10%;
 }
