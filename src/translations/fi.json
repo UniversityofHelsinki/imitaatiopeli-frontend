@@ -157,5 +157,6 @@
   "admin_monitor_table_description":"Valvomo,tuomari ja pelaaja tiedot",
   "admin_monitor_table_sort_button_title": "Järjestä",
   "admin_monitor_table_sort_ascending": "Järjestä laskevasti nimimerkin mukaan",
-  "admin_monitor_table_sort_descending": "Järjestä nousevasti nimimerkin mukaan"
+  "admin_monitor_table_sort_descending": "Järjestä nousevasti nimimerkin mukaan",
+  "nickname_already_in_use": "Nimi on jo käytössä"
 }
