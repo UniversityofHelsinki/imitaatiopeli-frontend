@@ -156,5 +156,13 @@
   "admin_monitor_table_description":"Valvomo,tuomari ja pelaaja tiedot",
   "admin_monitor_table_sort_button_title": "Järjestä",
   "admin_monitor_table_sort_ascending": "Järjestä laskevasti nimimerkin mukaan",
-  "admin_monitor_table_sort_descending": "Järjestä nousevasti nimimerkin mukaan"
+  "admin_monitor_table_sort_descending": "Järjestä nousevasti nimimerkin mukaan",
+  "messenger_message_form_submit_button": "Lähetä",
+  "playroom_heading_judge": "Tuomari",
+  "playroom_heading_aito": "Aito",
+  "playroom_page_heading": "Peli",
+  "playroom_waiting_for_questions": "Odotetaan kysymyksiä",
+  "playroom_waiting_for_answers": "Odotetaan vastauksia",
+  "playroom_notification_new_messages": "Uusia viestejä",
+  "message_field_message": "Viesti"
 }
