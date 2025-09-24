@@ -27,7 +27,7 @@ const CheckBox = ({
     dsErrorText: errorText,
     dsRequired: required,
     dsOptional: optional,
-    dsLegend: legend,
+    dsLabel: legend,
     dsAssistiveText: assistiveText,
     dsOptionalText: optionalText,
     dsErrorsDisabled: errorsDisabled,

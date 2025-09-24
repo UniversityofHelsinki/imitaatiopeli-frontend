@@ -1,0 +1,5 @@
+.join-game-font-size {
+    font-size: var(--ds-fontSize-18);
+    font-weight: bold;
+    padding-top: 1rem;
+}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './JoinGameForm.css';
+import './JoinGameForm.css'
 import NickNameField from './NickNameField';
 import { useTranslation } from 'react-i18next';
 import useJoinGame from '../../../hooks/useJoinGame';
@@ -9,6 +9,7 @@ import FormButtons from './FormButtons';
 import localStorage from '../../../utilities/localStorage';
 import { useNavigate } from 'react-router-dom';
 import ResearchPermissionForm from './ResearchPermissionForm';
+import usePublicPlayer from "../../../hooks/usePublicPlayer.js";
 import { useSocket } from '../../../contexts/SocketContext.jsx';
 
 const emptyJoining = {
@@ -18,59 +19,84 @@ const emptyJoining = {
 const JoinGameForm = ({ game }) => {
     const { isConnected, emit, on, off } = useSocket();
     const { t } = useTranslation();
-
+    const [players= []] = usePublicPlayer(game?.game_id);
     const [player, setPlayer] = useState(emptyJoining);
     const join = useJoinGame(game);
     const [saving, setSaving] = useState(false);
     const [phase, setPhase] = useState('nickname');
+    const [nicknameError, setNicknameError] = useState('');
     const navigate = useNavigate();
 
     const onChange = (key, value) => {
         setPlayer({ ...player, [key]: value });
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        const researchPermissionRequired = phase === 'nickname' && game.configuration[0].is_research_game;
-        if (researchPermissionRequired) {
-            setPhase('research-permission');
-            return;
-        }
-
-        setSaving(true);
-
-        try {
-            const response = await join({ ...player, code: game.game_code });
-
-            if (!response.ok) {
-                throw new Error(`Join request failed: ${response.status}`);
+        if (key === 'nickname') {
+            const nicknameExists = players?.some(p => {
+                return p.nickname.toLowerCase() === value.toLowerCase();
+            });
+            if (nicknameExists && value.trim() !== '') {
+                setNicknameError(t('nickname_already_in_use'));
+            } else {
+                setNicknameError('');
             }
-
-            const playerData = await response.json();
-            localStorage.set("player", playerData);
-
-            console.log(playerData.player_id);
-            console.log(game.game_id);
-
-            if (isConnected && game?.game_id && playerData?.player_id) {
-                emit('join-game', {
-                    userId: playerData.player_id,
-                    gameId: game.game_id,
-                    nickname: playerData.nickname
-                });
-            }
-
-            navigate(`/games/${game.game_code}`);
-        } catch (error) {
-            console.error('Failed to join game:', error);
-        } finally {
-            setSaving(false);
         }
     };
+
+    const isFormDisabled = () => {
+        const nicknameEmpty = !player.nickname || player?.nickname.trim() === '';
+        const nicknameExists = players?.some(p =>
+            p.nickname.toLowerCase() === player.nickname.toLowerCase()
+        );
+        return saving || nicknameEmpty || nicknameExists;
+    };
+
+  const handleSubmit = async (event) => {
+      event.preventDefault();
+      const nicknameExists = players.some(p => p.nickname.toLowerCase() === player.nickname.toLowerCase());
+      if (nicknameExists) {
+          setNicknameError(t('nickname_already_in_use'));
+          return;
+      }
+      const researchPermissionRequired = phase === 'nickname' && game.configuration[0].is_research_game;
+      if (researchPermissionRequired) {
+          setPhase('research-permission');
+          return;
+      }
+
+      setSaving(true);
+
+      try {
+          const response = await join({ ...player, code: game.game_code });
+
+          if (!response.ok) {
+              throw new Error(`Join request failed: ${response.status}`);
+          }
+
+          const playerData = await response.json();
+          localStorage.set("player", playerData);
+
+          console.log(playerData.player_id);
+          console.log(game.game_id);
+
+          if (isConnected && game?.game_id && playerData?.player_id) {
+              emit('join-game', {
+                  userId: playerData.player_id,
+                  gameId: game.game_id,
+                  nickname: playerData.nickname
+              });
+          }
+
+          navigate(`/games/${game.game_code}`);
+      } catch (error) {
+          console.error('Failed to join game:', error);
+      } finally {
+          setSaving(false);
+      }
+  };
 
     const handleReset = (event) => {
         event.preventDefault();
+        setPlayer(emptyJoining);
+        setNicknameError('');
     };
 
     const basicForm = (
@@ -80,13 +106,13 @@ const JoinGameForm = ({ game }) => {
                     value={player.nickname}
                     disabled={saving}
                     onChange={(value) => onChange('nickname', value)}
-                    validation={undefined}
+                    validation={nicknameError ? { message: nicknameError, type: 'error' } : undefined}
                 />
             </div>
             <div className="horizontal-divider"></div>
             <div className="join-game-form-bottom-row">
                 <BottomRow saving={saving}>
-                    <FormButtons disabled={saving} />
+                    <FormButtons disabled={isFormDisabled()} />
                 </BottomRow>
             </div>
         </form>
