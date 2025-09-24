@@ -6,7 +6,7 @@ import Page from '../Page';
 import { useTranslation } from 'react-i18next';
 import { get } from '../../../hooks/useHttp';
 import AdminGameLobbyPlayers from './AdminGameLobbyPlayers';
-import {useNotification} from "../../notification/NotificationContext.js";
+import {useNotification} from "../../notification/NotificationContext.jsx";
 import BottomRow from "../../game/form/BottomRow.jsx";
 import CopyGameUrlButton from "./CopyGameUrlButton.jsx";
 import Link from '../../misc/ds/Link';

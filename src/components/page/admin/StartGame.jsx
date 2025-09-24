@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { get } from '../../../hooks/useHttp';
 import useStartGame from '../../../hooks/useStartGame';
 import StartGameForm from '../../game/form/StartGameForm';
-import { useNotification } from '../../notification/NotificationContext';
+import { useNotification } from '../../notification/NotificationContext.jsx';
 
 const StartGame = () => {
   const { id } = useParams();
@@ -17,7 +17,7 @@ const StartGame = () => {
   const navigate = useNavigate();
   const { setNotification } = useNotification();
   const start = useStartGame(id);
-  
+
   useEffect(() => {
     (async () => {
       const response = await get({
@@ -28,7 +28,7 @@ const StartGame = () => {
       setLoading(false);
     })();
   }, []);
-  
+
   const startGame = async () => {
     await start();
     setNotification(t('start_game_page_success_notification'), 'success', true);
@@ -64,8 +64,8 @@ const StartGame = () => {
 
   return (
     <Page loading={loading} heading={t('start_game_page_heading')} crumbs={crumbs}>
-      {isAlreadyStarted 
-        && alreadyStarted 
+      {isAlreadyStarted
+        && alreadyStarted
         || <StartGameForm game={game} startGame={startGame} />}
     </Page>
   );
