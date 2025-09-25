@@ -2,23 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { DsLink } from '@uh-design-system/component-library-react';
-import { useNotification } from '../../notification/NotificationContext.js';
+import { useNotification } from '../../notification/NotificationContext.jsx';
 
 const Link = ({
-                  label = '',
-                  href = '',
-                  'aria-label': ariaLabel = label,
-                  colour = 'blue',
-                  icon,
-                  iconPosition = 'start',
-                  weight = 'regular',
-                  target = '_self',
-                  size = 'medium',
-                  variant = '',
-                  internal = false,
-                  validation,
-                  ...rest
-              }) => {
+    label = '',
+    href = '',
+    'aria-label': ariaLabel = label,
+    colour = 'blue',
+    icon,
+    iconPosition = 'start',
+    weight = 'regular',
+    target = '_self',
+    size = 'medium',
+    variant = '',
+    internal = false,
+    validation,
+    ...rest
+    }) => {
     const navigate = useNavigate();
     const { setNotification } = useNotification();
 
