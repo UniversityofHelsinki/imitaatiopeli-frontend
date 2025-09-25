@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import { get } from '../../../hooks/useHttp';
 import JoinGameForm from '../../game/form/JoinGameForm';
 import './JoinGame.css';
@@ -14,6 +14,7 @@ const JoinGame = () => {
     const [game, setGame] = useState();
     const [alreadyJoined, setAlreadyJoined] = useState(false);
     const [playerConfiguration, setPlayerConfiguration] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         (async () => {
@@ -48,13 +49,18 @@ const JoinGame = () => {
         return <div className="join-game-font-size">{t('join_game_player_cant_joined')} </div>
     }
 
+    useEffect(() => {
+        if (!game) return; // wait until game is set
+        !alreadyJoined && navigate(`/games/${code}/join`, { replace: true });
+    }, [game, alreadyJoined]);
+
     return (
         <>
             {game?.start_time != null ? (gameAlreadyStarted()
             ) : (
                 <PublicPage
                     loading={loading}
-                    heading={t('join_game_page_heading')}
+                    heading={!alreadyJoined && t('join_game_page_heading')}
                     crumbs={crumbs}
                     configuration={playerConfiguration}
                 >

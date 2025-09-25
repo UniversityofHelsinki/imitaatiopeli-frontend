@@ -16,7 +16,7 @@ const GameLobby = () => {
     const { t } = useTranslation();
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [hasJoined, setJoined] = useState(false);
+    const [hasJoined, setJoined] = useState(undefined);
     const [playerConfiguration, setPlayerConfiguration] = useState(null);
     const [joinedGame, setJoinedGame] = useState(null);
     const { setNotification } = useNotification();
@@ -140,14 +140,14 @@ const GameLobby = () => {
     }, [joinedGame?.end_time, game?.game_id, navigate]);
 
     useEffect(() => {
-        if (!game) return; // wait until game is set
+        if (!game || hasJoined === undefined) return; // wait until game is set
         const notStarted = game.start_time == null; // true for null or undefined
         const notEnded = game.end_time == null;
 
         if (!hasJoined && notStarted && notEnded) {
             navigate(`/games/${code}/join`, { replace: true });
         }
-    }, [hasJoined, game?.start_time, game?.end_time, code, navigate]);
+    }, [hasJoined, game, navigate]);
 
     const crumbs = [
         {
