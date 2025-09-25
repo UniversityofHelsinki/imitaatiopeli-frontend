@@ -157,5 +157,5 @@
   "admin_monitor_table_sort_button_title": "Järjestä",
   "admin_monitor_table_sort_ascending": "Järjestä laskevasti nimimerkin mukaan",
   "admin_monitor_table_sort_descending": "Järjestä nousevasti nimimerkin mukaan",
-  "start_game_validation_message": "Pelin käynnistäminen vaatii vähintään 2 pelaajaa"
+  "start_game_validation_message": "Pelin käynnistäminen vaatii vähintään 2 pelaajaa!"
 }
