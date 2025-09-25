@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { DsLink } from '@uh-design-system/component-library-react';
 import { useNotification } from '../../notification/NotificationContext.js';
 
 const Link = ({
@@ -49,7 +50,7 @@ const Link = ({
 
     return (
         <div className="ds-link-container">
-            <ds-link {...dsProps} onClick={onClick} />
+            <DsLink {...dsProps} onClick={onClick} />
         </div>
     );
 };

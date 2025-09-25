@@ -3,7 +3,7 @@ import EndGameForm from '../../game/form/EndGameForm';
 import Page from '../Page';
 import './EndGame.css';
 import useEndGame from '../../../hooks/useEndGame';
-import { useNotification } from '../../notification/NotificationContext';
+import { useNotification } from '../../notification/NotificationContext.jsx';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { get } from '../../../hooks/useHttp';
@@ -17,7 +17,7 @@ const EndGame = () => {
   const [loading, setLoading] = useState(true);
   const { setNotification } = useNotification();
   const end = useEndGame(id);
-  
+
   useEffect(() => {
     (async () => {
       const response = await get({
@@ -28,7 +28,7 @@ const EndGame = () => {
       setLoading(false);
     })();
   }, [game]);
-  
+
   const endGame = async () => {
     await end();
     setNotification(t('end_game_page_success_notification'), 'success', true);

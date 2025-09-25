@@ -5,11 +5,11 @@ import Accordion from '../../misc/ds/Accordion';
 import Link from '../../misc/ds/Link';
 import Tag from '../../misc/ds/Tag';
 import './Game.css';
-import {useNotification} from "../../notification/NotificationContext.js";
+import {useNotification} from "../../notification/NotificationContext.jsx";
 import CopyGameUrlButton from "../../page/admin/CopyGameUrlButton.jsx";
 import Button from '../../misc/ds/Button';
 import useDeleteGame from "../../../hooks/useDeleteGame.js";
-import ConfirmDialog from "../../../utilities/ConfirmDialog.js";
+import ConfirmDialog from "../../../utilities/ConfirmDialog.jsx";
 
 const Header = ({ game }) => {
   const { t } = useTranslation();

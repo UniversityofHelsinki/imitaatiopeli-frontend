@@ -15,9 +15,6 @@
   padding-bottom: var(--ds-spacing-layout-base);
 }
 
-.imitation-game main {
-}
-
 @media (max-width: 20rem) {
   .imitation-game > div:first-of-type {
     height: unset;
@@ -28,6 +25,7 @@
 
 .main-content {
   flex-grow: 1;
+  display: flex;
 }
 
 .notification-area-container {

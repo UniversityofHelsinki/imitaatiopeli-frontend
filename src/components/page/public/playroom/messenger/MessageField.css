@@ -1,0 +1,36 @@
+.messenger-message-field {
+  display: flex;
+  padding: var(--ds-spacing-2xSmall);
+
+  position: relative;
+}
+
+.messenger-message-field form {
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+  gap: var(--ds-spacing-2xSmall);
+  margin-right: var(--ds-spacing-2xSmall);
+}
+
+.messenger-message-field textarea {
+  resize: none;
+  flex-grow: 1;
+}
+
+.messenger-message-field ds-button {
+  min-width: max-content;
+}
+
+.messenger-message-field-announcement {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(230, 230, 230, 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

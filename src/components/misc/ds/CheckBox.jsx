@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { DsCheckbox } from '@uh-design-system/component-library-react';
+
+
 const CheckBox = ({
   label = '',
   checked = false,
@@ -37,7 +40,7 @@ const CheckBox = ({
     ...rest
   };
 
-  return <ds-checkbox { ...dsProps } />;
+  return <DsCheckbox { ...dsProps } />;
 };
 
 CheckBox.propTypes = {

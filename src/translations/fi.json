@@ -86,6 +86,7 @@
   "game_listing_page_create_game": "Uusi peli",
   "join_game_page_heading": "Liity peliin",
   "join_game_player_already_joined": "Pelaaja on jo liittynyt peliin",
+  "join_game_player_cant_joined": "Peliin ei voi enää liittyä",
   "nickname_field_label": "Nimimerkki",
   "nickname_field_placeholder": "Syötä nimimerkki",
   "join_game_form_submit_button": "Liity",
@@ -157,5 +158,14 @@
   "admin_monitor_table_sort_button_title": "Järjestä",
   "admin_monitor_table_sort_ascending": "Järjestä laskevasti nimimerkin mukaan",
   "admin_monitor_table_sort_descending": "Järjestä nousevasti nimimerkin mukaan",
+  "messenger_message_form_submit_button": "Lähetä",
+  "playroom_heading_judge": "Tuomari",
+  "playroom_heading_aito": "Aito",
+  "playroom_page_heading": "Peli",
+  "playroom_waiting_for_questions": "Odotetaan kysymyksiä",
+  "playroom_waiting_for_answers": "Odotetaan vastauksia",
+  "playroom_notification_new_messages": "Uusia viestejä",
+  "message_field_message": "Viesti",
+  "nickname_already_in_use": "Nimi on jo käytössä",
   "start_game_validation_message": "Pelin käynnistäminen vaatii vähintään 2 pelaajaa!"
 }
