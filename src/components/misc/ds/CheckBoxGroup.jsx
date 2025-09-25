@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { DsCheckboxGroup } from '@uh-design-system/component-library-react';
+
 
 const CheckBoxGroup = ({
   children,
@@ -30,7 +32,7 @@ const CheckBoxGroup = ({
     ...rest
   };
 
-  return <ds-checkbox-group { ...dsProps }>{children}</ds-checkbox-group>
+  return <DsCheckboxGroup { ...dsProps }>{children}</DsCheckboxGroup>
 };
 
 CheckBoxGroup.propTypes = {

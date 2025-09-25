@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { get, invalidate } from '../../../hooks/useHttp';
 import localStorage from '../../../utilities/localStorage';
 import Spinner from '../../misc/ds/Spinner.jsx';
-import { useNotification } from '../../notification/NotificationContext.js';
+import { useNotification } from '../../notification/NotificationContext.jsx';
 import { useSocket } from '../../../contexts/SocketContext.jsx';
 import PublicPage from './PublicPage.jsx';
 import usePlayer from '../../../hooks/usePlayer.js';
