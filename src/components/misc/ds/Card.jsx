@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { DsCard } from '@uh-design-system/component-library-react';
+
 const Card = ({
   heading,
   description,
@@ -33,10 +35,10 @@ const Card = ({
     ...rest
   };
 
-  return <ds-card { ...dsProps }>
+  return <DsCard { ...dsProps }>
     <div slot="content">{children}</div>
     <div slot="footer">{footer}</div>
-  </ds-card>;
+  </DsCard>;
 };
 
 Card.propTypes = {

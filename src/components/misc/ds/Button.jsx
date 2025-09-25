@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 
+import { DsButton } from "@uh-design-system/component-library-react";
+
 const Button = ({
   label = '',
   disabled = false,
@@ -37,7 +39,7 @@ const Button = ({
   };
 
   return (
-    <ds-button { ...dsProps } />
+    <DsButton { ...dsProps } />
   );
 };
 
