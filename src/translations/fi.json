@@ -113,6 +113,7 @@
   "temperature_setting": "lämpötila-asetus",
   "game_lobby_player_not_joined": "Pelaaja ei ole liittynyt peliin",
   "game_lobby_player_joined": "Pelaaja on liittynyt peliin",
+  "game_lobby_game_started": "Peli on käynnissä, liittyminen ei ole mahdollista",
   "spinner_awaiting_game_starting": "Odotetaan pelin alkua...",
   "game_lobby_game_started": "Peli käynnistetty",
   "temperature_conservative": "Konservatiivinen",

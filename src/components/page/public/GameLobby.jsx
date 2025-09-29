@@ -17,6 +17,7 @@ const GameLobby = () => {
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
     const [hasJoined, setJoined] = useState(undefined);
+    const [gameStarted, setGameStarted] = useState(undefined);
     const [playerConfiguration, setPlayerConfiguration] = useState(null);
     const [joinedGame, setJoinedGame] = useState(null);
     const { setNotification } = useNotification();
@@ -79,7 +80,7 @@ const GameLobby = () => {
                 });
 
                 setGame({ ...gameResponse.body });
-                setPlayerConfiguration(gameResponse.body.configuration?.[0]);
+                setPlayerConfiguration(gameResponse.body?.configuration?.[0]);
 
                 const localPlayer = localStorage.get("player");
 
@@ -88,8 +89,12 @@ const GameLobby = () => {
                         path: `/public/getPlayerById/${localPlayer.player_id}`,
                         tag: `PLAYER_${localPlayer.player_id}`
                     });
-                    const hasJoined = playerResponse.body?.gameId === gameResponse.body.game_id;
-                    setJoined(hasJoined);
+                    if (playerResponse?.body == undefined || gameResponse?.body == undefined) {
+                        setJoined(false);
+                    } else {
+                        const hasJoined = playerResponse.body.gameId === gameResponse.body.game_id;
+                        setJoined(hasJoined);
+                    }
                 } else {
                     console.log("No player found in localStorage");
                     setJoined(false);
@@ -140,6 +145,12 @@ const GameLobby = () => {
     }, [joinedGame?.end_time, game?.game_id, navigate]);
 
     useEffect(() => {
+        if (game?.start_time && game?.game_id) {
+            setGameStarted(true);
+        }
+    }, [game?.start_time, game?.game_id]);
+
+    useEffect(() => {
         if (!game || hasJoined === undefined) return; // wait until game is set
         const notStarted = game.start_time == null; // true for null or undefined
         const notEnded = game.end_time == null;
@@ -166,25 +177,28 @@ const GameLobby = () => {
     ]
 
     return (
-        <PublicPage className="page-heading"
-                    loading={loading}
-                    heading={playerConfiguration?.theme_description}
-                    crumbs={crumbs}
-                    configuration={playerConfiguration}
-        >
-            <div className="game-lobby-double-rule" />
-            {hasJoined ? (<span>{t('game_lobby_player_joined')}</span>) : (<span>{t('game_lobby_player_not_joined')}</span>)}
-            <br /><br />
-            <div className="game-lobby-page-instructions">
-                {playerConfiguration?.instructions_for_players}
-            </div>
-            <div>
-                {joinedGame?.start_time == null
-                    ? <Spinner text={t('spinner_awaiting_game_starting')} position="side" size="medium" /> :
-                    <div className="game-lobby-font-size">{t('game_lobby_game_started')}</div>
-                }
-            </div>
-        </PublicPage>
+        <>
+            {gameStarted ? (<h2>{t('game_lobby_game_started')}</h2>) :
+                (<PublicPage className="page-heading"
+                        loading={loading}
+                        heading={playerConfiguration?.theme_description}
+                        crumbs={crumbs}
+                        configuration={playerConfiguration}
+                    >
+                    <div className="game-lobby-double-rule" />
+                    {hasJoined ? (<span>{t('game_lobby_player_joined')}</span>) : (<span>{t('game_lobby_player_not_joined')}</span>)}
+                    <br /><br />
+                    <div className="game-lobby-page-instructions">
+                        {playerConfiguration?.instructions_for_players}
+                    </div>
+                    <div>
+                        {joinedGame?.start_time == null
+                            ? <Spinner text={t('spinner_awaiting_game_starting')} position="side" size="medium" /> :
+                            <div className="game-lobby-font-size">{t('game_lobby_game_started')}</div>
+                        }
+                    </div>
+                </PublicPage>)}
+            </>
     )
 
 };
