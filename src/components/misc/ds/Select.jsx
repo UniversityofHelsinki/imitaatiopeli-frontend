@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { DsOption } from '@uh-design-system/component-library-react';
+
 
 export const Option = ({
   children,
@@ -14,7 +16,7 @@ export const Option = ({
     ...rest
   };
 
-  return <ds-option { ...dsProps}>{children}</ds-option>
+  return <DsOption { ...dsProps}>{children}</DsOption>
 
 };
 
@@ -54,7 +56,7 @@ const Select = ({
   }, [ref.current, onChange]);
 
   const dsProps = {
-    dsTitle: title,
+    dsLabel: title,
     dsPlaceholder: placeholder,
     dsVariant: variant,
     dsClearable: clearable,

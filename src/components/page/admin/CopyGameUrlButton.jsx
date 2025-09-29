@@ -2,7 +2,7 @@ import Button from '../../misc/ds/Button';
 import Icon from '../../misc/ds/Icon';
 import './CopyGameUrlButton.css';
 import {useTranslation} from "react-i18next";
-import {useNotification} from "../../notification/NotificationContext.js";
+import {useNotification} from "../../notification/NotificationContext.jsx";
 import PropTypes from "prop-types";
 
 const CopyGameUrlButton = ({ game }) => {

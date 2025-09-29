@@ -6,12 +6,12 @@ import { Provider } from 'react-redux';
 import { createBrowserRouter, createRoutesFromElements, Outlet, Route, RouterProvider } from 'react-router-dom';
 import { applyMiddleware, createStore } from 'redux';
 import { thunk } from 'redux-thunk';
-import ErrorPage from '../src/Error';
-import Protected from '../src/Protected';
-import ProtectedRoute from '../src/ProtectedRoute';
+import ErrorPage from '../src/Error.jsx';
+import Protected from '../src/Protected.jsx';
+import ProtectedRoute from '../src/ProtectedRoute.jsx';
 import { defineCustomElements } from '@uh-design-system/component-library/loader';
 import './App.css';
-import { AuthProvider } from './AuthContext.js';
+import { AuthProvider } from './AuthContext.jsx';
 import NotificationProvider from './components/notification/NotificationContext';
 import AdminGameLobby from "./components/page/admin/AdminGameLobby.jsx";
 import CreateGame from './components/page/admin/CreateGame';
@@ -26,8 +26,9 @@ import { DEFAULT_LANGUAGE } from './Constants.js';
 import Imitation from './Imitation';
 import reducer from './reducers';
 import translations from './translations';
-import EndOfGame from "./components/page/public/EndOfGame.js";
+import EndOfGame from "./components/page/public/EndOfGame.jsx";
 import AdminMonitor from "./components/page/admin/AdminMonitor.jsx";
+import Playroom from './components/page/public/playroom/Playroom';
 
 defineCustomElements(window);
 
@@ -62,8 +63,8 @@ const App = () => {
                 {/* Public routes here */}
                 <Route index element={<div></div>} />
                 <Route path="games">
-                  <Route path=":code" element={<GameLobby />}>
-                  </Route>
+                  <Route path=":code" element={<GameLobby />} />
+                  <Route path=":code/play" element={<Playroom />} />
                   <Route path=":code/join" element={<JoinGame />} />
                   <Route path=":id/end" element={<EndOfGame />} />
                 </Route>
