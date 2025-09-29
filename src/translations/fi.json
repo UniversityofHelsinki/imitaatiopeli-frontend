@@ -166,5 +166,7 @@
   "playroom_waiting_for_answers": "Odotetaan vastauksia",
   "playroom_notification_new_messages": "Uusia viestejä",
   "message_field_message": "Viesti",
-  "nickname_already_in_use": "Nimi on jo käytössä"
+  "nickname_already_in_use": "Nimi on jo käytössä",
+  "start_game_validation_message": "Pelin käynnistäminen vaatii vähintään 2 pelaajaa!",
+  "start_game_page_already_started": "Peli on jo käynnissä!"
 }
