@@ -8,6 +8,7 @@ import useStartGame from '../../../hooks/useStartGame';
 import StartGameForm from '../../game/form/StartGameForm';
 import { useNotification } from '../../notification/NotificationContext.jsx';
 import useStartGameValidation from '../../../hooks/useStartGameValidation';
+import { useSocket } from '../../../contexts/SocketContext.jsx';
 
 const StartGame = () => {
   const { id } = useParams();
@@ -19,6 +20,7 @@ const StartGame = () => {
   const { setNotification } = useNotification();
   const start = useStartGame(id);
   const validate = useStartGameValidation(players);
+    const { isConnected, emit } = useSocket();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,11 +48,16 @@ const StartGame = () => {
     fetchData();
   }, []);
 
-  const startGame = async () => {
-    await start();
-    setNotification(t('start_game_page_success_notification'), 'success', true);
-    navigate('/admin/games');
-  };
+    const startGame = async () => {
+        if (isConnected && id) {
+            emit('start-game', {
+                gameId: id,
+            });
+            await start();
+            setNotification(t('start_game_page_success_notification'), 'success', true);
+            navigate('/admin/games');
+        }
+    };
 
   const isAlreadyStarted = game?.start_time;
   const validation = validate();
@@ -100,6 +107,9 @@ const StartGame = () => {
         {getPageContent()}
       </Page>
   );
+};
+
+StartGame.propTypes = {
 };
 
 export default StartGame;

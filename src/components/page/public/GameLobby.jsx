@@ -1,14 +1,14 @@
+
 import React, { useEffect, useState } from 'react';
 import './GameLobby.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { get, invalidate } from '../../../hooks/useHttp';
+import { get } from '../../../hooks/useHttp';
 import localStorage from '../../../utilities/localStorage';
 import Spinner from '../../misc/ds/Spinner.jsx';
 import { useNotification } from '../../notification/NotificationContext.jsx';
 import { useSocket } from '../../../contexts/SocketContext.jsx';
 import PublicPage from './PublicPage.jsx';
-import usePlayer from '../../../hooks/usePlayer.js';
 
 const GameLobby = () => {
     const { isConnected, emit, on, off } = useSocket();
@@ -18,7 +18,7 @@ const GameLobby = () => {
     const [loading, setLoading] = useState(true);
     const [hasJoined, setJoined] = useState(false);
     const [playerConfiguration, setPlayerConfiguration] = useState(null);
-    const [joinedGame, setJoinedGame] = useState(null);
+    const [gameStarted, setGameStarted] = useState(false);
     const { setNotification } = useNotification();
     const navigate = useNavigate();
 
@@ -55,20 +55,36 @@ const GameLobby = () => {
         joinGameIfReady();
     }, [isConnected, emit, game]);
 
-    // Listen for messages from backend
+    // Listen for game-started event from Socket.IO
     useEffect(() => {
-        const handleMessage = (data) => {
-            console.log('message from backend:', data);
+        const handleGameStarted = (data) => {
+            const { gameId, message } = data;
+            console.log('Game started event received:', data);
+            console.log('Current game ID:', game?.game_id);
+
+            const socketGameId = String(gameId);
+            const currentGameId = String(game?.game_id);
+
+            if (socketGameId === currentGameId) {
+                setGameStarted(true);
+                setNotification(message || t('game_started_notification'), 'success', true);
+                navigate(`/games/${gameId}/play`);
+            }
         };
 
+        const handleMessage = (data) => {
+            console.log('Message from backend:', data);
+        };
+
+        // Listen for socket events
+        on('game-started', handleGameStarted);
         on('message', handleMessage);
 
         return () => {
+            off('game-started', handleGameStarted);
             off('message', handleMessage);
         };
-    }, [on, off]);
-
-
+    }, [on, off, game?.game_id, setNotification, t]);
 
     useEffect(() => {
         (async () => {
@@ -90,6 +106,11 @@ const GameLobby = () => {
                     });
                     const hasJoined = playerResponse.body?.gameId === gameResponse.body.game_id;
                     setJoined(hasJoined);
+
+                    // Check if game is already started
+                    if (gameResponse.body.start_time) {
+                        setGameStarted(true);
+                    }
                 } else {
                     console.log("No player found in localStorage");
                     setJoined(false);
@@ -104,40 +125,31 @@ const GameLobby = () => {
         })();
     }, [code]);
 
-
-
+    // Handle navigation when game ends (keep this if needed)
     useEffect(() => {
-        if (game && game.game_id) {
-            const fetchGame = async () => {
+        const checkGameEnd = async () => {
+            if (game?.game_id) {
                 try {
                     const response = await get({
                         path: `/public/game/${game.game_id}`,
                         tag: `GAME_DATA_${game.game_id}`
                     });
-                    setJoinedGame({ ...response.body });
+
+                    if (response.body?.end_time) {
+                        navigate(`/games/${game.game_id}/end`);
+                    }
                 } catch (error) {
-                    console.error('Error fetching game:', error);
-                    setNotification(t('game_fetch_error'), 'error');
-                } finally {
-                    setLoading(false);
+                    console.error('Error checking game end:', error);
                 }
-            };
+            }
+        };
 
-            const schedule = () => {
-                setTimeout(() => {
-                    invalidate([`GAME_DATA_${game?.game_id}`]);
-                    fetchGame().then(schedule) // recursively reload game
-                }, 15000);
-            };
-            schedule();
+        // Only check for game end occasionally, not every 15 seconds
+        if (gameStarted && game?.game_id) {
+            const interval = setInterval(checkGameEnd, 30000); // Check every 30 seconds
+            return () => clearInterval(interval);
         }
-    }, [game]);
-
-    useEffect(() => {
-        if (joinedGame?.end_time && game?.game_id) {
-            navigate(`/games/${game.game_id}/end`);
-        }
-    }, [joinedGame?.end_time, game?.game_id, navigate]);
+    }, [gameStarted, game?.game_id, navigate]);
 
     const crumbs = [
         {
@@ -169,14 +181,13 @@ const GameLobby = () => {
                 {playerConfiguration?.instructions_for_players}
             </div>
             <div>
-                {joinedGame?.start_time == null
+                {!gameStarted
                     ? <Spinner text={t('spinner_awaiting_game_starting')} position="side" size="medium" /> :
                     <div className="game-lobby-font-size">{t('game_lobby_game_started')}</div>
                 }
             </div>
         </PublicPage>
     )
-
 };
 
 GameLobby.propTypes = {
