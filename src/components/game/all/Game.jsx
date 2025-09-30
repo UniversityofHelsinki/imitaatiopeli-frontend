@@ -15,15 +15,15 @@ const Header = ({ game }) => {
   const { t } = useTranslation();
 
   const waitingTag = (
-      <Tag text={t('game_tag_waiting')} colour="info" />
+      <Tag className="game-tag" text={t('game_tag_waiting')} colour="info" />
   );
 
   const startTag = (
-      <Tag text={t('game_tag_started')} colour="success" />
+      <Tag className="game-tag" text={t('game_tag_started')} colour="success" />
   );
 
   const endTag = (
-      <Tag text={t('game_tag_ended')} colour="black" />
+      <Tag className="game-tag" text={t('game_tag_ended')} colour="black" />
   );
 
   const tag = (() => {
@@ -124,12 +124,17 @@ const Content = ({ game, reload }) => {
         </div>
     );
 
+    const gameStarted = game.start_time && !game.end_time;
 
     return (
       <div className="game-content">
         <div className="game-content-data">
           <div>{t('game_content_theme')}  {game.configuration.theme_description}</div>
         </div>
+          {gameStarted &&
+              <div className="game-content-data">
+                  <div>{t('game_content_code')}  {game.game_code}</div>
+              </div>}
           {gameWaiting && <div className="game-content-data">
             <div>{t('game_content_join_link_label')} <CopyGameUrlButton game={game} />
             </div>
