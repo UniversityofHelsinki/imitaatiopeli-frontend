@@ -1,5 +1,7 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import React, { createContext, useContext, useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { io } from 'socket.io-client';
+import PropTypes from 'prop-types';
 
 const SocketContext = createContext();
 
@@ -72,51 +74,44 @@ export const SocketProvider = ({ children }) => {
         };
     }, [serverUrl]);
 
-    // Socket methods
-    const emit = (event, data) => {
+    // Memoize socket methods to prevent recreation on every render
+    const emit = useCallback((event, data) => {
         if (socketRef.current && isConnected) {
             socketRef.current.emit(event, data);
         } else {
             console.warn('Socket not connected. Cannot emit event:', event);
         }
-    };
+    }, [isConnected]);
 
-    const on = (event, callback) => {
+    const on = useCallback((event, callback) => {
         if (socketRef.current) {
             socketRef.current.on(event, callback);
         }
-    };
+    }, []);
 
-    const off = (event, callback) => {
+    const off = useCallback((event, callback) => {
         if (socketRef.current) {
             socketRef.current.off(event, callback);
         }
-    };
+    }, []);
 
-    // Game-specific methods
-    const joinGame = (gameCode, playerId) => {
-        emit('player-join-game', { gameCode, playerId });
-    };
-
-    const sendTyping = (gameCode, isTyping) => {
-        emit('typing', { gameCode, isTyping });
-    };
-
-    const value = {
+    const value = useMemo(() => ({
         socket: socketRef.current,
         isConnected,
         connectionError,
         serverUrl,
         emit,
         on,
-        off,
-        joinGame,
-        sendTyping,
-    };
+        off
+    }), [isConnected, connectionError, serverUrl, emit, on, off]);
 
     return (
         <SocketContext.Provider value={value}>
             {children}
         </SocketContext.Provider>
     );
+};
+
+SocketProvider.propTypes = {
+    children: PropTypes.node.isRequired,
 };

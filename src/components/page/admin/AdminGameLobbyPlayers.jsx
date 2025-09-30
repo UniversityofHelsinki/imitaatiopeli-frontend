@@ -1,14 +1,11 @@
-
 import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
 import usePlayer from '../../../hooks/usePlayer.js';
 import './AdminGameLobbyPlayers.css';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../../../components/misc/ds/Spinner.jsx';
 import {invalidate} from "../../../hooks/useHttp.js";
-import TextArea from "../../misc/ds/TextArea.jsx";
 
-const AdminGameLobbyPlayers = ({ game }) => {
+const AdminGameLobbyPlayers = ({ game, onPlayersUpdate }) => {
     const { t } = useTranslation();
     const [players= [], error, reload] = usePlayer(null, game.game_id);
 
@@ -23,6 +20,13 @@ const AdminGameLobbyPlayers = ({ game }) => {
         schedule();
 
     }, []);
+
+    useEffect(() => {
+        if (players) {
+            onPlayersUpdate(players);
+        }
+    }, [players, onPlayersUpdate]);
+
 
     if (!players || error) {
         return (
@@ -59,6 +63,7 @@ AdminGameLobbyPlayers.propTypes = {
     game: PropTypes.shape({
         game_id: PropTypes.number.isRequired,
     }).isRequired,
+    onPlayersUpdate: PropTypes.func
 };
 
 export default AdminGameLobbyPlayers;
