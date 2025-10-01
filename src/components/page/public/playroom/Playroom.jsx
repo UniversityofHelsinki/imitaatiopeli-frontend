@@ -74,26 +74,6 @@ const Playroom = () => {
     freezeAnswerField();
   };
 
-  const crumbs = [
-      {
-          label: 'bread_crumb_home',
-          href: '/'
-      },
-      {
-          label: 'bread_crumb_games',
-          href: '/games'
-      },
-      {
-          label: 'bread_crumb_games_lobby',
-          href: `/games/${code}`
-      },
-      {
-          label: 'bread_crumb_games_playroom',
-          href: `/games/${code}/play`,
-          current: true
-      }
-  ];
-
   const tabs = [
     {
       heading: t('playroom_heading_judge'),
@@ -133,7 +113,7 @@ const Playroom = () => {
   };
 
   return (
-    <PublicPage heading={t('playroom_page_heading')} crumbs={crumbs}>
+    <PublicPage heading={t('playroom_page_heading')} >
       <div className="playroom">
         <Tabs tabs={tabs} onTabSwitch={switchTab} />
       </div>
