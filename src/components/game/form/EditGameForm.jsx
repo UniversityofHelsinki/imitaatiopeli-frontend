@@ -4,6 +4,8 @@ import validate from '../../../utilities/validation/game/gameValidation';
 import { useNotification } from '../../notification/NotificationContext';
 import './EditGameForm.css';
 import GameForm from './GameForm';
+import ErrorPage from '../../misc/ErrorPage';
+import PropTypes from "prop-types";
 
 const EditGameForm = ({ 
   game,
@@ -13,9 +15,8 @@ const EditGameForm = ({
   const { setNotification } = useNotification();
   const [modifiedGame, setModifiedGame] = useState(null);
   const [saving, setSaving] = useState(false);
-
   const [validations, setValidations] = useState({});
-  
+
   useEffect(() => {
     const newGame = { ...game };
     setModifiedGame(newGame);
@@ -26,6 +27,14 @@ const EditGameForm = ({
 
   if (!modifiedGame) {
     return <></>;
+  }
+
+  if (validations.canEdit?.valid === false && validations.canEdit?.message) {
+    return (
+        <ErrorPage>
+          <p>{t(validations.canEdit.message)}</p>
+        </ErrorPage>
+    );
   }
 
   const onChange = async (key, value) => {
@@ -71,6 +80,9 @@ const EditGameForm = ({
 };
 
 EditGameForm.propTypes = {
+  game: PropTypes.shape({
+    playerCount: PropTypes.number
+  })
 };
 
 export default EditGameForm;

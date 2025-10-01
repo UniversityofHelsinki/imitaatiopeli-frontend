@@ -136,7 +136,7 @@ const Content = ({ game, reload }) => {
         <div className="game-content-bottom-row">
           <div className="game-content-actions">
             {stateLink}
-            {gameWaiting && (
+            {gameWaiting && game.playerCount === 0 && (
                 <>
                   <Link
                       label={t('game_content_edit_game_link_label')}
@@ -164,7 +164,7 @@ const Content = ({ game, reload }) => {
           </div>
         </div>
       </div>
-  )
+    )
 };
 
 
