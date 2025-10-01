@@ -169,5 +169,6 @@
   "nickname_already_in_use": "Nimi on jo käytössä",
   "start_game_validation_message": "Pelin käynnistäminen vaatii vähintään 2 pelaajaa!",
   "start_game_page_already_started": "Peli on jo käynnissä!",
-  "edit_game_player_joined_validation": "Peli ei ole muokattavissa koska siihen on liittynyt pelaajia"
+  "edit_game_player_joined_validation": "Peli ei ole muokattavissa koska siihen on liittynyt pelaajia",
+  "admin_monitor_join_link": "Liittymislinkki: "
 }

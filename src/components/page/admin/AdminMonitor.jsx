@@ -1,12 +1,13 @@
 import {useParams} from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { get, invalidate } from '../../../hooks/useHttp';
 import './AdminMonitor.css'
 import AdminMonitorTable from "./AdminMonitorTable.jsx";
 import {Row} from "react-bootstrap";
 import useJudgePlayerPairs from "../../../hooks/useJudgePlayerPairs.js";
 import Page from "../Page.jsx";
+import CopyGameUrlButton from "./CopyGameUrlButton.jsx";
 
 const AdminMonitor = () => {
     const { id: gameId } = useParams();
@@ -103,6 +104,10 @@ const AdminMonitor = () => {
                 <div>
                     <label>{t('admin_monitor_start_time')}</label>
                     <div>{formatDate(game?.start_time)}</div>
+                </div>
+                <div>
+                    <label>{t('admin_monitor_join_link')}</label>
+                    <div> <CopyGameUrlButton game={game} /> </div>
                 </div>
             </div>
             <Row>
