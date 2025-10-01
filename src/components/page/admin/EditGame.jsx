@@ -17,12 +17,40 @@ const EditGame = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await get({ 
-        path: `/api/game/${gameId}`, 
-        tag: `GAME_${gameId}` 
-      });
-      setGame({ ...response.body });
-      setLoading(false);
+      try {
+        const gameResponse = await get({
+          path: `/api/game/${gameId}`,
+          tag: `GAME_${gameId}`
+        });
+
+        if (!gameResponse?.body) {
+          throw new Error('Game data not found');
+        }
+
+        try {
+          const playersResponse = await get({
+            path: `/api/games/${gameId}/players`,
+            tag: `GAME_PLAYERS_${gameId}`
+          });
+
+          setGame({
+            ...gameResponse.body,
+            playerCount: (playersResponse?.body && Array.isArray(playersResponse.body))
+                ? playersResponse.body.length
+                : 0
+          });
+        } catch (playerError) {
+          console.error('Error fetching players:', playerError);
+          setGame({
+            ...gameResponse.body,
+            playerCount: 0
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching game data:', error);
+      } finally {
+        setLoading(false);
+      }
     })();
   }, []);
 
