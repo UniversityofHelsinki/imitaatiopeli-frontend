@@ -124,21 +124,14 @@ const Content = ({ game, reload }) => {
         </div>
     );
 
-    const gameStarted = game.start_time && !game.end_time;
-
     return (
       <div className="game-content">
         <div className="game-content-data">
           <div>{t('game_content_theme')}  {game.configuration.theme_description}</div>
         </div>
-          {gameStarted &&
-              <div className="game-content-data">
-                  <div>{t('game_content_code')}  {game.game_code}</div>
-              </div>}
-          {gameWaiting && <div className="game-content-data">
-            <div>{t('game_content_join_link_label')} <CopyGameUrlButton game={game} />
-            </div>
-        </div>}
+         <div className="game-content-data">
+            <div>{t('game_content_join_link_label')} <CopyGameUrlButton game={game} /> </div>
+        </div>
         <div className="game-content-divider"></div>
         <div className="game-content-bottom-row">
           <div className="game-content-actions">
