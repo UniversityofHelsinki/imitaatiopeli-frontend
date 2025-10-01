@@ -151,27 +151,10 @@ const GameLobby = () => {
         }
     }, [gameStarted, game?.game_id, navigate]);
 
-    const crumbs = [
-        {
-            label: 'bread_crumb_home',
-            href: '/'
-        },
-        {
-            label: 'bread_crumb_games',
-            href: '/games'
-        },
-        {
-            label: 'bread_crumb_games_lobby',
-            href: `/games/${code}`,
-            current: true
-        }
-    ]
-
     return (
         <PublicPage className="page-heading"
                     loading={loading}
                     heading={playerConfiguration?.theme_description}
-                    crumbs={crumbs}
                     configuration={playerConfiguration}
         >
             <div className="game-lobby-double-rule" />
