@@ -5,13 +5,12 @@ import MessageArea from './MessageArea';
 import MessageField from './MessageField';
 
 const Messenger = ({ 
-  instructions, 
   messageFieldDisabled,
   announcement,
   onMessageSubmit,
   message,
-  messages,
-  onMessageChange
+  onMessageChange,
+  children
 }) => {
 
   const handleMessageSubmit = (message) => {
@@ -23,7 +22,9 @@ const Messenger = ({
 
   return (
       <div className="messenger">
-        <MessageArea instructions={instructions} messages={messages} />
+        <MessageArea>
+          {children}
+        </MessageArea>
         <MessageField
           onSubmit={handleMessageSubmit}
           onChange={onMessageChange}
@@ -37,7 +38,6 @@ const Messenger = ({
 };
 
 Messenger.propTypes = {
-  instructions: PropTypes.string,
   messageFieldDisabled: PropTypes.bool,
   announcement: PropTypes.node,
   onMessageSubmit: PropTypes.func,
