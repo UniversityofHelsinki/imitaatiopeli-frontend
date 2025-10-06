@@ -31,8 +31,10 @@ export const SocketProvider = ({ children }) => {
             timeout: 20000,
             forceNew: true,
             reconnection: true,
-            reconnectionAttempts: 5,
-            reconnectionDelay: 1000,
+            reconnectionAttempts: 15,
+            reconnectionDelay: 2000,
+            reconnectionDelayMax: 10000,
+            randomizationFactor: 0.5,
         });
 
         socketRef.current = socket;
