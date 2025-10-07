@@ -6,6 +6,7 @@ import useAnswerQuestion from '../../../../../hooks/useAnswerQuestion';
 import { WaitingAnnouncement } from '../Playroom';
 import { useTranslation } from 'react-i18next';
 import Message, { InstructionMessage } from './Message';
+import { useSocket } from "../../../../../contexts/SocketContext.jsx";
 
 const AitoMessenger = ({
   game
@@ -23,12 +24,21 @@ const AitoMessenger = ({
     }
   ]
 
-  const [currentState, setCurrentState] = useState('wait');
+  const [currentState, setCurrentState] = useState('answer');
   const [answer, setAnswer] = useState('');
   const sendAnswer = useAnswerQuestion(game);
+  const { isConnected, emit, on, off } = useSocket();
 
   const answerQuestion = async (answer) => {
-    await sendAnswer(answer);
+    //await sendAnswer(answer);
+    if (isConnected) {
+          emit('send-answer', {
+              questionId: answer.question_id,
+              playerId: answer.player_id,
+              gameId: answer.game_id,
+              answer: answer.answer,
+          });
+    }
     setCurrentState('wait');
   };
 
