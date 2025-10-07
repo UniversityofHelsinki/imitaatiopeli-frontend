@@ -7,3 +7,8 @@
 .messenger-message-instructions {
   border: 2px dashed var(--ds-bgColor-black);
 }
+
+.rating-message {
+  display: flex;
+  gap: var(--ds-spacing-base);
+}
