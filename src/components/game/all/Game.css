@@ -75,3 +75,7 @@
   flex-wrap: wrap;
   gap: var(--ds-spacing-base);
 }
+
+.game-tag {
+    padding-left: var(--ds-spacing-base);
+}

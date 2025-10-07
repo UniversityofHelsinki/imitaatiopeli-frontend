@@ -29,22 +29,6 @@ const JoinGame = () => {
         })();
     }, [code]);
 
-    const crumbs = [
-        {
-            label: t('bread_crumb_home'),
-            href: '/'
-        },
-        {
-            label: t('bread_crumb_games'),
-            href: '/games'
-        },
-        {
-            label: t('bread_crumb_games_join'),
-            href: `/games/${code}/join`,
-            current: true
-        }
-    ];
-
     const gameAlreadyStarted = () => {
         return <div className="join-game-font-size">{t('join_game_player_cant_joined')} </div>
     }
@@ -61,7 +45,6 @@ const JoinGame = () => {
                 <PublicPage
                     loading={loading}
                     heading={!alreadyJoined && t('join_game_page_heading')}
-                    crumbs={crumbs}
                     configuration={playerConfiguration}
                 >
                     {alreadyJoined && <span>{t('join_game_player_already_joined')}</span> || <JoinGameForm game={game} />}

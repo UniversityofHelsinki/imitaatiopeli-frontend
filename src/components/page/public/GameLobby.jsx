@@ -1,14 +1,14 @@
+
 import React, { useEffect, useState } from 'react';
 import './GameLobby.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { get, invalidate } from '../../../hooks/useHttp';
+import { get } from '../../../hooks/useHttp';
 import localStorage from '../../../utilities/localStorage';
 import Spinner from '../../misc/ds/Spinner.jsx';
 import { useNotification } from '../../notification/NotificationContext.jsx';
 import { useSocket } from '../../../contexts/SocketContext.jsx';
 import PublicPage from './PublicPage.jsx';
-import usePlayer from '../../../hooks/usePlayer.js';
 
 const GameLobby = () => {
     const { isConnected, emit, on, off } = useSocket();
@@ -19,7 +19,7 @@ const GameLobby = () => {
     const [hasJoined, setJoined] = useState(undefined);
     const [gameStartedA, setGameStartedA] = useState(undefined);
     const [playerConfiguration, setPlayerConfiguration] = useState(null);
-    const [joinedGame, setJoinedGame] = useState(null);
+    const [gameStarted, setGameStarted] = useState(false);
     const { setNotification } = useNotification();
     const navigate = useNavigate();
 
@@ -56,20 +56,36 @@ const GameLobby = () => {
         joinGameIfReady();
     }, [isConnected, emit, game]);
 
-    // Listen for messages from backend
+    // Listen for game-started event from Socket.IO
     useEffect(() => {
-        const handleMessage = (data) => {
-            console.log('message from backend:', data);
+        const handleGameStarted = (data) => {
+            const { gameId, message } = data;
+            console.log('Game started event received:', data);
+            console.log('Current game ID:', game?.game_id);
+
+            const socketGameId = String(gameId);
+            const currentGameId = String(game?.game_id);
+
+            if (socketGameId === currentGameId) {
+                setGameStarted(true);
+                setNotification(message || t('game_started_notification'), 'success', true);
+                navigate(`/games/${gameId}/play`);
+            }
         };
 
+        const handleMessage = (data) => {
+            console.log('Message from backend:', data);
+        };
+
+        // Listen for socket events
+        on('game-started', handleGameStarted);
         on('message', handleMessage);
 
         return () => {
+            off('game-started', handleGameStarted);
             off('message', handleMessage);
         };
-    }, [on, off]);
-
-
+    }, [on, off, game?.game_id, setNotification, t]);
 
     useEffect(() => {
         (async () => {
@@ -109,40 +125,31 @@ const GameLobby = () => {
         })();
     }, [code]);
 
-
-
+    // Handle navigation when game ends (keep this if needed)
     useEffect(() => {
-        if (game && game.game_id) {
-            const fetchGame = async () => {
+        const checkGameEnd = async () => {
+            if (game?.game_id) {
                 try {
                     const response = await get({
                         path: `/public/game/${game.game_id}`,
                         tag: `GAME_DATA_${game.game_id}`
                     });
-                    setJoinedGame({ ...response.body });
-                } catch (error) {
-                    console.error('Error fetching game:', error);
-                    setNotification(t('game_fetch_error'), 'error');
-                } finally {
-                    setLoading(false);
-                }
-            };
 
-            const schedule = () => {
-                setTimeout(() => {
-                    invalidate([`GAME_DATA_${game?.game_id}`]);
-                    fetchGame().then(schedule) // recursively reload game
-                }, 15000);
-            };
-            schedule();
+                    if (response.body?.end_time) {
+                        navigate(`/games/${game.game_id}/end`);
+                    }
+                } catch (error) {
+                    console.error('Error checking game end:', error);
+                }
+            }
+        };
+
+        // Only check for game end occasionally, not every 15 seconds
+        if (gameStarted && game?.game_id) {
+            const interval = setInterval(checkGameEnd, 30000); // Check every 30 seconds
+            return () => clearInterval(interval);
         }
     }, [game]);
-
-    useEffect(() => {
-        if (joinedGame?.end_time && game?.game_id) {
-            navigate(`/games/${game.game_id}/end`);
-        }
-    }, [joinedGame?.end_time, game?.game_id, navigate]);
 
     useEffect(() => {
         if (game?.start_time && game?.game_id) {
@@ -160,29 +167,12 @@ const GameLobby = () => {
         }
     }, [hasJoined, game, navigate]);
 
-    const crumbs = [
-        {
-            label: 'bread_crumb_home',
-            href: '/'
-        },
-        {
-            label: 'bread_crumb_games',
-            href: '/games'
-        },
-        {
-            label: 'bread_crumb_games_lobby',
-            href: `/games/${code}`,
-            current: true
-        }
-    ]
-
     return (
         <>
             {gameStartedA ? (<h2>{t('game_lobby_game_started')}</h2>) :
                 (<PublicPage className="page-heading"
                         loading={loading}
                         heading={playerConfiguration?.theme_description}
-                        crumbs={crumbs}
                         configuration={playerConfiguration}
                     >
                     <div className="game-lobby-double-rule" />
@@ -192,7 +182,7 @@ const GameLobby = () => {
                         {playerConfiguration?.instructions_for_players}
                     </div>
                     <div>
-                        {joinedGame?.start_time == null
+                        {!gameStarted == null
                             ? <Spinner text={t('spinner_awaiting_game_starting')} position="side" size="medium" /> :
                             <div className="game-lobby-font-size">{t('game_lobby_game_started')}</div>
                         }
@@ -200,7 +190,6 @@ const GameLobby = () => {
                 </PublicPage>)}
             </>
     )
-
 };
 
 GameLobby.propTypes = {

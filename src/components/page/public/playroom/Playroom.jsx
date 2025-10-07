@@ -3,25 +3,25 @@ import PropTypes from 'prop-types';
 import './Playroom.css'
 import PublicPage from '../PublicPage';
 import Tabs from './tab/Tabs';
-import Messenger from './messenger/Messenger';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../../misc/ds/Spinner';
 import { useParams } from 'react-router-dom';
-import useAskQuestion from '../../../../hooks/useAskQuestion';
-import useAnswerQuestion from '../../../../hooks/useAnswerQuestion';
-import useWaitQuestion from '../../../../hooks/useWaitQuestion';
-import useWaitAnswers from '../../../../hooks/useWaitAnswers';
+import JudgeMessenger from './messenger/JudgeMessenger';
+import AitoMessenger from './messenger/AitoMessenger';
 
-const WaitingAnnouncement = ({ content }) => {
+export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
   return (
     <div className="playroom-waiting-announcement">
-      <Spinner text={content} position="right" />
+      {showSpinner
+        && <Spinner text={content} position="right" />
+        || <span>{content}</span>}
     </div>
   )
 };
 
 WaitingAnnouncement.propTypes = {
   content: PropTypes.string,
+  showSpinner: PropTypes.bool,
 };
 
 const Playroom = () => {
@@ -30,98 +30,18 @@ const Playroom = () => {
   const { code } = useParams();
   const { t } = useTranslation();
 
-  const ask = useAskQuestion(code);
-  const sendAnswer = useAnswerQuestion(code);
-
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
-
-  const { question: aitoQuestion } = useWaitQuestion();
-  const { answers } = useWaitAnswers();
-
-  const [messengerStates, setMessengerStates] = useState({
-    judge: null,
-    aito: {
-      announcement: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />
-    }
-  });
-
-  const freezeAnswerField = () => {
-    setMessengerStates({
-      ...messengerStates,
-      aito: {
-        announcement: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />
-      }
-    });
-  };
-
-  const freezeQuestionField = () => {
-    setMessengerStates({
-      ...messengerStates,
-      judge: {
-        announcement: <WaitingAnnouncement content={t('playroom_waiting_for_answers')} />
-      }
-    });
-  };
-
-  const askQuestion = async (question) => {
-    await ask(question);
-    freezeQuestionField();
-  };
-
-  const answerQuestion = async (answer) => {
-    await sendAnswer(answer);
-    freezeAnswerField();
-  };
-
-  const crumbs = [
-      {
-          label: 'bread_crumb_home',
-          href: '/'
-      },
-      {
-          label: 'bread_crumb_games',
-          href: '/games'
-      },
-      {
-          label: 'bread_crumb_games_lobby',
-          href: `/games/${code}`
-      },
-      {
-          label: 'bread_crumb_games_playroom',
-          href: `/games/${code}/play`,
-          current: true
-      }
-  ];
-
   const tabs = [
     {
       heading: t('playroom_heading_judge'),
       children: (
-        <Messenger
-          instructions={t('playroom_instructions_judge')}
-          onMessageSubmit={askQuestion}
-          messageFieldDisabled={Boolean(messengerStates.judge)} 
-          announcement={messengerStates.judge?.announcement} 
-          message={question}
-          messages={[{ content: 'AAAAA?', type: 'sent' }, ...answers]}
-          onMessageChange={m => setQuestion(m)}
-        />
+        <JudgeMessenger game={code} />
       )
     },
     {
       heading: t('playroom_heading_aito'),
       notification: t('playroom_notification_new_messages'),
       children: (
-        <Messenger 
-          instructions={t('playroom_instructions_aito')}
-          onMessageSubmit={answerQuestion}
-          messageFieldDisabled={Boolean(messengerStates.aito)}
-          announcement={messengerStates.aito.announcement}
-          message={answer}
-          messages={[aitoQuestion, { content: 'Ke fj qie dosas.', type: 'sent' }].filter(q => q)}
-          onMessageChange={m => setAnswer(m)}
-        />
+        <AitoMessenger game={code} />
       )
     }
   ];
@@ -133,7 +53,7 @@ const Playroom = () => {
   };
 
   return (
-    <PublicPage heading={t('playroom_page_heading')} crumbs={crumbs}>
+    <PublicPage heading={t('playroom_page_heading')} >
       <div className="playroom">
         <Tabs tabs={tabs} onTabSwitch={switchTab} />
       </div>
