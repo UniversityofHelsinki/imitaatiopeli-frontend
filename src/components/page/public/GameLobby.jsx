@@ -17,7 +17,7 @@ const GameLobby = () => {
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
     const [hasJoined, setJoined] = useState(undefined);
-    const [gameStarted, setGameStarted] = useState(undefined);
+    const [gameStartedA, setGameStartedA] = useState(undefined);
     const [playerConfiguration, setPlayerConfiguration] = useState(null);
     const [joinedGame, setJoinedGame] = useState(null);
     const { setNotification } = useNotification();
@@ -146,7 +146,7 @@ const GameLobby = () => {
 
     useEffect(() => {
         if (game?.start_time && game?.game_id) {
-            setGameStarted(true);
+            setGameStartedA(true);
         }
     }, [game?.start_time, game?.game_id]);
 
@@ -178,7 +178,7 @@ const GameLobby = () => {
 
     return (
         <>
-            {gameStarted ? (<h2>{t('game_lobby_game_started')}</h2>) :
+            {gameStartedA ? (<h2>{t('game_lobby_game_started')}</h2>) :
                 (<PublicPage className="page-heading"
                         loading={loading}
                         heading={playerConfiguration?.theme_description}
