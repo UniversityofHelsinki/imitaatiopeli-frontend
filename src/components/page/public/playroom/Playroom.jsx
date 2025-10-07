@@ -30,50 +30,6 @@ const Playroom = () => {
   const { code } = useParams();
   const { t } = useTranslation();
 
-  const ask = useAskQuestion(code);
-  const sendAnswer = useAnswerQuestion(code);
-
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
-
-  const { question: aitoQuestion } = useWaitQuestion();
-  const { answers } = useWaitAnswers();
-
-  const [messengerStates, setMessengerStates] = useState({
-    judge: null,
-    aito: {
-      announcement: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />
-    }
-  });
-
-  const freezeAnswerField = () => {
-    setMessengerStates({
-      ...messengerStates,
-      aito: {
-        announcement: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />
-      }
-    });
-  };
-
-  const freezeQuestionField = () => {
-    setMessengerStates({
-      ...messengerStates,
-      judge: {
-        announcement: <WaitingAnnouncement content={t('playroom_waiting_for_answers')} />
-      }
-    });
-  };
-
-  const askQuestion = async (question) => {
-    await ask(question);
-    freezeQuestionField();
-  };
-
-  const answerQuestion = async (answer) => {
-    await sendAnswer(answer);
-    freezeAnswerField();
-  };
-
   const tabs = [
     {
       heading: t('playroom_heading_judge'),
