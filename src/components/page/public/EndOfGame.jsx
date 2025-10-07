@@ -8,24 +8,8 @@ const EndOfGame = () => {
     const { id } = useParams();
     const { t } = useTranslation();
 
-    const crumbs = [
-        {
-            label: 'bread_crumb_home',
-            href: '/'
-        },
-        {
-            label: 'bread_crumb_games',
-            href: '/games'
-        },
-        {
-            label: 'bread_crumb_games_lobby',
-            href: `/games/${id}/end`,
-            current: true
-        }
-    ];
-
     return (
-        <Page  heading={t('end_of_game_page_heading')} crumbs={crumbs}>
+        <Page  heading={t('end_of_game_page_heading')} >
         </Page>
     );
 };
