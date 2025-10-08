@@ -7,6 +7,7 @@ import { WaitingAnnouncement } from '../Playroom';
 import { useTranslation } from 'react-i18next';
 import Message, { InstructionMessage } from './Message';
 import { useSocket } from "../../../../../contexts/SocketContext.jsx";
+import localStorage  from "../../../../../utilities/localStorage.js";
 
 const AitoMessenger = ({
   game
@@ -26,17 +27,22 @@ const AitoMessenger = ({
 
   const [currentState, setCurrentState] = useState('answer');
   const [answer, setAnswer] = useState('');
+  const [game_id, setGame_id] = useState(game);
   const sendAnswer = useAnswerQuestion(game);
   const { isConnected, emit, on, off } = useSocket();
+  const localPlayer = localStorage.get("player");
 
   const answerQuestion = async (answer) => {
     //await sendAnswer(answer);
+      /*
+        game_id, player_id, judge_id, question_id, question_text
+      */
     if (isConnected) {
           emit('send-answer', {
-              questionId: answer.question_id,
-              playerId: answer.player_id,
-              gameId: answer.game_id,
-              answer: answer.answer,
+              questionId: "2", //question_id,
+              playerId: localPlayer.player_id,
+              gameId: "2", //game_id,
+              answer: answer,
           });
     }
     setCurrentState('wait');
