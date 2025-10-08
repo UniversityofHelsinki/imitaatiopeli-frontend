@@ -39,9 +39,9 @@ const AitoMessenger = ({
       */
     if (isConnected) {
           emit('send-answer', {
-              questionId: "2", //question_id,
+              questionId: "3", //question_id,
               playerId: localPlayer.player_id,
-              gameId: "2", //game_id,
+              gameId: "3", //game_id,
               answer: answer,
           });
     }
