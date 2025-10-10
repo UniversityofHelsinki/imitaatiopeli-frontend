@@ -113,6 +113,7 @@
   "temperature_setting": "lämpötila-asetus",
   "game_lobby_player_not_joined": "Pelaaja ei ole liittynyt peliin",
   "game_lobby_player_joined": "Pelaaja on liittynyt peliin",
+  "game_lobby_game_started": "Peli on käynnissä, liittyminen ei ole mahdollista",
   "spinner_awaiting_game_starting": "Odotetaan pelin alkua...",
   "game_lobby_game_started": "Peli käynnistetty",
   "temperature_conservative": "Konservatiivinen",
@@ -164,11 +165,19 @@
   "playroom_page_heading": "Peli",
   "playroom_waiting_for_questions": "Odotetaan kysymyksiä",
   "playroom_waiting_for_answers": "Odotetaan vastauksia",
+  "playroom_waiting_for_rating": "Arvioi vastaukset ensin tai päätä peli",
   "playroom_notification_new_messages": "Uusia viestejä",
   "message_field_message": "Viesti",
   "nickname_already_in_use": "Nimi on jo käytössä",
   "start_game_validation_message": "Pelin käynnistäminen vaatii vähintään 2 pelaajaa!",
   "start_game_page_already_started": "Peli on jo käynnissä!",
+  "admin_monitor_join_link": "Liittymislinkki: ",
   "edit_game_player_joined_validation": "Peli ei ole muokattavissa koska siihen on liittynyt pelaajia",
-  "admin_monitor_join_link": "Liittymislinkki: "
+  "rating_form_instructive_heading": "Kumpi on tekoälyn kirjoittama?",
+  "rating_form_justifications_label": "Perustelut",
+  "rating_form_justifications_assistive_text": "Perustele, miksi valitsemasi vastaus on tekoälyn kirjoittama.",
+  "rating_form_justifications_placeholder": "Kirjoita perustelet tähän",
+  "rating_form_confidence_meter_label": "Kuinka varma olet vastauksestasi?",
+  "rating_form_submit_rating": "Tallenna",
+  "rating_form_end_game": "Tallenna ja päätä peli"
 }

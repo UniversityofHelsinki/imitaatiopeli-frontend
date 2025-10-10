@@ -18,10 +18,6 @@
   flex-grow: 1;
 }
 
-.messenger-message-field ds-button {
-  min-width: max-content;
-}
-
 .messenger-message-field-announcement {
   position: absolute;
   top: 0;
@@ -33,4 +29,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  max-height: 100%;
+  overflow-y: scroll;
 }

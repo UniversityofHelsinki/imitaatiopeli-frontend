@@ -29,10 +29,12 @@ export const SocketProvider = ({ children }) => {
             transports: ['websocket', 'polling'],
             upgrade: true,
             timeout: 20000,
-            forceNew: true,
             reconnection: true,
-            reconnectionAttempts: 5,
+            forceNew: false,
+            reconnectionAttempts: Infinity,
             reconnectionDelay: 1000,
+            reconnectionDelayMax: 10000,
+            randomizationFactor: 0.5,
         });
 
         socketRef.current = socket;

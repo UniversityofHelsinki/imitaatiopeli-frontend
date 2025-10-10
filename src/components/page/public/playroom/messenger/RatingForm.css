@@ -1,0 +1,30 @@
+.rating-form {
+  display: flex;
+  flex-direction: column;
+  padding: var(--ds-spacing-base);
+  gap: var(--ds-spacing-2xSmall);
+  list-style: none;
+  margin: unset;
+}
+
+.rating-form-heading {
+  padding: var(--ds-spacing-2xSmall);
+}
+
+.rating-form-answers {
+  padding: var(--ds-spacing-2xSmall);
+}
+
+.rating-form-form ds-button {
+  padding: var(--ds-spacing-2xSmall);
+}
+
+.rating-form-justifications {
+  padding: var(--ds-spacing-2xSmall);
+}
+
+.rating-form-confidence {
+  display: flex;
+  flex-direction: column;
+  padding: var(--ds-spacing-2xSmall);
+}
