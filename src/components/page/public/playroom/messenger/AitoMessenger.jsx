@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import Message, { InstructionMessage } from './Message';
 import { useSocket } from "../../../../../contexts/SocketContext.jsx";
 import localStorage  from "../../../../../utilities/localStorage.js";
+import useWaitQuestion from "../../../../../hooks/useWaitQuestion.js";
 
 const AitoMessenger = ({
   game
@@ -16,7 +17,7 @@ const AitoMessenger = ({
 
   const messages = [
     {
-      content: 'AAAAAA?',
+      content: 'AAAAAA?' + ' game:' + game + ' player_id:' + localStorage.get("player").player_id,
       type: 'received'
     },
     {
@@ -28,6 +29,7 @@ const AitoMessenger = ({
   const [currentState, setCurrentState] = useState('answer');
   const [answer, setAnswer] = useState('');
   const [game_id, setGame_id] = useState(game);
+  const waitQuestion = useWaitQuestion(game);
   const sendAnswer = useAnswerQuestion(game);
   const { isConnected, emit, on, off } = useSocket();
   const localPlayer = localStorage.get("player");
@@ -39,10 +41,11 @@ const AitoMessenger = ({
       */
     if (isConnected) {
           emit('send-answer', {
-              questionId: "3", //question_id,
-              playerId: localPlayer.player_id,
-              gameId: "3", //game_id,
+              questionId: "4", //question_id,
+              playerId: "9", //localPlayer.player_id,
+              gameId: "4", //game_id,
               answer: answer,
+              timestamp: Date.now()
           });
     }
     setCurrentState('wait');
