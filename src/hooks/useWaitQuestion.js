@@ -11,6 +11,7 @@ const useWaitQuestion = (game) => {
   useEffect(() => {
   }, [game, question]);
 
+
   return {
     question,
     clearQuestion
