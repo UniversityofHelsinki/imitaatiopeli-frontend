@@ -79,9 +79,10 @@ const JoinGameForm = ({ game }) => {
 
           if (isConnected && game?.game_id && playerData?.player_id) {
               emit('join-game', {
-                  userId: playerData.player_id,
-                  gameId: game.game_id,
-                  nickname: playerData.nickname
+                  userId: playerData?.player_id,
+                  gameId: game?.game_id,
+                  nickname: playerData?.nickname,
+                  session_token: playerData?.session_token?.toString(),
               });
           }
 
