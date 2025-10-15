@@ -20,7 +20,13 @@
 }
 
 .rating-form-justifications {
+  display: flex;
+  flex-direction: column;
   padding: var(--ds-spacing-2xSmall);
+}
+
+.rating-form-justifications-character-count {
+  margin-top: var(--ds-spacing-2xSmall);
 }
 
 .rating-form-confidence {
