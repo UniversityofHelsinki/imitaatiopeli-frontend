@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './JudgeMessenger.css'
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,6 @@ const JudgeMessenger = ({ game }) => {
 
   const handleAskQuestion = async (questionText) => {
     try {
-      console.log('JudgeMessenger question:', questionText);
       await askQuestion(questionText);
       setCurrentState('wait');
     } catch (error) {
@@ -47,11 +46,13 @@ const JudgeMessenger = ({ game }) => {
             <InstructionMessage content={t('playroom_instructions_judge')} />
           </li>
         </ul>
-        {/*<RatingForm
-          question={{ content: 'AAAAAA?', type: 'sent' }}
-          answers={[{ content: 'ASJLAJLJAS', type: 'received' }, { content: 'KKKKK', type: 'received' }]}
-          onSubmit={console.log}
-        />*/}
+        {currentState === 'rate' &&
+        <RatingForm
+            question={{ content: 'AAAAAA?', type: 'sent' }}
+            answers={[{ content: 'ASJLAJLJAS', type: 'received' }, { content: 'KKKKK', type: 'received' }]}
+            onSubmit={console.log}
+        />}
+
       </Messenger>
   );
 
