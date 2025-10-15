@@ -6,12 +6,36 @@ import Button from '../../../../misc/ds/Button';
 import { useTranslation } from 'react-i18next';
 import TextArea from '../../../../misc/ds/TextArea';
           
-const ConfidenceMeter = () => {
+const ConfidenceMeter = ({
+  value,
+  onChange
+}) => {
   const id = useId();
   const { t } = useTranslation();
+
+  const handleChange = (event) => {
+    if (onChange) {
+      onChange(event.target.value / 33 + 1);
+    }
+  }
+
   return (<>
     <label htmlFor="confidence">{t('rating_form_confidence_meter_label')}</label>
-    <input type="range" name="confidence" id={id} min={1} max={5} />
+    <input type="range" name="confidence" value={(value - 1) * 33} id={id} step="33" max="99" list="confidence-values" onChange={handleChange} />
+    <datalist id="confidence-values">
+      <option value="0">
+        {t('confidence_meter_value_1')}
+      </option>
+      <option className="confidence-values-oddd" value="33">
+        {t('confidence_meter_value_2')}
+      </option>
+      <option className="confidence-values-evenn" value="66">
+        {t('confidence_meter_value_3')}
+      </option>
+      <option className="confidence-values-last" value="99">
+        {t('confidence_meter_value_4')}
+      </option>
+    </datalist>
   </>);
 };
 
@@ -23,6 +47,7 @@ const RatingForm = ({
   const { t } = useTranslation();
 
   const [selected, setSelected] = useState(null);
+  const [confidence, setConfidence] = useState(2);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -52,7 +77,7 @@ const RatingForm = ({
           </div>
         ))}
         <div className="rating-form-confidence">
-          <ConfidenceMeter />
+          <ConfidenceMeter value={confidence} onChange={v => setConfidence(v)} />
         </div>
         <div className="rating-form-justifications">
           <TextArea 

@@ -28,3 +28,42 @@
   flex-direction: column;
   padding: var(--ds-spacing-2xSmall);
 }
+
+.rating-form-confidence datalist {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem;
+}
+
+.rating-form-confidence datalist option {
+  flex-basis: 25%;
+  max-width: 25%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.confidence-values-oddd::after {
+  display: inline-block;
+  content: "";
+  width: 33%;
+}
+
+.confidence-values-oddd {
+  text-align: center;
+  flex-basis: 66%;
+}
+
+.confidence-values-evenn::before {
+  display: inline-block;
+  content: "";
+  width: 33%;
+}
+
+.confidence-values-evenn {
+  text-align: center;
+}
+
+.confidence-values-last {
+  text-align: end;
+}

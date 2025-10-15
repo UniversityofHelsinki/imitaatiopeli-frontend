@@ -179,5 +179,10 @@
   "rating_form_justifications_placeholder": "Kirjoita perustelet tähän",
   "rating_form_confidence_meter_label": "Kuinka varma olet vastauksestasi?",
   "rating_form_submit_rating": "Tallenna",
-  "rating_form_end_game": "Tallenna ja päätä peli"
+  "rating_form_end_game": "Tallenna ja päätä peli",
+  "confidence_meter_value_1": "Epävarma",
+  "confidence_meter_value_2": "Varmahko",
+  "confidence_meter_value_3": "Varma",
+  "confidence_meter_value_4": "Täysin varma"
+
 }
