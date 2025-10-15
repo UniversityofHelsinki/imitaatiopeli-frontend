@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import './AitoMessenger.css'
 import Messenger from './Messenger';
@@ -8,29 +8,36 @@ import { useTranslation } from 'react-i18next';
 import Message, { InstructionMessage } from './Message';
 
 const AitoMessenger = ({
-  game
+  game, question
 }) => {
   const { t } = useTranslation();
-
-  const messages = [
-    {
-      content: 'AAAAAA?',
-      type: 'received'
-    },
-    {
-      content: 'BBBBB AA asdf.',
-      type: 'sent'
-    }
-  ]
-
   const [currentState, setCurrentState] = useState('wait');
   const [answer, setAnswer] = useState('');
-  const sendAnswer = useAnswerQuestion(game);
+  const [messages, setMessages] = useState([]);
+  const { sendAnswer } = useAnswerQuestion(game);
 
-  const answerQuestion = async (answer) => {
-    await sendAnswer(answer);
-    setCurrentState('wait');
-  };
+     useEffect(() => {
+         if (question) {
+             setCurrentState('answer');
+         }
+    }, [question, currentState]);
+
+    const answerQuestion = async (answerContent) => {
+        // Add the answer to messages
+        setMessages(prev => [...prev, {
+            content: answerContent,
+            type: 'sent'
+        }]);
+
+        try {
+            await sendAnswer(answerContent, question);
+        } catch (error) {
+            console.error('Error sending answer:', error);
+        }
+
+        setAnswer('');
+        setCurrentState('wait');
+    };
 
   const disabledAnnouncements = {
     wait: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />
@@ -48,7 +55,7 @@ const AitoMessenger = ({
         <li className="message-area-instructions message-area-item">
           <InstructionMessage content={t('playroom_instructions_aito')} />
         </li>
-        {messages.map((msg, i) => (
+        {[question].map((msg, i) => (
           <li key={`${msg.type}-i`} className={`message-area-item message-area-item-${msg.type}`}>
             <Message>{msg.content}</Message>
           </li>

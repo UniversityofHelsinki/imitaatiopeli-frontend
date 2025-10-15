@@ -14,7 +14,7 @@ const JudgeMessenger = ({
 }) => {
   const { t } = useTranslation();
   const ask = useAskQuestion(game);
-  const [currentState, setCurrentState] = useState('rate');
+  const [currentState, setCurrentState] = useState('ask');
   const [question, setQuestion] = useState('');
 
   const disabledAnnouncements = {
