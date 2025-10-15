@@ -5,10 +5,9 @@ import localStorage from '../utilities/localStorage';
 export const useAskQuestion = (gameId) => {
   const { emit, on, off } = useSocket();
 
-  const askQuestion = useCallback((content) => {
+  const askQuestion = useCallback((question_text) => {
     return new Promise((resolve, reject) => {
       const judge = localStorage.get('player');
-      console.log('judge object:', judge);
 
       if (!judge || !judge.player_id) {
         reject(new Error('No judge data found'));
@@ -33,7 +32,7 @@ export const useAskQuestion = (gameId) => {
       emit('send-question', {
         judgeId: judge.player_id,
         gameId: parseInt(gameId, 10),
-        content: content.question_text
+        questionText: question_text
       });
     });
   }, [emit, on, off, gameId]);
