@@ -35,9 +35,9 @@ const useAnswerQuestion = (gameId) => {
             on('answer-sent-error', onError);
 
             emit('send-answer', {
-                questionId: question.questionId,
-                playerId: player?.player_id,
-                gameId: question.gameId,
+                questionId: question.questionId.toString(),
+                playerId: player?.player_id.toString(),
+                gameId: question.gameId.toString(),
                 answer: content,
                 timestamp: Date.now()
             });
