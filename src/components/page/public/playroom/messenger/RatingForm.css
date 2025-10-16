@@ -20,11 +20,56 @@
 }
 
 .rating-form-justifications {
+  display: flex;
+  flex-direction: column;
   padding: var(--ds-spacing-2xSmall);
+}
+
+.rating-form-justifications-character-count {
+  margin-top: var(--ds-spacing-2xSmall);
 }
 
 .rating-form-confidence {
   display: flex;
   flex-direction: column;
   padding: var(--ds-spacing-2xSmall);
+}
+
+.rating-form-confidence datalist {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem;
+}
+
+.rating-form-confidence datalist option {
+  flex-basis: 25%;
+  max-width: 25%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.confidence-values-odd::after {
+  display: inline-block;
+  content: "";
+  width: 33%;
+}
+
+.confidence-values-odd {
+  text-align: center;
+  flex-basis: 66%;
+}
+
+.confidence-values-even::before {
+  display: inline-block;
+  content: "";
+  width: 33%;
+}
+
+.confidence-values-even {
+  text-align: center;
+}
+
+.confidence-values-last {
+  text-align: end;
 }
