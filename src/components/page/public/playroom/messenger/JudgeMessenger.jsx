@@ -16,6 +16,19 @@ const JudgeMessenger = ({ game, answers }) => {
   const [question, setQuestion] = useState('');
   const { setNotification } = useNotification();
 
+  const handleAskQuestion = async (questionText) => {
+    try {
+      await askQuestion(questionText);
+      setCurrentState('wait');
+    } catch (error) {
+      console.error('Failed to ask question:', error);
+      setCurrentState('ask');
+      setNotification(t('judge_messenger_send_question_error_notification'), 'error', true);
+    }
+  };
+
+  const { setNotification } = useNotification();
+
     useEffect(() => {
         if (answers && answers.length > 0) {
             setCurrentState('rate'); // vai rate
