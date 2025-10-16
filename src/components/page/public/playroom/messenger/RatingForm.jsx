@@ -49,10 +49,12 @@ const RatingForm = ({
   const [selected, setSelected] = useState(null);
   const [confidence, setConfidence] = useState(2);
   const [justifications, setJustifications] = useState('');
+  const [ratingCount, setRatingCount] = useState(0);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log('rating submit', event);
+    setRatingCount(ratingCount + 1);
   };
 
   const handleChange = (event) => {
@@ -87,11 +89,12 @@ const RatingForm = ({
             placeholder={t('rating_form_justifications_placeholder')}
             value={justifications}
             onChange={e => setJustifications(e.target.value?.substring(0, 500))}
+            autocomplete="off"
           />
           <span className="rating-form-justifications-character-count">{justifications.length} / 500</span>
         </div>
         <Button type="submit" label={t('rating_form_submit_rating')} />
-        <Button variant="secondary" label={t('rating_form_end_game')} />
+        {ratingCount > 2 && <Button variant="secondary" label={t('rating_form_end_game')} />}
       </form>
     </div>
   );
