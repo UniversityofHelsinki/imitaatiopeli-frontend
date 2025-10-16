@@ -5,53 +5,46 @@ import localStorage from '../utilities/localStorage';
 export const useAskQuestion = (gameId) => {
     const { emit, on, off } = useSocket();
 
-    const ask = useCallback((content) => {
+    const askQuestion = useCallback((content, onSuccess, onError) => {
+        console.log('askQuestion called with content:', content);
 
-        return new Promise((resolve, reject) => {
-            const player = localStorage.get('player');
-            console.log('player object:', player);
+        const judge = localStorage.get('player');
+        console.log('judge object:', judge);
 
-            console.log('questiooni data:', {
-                gameId,
-                judgeId: player.judge_player_id,
-                playerId: player?.player_id,
-            });
-
-            if (!player) {
-                reject(new Error('No player data found'));
-                return;
+        if (!judge || !judge.player_id) {
+            if (onError) {
+                onError(new Error('No judge data found'));
             }
+            return;
+        }
 
-            if (!player.player_id_for_question_receiver) {
-                reject(new Error('No player to receive question'));
-                return;
+        const handleSuccess = (data) => {
+            off('question-sent-success', handleSuccess);
+            off('question-sent-error', handleError);
+            if (onSuccess) {
+                onSuccess(data);
             }
+        };
 
-            const onSuccess = (data) => {
-                off('question-sent-success', onSuccess);
-                off('question-sent-error', onError);
-                resolve(data);
-            };
+        const handleError = (error) => {
+            off('question-sent-success', handleSuccess);
+            off('question-sent-error', handleError);
+            if (onError) {
+                onError(error);
+            }
+        };
 
-            const onError = (error) => {
-                off('question-sent-success', onSuccess);
-                off('question-sent-error', onError);
-                reject(error);
-            };
+        on('question-sent-success', handleSuccess);
+        on('question-sent-error', handleError);
 
-            on('question-sent-success', onSuccess);
-            on('question-sent-error', onError);
-
-            emit('send-question', {
-                gameId: parseInt(gameId, 10),
-                content,
-                judgeId: player.judge_player_id,
-                playerId: player.player_id_for_question_receiver
-            });
+        emit('send-question', {
+            judgeId: judge.player_id,
+            gameId: parseInt(gameId, 10),
+            questionText: content
         });
     }, [emit, on, off, gameId]);
 
-    return { ask };
+    return { askQuestion };
 };
 
 export default useAskQuestion;
