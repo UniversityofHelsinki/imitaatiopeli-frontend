@@ -49,24 +49,24 @@
   text-overflow: ellipsis;
 }
 
-.confidence-values-oddd::after {
+.confidence-values-odd::after {
   display: inline-block;
   content: "";
   width: 33%;
 }
 
-.confidence-values-oddd {
+.confidence-values-odd {
   text-align: center;
   flex-basis: 66%;
 }
 
-.confidence-values-evenn::before {
+.confidence-values-even::before {
   display: inline-block;
   content: "";
   width: 33%;
 }
 
-.confidence-values-evenn {
+.confidence-values-even {
   text-align: center;
 }
 

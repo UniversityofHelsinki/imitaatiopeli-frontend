@@ -26,10 +26,10 @@ const ConfidenceMeter = ({
       <option value="0">
         {t('confidence_meter_value_1')}
       </option>
-      <option className="confidence-values-oddd" value="33">
+      <option className="confidence-values-odd" value="33">
         {t('confidence_meter_value_2')}
       </option>
-      <option className="confidence-values-evenn" value="66">
+      <option className="confidence-values-even" value="66">
         {t('confidence_meter_value_3')}
       </option>
       <option className="confidence-values-last" value="99">
@@ -37,6 +37,11 @@ const ConfidenceMeter = ({
       </option>
     </datalist>
   </>);
+};
+
+ConfidenceMeter.propTypes = {
+  value: PropTypes.number,
+  onChange: PropTypes.func,
 };
 
 const RatingForm = ({
