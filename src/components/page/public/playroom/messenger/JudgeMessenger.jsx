@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import './JudgeMessenger.css'
 import { useTranslation } from 'react-i18next';
@@ -10,14 +10,20 @@ import RatingForm from './RatingForm';
 
 
 const JudgeMessenger = ({
-  game
+  game, answers
 }) => {
   const { t } = useTranslation();
   const ask = useAskQuestion(game);
   const [currentState, setCurrentState] = useState('ask');
   const [question, setQuestion] = useState('');
 
-  const disabledAnnouncements = {
+    useEffect(() => {
+        if (answers && answers.length > 0) {
+            setCurrentState('rate'); // vai rate
+        }
+    }, [answers]);
+
+    const disabledAnnouncements = {
     'wait': <WaitingAnnouncement content={t('playroom_waiting_for_answers')} />,
     'rate': <WaitingAnnouncement content={t('playroom_waiting_for_rating')} showSpinner={false} />
   };
@@ -41,7 +47,7 @@ const JudgeMessenger = ({
         </ul>
         <RatingForm 
           question={{ content: 'AAAAAA?', type: 'sent' }}
-          answers={[{ content: 'ASJLAJLJAS', type: 'received' }, { content: 'KKKKK', type: 'received' }]}
+          answers={ answers }
           onSubmit={console.log}
         />
     </Messenger>
