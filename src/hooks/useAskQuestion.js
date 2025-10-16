@@ -3,42 +3,48 @@ import { useCallback } from 'react';
 import localStorage from '../utilities/localStorage';
 
 export const useAskQuestion = (gameId) => {
-  const { emit, on, off } = useSocket();
+    const { emit, on, off } = useSocket();
 
-  const askQuestion = useCallback((content) => {
-    return new Promise((resolve, reject) => {
-      const judge = localStorage.get('player');
-      console.log('judge object:', judge);
+    const askQuestion = useCallback((content, onSuccess, onError) => {
+        console.log('askQuestion called with content:', content);
 
-      if (!judge || !judge.player_id) {
-        reject(new Error('No judge data found'));
-        return;
-      }
+        const judge = localStorage.get('player');
+        console.log('judge object:', judge);
 
-      const onSuccess = (data) => {
-        off('question-sent-success', onSuccess);
-        off('question-sent-error', onError);
-        resolve(data);
-      };
+        if (!judge || !judge.player_id) {
+            if (onError) {
+                onError(new Error('No judge data found'));
+            }
+            return;
+        }
 
-      const onError = (error) => {
-        off('question-sent-success', onSuccess);
-        off('question-sent-error', onError);
-        reject(error);
-      };
+        const handleSuccess = (data) => {
+            off('question-sent-success', handleSuccess);
+            off('question-sent-error', handleError);
+            if (onSuccess) {
+                onSuccess(data);
+            }
+        };
 
-      on('question-sent-success', onSuccess);
-      on('question-sent-error', onError);
+        const handleError = (error) => {
+            off('question-sent-success', handleSuccess);
+            off('question-sent-error', handleError);
+            if (onError) {
+                onError(error);
+            }
+        };
 
-      emit('send-question', {
-        judgeId: judge.player_id,
-        gameId: parseInt(gameId, 10),
-        content: content.question_text
-      });
-    });
-  }, [emit, on, off, gameId]);
+        on('question-sent-success', handleSuccess);
+        on('question-sent-error', handleError);
 
-  return { askQuestion };
+        emit('send-question', {
+            judgeId: judge.player_id,
+            gameId: parseInt(gameId, 10),
+            questionText: content
+        });
+    }, [emit, on, off, gameId]);
+
+    return { askQuestion };
 };
 
 export default useAskQuestion;
