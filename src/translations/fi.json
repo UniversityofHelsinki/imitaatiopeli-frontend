@@ -115,7 +115,6 @@
   "game_lobby_player_joined": "Pelaaja on liittynyt peliin",
   "game_lobby_game_started": "Peli on käynnissä, liittyminen ei ole mahdollista",
   "spinner_awaiting_game_starting": "Odotetaan pelin alkua...",
-  "game_lobby_game_started": "Peli käynnistetty",
   "temperature_conservative": "Konservatiivinen",
   "temperature_creative": "Luova",
   "temperature_balanced": "Maltillinen",
@@ -183,6 +182,7 @@
   "confidence_meter_value_1": "Epävarma",
   "confidence_meter_value_2": "Varmahko",
   "confidence_meter_value_3": "Varma",
-  "confidence_meter_value_4": "Täysin varma"
+  "confidence_meter_value_4": "Täysin varma",
+  "game_started_notification": "Peli aloitettu!"
 
 }
