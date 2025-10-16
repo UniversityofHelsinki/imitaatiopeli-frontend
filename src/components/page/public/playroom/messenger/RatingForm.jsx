@@ -70,7 +70,7 @@ const RatingForm = ({
 };
 
 RatingForm.propTypes = {
-  question: PropTypes.string,
+  question: PropTypes.object,
   answers: PropTypes.array,
   onSubmit: PropTypes.func,
 };

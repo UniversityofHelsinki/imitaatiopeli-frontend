@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import useAskQuestion from '../../../../../hooks/useAskQuestion';
 import { WaitingAnnouncement } from '../Playroom';
 import Messenger from './Messenger';
-import { InstructionMessage } from './Message';
+import Message, { InstructionMessage } from './Message';
 import RatingForm from './RatingForm';
 import {useNotification} from "../../../../notification/NotificationContext.jsx";
 
@@ -13,7 +13,8 @@ const JudgeMessenger = ({ game, answers }) => {
   const { t } = useTranslation();
   const { askQuestion } = useAskQuestion(game);
   const [currentState, setCurrentState] = useState('ask');
-  const [question, setQuestion] = useState('');
+  const [questionInput, setQuestionInput] = useState('');
+  const [askedQuestion, setAskedQuestion] = useState(null);
   const { setNotification } = useNotification();
 
     useEffect(() => {
@@ -25,6 +26,7 @@ const JudgeMessenger = ({ game, answers }) => {
   const handleAskQuestion = async (questionText) => {
     try {
       await askQuestion(questionText);
+      setAskedQuestion({ content: questionText, type: 'sent' });
       setCurrentState('wait');
     } catch (error) {
       console.error('Failed to ask question:', error);
@@ -43,16 +45,16 @@ const JudgeMessenger = ({ game, answers }) => {
           onMessageSubmit={handleAskQuestion}
           messageFieldDisabled={currentState !== 'ask'}
           announcement={disabledAnnouncements[currentState]}
-          message={question}
-          onMessageChange={m => setQuestion(m)}>
-        <ul className="message-area-messages">
+          message={questionInput}
+          onMessageChange={m => setQuestionInput(m)}>
+      <ul className="message-area-messages">
           <li className="message-area-instructions message-area-item">
             <InstructionMessage content={t('playroom_instructions_judge')} />
           </li>
-        </ul>
-        {currentState === 'rate' &&
-        <RatingForm
-            question={{ content: 'AAAAAA?', type: 'sent' }}
+      </ul>
+        {currentState === 'rate' && askedQuestion &&
+            <RatingForm
+            question={askedQuestion}
             answers={ answers }
             onSubmit={console.log}
         />}
@@ -63,6 +65,7 @@ const JudgeMessenger = ({ game, answers }) => {
 
 JudgeMessenger.propTypes = {
   game: PropTypes.string,
+  answers: PropTypes.array,
 };
 
 export default JudgeMessenger;
