@@ -16,19 +16,6 @@ const JudgeMessenger = ({ game, answers }) => {
   const [question, setQuestion] = useState('');
   const { setNotification } = useNotification();
 
-  const handleAskQuestion = async (questionText) => {
-    try {
-      await askQuestion(questionText);
-      setCurrentState('wait');
-    } catch (error) {
-      console.error('Failed to ask question:', error);
-      setCurrentState('ask');
-      setNotification(t('judge_messenger_send_question_error_notification'), 'error', true);
-    }
-  };
-
-  const { setNotification } = useNotification();
-
     useEffect(() => {
         if (answers && answers.length > 0) {
             setCurrentState('rate'); // vai rate
@@ -46,12 +33,10 @@ const JudgeMessenger = ({ game, answers }) => {
     }
   };
 
-
   const disabledAnnouncements = {
     'wait': <WaitingAnnouncement content={t('playroom_waiting_for_answers')} />,
     'rate': <WaitingAnnouncement content={t('playroom_waiting_for_rating')} showSpinner={false} />
   };
-
 
   return (
       <Messenger
@@ -74,7 +59,6 @@ const JudgeMessenger = ({ game, answers }) => {
 
       </Messenger>
   );
-
 };
 
 JudgeMessenger.propTypes = {
