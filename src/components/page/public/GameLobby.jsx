@@ -17,7 +17,6 @@ const GameLobby = () => {
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
     const [hasJoined, setJoined] = useState(undefined);
-    const [gameStartedA, setGameStartedA] = useState(undefined);
     const [playerConfiguration, setPlayerConfiguration] = useState(null);
     const [gameStarted, setGameStarted] = useState(false);
     const { setNotification } = useNotification();
@@ -35,7 +34,7 @@ const GameLobby = () => {
 
             if (socketGameId === currentGameId) {
                 setGameStarted(true);
-                setNotification(message || t('game_started_notification'), 'success', true);
+                setNotification(t('game_started_notification'), 'success', true);
                 navigate(`/games/${gameId}/play`);
             }
         };
@@ -119,12 +118,6 @@ const GameLobby = () => {
     }, [game]);
 
     useEffect(() => {
-        if (game?.start_time && game?.game_id) {
-            setGameStartedA(true);
-        }
-    }, [game?.start_time, game?.game_id]);
-
-    useEffect(() => {
         if (!game || hasJoined === undefined) return; // wait until game is set
         const notStarted = game.start_time == null; // true for null or undefined
         const notEnded = game.end_time == null;
@@ -135,27 +128,23 @@ const GameLobby = () => {
     }, [hasJoined, game, navigate]);
 
     return (
-        <>
-            {gameStartedA ? (<h2>{t('game_lobby_game_started')}</h2>) :
-                (<PublicPage className="page-heading"
-                        loading={loading}
-                        heading={playerConfiguration?.theme_description}
-                        configuration={playerConfiguration}
-                    >
-                    <div className="game-lobby-double-rule" />
-                    {hasJoined ? (<span>{t('game_lobby_player_joined')}</span>) : (<span>{t('game_lobby_player_not_joined')}</span>)}
-                    <br /><br />
-                    <div className="game-lobby-page-instructions">
-                        {playerConfiguration?.instructions_for_players}
-                    </div>
-                    <div>
-                        {!gameStarted == null
-                            ? <Spinner text={t('spinner_awaiting_game_starting')} position="side" size="medium" /> :
-                            <div className="game-lobby-font-size">{t('game_lobby_game_started')}</div>
-                        }
-                    </div>
-                </PublicPage>)}
-            </>
+        <PublicPage className="page-heading"
+            loading={loading}
+            heading={playerConfiguration?.theme_description}
+            configuration={playerConfiguration}
+        >
+            <div className="game-lobby-double-rule" />
+                {hasJoined ? (<span>{t('game_lobby_player_joined')}</span>) : (<span>{t('game_lobby_player_not_joined')}</span>)}
+            <div className="medium-margin"></div>
+            <div className="game-lobby-page-instructions">
+                {playerConfiguration?.instructions_for_players}
+            </div>
+            <div>
+                {!gameStarted && (
+                    <Spinner text={t('spinner_awaiting_game_starting')} position="side" size="medium" />
+                )}
+            </div>
+        </PublicPage>
     )
 };
 

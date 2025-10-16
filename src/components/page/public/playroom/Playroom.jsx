@@ -8,6 +8,8 @@ import Spinner from '../../../misc/ds/Spinner';
 import { useParams } from 'react-router-dom';
 import JudgeMessenger from './messenger/JudgeMessenger';
 import AitoMessenger from './messenger/AitoMessenger';
+import useWaitQuestion from "../../../../hooks/useWaitQuestion.js";
+import useWaitAnswers from "../../../../hooks/useWaitAnswers.js";
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
   return (
@@ -29,19 +31,21 @@ const Playroom = () => {
   const [activeTab, setActiveTab] = useState(0);
   const { code } = useParams();
   const { t } = useTranslation();
+  const { question, clearQuestion } = useWaitQuestion(code);
+  const { answers, clearAnswers } = useWaitAnswers(code);
 
   const tabs = [
     {
       heading: t('playroom_heading_judge'),
       children: (
-        <JudgeMessenger game={code} />
+        <JudgeMessenger game={code} answers={answers} />
       )
     },
     {
       heading: t('playroom_heading_aito'),
-      notification: t('playroom_notification_new_messages'),
+      notification: question ? t('playroom_notification_new_messages') : null,
       children: (
-        <AitoMessenger game={code} />
+        <AitoMessenger game={code} question={question}  />
       )
     }
   ];
