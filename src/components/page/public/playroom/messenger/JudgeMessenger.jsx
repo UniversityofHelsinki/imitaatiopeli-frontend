@@ -7,44 +7,53 @@ import { WaitingAnnouncement } from '../Playroom';
 import Messenger from './Messenger';
 import { InstructionMessage } from './Message';
 import RatingForm from './RatingForm';
+import {useNotification} from "../../../../notification/NotificationContext.jsx";
 
-
-const JudgeMessenger = ({
-  game
-}) => {
+const JudgeMessenger = ({ game }) => {
   const { t } = useTranslation();
-  const ask = useAskQuestion(game);
+  const { askQuestion } = useAskQuestion(game);
   const [currentState, setCurrentState] = useState('ask');
   const [question, setQuestion] = useState('');
+  const { setNotification } = useNotification();
+
+  const handleAskQuestion = async (questionText) => {
+    try {
+      await askQuestion(questionText);
+      setCurrentState('wait');
+    } catch (error) {
+      console.error('Failed to ask question:', error);
+      setCurrentState('ask');
+      setNotification(t('judge_messenger_send_question_error_notification'), 'error', true);
+    }
+  };
+
 
   const disabledAnnouncements = {
     'wait': <WaitingAnnouncement content={t('playroom_waiting_for_answers')} />,
     'rate': <WaitingAnnouncement content={t('playroom_waiting_for_rating')} showSpinner={false} />
   };
 
-  const askQuestion = async (question) => {
-    await ask(question);
-    setCurrentState('wait');
-  };
 
   return (
-    <Messenger 
-      onMessageSubmit={askQuestion}
-      messageFieldDisabled={currentState !== 'ask'}
-      announcement={disabledAnnouncements[currentState]}
-      message={question}
-      onMessageChange={m => setQuestion(m)}>
+      <Messenger
+          onMessageSubmit={handleAskQuestion}
+          messageFieldDisabled={currentState !== 'ask'}
+          announcement={disabledAnnouncements[currentState]}
+          message={question}
+          onMessageChange={m => setQuestion(m)}>
         <ul className="message-area-messages">
           <li className="message-area-instructions message-area-item">
             <InstructionMessage content={t('playroom_instructions_judge')} />
           </li>
         </ul>
-        <RatingForm 
-          question={{ content: 'AAAAAA?', type: 'sent' }}
-          answers={[{ content: 'ASJLAJLJAS', type: 'received' }, { content: 'KKKKK', type: 'received' }]}
-          onSubmit={console.log}
-        />
-    </Messenger>
+        {currentState === 'rate' &&
+        <RatingForm
+            question={{ content: 'AAAAAA?', type: 'sent' }}
+            answers={[{ content: 'ASJLAJLJAS', type: 'received' }, { content: 'KKKKK', type: 'received' }]}
+            onSubmit={console.log}
+        />}
+
+      </Messenger>
   );
 
 };
