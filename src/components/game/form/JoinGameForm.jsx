@@ -109,6 +109,9 @@ const JoinGameForm = ({ game }) => {
                     validation={nicknameError ? { message: nicknameError, type: 'error' } : undefined}
                 />
             </div>
+            <p>
+              {t('join_game_cookies_announcement')}
+            </p>
             <div className="horizontal-divider"></div>
             <div className="join-game-form-bottom-row">
                 <BottomRow saving={saving}>
