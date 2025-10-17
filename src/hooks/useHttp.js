@@ -1,6 +1,9 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import localStorage from '../utilities/localStorage.js';
 
 const baseUrl = import.meta.env.VITE_APP_IMITATION_BACKEND_SERVER || '';
+
+const getPlayer = () => localStorage.get('player');
 
 const cache = (() => {
     const content = {};
@@ -41,11 +44,29 @@ const cache = (() => {
 })();
 
 const client = async (path, tag, options = {}) => {
+    const player = getPlayer();
+    console.log("HIT");
+    console.log(player);
+
+    const fetchOptions = {
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers,
+            ...(player && {
+                'X-Player-Session-Token': player.session_token?.toString() || '',
+                'X-Player-Nickname': player.nickname || '',
+                'X-Player-Id': player.player_id || '',
+                'X-Player-Game-Id': player.game_id || '',
+            }),
+        },
+    };
+
     let request;
     if (!tag) {
-        request = fetch(`${baseUrl}${path}`, options);
+        request = fetch(`${baseUrl}${path}`, fetchOptions);
     } else if (!cache.has(tag)) {
-        cache.set(tag, fetch(`${baseUrl}${path}`, options));
+        cache.set(tag, fetch(`${baseUrl}${path}`, fetchOptions));
     }
     request = request || cache.get(tag).response;
 
@@ -118,6 +139,7 @@ export const get = async ({ path, tag }) => {
 };
 
 export const usePOST = ({ path, invalidates = [] }) => {
+    const player = getPlayer();
     const post = async (body) => {
         try {
             const response = await fetch(`${baseUrl}${path}`, {
@@ -125,6 +147,10 @@ export const usePOST = ({ path, invalidates = [] }) => {
                 body: JSON.stringify(body),
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-Player-Session-Token': player?.session_token?.toString() || '',
+                    'X-Player-Nickname': player?.nickname || '',
+                    'X-Player-Id': player?.player_id || '',
+                    'X-Player-Game-Id': player?.game_id || '',
                 },
             });
             if (response.ok) {
@@ -150,6 +176,10 @@ export const usePUT = ({ path, invalidates = [] }) => {
                 body: JSON.stringify(body),
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-Player-Session-Token': player?.session_token?.toString() || '',
+                    'X-Player-Nickname': player?.nickname || '',
+                    'X-Player-Id': player?.player_id || '',
+                    'X-Player-Game-Id': player?.game_id || '',
                 },
             });
             if (response.ok) {
@@ -175,6 +205,10 @@ export const useDELETE = ({ path, invalidates = [] }) => {
                 body: JSON.stringify(body),
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-Player-Session-Token': player?.session_token?.toString() || '',
+                    'X-Player-Nickname': player?.nickname || '',
+                    'X-Player-Id': player?.player_id || '',
+                    'X-Player-Game-Id': player?.game_id || '',
                 },
             });
             if (response.ok) {
