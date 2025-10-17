@@ -15,14 +15,6 @@
   padding-bottom: var(--ds-spacing-layout-base);
 }
 
-@media (max-width: 20rem) {
-  .imitation-game > div:first-of-type {
-    height: unset;
-    min-height: unset;
-  }
-
-}
-
 .main-content {
   flex-grow: 1;
   display: flex;

@@ -9,3 +9,9 @@
   overflow-y: scroll;
   scrollbar-width: thin;
 }
+
+@media (max-width: 30rem) {
+  .messenger > .messenger-message-area {
+    flex-basis: content;
+  }
+}
