@@ -50,6 +50,7 @@ const JudgeMessenger = ({ game, answers }) => {
                 confidence: data.confidence,
                 argument: data.justifications
             });
+            setCurrentState('ask');
         }
     };
 
