@@ -4,7 +4,7 @@ const IMITATION_BACKEND_SERVER = import.meta.env.VITE_APP_IMITATION_BACKEND_SERV
 
 const getUser = async () => {
     const URL = `${IMITATION_BACKEND_SERVER}/api/user`;
-    const logoutPath = '/Shibboleth.sso/Logout?return=https://your-idp-logout-url.com';
+    const logoutPath = '/Shibboleth.sso/Logout?return=/';
     try {
         const response = await fetch(URL);
         if (response.ok) {
