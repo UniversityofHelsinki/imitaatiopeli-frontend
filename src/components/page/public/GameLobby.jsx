@@ -17,44 +17,10 @@ const GameLobby = () => {
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(true);
     const [hasJoined, setJoined] = useState(undefined);
-    const [gameStartedA, setGameStartedA] = useState(undefined);
     const [playerConfiguration, setPlayerConfiguration] = useState(null);
     const [gameStarted, setGameStarted] = useState(false);
     const { setNotification } = useNotification();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const joinGameIfReady = async () => {
-            const localPlayer = localStorage.get("player");
-
-            if (isConnected && game && localPlayer?.player_id) {
-                try {
-                    const playerResponse = await get({
-                        path: `/public/getPlayerById/${localPlayer.player_id}`,
-                        tag: `PLAYER_${localPlayer.player_id}`
-                    });
-
-                    const playerFromBackend = playerResponse.body;
-
-                    const canJoinGame = game?.game_id &&
-                        playerFromBackend?.player_id === localPlayer?.player_id &&
-                        playerFromBackend?.gameId === game?.game_id;
-
-                    if (canJoinGame) {
-                        emit('join-game', {
-                            userId: playerFromBackend.player_id,
-                            gameId: game.game_id,
-                            nickname: playerFromBackend.nickname
-                        });
-                    }
-                } catch (error) {
-                    console.error('Error fetching player from backend:', error);
-                }
-            }
-        };
-
-        joinGameIfReady();
-    }, [isConnected, emit, game]);
 
     // Listen for game-started event from Socket.IO
     useEffect(() => {
@@ -68,7 +34,7 @@ const GameLobby = () => {
 
             if (socketGameId === currentGameId) {
                 setGameStarted(true);
-                setNotification(message || t('game_started_notification'), 'success', true);
+                setNotification(t('game_started_notification'), 'success', true);
                 navigate(`/games/${gameId}/play`);
             }
         };
@@ -152,12 +118,6 @@ const GameLobby = () => {
     }, [game]);
 
     useEffect(() => {
-        if (game?.start_time && game?.game_id) {
-            setGameStartedA(true);
-        }
-    }, [game?.start_time, game?.game_id]);
-
-    useEffect(() => {
         if (!game || hasJoined === undefined) return; // wait until game is set
         const notStarted = game.start_time == null; // true for null or undefined
         const notEnded = game.end_time == null;
@@ -168,27 +128,23 @@ const GameLobby = () => {
     }, [hasJoined, game, navigate]);
 
     return (
-        <>
-            {gameStartedA ? (<h2>{t('game_lobby_game_started')}</h2>) :
-                (<PublicPage className="page-heading"
-                        loading={loading}
-                        heading={playerConfiguration?.theme_description}
-                        configuration={playerConfiguration}
-                    >
-                    <div className="game-lobby-double-rule" />
-                    {hasJoined ? (<span>{t('game_lobby_player_joined')}</span>) : (<span>{t('game_lobby_player_not_joined')}</span>)}
-                    <br /><br />
-                    <div className="game-lobby-page-instructions">
-                        {playerConfiguration?.instructions_for_players}
-                    </div>
-                    <div>
-                        {!gameStarted == null
-                            ? <Spinner text={t('spinner_awaiting_game_starting')} position="side" size="medium" /> :
-                            <div className="game-lobby-font-size">{t('game_lobby_game_started')}</div>
-                        }
-                    </div>
-                </PublicPage>)}
-            </>
+        <PublicPage className="page-heading"
+            loading={loading}
+            heading={playerConfiguration?.theme_description}
+            configuration={playerConfiguration}
+        >
+            <div className="game-lobby-double-rule" />
+                {hasJoined ? (<span>{t('game_lobby_player_joined')}</span>) : (<span>{t('game_lobby_player_not_joined')}</span>)}
+            <div className="medium-margin"></div>
+            <div className="game-lobby-page-instructions">
+                {playerConfiguration?.instructions_for_players}
+            </div>
+            <div>
+                {!gameStarted && (
+                    <Spinner text={t('spinner_awaiting_game_starting')} position="side" size="medium" />
+                )}
+            </div>
+        </PublicPage>
     )
 };
 

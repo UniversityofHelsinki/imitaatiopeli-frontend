@@ -3,6 +3,7 @@
   padding: var(--ds-spacing-2xSmall);
 
   position: relative;
+  max-width: 100%;
 }
 
 .messenger-message-field form {
@@ -11,6 +12,7 @@
   align-items: center;
   gap: var(--ds-spacing-2xSmall);
   margin-right: var(--ds-spacing-2xSmall);
+  justify-content: center;
 }
 
 .messenger-message-field textarea {
