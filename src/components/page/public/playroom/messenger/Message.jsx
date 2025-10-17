@@ -22,6 +22,7 @@ export const RatingMessage = ({ i, name, children, isSelected }) => {
 
     return (
         <Button
+            variant='secondary'
             icon={isSelected ? 'check_box_fill' : 'check_box_outline_blank'}
             type="button"
             className="messenger-message rating-message"
