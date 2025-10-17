@@ -1,6 +1,5 @@
 .messenger-message {
   border-radius: var(--ds-spacing-3xSmall);
-  border: 1px solid var(--ds-bgColor-black);
   padding: var(--ds-spacing-base);
 }
 
