@@ -4,17 +4,14 @@ const IMITATION_BACKEND_SERVER = import.meta.env.VITE_APP_IMITATION_BACKEND_SERV
 
 const getUser = async () => {
     const URL = `${IMITATION_BACKEND_SERVER}/api/user`;
-    const logoutPath = '/Shibboleth.sso/Logout';
+    const logoutPath = '/Shibboleth.sso/Logout?return=https://your-idp-logout-url.com';
     try {
         const response = await fetch(URL);
-
-        console.log(response.status);
         if (response.ok) {
             return await response.json();
-        } else if (response.status === 401) {
-            window.location.replace(`${logoutPath}`);
-        } else if (response.status === 403) {
-            window.location.replace(`${logoutPath}`);
+        } else if (response.status === 401 || response.status === 403) {
+            window.location.href = logoutPath;
+            return null;
         } else {
             throw new Error(`Unexpected status code ${response.status} from ${URL}`);
         }
