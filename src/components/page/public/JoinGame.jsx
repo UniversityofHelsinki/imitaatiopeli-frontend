@@ -47,7 +47,7 @@ const JoinGame = () => {
                     heading={!alreadyJoined && t('join_game_page_heading')}
                     configuration={playerConfiguration}
                 >
-                    {alreadyJoined && <span>{t('join_game_player_already_joined')}</span> || <JoinGameForm game={game} />}
+                    {alreadyJoined && <span>{t('join_game_player_already_joined')}</span> || <JoinGameForm game={game} /> }
                 </PublicPage>)}
         </>
     );
