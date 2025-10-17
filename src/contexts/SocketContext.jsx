@@ -39,16 +39,6 @@ export const SocketProvider = ({ children }) => {
 
         socketRef.current = socket;
 
-        const testData = {
-            answerId: '1',
-            argument: 'i think its AI because ......',
-            confidence: 5,
-        };
-
-        console.log('Sending answer guess data:', testData);
-        //socket.emit('send-guess-to-answer', testData);
-
-
         // Connection event handlers
         socket.on('connect', () => {
             console.log('Connected to server with ID:', socket.id);
