@@ -169,6 +169,7 @@ export const usePOST = ({ path, invalidates = [] }) => {
 };
 
 export const usePUT = ({ path, invalidates = [] }) => {
+    const player = getPlayer();
     const put = async (body) => {
         try {
             const response = await fetch(`${baseUrl}${path}`, {
@@ -198,6 +199,7 @@ export const usePUT = ({ path, invalidates = [] }) => {
 };
 
 export const useDELETE = ({ path, invalidates = [] }) => {
+    const player = getPlayer();
     const deleteFn = async (body) => {
         try {
             const response = await fetch(`${baseUrl}${path}`, {

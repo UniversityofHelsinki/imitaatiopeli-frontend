@@ -2,8 +2,11 @@ import { useSocket } from '../contexts/SocketContext';
 import { useCallback } from 'react';
 import localStorage from '../utilities/localStorage';
 
+const getPlayer = () => localStorage.get('player');
+
 const useAnswerQuestion = (gameId) => {
     const { emit, on, off } = useSocket();
+    const player = getPlayer();
 
     const sendAnswer = useCallback((content, question) => {
         return new Promise((resolve, reject) => {
@@ -35,6 +38,7 @@ const useAnswerQuestion = (gameId) => {
             on('answer-sent-error', onError);
 
             emit('send-answer', {
+                session_token: player.session_token?.toString(),
                 questionId: question.questionId.toString(),
                 playerId: player?.player_id.toString(),
                 gameId: question.gameId.toString(),
