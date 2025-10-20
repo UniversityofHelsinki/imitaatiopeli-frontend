@@ -23,6 +23,8 @@ const AitoMessenger = ({
     }, [question, currentState]);
 
     const answerQuestion = async (answerContent) => {
+        setAnswer('');
+
         // Add the answer to messages
         setMessages(prev => [...prev, {
             content: answerContent,
@@ -31,12 +33,10 @@ const AitoMessenger = ({
 
         try {
             await sendAnswer(answerContent, question);
+            setCurrentState('wait');
         } catch (error) {
             console.error('Error sending answer:', error);
         }
-
-        setAnswer('');
-        setCurrentState('wait');
     };
 
   const disabledAnnouncements = {
