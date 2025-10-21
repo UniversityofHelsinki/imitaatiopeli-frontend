@@ -9,12 +9,13 @@ import { InstructionMessage } from './Message';
 import RatingForm from './RatingForm';
 import { useNotification } from '../../../../notification/NotificationContext.jsx';
 import { useSocket } from '../../../../../contexts/SocketContext.jsx';
+import FinalReview from './FinalReview';
 
 const JudgeMessenger = ({ game, answers }) => {
     const { isConnected, emit } = useSocket();
     const { t } = useTranslation();
     const { askQuestion } = useAskQuestion(game);
-    const [currentState, setCurrentState] = useState('ask');
+    const [currentState, setCurrentState] = useState('final-review');
     const [questionInput, setQuestionInput] = useState('');
     const [askedQuestion, setAskedQuestion] = useState(null);
     const { setNotification } = useNotification();
@@ -54,6 +55,44 @@ const JudgeMessenger = ({ game, answers }) => {
         }
     };
 
+    const finalReview = (() => {
+      const mockMessages = [
+        {
+          question: 'AAAAA?',
+          answers: [
+            'OoO?',
+            'EEEE?'
+          ],
+          selectedAnswer: 0,
+          justification: 'Joo hyvä meno.'
+        },
+        {
+          question: 'BBBBB?',
+          answers: [
+            'KKAKAKAKAKAKAKAKAKAK?',
+            'HEHEHEHEHEHEHEHEH?'
+          ],
+          selectedAnswer: 1,
+          justification: 'Joo hyvä meno.'
+        },
+        {
+          question: 'CCCCCC?',
+          answers: [
+            'Vastaus joo?',
+            'Hehe?'
+          ],
+          selectedAnswer: 1,
+          justification: 'Perustelut koska joo'
+        }
+      ];
+      if (currentState === 'final-review') {
+        return (
+          <FinalReview messages={mockMessages} onSubmit={console.log} />
+        );
+      }
+      return <></>;
+    })();
+
     return (
         <Messenger
             onMessageSubmit={handleAskQuestion}
@@ -61,11 +100,11 @@ const JudgeMessenger = ({ game, answers }) => {
             announcement={disabledAnnouncements[currentState]}
             message={questionInput}
             onMessageChange={m => setQuestionInput(m)}>
-            <ul className="message-area-messages">
+            {currentState !== 'final-review' && <ul className="message-area-messages">
                 <li className="message-area-instructions message-area-item">
                     <InstructionMessage content={t('playroom_instructions_judge')} />
                 </li>
-            </ul>
+            </ul> || finalReview}
             {currentState === 'rate' && askedQuestion &&
                 <RatingForm
                     question={askedQuestion}

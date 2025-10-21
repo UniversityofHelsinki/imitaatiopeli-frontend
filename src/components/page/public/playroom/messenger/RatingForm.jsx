@@ -6,37 +6,36 @@ import Button from '../../../../misc/ds/Button';
 import { useTranslation } from 'react-i18next';
 import TextArea from '../../../../misc/ds/TextArea';
 
-const ConfidenceMeter = ({
+export const ConfidenceMeter = ({
                              value,
                              onChange
                          }) => {
     const id = useId();
     const { t } = useTranslation();
 
-    const handleChange = (event) => {
-        if (onChange) {
-            onChange(event.target.value / 33 + 1);
-        }
+  const handleChange = (event) => {
+    if (onChange) {
+      onChange(event.target.value);
     }
-
-    return (<>
-        <label htmlFor="confidence">{t('rating_form_confidence_meter_label')}</label>
-        <input type="range" name="confidence" value={(value - 1) * 33} id={id} step="33" max="99" list="confidence-values" onChange={handleChange} />
-        <datalist id="confidence-values">
-            <option value="0">
-                {t('confidence_meter_value_1')}
-            </option>
-            <option className="confidence-values-odd" value="33">
-                {t('confidence_meter_value_2')}
-            </option>
-            <option className="confidence-values-even" value="66">
-                {t('confidence_meter_value_3')}
-            </option>
-            <option className="confidence-values-last" value="99">
-                {t('confidence_meter_value_4')}
-            </option>
-        </datalist>
-    </>);
+  };
+  return (<>
+    <label htmlFor="confidence">{t('rating_form_confidence_meter_label')}</label>
+    <input type="range" name="confidence" value={value} id={id} step="1" min="1" max="4" list="confidence-values" onChange={handleChange} />
+    <datalist id="confidence-values">
+      <option value="1">
+        {t('confidence_meter_value_1')}
+      </option>
+      <option className="confidence-values-odd" value="2">
+        {t('confidence_meter_value_2')}
+      </option>
+      <option className="confidence-values-even" value="3">
+        {t('confidence_meter_value_3')}
+      </option>
+      <option className="confidence-values-last" value="4">
+        {t('confidence_meter_value_4')}
+      </option>
+    </datalist>
+  </>);
 };
 
 ConfidenceMeter.propTypes = {

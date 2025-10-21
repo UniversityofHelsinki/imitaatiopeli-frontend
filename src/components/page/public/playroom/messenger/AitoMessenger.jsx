@@ -62,7 +62,7 @@ const AitoMessenger = ({
           )}
       </ul>
     </Messenger>
-  )
+  );
 };
 
 AitoMessenger.propTypes = {
