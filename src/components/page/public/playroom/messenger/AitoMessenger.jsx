@@ -55,11 +55,11 @@ const AitoMessenger = ({
         <li className="message-area-instructions message-area-item">
           <InstructionMessage content={t('playroom_instructions_aito')} />
         </li>
-        {[question].map((msg, i) => (
-          <li key={`${msg.type}-i`} className={`message-area-item message-area-item-${msg.type}`}>
-            <Message>{msg.content}</Message>
-          </li>
-        ))}
+          {question && (
+              <li key={`question-0`} className={`message-area-item message-area-item-${question.type}`}>
+                  <Message>{question.content}</Message>
+              </li>
+          )}
       </ul>
     </Messenger>
   )
@@ -67,6 +67,7 @@ const AitoMessenger = ({
 
 AitoMessenger.propTypes = {
   game: PropTypes.string,
+  question: PropTypes.object,
 };
 
 export default AitoMessenger;
