@@ -27,7 +27,8 @@ const JudgeMessenger = ({ game, answers }) => {
 
     const handleAskQuestion = async (questionText) => {
         try {
-            askQuestion(questionText);
+            const result = await askQuestion(questionText);
+            console.log('Asked question sent successfully:', result);
             setAskedQuestion({ content: questionText, type: 'sent' });
             setCurrentState('wait');
         } catch (error) {

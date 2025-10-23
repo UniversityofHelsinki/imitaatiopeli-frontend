@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import './AitoMessenger.css'
+import './AitoMessenger.css';
 import Messenger from './Messenger';
 import useAnswerQuestion from '../../../../../hooks/useAnswerQuestion';
 import { WaitingAnnouncement } from '../Playroom';
@@ -8,65 +8,75 @@ import { useTranslation } from 'react-i18next';
 import Message, { InstructionMessage } from './Message';
 
 const AitoMessenger = ({
-  game, question
-}) => {
-  const { t } = useTranslation();
-  const [currentState, setCurrentState] = useState('wait');
-  const [answer, setAnswer] = useState('');
-  const [messages, setMessages] = useState([]);
-  const { sendAnswer } = useAnswerQuestion(game);
+                           game, question
+                       }) => {
+    const { t } = useTranslation();
+    const [currentState, setCurrentState] = useState('wait');
+    const [answer, setAnswer] = useState('');
+    const [askedQuestion, setAskedQuestion] = useState(question);
+    const [messages, setMessages] = useState([]);
+    const { sendAnswer } = useAnswerQuestion(game);
 
-     useEffect(() => {
-         if (question) {
-             setCurrentState('answer');
-         }
-    }, [question, currentState]);
+    useEffect(() => {
+        console.log('Question changed:', question);
+        if (question) {
+            setAskedQuestion(question);
+            setCurrentState('answer');
+        } else {
+            setCurrentState('wait');
+        }
+    }, [question]);
 
     const answerQuestion = async (answerContent) => {
+        console.log('current state:', currentState);
         setAnswer('');
-
-        // Add the answer to messages
-        setMessages(prev => [...prev, {
-            content: answerContent,
-            type: 'sent'
-        }]);
-
         try {
-            await sendAnswer(answerContent, question);
-            setCurrentState('wait');
+            const result = await sendAnswer(answerContent, question);
+            console.log('Answer sent successfully:', result);
+            if (result) {
+                setMessages(prev => [...prev, {
+                    content: result,
+                    type: 'received'
+                }]);
+                setAskedQuestion(null);
+                setCurrentState('wait');
+                console.log(currentState);
+                console.log(askedQuestion);
+            }
         } catch (error) {
             console.error('Error sending answer:', error);
         }
     };
 
-  const disabledAnnouncements = {
-    wait: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />
-  };
+    const disabledAnnouncements = {
+        wait: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />
+    };
 
-  return (
-    <Messenger
-      onMessageSubmit={answerQuestion}
-      messageFieldDisabled={currentState !== 'answer'}
-      announcement={disabledAnnouncements[currentState]}
-      message={answer}
-      onMessageChange={m => setAnswer(m)}
-    >
-      <ul className="message-area-messages">
-        <li className="message-area-instructions message-area-item">
-          <InstructionMessage content={t('playroom_instructions_aito')} />
-        </li>
-        {[question].map((msg, i) => (
-          <li key={`${msg.type}-i`} className={`message-area-item message-area-item-${msg.type}`}>
-            <Message>{msg.content}</Message>
-          </li>
-        ))}
-      </ul>
-    </Messenger>
-  )
+    return (
+        <Messenger
+            onMessageSubmit={answerQuestion}
+            messageFieldDisabled={currentState !== 'answer'}
+            announcement={disabledAnnouncements[currentState]}
+            message={answer}
+            onMessageChange={m => setAnswer(m)}
+        >
+            <ul className="message-area-messages">
+                <li className="message-area-instructions message-area-item">
+                    <InstructionMessage content={t('playroom_instructions_aito')} />
+                </li>
+                {askedQuestion && (
+                    <li key={`question-0`} className={`message-area-item message-area-item-${askedQuestion.type}`}>
+                        <Message>{askedQuestion.content}</Message>
+                    </li>
+                )}
+            </ul>
+        </Messenger>
+    )
 };
 
 AitoMessenger.propTypes = {
-  game: PropTypes.string,
+    game: PropTypes.string,
+    question: PropTypes.object
 };
 
 export default AitoMessenger;
