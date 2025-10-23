@@ -37,6 +37,12 @@ const playerReducer = (state = initialState, action) => {
                 loadingPlayer: false,
                 error: action.payload
             };
+        case 'GET_JUDGE_QUESTION' :
+            console.log('Reducer GET_JUDGE_QUESTION called with:', action.payload);
+            return {
+                ...state,
+                judgeQuestion: action.payload,
+            };
         default:
             return state;
     }

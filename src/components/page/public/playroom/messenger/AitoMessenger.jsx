@@ -8,12 +8,12 @@ import { useTranslation } from 'react-i18next';
 import Message, { InstructionMessage } from './Message';
 
 const AitoMessenger = ({
-                           game, question
+                           game, question, onQuestionAnswered
                        }) => {
     const { t } = useTranslation();
     const [currentState, setCurrentState] = useState('wait');
     const [answer, setAnswer] = useState('');
-    const [askedQuestion, setAskedQuestion] = useState(question);
+    const [askedQuestion, setAskedQuestion] = useState('');
     const [messages, setMessages] = useState([]);
     const { sendAnswer } = useAnswerQuestion(game);
 
@@ -30,6 +30,8 @@ const AitoMessenger = ({
     const answerQuestion = async (answerContent) => {
         console.log('current state:', currentState);
         setAnswer('');
+        setAskedQuestion(null);
+        setCurrentState('wait');
         try {
             const result = await sendAnswer(answerContent, question);
             console.log('Answer sent successfully:', result);
@@ -38,8 +40,7 @@ const AitoMessenger = ({
                     content: result,
                     type: 'received'
                 }]);
-                setAskedQuestion(null);
-                setCurrentState('wait');
+                onQuestionAnswered();
                 console.log(currentState);
                 console.log(askedQuestion);
             }
@@ -76,7 +77,8 @@ const AitoMessenger = ({
 
 AitoMessenger.propTypes = {
     game: PropTypes.string,
-    question: PropTypes.object
+    question: PropTypes.object,
+    onQuestionAnswered: PropTypes.func,
 };
 
 export default AitoMessenger;

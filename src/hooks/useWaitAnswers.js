@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSocket } from "../contexts/SocketContext.jsx";
 
-const useWaitAnswers = (game) => {
+const useWaitAnswers = () => {
     const [answers, setAnswers] = useState([]);
     const { on, off } = useSocket();
 
