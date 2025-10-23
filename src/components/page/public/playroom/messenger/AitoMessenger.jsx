@@ -30,6 +30,8 @@ const AitoMessenger = ({
     const answerQuestion = async (answerContent) => {
         console.log('current state:', currentState);
         setAnswer('');
+        setAskedQuestion(null);
+        setCurrentState('wait');
         try {
             const result = await sendAnswer(answerContent, question);
             console.log('Answer sent successfully:', result);
@@ -38,8 +40,6 @@ const AitoMessenger = ({
                     content: result,
                     type: 'received'
                 }]);
-                setAskedQuestion(null);
-                setCurrentState('wait');
                 onQuestionAnswered();
                 console.log(currentState);
                 console.log(askedQuestion);
