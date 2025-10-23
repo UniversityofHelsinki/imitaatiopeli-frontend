@@ -9,28 +9,41 @@ import { InstructionMessage } from './Message';
 import RatingForm from './RatingForm';
 import { useNotification } from '../../../../notification/NotificationContext.jsx';
 import { useSocket } from '../../../../../contexts/SocketContext.jsx';
+import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js';
 
-const JudgeMessenger = ({ game, answers }) => {
+const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
     const { isConnected, emit } = useSocket();
     const { t } = useTranslation();
     const { askQuestion } = useAskQuestion(game);
     const [currentState, setCurrentState] = useState('ask');
     const [questionInput, setQuestionInput] = useState('');
-    const [askedQuestion, setAskedQuestion] = useState(null);
+    const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
     const { setNotification } = useNotification();
 
     useEffect(() => {
-        if (answers && answers.length > 0) {
-            setCurrentState('rate'); // vai rate
+        console.log('Answers changed:', answers);
+        console.log('Asked question:', askedQuestion);
+        console.log(currentState);
+        if (answers && answers.length > 0 && askedQuestion) {
+            setCurrentState('rate');
+            console.log('rate');
+        } else if (answers.length === 0 && askedQuestion) {
+            setCurrentState('wait');
+            console.log('wait');
+        } else {
+            setCurrentState('ask');
+            console.log('ask');
         }
-    }, [answers]);
+    }, [answers, askedQuestion]);
 
     const handleAskQuestion = async (questionText) => {
         try {
             const result = await askQuestion(questionText);
             console.log('Asked question sent successfully:', result);
             setAskedQuestion({ content: questionText, type: 'sent' });
+            console.log('Dispatched setAskedQuestion:', questionText);
             setCurrentState('wait');
+            onRateSubmitted();
         } catch (error) {
             console.error('Failed to ask question:', error);
             setCurrentState('ask');
@@ -51,6 +64,7 @@ const JudgeMessenger = ({ game, answers }) => {
                 confidence: data.confidence,
                 argument: data.justifications
             });
+            setAskedQuestion(null);
             setCurrentState('ask');
         }
     };
@@ -81,6 +95,7 @@ const JudgeMessenger = ({ game, answers }) => {
 JudgeMessenger.propTypes = {
     game: PropTypes.string,
     answers: PropTypes.array,
+    onRateSubmitted: PropTypes.func,
 };
 
 export default JudgeMessenger;
