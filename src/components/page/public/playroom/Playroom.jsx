@@ -31,21 +31,32 @@ const Playroom = () => {
   const [activeTab, setActiveTab] = useState(0);
   const { code } = useParams();
   const { t } = useTranslation();
-  const { question, clearQuestion } = useWaitQuestion(code);
-  const { answers, clearAnswers } = useWaitAnswers(code);
+  const { question, clearQuestion } = useWaitQuestion();
+  const { answers, clearAnswers } = useWaitAnswers();
+
+  const onQuestionAnswered = () => {
+      console.log('clearing question');
+      clearQuestion();
+  };
+
+  const onRateSubmitted = () => {
+      console.log('HIT');
+      clearAnswers();
+      console.log(answers);
+  }
 
   const tabs = [
     {
       heading: t('playroom_heading_judge'),
       children: (
-        <JudgeMessenger game={code} answers={answers} />
+        <JudgeMessenger game={code} answers={answers} onRateSubmitted={onRateSubmitted} />
       )
     },
     {
       heading: t('playroom_heading_aito'),
       notification: question ? t('playroom_notification_new_messages') : null,
       children: (
-        <AitoMessenger game={code} question={question}  />
+        <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered}  />
       )
     }
   ];
