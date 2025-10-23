@@ -4,14 +4,11 @@ import localStorage from '../utilities/localStorage';
 
 const getPlayer = () => localStorage.get('player');
 
-const useAnswerQuestion = (gameId) => {
+const useAnswerQuestion = () => {
     const { emit, on, off } = useSocket();
     const player = getPlayer();
-
     const sendAnswer = useCallback((content, question) => {
         return new Promise((resolve, reject) => {
-            const player = localStorage.get('player');
-
             if (!player) {
                 reject(new Error('No player data found'));
                 return;
