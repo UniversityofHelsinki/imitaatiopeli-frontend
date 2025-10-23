@@ -15,7 +15,7 @@ const JudgeMessenger = ({ game, answers }) => {
     const { isConnected, emit } = useSocket();
     const { t } = useTranslation();
     const { askQuestion } = useAskQuestion(game);
-    const [currentState, setCurrentState] = useState('final-review');
+    const [currentState, setCurrentState] = useState('ask');
     const [questionInput, setQuestionInput] = useState('');
     const [askedQuestion, setAskedQuestion] = useState(null);
     const { setNotification } = useNotification();
