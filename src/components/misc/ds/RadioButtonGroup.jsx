@@ -11,6 +11,7 @@ const RadioButtonGroup = ({
   errorText,
   value,
   required = false,
+  label = '',
   ...rest
 }) => {
   const dsProps = {
@@ -20,6 +21,7 @@ const RadioButtonGroup = ({
     dsErrorText: errorText,
     dsValue: value,
     dsRequired: required,
+    dsLabel: label,
     ...rest
   };
 

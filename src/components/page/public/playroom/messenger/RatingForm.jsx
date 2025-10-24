@@ -6,7 +6,7 @@ import Button from '../../../../misc/ds/Button';
 import { useTranslation } from 'react-i18next';
 import TextArea from '../../../../misc/ds/TextArea';
 
-const ConfidenceMeter = ({
+export const ConfidenceMeter = ({
                              value,
                              onChange
                          }) => {
