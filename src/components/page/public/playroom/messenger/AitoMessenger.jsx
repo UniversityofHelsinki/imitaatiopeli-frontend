@@ -25,7 +25,7 @@ const AitoMessenger = ({
         } else {
             setCurrentState('wait');
         }
-    }, [question, currentState]);
+    }, [question]);
 
     const answerQuestion = async (answerContent) => {
         console.log('current state:', currentState);
