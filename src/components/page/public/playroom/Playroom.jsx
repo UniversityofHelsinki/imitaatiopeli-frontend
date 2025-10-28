@@ -1,4 +1,4 @@
-import React, { useId, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Playroom.css'
 import PublicPage from '../PublicPage';
@@ -10,6 +10,7 @@ import JudgeMessenger from './messenger/JudgeMessenger';
 import AitoMessenger from './messenger/AitoMessenger';
 import useWaitQuestion from "../../../../hooks/useWaitQuestion.js";
 import useWaitAnswers from "../../../../hooks/useWaitAnswers.js";
+import useGetInitialQuestion from '../../../../hooks/useGetInitialQuestion.js';
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
   return (
@@ -31,8 +32,22 @@ const Playroom = () => {
   const [activeTab, setActiveTab] = useState(0);
   const { code } = useParams();
   const { t } = useTranslation();
-  const { question, clearQuestion } = useWaitQuestion();
+  let { question, clearQuestion } = useWaitQuestion();
   const { answers, clearAnswers } = useWaitAnswers();
+  const [initialQuestion] = useGetInitialQuestion(code);
+
+  console.log('initial question: ', initialQuestion);
+
+  if (!question && initialQuestion) {
+      console.log('setting question');
+      question = {};
+      question.questionId = initialQuestion.question_id;
+      question.gameId = initialQuestion.game_id;
+      question.content = initialQuestion.question_text;
+      question.judgeId = initialQuestion.judge_id;
+      question.created = initialQuestion.created;
+      question.type = 'received';
+  }
 
   const onQuestionAnswered = () => {
       console.log('clearing question');
