@@ -25,7 +25,7 @@ const AitoMessenger = ({
         } else {
             setCurrentState('wait');
         }
-    }, [question, currentState]);
+    }, [question]);
 
     const answerQuestion = async (answerContent) => {
         console.log('current state:', currentState);
@@ -60,6 +60,7 @@ const AitoMessenger = ({
       announcement={disabledAnnouncements[currentState]}
       message={answer}
       onMessageChange={m => setAnswer(m)}
+      msglength={255}
     >
       <ul className="message-area-messages">
         <li className="message-area-instructions message-area-item">

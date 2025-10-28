@@ -77,3 +77,28 @@
 .confidence-values-last {
   text-align: end;
 }
+
+.confidence-meter-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.confidence-meter-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.confidence-meter-labels span {
+    flex: 1;
+    text-align: center;
+}
+
+.confidence-meter-labels span:first-child {
+    text-align: left;
+}
+
+.confidence-meter-labels span:last-child {
+    text-align: right;
+}

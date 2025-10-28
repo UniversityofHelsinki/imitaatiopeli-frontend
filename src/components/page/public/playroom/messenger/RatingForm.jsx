@@ -20,22 +20,22 @@ export const ConfidenceMeter = ({
     }
 
     return (<>
-        <label htmlFor="confidence">{t('rating_form_confidence_meter_label')}</label>
-        <input type="range" name="confidence" value={(value - 1) * 33} id={id} step="33" max="99" list="confidence-values" onChange={handleChange} />
-        <datalist id="confidence-values">
-            <option value="0">
-                {t('confidence_meter_value_1')}
-            </option>
-            <option className="confidence-values-odd" value="33">
-                {t('confidence_meter_value_2')}
-            </option>
-            <option className="confidence-values-even" value="66">
-                {t('confidence_meter_value_3')}
-            </option>
-            <option className="confidence-values-last" value="99">
-                {t('confidence_meter_value_4')}
-            </option>
-        </datalist>
+        <div className="confidence-meter-container">
+            <label htmlFor="confidence">{t('rating_form_confidence_meter_label')}</label>
+            <input type="range" name="confidence" value={(value - 1) * 33} id={id} step="33" max="99" list="confidence-values" onChange={handleChange} />
+            <datalist id="confidence-values">
+                <option value="0" />
+                <option value="33" />
+                <option value="66" />
+                <option value="99" />
+            </datalist>
+            <div className="confidence-meter-labels">
+                <span>{t('confidence_meter_value_1')}</span>
+                <span>{t('confidence_meter_value_2')}</span>
+                <span>{t('confidence_meter_value_3')}</span>
+                <span>{t('confidence_meter_value_4')}</span>
+            </div>
+        </div>
     </>);
 };
 
