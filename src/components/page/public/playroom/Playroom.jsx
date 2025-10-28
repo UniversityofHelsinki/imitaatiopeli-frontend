@@ -38,6 +38,8 @@ const Playroom = () => {
 
     console.log('initial question: ', initialQuestion);
 
+    console.log('question: ', question);
+
     if (!question && initialQuestion && Object.keys(initialQuestion).length > 0) {
         console.log('setting question');
         console.log(initialQuestion);
