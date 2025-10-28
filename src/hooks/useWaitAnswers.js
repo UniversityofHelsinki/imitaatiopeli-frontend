@@ -7,6 +7,8 @@ const useWaitAnswers = () => {
 
     const clearAnswers = () => setAnswers([]);
 
+    const changeAnswers = (newAnswers) => setAnswers(newAnswers);
+
     useEffect(() => {
         const handleReceiveAnswers = (data) => {
             console.log('Received answers:', data);
@@ -30,6 +32,7 @@ const useWaitAnswers = () => {
     return {
         answers,
         clearAnswers,
+        changeAnswers
     };
 };
 

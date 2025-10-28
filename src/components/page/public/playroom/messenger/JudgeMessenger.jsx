@@ -21,9 +21,12 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
     const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
     const { setNotification } = useNotification();
 
+    console.log('received answers:', answers);
+
     useEffect(() => {
         console.log('Answers changed:', answers);
         console.log('Asked question:', askedQuestion);
+        if (!askedQuestion )
         console.log(currentState);
         if (answers && answers.length > 0 && askedQuestion) {
             setCurrentState('rate');

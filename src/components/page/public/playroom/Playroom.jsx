@@ -11,6 +11,8 @@ import AitoMessenger from './messenger/AitoMessenger';
 import useWaitQuestion from '../../../../hooks/useWaitQuestion.js';
 import useWaitAnswers from '../../../../hooks/useWaitAnswers.js';
 import useGetInitialQuestion from '../../../../hooks/useGetInitialQuestion.js';
+import useGetInitialAnswers from '../../../../hooks/useGetInitialAnswers.js';
+import useJudgeAskedQuestion from '../../../../hooks/useJudgeAskedQuestion.js';
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
     return (
@@ -33,17 +35,12 @@ const Playroom = () => {
     const { code } = useParams();
     const { t } = useTranslation();
     let { question, clearQuestion } = useWaitQuestion();
-    const { answers, clearAnswers } = useWaitAnswers();
+    let { answers, clearAnswers, changeAnswers } = useWaitAnswers();
     const {initialQuestion, clearInitialQuestion} = useGetInitialQuestion(code);
-
-    console.log('initial question: ', initialQuestion);
-
-    console.log('question: ', question);
+    const {initialAnswers, clearInitialAnswers} = useGetInitialAnswers(code);
+    const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
 
     if (!question && initialQuestion && Object.keys(initialQuestion).length > 0) {
-        console.log('setting question');
-        console.log(initialQuestion);
-        console.log(question);
         question = {};
         question.questionId = initialQuestion.question_id;
         question.gameId = initialQuestion.game_id;
@@ -52,6 +49,17 @@ const Playroom = () => {
         question.created = initialQuestion.created;
         question.type = 'received';
     }
+
+    if ((!answers || answers.length === 0) && initialAnswers?.length > 0) {
+        const newAnswers = initialAnswers.map(answer => ({
+            ...answer,
+            content: answer.answer_text,
+        }));
+
+        setAskedQuestion({ content: initialAnswers[0].answer_text, type: 'sent' });
+        changeAnswers(newAnswers);
+    }
+
 
     const onQuestionAnswered = () => {
         console.log('clearing question');
@@ -62,6 +70,7 @@ const Playroom = () => {
     const onRateSubmitted = () => {
         console.log('HIT');
         clearAnswers();
+        clearInitialAnswers();
         console.log(answers);
     }
 
@@ -69,7 +78,7 @@ const Playroom = () => {
         {
             heading: t('playroom_heading_judge'),
             children: (
-                <JudgeMessenger game={code} answers={answers} onRateSubmitted={onRateSubmitted} />
+                <JudgeMessenger game={code} answers={answers} onRateSubmitted={onRateSubmitted}   />
             )
         },
         {
