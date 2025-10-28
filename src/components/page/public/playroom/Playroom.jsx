@@ -10,6 +10,7 @@ import JudgeMessenger from './messenger/JudgeMessenger';
 import AitoMessenger from './messenger/AitoMessenger';
 import useWaitQuestion from "../../../../hooks/useWaitQuestion.js";
 import useWaitAnswers from "../../../../hooks/useWaitAnswers.js";
+import localStorage from "../../../../utilities/localStorage.js";
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
   return (
@@ -20,6 +21,8 @@ export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
     </div>
   )
 };
+
+const getPlayer = () => localStorage.get('player');
 
 WaitingAnnouncement.propTypes = {
   content: PropTypes.string,
@@ -33,6 +36,7 @@ const Playroom = () => {
   const { t } = useTranslation();
   const { question, clearQuestion } = useWaitQuestion();
   const { answers, clearAnswers } = useWaitAnswers();
+  const player = getPlayer();
 
   const onQuestionAnswered = () => {
       console.log('clearing question');
@@ -69,7 +73,7 @@ const Playroom = () => {
   };
 
   return (
-    <PublicPage heading={t('playroom_page_heading')} >
+    <PublicPage heading={player?.theme_description} >
       <div className="playroom">
         <Tabs tabs={tabs} onTabSwitch={switchTab} />
       </div>

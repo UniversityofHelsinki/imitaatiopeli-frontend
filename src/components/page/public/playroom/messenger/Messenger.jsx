@@ -10,7 +10,8 @@ const Messenger = ({
   onMessageSubmit,
   message,
   onMessageChange,
-  children
+  children,
+  msglength = null
 }) => {
 
   const handleMessageSubmit = (message) => {
@@ -31,6 +32,7 @@ const Messenger = ({
           disabled={messageFieldDisabled}
           announcement={announcement}
           message={message}
+          msglength={msglength}
         />
       </div>
   );
