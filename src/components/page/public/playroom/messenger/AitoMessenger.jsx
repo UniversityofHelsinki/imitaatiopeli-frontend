@@ -25,7 +25,7 @@ const AitoMessenger = ({
         } else {
             setCurrentState('wait');
         }
-    }, [question]);
+    }, [question, currentState]);
 
     const answerQuestion = async (answerContent) => {
         console.log('current state:', currentState);
@@ -53,26 +53,27 @@ const AitoMessenger = ({
         wait: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />
     };
 
-    return (
-        <Messenger
-            onMessageSubmit={answerQuestion}
-            messageFieldDisabled={currentState !== 'answer'}
-            announcement={disabledAnnouncements[currentState]}
-            message={answer}
-            onMessageChange={m => setAnswer(m)}
-        >
-            <ul className="message-area-messages">
-                <li className="message-area-instructions message-area-item">
-                    <InstructionMessage content={t('playroom_instructions_aito')} />
-                </li>
-                {askedQuestion && (
-                    <li key={`question-0`} className={`message-area-item message-area-item-${askedQuestion.type}`}>
-                        <Message>{askedQuestion.content}</Message>
-                    </li>
-                )}
-            </ul>
-        </Messenger>
-    )
+  return (
+    <Messenger
+      onMessageSubmit={answerQuestion}
+      messageFieldDisabled={currentState !== 'answer'}
+      announcement={disabledAnnouncements[currentState]}
+      message={answer}
+      onMessageChange={m => setAnswer(m)}
+      msglength={255}
+    >
+      <ul className="message-area-messages">
+        <li className="message-area-instructions message-area-item">
+          <InstructionMessage content={t('playroom_instructions_aito')} />
+        </li>
+          {askedQuestion && (
+              <li key={`question-0`} className={`message-area-item message-area-item-${askedQuestion.type}`}>
+                  <Message>{askedQuestion.content}</Message>
+              </li>
+          )}
+      </ul>
+    </Messenger>
+  );
 };
 
 AitoMessenger.propTypes = {

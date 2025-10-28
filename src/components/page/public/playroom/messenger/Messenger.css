@@ -10,7 +10,7 @@
   scrollbar-width: thin;
 }
 
-@media (max-width: 30rem) {
+@media (max-width: 20rem) {
   .messenger > .messenger-message-area {
     flex-basis: content;
   }
