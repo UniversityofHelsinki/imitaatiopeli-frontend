@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './Playroom.css'
+import './Playroom.css';
 import PublicPage from '../PublicPage';
 import Tabs from './tab/Tabs';
 import { useTranslation } from 'react-i18next';
@@ -8,87 +8,90 @@ import Spinner from '../../../misc/ds/Spinner';
 import { useParams } from 'react-router-dom';
 import JudgeMessenger from './messenger/JudgeMessenger';
 import AitoMessenger from './messenger/AitoMessenger';
-import useWaitQuestion from "../../../../hooks/useWaitQuestion.js";
-import useWaitAnswers from "../../../../hooks/useWaitAnswers.js";
+import useWaitQuestion from '../../../../hooks/useWaitQuestion.js';
+import useWaitAnswers from '../../../../hooks/useWaitAnswers.js';
 import useGetInitialQuestion from '../../../../hooks/useGetInitialQuestion.js';
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
-  return (
-    <div className="playroom-waiting-announcement">
-      {showSpinner
-        && <Spinner text={content} position="right" />
-        || <span>{content}</span>}
-    </div>
-  )
+    return (
+        <div className="playroom-waiting-announcement">
+            {showSpinner
+                && <Spinner text={content} position="right" />
+                || <span>{content}</span>}
+        </div>
+    )
 };
 
 WaitingAnnouncement.propTypes = {
-  content: PropTypes.string,
-  showSpinner: PropTypes.bool,
+    content: PropTypes.string,
+    showSpinner: PropTypes.bool,
 };
 
 const Playroom = () => {
 
-  const [activeTab, setActiveTab] = useState(0);
-  const { code } = useParams();
-  const { t } = useTranslation();
-  let { question, clearQuestion } = useWaitQuestion();
-  const { answers, clearAnswers } = useWaitAnswers();
-  const [initialQuestion] = useGetInitialQuestion(code);
+    const [activeTab, setActiveTab] = useState(0);
+    const { code } = useParams();
+    const { t } = useTranslation();
+    let { question, clearQuestion } = useWaitQuestion();
+    const { answers, clearAnswers } = useWaitAnswers();
+    const {initialQuestion, clearInitialQuestion} = useGetInitialQuestion(code);
 
-  console.log('initial question: ', initialQuestion);
+    console.log('initial question: ', initialQuestion);
 
-  if (!question && initialQuestion) {
-      console.log('setting question');
-      question = {};
-      question.questionId = initialQuestion.question_id;
-      question.gameId = initialQuestion.game_id;
-      question.content = initialQuestion.question_text;
-      question.judgeId = initialQuestion.judge_id;
-      question.created = initialQuestion.created;
-      question.type = 'received';
-  }
-
-  const onQuestionAnswered = () => {
-      console.log('clearing question');
-      clearQuestion();
-  };
-
-  const onRateSubmitted = () => {
-      console.log('HIT');
-      clearAnswers();
-      console.log(answers);
-  }
-
-  const tabs = [
-    {
-      heading: t('playroom_heading_judge'),
-      children: (
-        <JudgeMessenger game={code} answers={answers} onRateSubmitted={onRateSubmitted} />
-      )
-    },
-    {
-      heading: t('playroom_heading_aito'),
-      notification: question ? t('playroom_notification_new_messages') : null,
-      children: (
-        <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered}  />
-      )
+    if (!question && initialQuestion && Object.keys(initialQuestion).length > 0) {
+        console.log('setting question');
+        console.log(initialQuestion);
+        console.log(question);
+        question = {};
+        question.questionId = initialQuestion.question_id;
+        question.gameId = initialQuestion.game_id;
+        question.content = initialQuestion.question_text;
+        question.judgeId = initialQuestion.judge_id;
+        question.created = initialQuestion.created;
+        question.type = 'received';
     }
-  ];
 
-  tabs[activeTab].active = true;
+    const onQuestionAnswered = () => {
+        console.log('clearing question');
+        clearQuestion();
+        clearInitialQuestion();
+    };
 
-  const switchTab = (heading) => {
-    setActiveTab(tabs.findIndex(t => t.heading === heading));
-  };
+    const onRateSubmitted = () => {
+        console.log('HIT');
+        clearAnswers();
+        console.log(answers);
+    }
 
-  return (
-    <PublicPage heading={t('playroom_page_heading')} >
-      <div className="playroom">
-        <Tabs tabs={tabs} onTabSwitch={switchTab} />
-      </div>
-    </PublicPage>
-  );
+    const tabs = [
+        {
+            heading: t('playroom_heading_judge'),
+            children: (
+                <JudgeMessenger game={code} answers={answers} onRateSubmitted={onRateSubmitted} />
+            )
+        },
+        {
+            heading: t('playroom_heading_aito'),
+            notification: question ? t('playroom_notification_new_messages') : null,
+            children: (
+                <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered}  />
+            )
+        }
+    ];
+
+    tabs[activeTab].active = true;
+
+    const switchTab = (heading) => {
+        setActiveTab(tabs.findIndex(t => t.heading === heading));
+    };
+
+    return (
+        <PublicPage heading={t('playroom_page_heading')} >
+            <div className="playroom">
+                <Tabs tabs={tabs} onTabSwitch={switchTab} />
+            </div>
+        </PublicPage>
+    );
 
 };
 

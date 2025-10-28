@@ -1,11 +1,14 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useGET } from './useHttp.js';
 import localStorage from '../utilities/localStorage.js';
 
 const useGetInitialQuestion = (gameId = null) => {
+    const [initialQuestion, setInitialQuestion] = useState(null);
+
     const judge = localStorage.get('player');
 
-    // ✅ useMemo makes sure the object reference is stable
+    const clearInitialQuestion = () => setInitialQuestion(null);
+
     const requestOptions = useMemo(() => {
         if (!gameId || !judge) return { path: null };
         return {
@@ -14,11 +17,20 @@ const useGetInitialQuestion = (gameId = null) => {
         };
     }, [gameId, judge?.player_id]);
 
-    // ✅ use your existing useGET safely
+    // useGET returns [response, error, reload]
     const [response, error, reload] = useGET(requestOptions);
 
-    // ❌ remove useEffect entirely — it’s unnecessary
-    return [response, error, reload];
+    // ✅ update state once when response arrives
+    useEffect(() => {
+        if (!initialQuestion && response && Object.keys(response).length > 0) {
+            setInitialQuestion(response);
+        }
+    }, [response]);
+
+    return {
+        initialQuestion,
+        clearInitialQuestion
+    };
 };
 
 export default useGetInitialQuestion;
