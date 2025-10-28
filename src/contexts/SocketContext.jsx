@@ -44,6 +44,7 @@ export const SocketProvider = ({ children }) => {
 
         // Connection event handlers
         socket.on('connect', () => {
+            setIsConnected(false);
             console.log('Connected to server with ID:', socket.id);
             setIsConnected(true);
             setConnectionError(null);

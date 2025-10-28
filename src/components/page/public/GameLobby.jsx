@@ -6,12 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { get } from '../../../hooks/useHttp';
 import localStorage from '../../../utilities/localStorage';
 import Spinner from '../../misc/ds/Spinner.jsx';
-import { useNotification } from '../../notification/NotificationContext.jsx';
 import { useSocket } from '../../../contexts/SocketContext.jsx';
 import PublicPage from './PublicPage.jsx';
 
 const GameLobby = () => {
-    const { isConnected, emit, on, off } = useSocket();
+    const { isConnected, on, off } = useSocket();
     const { code } = useParams();
     const { t } = useTranslation();
     const [game, setGame] = useState(null);
@@ -19,8 +18,11 @@ const GameLobby = () => {
     const [hasJoined, setJoined] = useState(undefined);
     const [playerConfiguration, setPlayerConfiguration] = useState(null);
     const [gameStarted, setGameStarted] = useState(false);
-    const { setNotification } = useNotification();
     const navigate = useNavigate();
+
+    console.log(isConnected);
+    console.log(on);
+    console.log(off);
 
     // Listen for game-started event from Socket.IO
     useEffect(() => {
@@ -34,7 +36,6 @@ const GameLobby = () => {
 
             if (socketGameId === currentGameId) {
                 setGameStarted(true);
-                setNotification(t('game_started_notification'), 'success', true);
                 navigate(`/games/${gameId}/play`);
             }
         };
@@ -51,7 +52,7 @@ const GameLobby = () => {
             off('game-started', handleGameStarted);
             off('message', handleMessage);
         };
-    }, [on, off, game?.game_id, setNotification, t]);
+    }, [on, off, isConnected, game]);
 
     useEffect(() => {
         (async () => {
