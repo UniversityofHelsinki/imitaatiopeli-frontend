@@ -1,7 +1,7 @@
 import React, { useId, useState } from 'react';
 import PropTypes from 'prop-types';
 import './RatingForm.css';
-import Message, { RatingMessage } from './Message';
+import Message, {QuestionMessage, RatingMessage} from './Message';
 import Button from '../../../../misc/ds/Button';
 import { useTranslation } from 'react-i18next';
 import TextArea from '../../../../misc/ds/TextArea';
@@ -85,10 +85,10 @@ const RatingForm = ({
 
     return (
         <div className="rating-form">
-            <div className="message-area-item message-area-item-sent">
-                <Message>
-                    {question.content}
-                </Message>
+            <div className="message-area-item message-area-item-sent rating-form-question">
+                <QuestionMessage>
+                  {question.content}
+                </QuestionMessage>
             </div>
             <div className="rating-form-heading">
                 {t('rating_form_instructive_heading')}
