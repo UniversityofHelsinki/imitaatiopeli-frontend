@@ -11,6 +11,10 @@
   padding: var(--ds-spacing-2xSmall);
 }
 
+.rating-form-question {
+    padding: var(--ds-spacing-2xSmall);
+}
+
 .rating-form-answers {
   padding: var(--ds-spacing-2xSmall);
 }

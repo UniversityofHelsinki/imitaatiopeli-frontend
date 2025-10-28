@@ -44,7 +44,6 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
             setAskedQuestion({ content: questionText, type: 'sent' });
             console.log('Dispatched setAskedQuestion:', questionText);
             setCurrentState('wait');
-            onRateSubmitted();
         } catch (error) {
             console.error('Failed to ask question:', error);
             setCurrentState('ask');
@@ -67,6 +66,7 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
             });
             setAskedQuestion(null);
             setCurrentState('ask');
+            onRateSubmitted();
         }
     };
 
