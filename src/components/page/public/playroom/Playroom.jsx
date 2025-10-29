@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Playroom.css';
 import PublicPage from '../PublicPage';
@@ -12,7 +12,6 @@ import useWaitQuestion from '../../../../hooks/useWaitQuestion.js';
 import useWaitAnswers from '../../../../hooks/useWaitAnswers.js';
 import useGetInitialQuestion from '../../../../hooks/useGetInitialQuestion.js';
 import useGetInitialAnswers from '../../../../hooks/useGetInitialAnswers.js';
-import useJudgeAskedQuestion from '../../../../hooks/useJudgeAskedQuestion.js';
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
     return (
@@ -38,7 +37,6 @@ const Playroom = () => {
     let { answers, clearAnswers, changeAnswers } = useWaitAnswers();
     const {initialQuestion, clearInitialQuestion} = useGetInitialQuestion(code);
     const {initialAnswers, clearInitialAnswers} = useGetInitialAnswers(code);
-    const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
 
     if (!question && initialQuestion && Object.keys(initialQuestion).length > 0) {
         question = {};
@@ -50,14 +48,18 @@ const Playroom = () => {
         question.type = 'received';
     }
 
-    if ((!answers || answers.length === 0) && initialAnswers?.length > 0) {
-        const newAnswers = initialAnswers.map(initialAnswer => ({
-            ...answers,
-            content: initialAnswer
-        }));
-        setAskedQuestion({ content: initialAnswers[0].answer_text, type: 'sent' });
-        changeAnswers(newAnswers);
-    }
+    useEffect(() => {
+        console.log(answers);
+        console.log(initialAnswers);
+        if ((!answers || answers.length === 0) && initialAnswers?.length > 0) {
+            const newAnswers = initialAnswers.map(initialAnswer => ({
+                ...answers,
+                content: initialAnswer
+            }));
+            changeAnswers(newAnswers);
+            console.log(answers);
+        }
+    }, [answers, initialAnswers]);
 
 
     const onQuestionAnswered = () => {
