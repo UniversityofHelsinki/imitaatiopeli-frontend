@@ -51,27 +51,23 @@ const Playroom = () => {
     }
 
     if ((!answers || answers.length === 0) && initialAnswers?.length > 0) {
-        const newAnswers = initialAnswers.map(answer => ({
-            ...answer,
-            content: answer.answer_text,
+        const newAnswers = initialAnswers.map(initialAnswer => ({
+            ...answers,
+            content: initialAnswer
         }));
-
         setAskedQuestion({ content: initialAnswers[0].answer_text, type: 'sent' });
         changeAnswers(newAnswers);
     }
 
 
     const onQuestionAnswered = () => {
-        console.log('clearing question');
         clearQuestion();
         clearInitialQuestion();
     };
 
     const onRateSubmitted = () => {
-        console.log('HIT');
         clearAnswers();
         clearInitialAnswers();
-        console.log(answers);
     }
 
     const tabs = [

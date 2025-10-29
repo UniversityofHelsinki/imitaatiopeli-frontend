@@ -22,6 +22,7 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
     const { setNotification } = useNotification();
 
     console.log('received answers:', answers);
+    console.log('received asked question:', askedQuestion);
 
     useEffect(() => {
         console.log('Answers changed:', answers);

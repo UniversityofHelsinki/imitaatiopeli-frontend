@@ -16,8 +16,6 @@ InstructionMessage.propTypes = {
 }
 
 export const RatingMessage = ({ i, name, children, isSelected }) => {
-    console.log('HIIIT' + children);
-
     const content = typeof children === 'object' && children?.answer_text
         ? children.answer_text
         : children;
