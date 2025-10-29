@@ -2,8 +2,11 @@
 import React, { createContext, useContext, useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { io } from 'socket.io-client';
 import PropTypes from 'prop-types';
+import localStorage from '../utilities/localStorage.js';
 
 const SocketContext = createContext();
+
+const getPlayer = () => localStorage.get('player');
 
 export const useSocket = () => {
     const context = useContext(SocketContext);
@@ -41,9 +44,23 @@ export const SocketProvider = ({ children }) => {
 
         // Connection event handlers
         socket.on('connect', () => {
+            setIsConnected(false);
             console.log('Connected to server with ID:', socket.id);
             setIsConnected(true);
             setConnectionError(null);
+            const Player = getPlayer();
+
+            console.log(Player);
+
+            if (Player?.player_id && Player?.game_id && Player?.nickname && Player?.session_token) {
+                socket.emit('join-game', {
+                    userId: Player.player_id,
+                    gameId: Player.game_id,
+                    nickname: Player.nickname,
+                    session_token: Player.session_token.toString(),
+                });
+                console.log('join-game emitted:', Player);
+            }
         });
 
         socket.on('disconnect', (reason) => {
