@@ -1,7 +1,7 @@
 import React, { useId, useState } from 'react';
 import PropTypes from 'prop-types';
 import './RatingForm.css';
-import Message, { RatingMessage } from './Message';
+import Message, {QuestionMessage, RatingMessage} from './Message';
 import Button from '../../../../misc/ds/Button';
 import { useTranslation } from 'react-i18next';
 import TextArea from '../../../../misc/ds/TextArea';
@@ -19,24 +19,24 @@ export const ConfidenceMeter = ({
         }
     }
 
-    return (<>
-        <label htmlFor="confidence">{t('rating_form_confidence_meter_label')}</label>
-        <input type="range" name="confidence" value={(value - 1) * 33} id={id} step="33" max="99" list="confidence-values" onChange={handleChange} />
-        <datalist id="confidence-values">
-            <option value="0">
-                {t('confidence_meter_value_1')}
-            </option>
-            <option className="confidence-values-odd" value="33">
-                {t('confidence_meter_value_2')}
-            </option>
-            <option className="confidence-values-even" value="66">
-                {t('confidence_meter_value_3')}
-            </option>
-            <option className="confidence-values-last" value="99">
-                {t('confidence_meter_value_4')}
-            </option>
-        </datalist>
-    </>);
+    return (
+        <div className="confidence-meter-container">
+            <label htmlFor="confidence">{t('rating_form_confidence_meter_label')}</label>
+            <input type="range" name="confidence" value={(value - 1) * 33} id={id} step="33" max="99" list="confidence-values" onChange={handleChange} />
+            <datalist id="confidence-values">
+                <option value="0" />
+                <option value="33" />
+                <option value="66" />
+                <option value="99" />
+            </datalist>
+            <div className="confidence-meter-labels">
+                <span>{t('confidence_meter_value_1')}</span>
+                <span>{t('confidence_meter_value_2')}</span>
+                <span>{t('confidence_meter_value_3')}</span>
+                <span>{t('confidence_meter_value_4')}</span>
+            </div>
+        </div>
+    );
 };
 
 ConfidenceMeter.propTypes = {
@@ -75,19 +75,20 @@ const RatingForm = ({
         if (button) {
             const answerIndex = parseInt(button.getAttribute('data-index'));
             const selectedAnswerObject = answers[answerIndex];
-            console.log('rating change', selectedAnswerObject);
             setSelected(selectedAnswerObject);
-            console.log(justifications);
-            console.log(confidence);
         }
+    };
+
+    const isFormDisabled = () => {
+        return selected === null || confidence === 0 || justifications.length === 0;
     };
 
     return (
         <div className="rating-form">
-            <div className="message-area-item message-area-item-sent">
-                <Message>
-                    {question.content}
-                </Message>
+            <div className="message-area-item message-area-item-sent rating-form-question">
+                <QuestionMessage>
+                  {question.content}
+                </QuestionMessage>
             </div>
             <div className="rating-form-heading">
                 {t('rating_form_instructive_heading')}
@@ -118,7 +119,7 @@ const RatingForm = ({
                     />
                     <span className="rating-form-justifications-character-count">{justifications.length} / 500</span>
                 </div>
-                <Button type="submit" label={t('rating_form_submit_rating')} />
+                <Button type="submit" label={t('rating_form_submit_rating')}  disabled={isFormDisabled()} />
                 {ratingCount > 2 && <Button variant="secondary" label={t('rating_form_end_game')} />}
             </form>
         </div>

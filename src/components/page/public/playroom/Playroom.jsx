@@ -10,6 +10,7 @@ import JudgeMessenger from './messenger/JudgeMessenger';
 import AitoMessenger from './messenger/AitoMessenger';
 import useWaitQuestion from "../../../../hooks/useWaitQuestion.js";
 import useWaitAnswers from "../../../../hooks/useWaitAnswers.js";
+import localStorage from "../../../../utilities/localStorage.js";
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
   return (
@@ -21,6 +22,8 @@ export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
   )
 };
 
+const getPlayer = () => localStorage.get('player');
+
 WaitingAnnouncement.propTypes = {
   content: PropTypes.string,
   showSpinner: PropTypes.bool,
@@ -28,11 +31,12 @@ WaitingAnnouncement.propTypes = {
 
 const Playroom = () => {
 
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(1);
   const { code } = useParams();
   const { t } = useTranslation();
   const { question, clearQuestion } = useWaitQuestion();
   const { answers, clearAnswers } = useWaitAnswers();
+  const player = getPlayer();
 
   const onQuestionAnswered = () => {
       console.log('clearing question');
@@ -46,29 +50,30 @@ const Playroom = () => {
   }
 
   const tabs = [
-    {
-      heading: t('playroom_heading_judge'),
-      children: (
-        <JudgeMessenger game={code} answers={answers} onRateSubmitted={onRateSubmitted} />
-      )
-    },
-    {
-      heading: t('playroom_heading_aito'),
-      notification: question ? t('playroom_notification_new_messages') : null,
-      children: (
-        <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered}  />
-      )
-    }
+        {
+            heading: t('playroom_heading_judge'),
+            active: activeTab  === 0,
+            notification: answers?.length > 0 && activeTab !== 0 ? t('playroom_notification_new_messages') : null,
+            children: (
+                <JudgeMessenger game={code} answers={answers} onRateSubmitted={onRateSubmitted} />
+            )
+        },
+        {
+            heading: t('playroom_heading_aito'),
+            active: activeTab  === 1,
+            notification: question && activeTab !== 1 ? t('playroom_notification_new_messages') : null,
+            children: (
+                <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered}  />
+            )
+        }
   ];
 
-  tabs[activeTab].active = true;
-
-  const switchTab = (heading) => {
+    const switchTab = (heading) => {
     setActiveTab(tabs.findIndex(t => t.heading === heading));
   };
 
   return (
-    <PublicPage heading={t('playroom_page_heading')} >
+    <PublicPage heading={player?.theme_description} >
       <div className="playroom">
         <Tabs tabs={tabs} onTabSwitch={switchTab} />
       </div>
