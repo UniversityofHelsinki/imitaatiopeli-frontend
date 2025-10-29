@@ -3,7 +3,7 @@ import { useSocket } from "../contexts/SocketContext.jsx";
 
 const useWaitAnswers = () => {
     const [answers, setAnswers] = useState([]);
-    const { on, off } = useSocket();
+    const { on, off, isConnected } = useSocket();
 
     const clearAnswers = () => setAnswers([]);
 
@@ -25,7 +25,7 @@ const useWaitAnswers = () => {
         return () => {
             off('send_answers_to_judge', handleReceiveAnswers);
         };
-    }, [on, off]);
+    }, [on, off, isConnected]);
 
     return {
         answers,
