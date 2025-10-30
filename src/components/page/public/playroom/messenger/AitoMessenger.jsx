@@ -61,7 +61,7 @@ const AitoMessenger = ({
       announcement={disabledAnnouncements[currentState]}
       message={answer}
       onMessageChange={m => setAnswer(m)}
-      msglength={255}
+      msglength={500}
     >
       <ul className="message-area-messages">
         <li className="message-area-instructions message-area-item">
