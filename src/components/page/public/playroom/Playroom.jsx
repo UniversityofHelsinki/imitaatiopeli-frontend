@@ -1,6 +1,6 @@
-import React, { useId, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import './Playroom.css'
+import './Playroom.css';
 import PublicPage from '../PublicPage';
 import Tabs from './tab/Tabs';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +11,8 @@ import AitoMessenger from './messenger/AitoMessenger';
 import useWaitQuestion from "../../../../hooks/useWaitQuestion.js";
 import useWaitAnswers from "../../../../hooks/useWaitAnswers.js";
 import localStorage from "../../../../utilities/localStorage.js";
+import useGetInitialQuestion from '../../../../hooks/useGetInitialQuestion.js';
+import useGetInitialAnswers from '../../../../hooks/useGetInitialAnswers.js';
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
   return (
@@ -31,12 +33,38 @@ WaitingAnnouncement.propTypes = {
 
 const Playroom = () => {
 
-  const [activeTab, setActiveTab] = useState(1);
-  const { code } = useParams();
-  const { t } = useTranslation();
-  const { question, clearQuestion } = useWaitQuestion();
-  const { answers, clearAnswers } = useWaitAnswers();
-  const player = getPlayer();
+    const [activeTab, setActiveTab] = useState(0);
+    const { code } = useParams();
+    const { t } = useTranslation();
+    let { question, clearQuestion } = useWaitQuestion();
+    let { answers, clearAnswers, changeAnswers } = useWaitAnswers();
+    const {initialQuestion, clearInitialQuestion} = useGetInitialQuestion(code);
+    const {initialAnswers, clearInitialAnswers} = useGetInitialAnswers(code);
+    const player = getPlayer();
+
+    if (!question && initialQuestion && Object.keys(initialQuestion).length > 0) {
+        question = {};
+        question.questionId = initialQuestion.question_id;
+        question.gameId = initialQuestion.game_id;
+        question.content = initialQuestion.question_text;
+        question.judgeId = initialQuestion.judge_id;
+        question.created = initialQuestion.created;
+        question.type = 'received';
+    }
+
+    useEffect(() => {
+        console.log(answers);
+        console.log(initialAnswers);
+        if ((!answers || answers.length === 0) && initialAnswers?.length > 0) {
+            const newAnswers = initialAnswers.map(initialAnswer => ({
+                ...answers,
+                content: initialAnswer
+            }));
+            changeAnswers(newAnswers);
+            console.log(answers);
+        }
+    }, [answers, initialAnswers]);
+
 
   const onQuestionAnswered = () => {
       console.log('clearing question');

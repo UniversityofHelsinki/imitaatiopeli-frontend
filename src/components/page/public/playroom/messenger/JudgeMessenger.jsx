@@ -22,9 +22,8 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
     const { setNotification } = useNotification();
 
     useEffect(() => {
-        console.log('Answers changed:', answers);
-        console.log('Asked question:', askedQuestion);
-        console.log(currentState);
+        console.log('received answers:', answers);
+        console.log('asked question:', askedQuestion);
         if (answers && answers.length > 0 && askedQuestion) {
             setCurrentState('rate');
             console.log('rate');
@@ -39,10 +38,8 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
 
     const handleAskQuestion = async (questionText) => {
         try {
-            const result = await askQuestion(questionText);
-            console.log('Asked question sent successfully:', result);
+            await askQuestion(questionText);
             setAskedQuestion({ content: questionText, type: 'sent' });
-            console.log('Dispatched setAskedQuestion:', questionText);
             setCurrentState('wait');
         } catch (error) {
             console.error('Failed to ask question:', error);
@@ -57,7 +54,6 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
     };
 
     const handleRatingSubmit = (data) => {
-        console.log('Received rating data:', data);
         if (isConnected) {
             emit('send-guess-to-answer', {
                 answerId: data.selectedAnswer.content.answer_id,
