@@ -49,9 +49,6 @@ export const SocketProvider = ({ children }) => {
             setIsConnected(true);
             setConnectionError(null);
             const Player = getPlayer();
-
-            console.log(Player);
-
             if (Player?.player_id && Player?.game_id && Player?.nickname && Player?.session_token) {
                 socket.emit('join-game', {
                     userId: Player.player_id,
@@ -59,7 +56,6 @@ export const SocketProvider = ({ children }) => {
                     nickname: Player.nickname,
                     session_token: Player.session_token.toString(),
                 });
-                console.log('join-game emitted:', Player);
             }
         });
 

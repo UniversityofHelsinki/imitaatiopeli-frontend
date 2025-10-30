@@ -1,25 +1,28 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-/**
- * Hook that gives you access to the judge's asked question from Redux,
- * and a setter to update or clear it.
- */
+const LOCAL_STORAGE_KEY = 'judgeQuestion';
+
 const useJudgeAskedQuestion = () => {
-    const dispatch = useDispatch();
-    const question = useSelector((state) => state.players.judgeQuestion);
-    console.log('Redux question from selector:', question);
+    // Initialize from localStorage or default to null
+    const [question, setQuestion] = useState(() => {
+        const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+        return stored ? JSON.parse(stored) : null;
+    });
 
-    const setAskedQuestion = useCallback(
-        (value) => {
-            console.log('Setting asked question:', value);
-            dispatch({
-                type: 'GET_JUDGE_QUESTION',
-                payload: value,
-            });
-        },
-        [dispatch]
-    );
+    // Save to localStorage whenever it changes
+    useEffect(() => {
+        console.log("question:" , question);
+        if (question !== null) {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(question));
+        } else {
+            localStorage.removeItem(LOCAL_STORAGE_KEY);
+        }
+    }, [question]);
+
+    const setAskedQuestion = useCallback((value) => {
+        setQuestion(value);
+    }, []);
+
     return [question, setAskedQuestion];
 };
 
