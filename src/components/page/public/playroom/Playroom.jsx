@@ -8,24 +8,27 @@ import Spinner from '../../../misc/ds/Spinner';
 import { useParams } from 'react-router-dom';
 import JudgeMessenger from './messenger/JudgeMessenger';
 import AitoMessenger from './messenger/AitoMessenger';
-import useWaitQuestion from '../../../../hooks/useWaitQuestion.js';
-import useWaitAnswers from '../../../../hooks/useWaitAnswers.js';
+import useWaitQuestion from "../../../../hooks/useWaitQuestion.js";
+import useWaitAnswers from "../../../../hooks/useWaitAnswers.js";
+import localStorage from "../../../../utilities/localStorage.js";
 import useGetInitialQuestion from '../../../../hooks/useGetInitialQuestion.js';
 import useGetInitialAnswers from '../../../../hooks/useGetInitialAnswers.js';
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
-    return (
-        <div className="playroom-waiting-announcement">
-            {showSpinner
-                && <Spinner text={content} position="right" />
-                || <span>{content}</span>}
-        </div>
-    )
+  return (
+    <div className="playroom-waiting-announcement">
+      {showSpinner
+        && <Spinner text={content} position="right" />
+        || <span>{content}</span>}
+    </div>
+  )
 };
 
+const getPlayer = () => localStorage.get('player');
+
 WaitingAnnouncement.propTypes = {
-    content: PropTypes.string,
-    showSpinner: PropTypes.bool,
+  content: PropTypes.string,
+  showSpinner: PropTypes.bool,
 };
 
 const Playroom = () => {
@@ -37,6 +40,7 @@ const Playroom = () => {
     let { answers, clearAnswers, changeAnswers } = useWaitAnswers();
     const {initialQuestion, clearInitialQuestion} = useGetInitialQuestion(code);
     const {initialAnswers, clearInitialAnswers} = useGetInitialAnswers(code);
+    const player = getPlayer();
 
     if (!question && initialQuestion && Object.keys(initialQuestion).length > 0) {
         question = {};
@@ -62,45 +66,47 @@ const Playroom = () => {
     }, [answers, initialAnswers]);
 
 
-    const onQuestionAnswered = () => {
-        clearQuestion();
-        clearInitialQuestion();
-    };
+  const onQuestionAnswered = () => {
+      console.log('clearing question');
+      clearQuestion();
+  };
 
-    const onRateSubmitted = () => {
-        clearAnswers();
-        clearInitialAnswers();
-    }
+  const onRateSubmitted = () => {
+      console.log('HIT');
+      clearAnswers();
+      console.log(answers);
+  }
 
-    const tabs = [
+  const tabs = [
         {
             heading: t('playroom_heading_judge'),
+            active: activeTab  === 0,
+            notification: answers?.length > 0 && activeTab !== 0 ? t('playroom_notification_new_messages') : null,
             children: (
-                <JudgeMessenger game={code} answers={answers} onRateSubmitted={onRateSubmitted}   />
+                <JudgeMessenger game={code} answers={answers} onRateSubmitted={onRateSubmitted} />
             )
         },
         {
             heading: t('playroom_heading_aito'),
-            notification: question ? t('playroom_notification_new_messages') : null,
+            active: activeTab  === 1,
+            notification: question && activeTab !== 1 ? t('playroom_notification_new_messages') : null,
             children: (
                 <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered}  />
             )
         }
-    ];
-
-    tabs[activeTab].active = true;
+  ];
 
     const switchTab = (heading) => {
-        setActiveTab(tabs.findIndex(t => t.heading === heading));
-    };
+    setActiveTab(tabs.findIndex(t => t.heading === heading));
+  };
 
-    return (
-        <PublicPage heading={t('playroom_page_heading')} >
-            <div className="playroom">
-                <Tabs tabs={tabs} onTabSwitch={switchTab} />
-            </div>
-        </PublicPage>
-    );
+  return (
+    <PublicPage heading={player?.theme_description} >
+      <div className="playroom">
+        <Tabs tabs={tabs} onTabSwitch={switchTab} />
+      </div>
+    </PublicPage>
+  );
 
 };
 

@@ -192,5 +192,8 @@
   "final_review_form_options_label_1": "Pelaaja 1",
   "final_review_form_options_label_2": "Pelaaja 2",
   "final_review_form_justification_label": "Perustelut",
-  "final_review_form_actions_submit": "Lähetä loppuarvio"
+  "final_review_form_actions_submit": "Lähetä loppuarvio",
+  "join_game_cookies_announcement": "???",
+  "playroom_instructions_judge": "???",
+  "playroom_instructions_aito": "???"
 }

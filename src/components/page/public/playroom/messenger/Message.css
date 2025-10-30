@@ -1,6 +1,9 @@
 .messenger-message {
   border-radius: var(--ds-spacing-3xSmall);
   padding: var(--ds-spacing-base);
+  word-break: normal;
+  hyphens: none;
+  overflow-wrap: normal;
 }
 
 .messenger-message-instructions {
@@ -10,4 +13,13 @@
 .rating-message {
   display: flex;
   gap: var(--ds-spacing-base);
+  word-break: normal;
+  hyphens: none;
+}
+
+.rating-message-question {
+    background-color: var(--ds-bgColor-white);
+    border: 2px solid var(--ds-borderColor-primary);
+    border-radius: var(--ds-spacing-3xSmall);
+    padding: var(--ds-spacing-small);
 }

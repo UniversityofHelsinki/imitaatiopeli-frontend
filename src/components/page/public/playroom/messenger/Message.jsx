@@ -43,6 +43,22 @@ RatingMessage.propTypes = {
     isSelected: PropTypes.bool,
 };
 
+export const QuestionMessage = ({ children }) => {
+    const content = typeof children === 'object' && children?.answer_text
+        ? children.answer_text
+        : children;
+
+    return (
+        <div className="messenger-message rating-message rating-message-question">
+            {content}
+        </div>
+    );
+};
+
+QuestionMessage.propTypes = {
+    children: PropTypes.node,
+};
+
 const Message = ({ children }) => {
     return (
         <div className="messenger-message">

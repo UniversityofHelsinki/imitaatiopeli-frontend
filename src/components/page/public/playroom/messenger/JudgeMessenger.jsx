@@ -41,7 +41,6 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
             await askQuestion(questionText);
             setAskedQuestion({ content: questionText, type: 'sent' });
             setCurrentState('wait');
-            onRateSubmitted();
         } catch (error) {
             console.error('Failed to ask question:', error);
             setCurrentState('ask');
@@ -63,6 +62,7 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
             });
             setAskedQuestion(null);
             setCurrentState('ask');
+            onRateSubmitted();
         }
     };
 
@@ -110,7 +110,8 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
             messageFieldDisabled={currentState !== 'ask'}
             announcement={disabledAnnouncements[currentState]}
             message={questionInput}
-            onMessageChange={m => setQuestionInput(m)}>
+            onMessageChange={m => setQuestionInput(m)}
+            msglength={255}>
             {currentState !== 'final-review' && <ul className="message-area-messages">
                 <li className="message-area-instructions message-area-item">
                     <InstructionMessage content={t('playroom_instructions_judge')} />

@@ -35,3 +35,7 @@
   max-height: 100%;
   overflow-y: auto;
 }
+
+.messenger-message-field-character-count {
+    margin-top: var(--ds-spacing-2xSmall);
+}
