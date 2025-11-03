@@ -195,5 +195,7 @@
   "final_review_form_actions_submit": "Lähetä loppuarvio",
   "join_game_cookies_announcement": "???",
   "playroom_instructions_judge": "???",
-  "playroom_instructions_aito": "???"
+  "playroom_instructions_aito": "???",
+  "game_form_randomization_field_legend" : "???",
+  "game_form_randomization_field_assistive_text": "???"
 }
