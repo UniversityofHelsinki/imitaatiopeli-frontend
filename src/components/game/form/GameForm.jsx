@@ -14,6 +14,7 @@ import ResearchField from "./ResearchField.jsx";
 import ResearchDescriptionField from "./ResearchDescriptionField.jsx";
 import AIPromptTest from "../../game/form/AIPromptTest.jsx";
 import Accordion from "../../misc/ds/Accordion.jsx";
+import RandomizationField from './RandomizationField.jsx';
 
 const GameForm = ({
                       game,
@@ -171,6 +172,16 @@ const GameForm = ({
                     onChange={e => onChange('configuration',  {
                         ...game.configuration,
                         is_research_game: e.target.value === true
+                    })}
+                    disabled={saving}
+                />
+            </div>
+            <div className="form-field game-form-field">
+                <RandomizationField
+                    value={game.configuration.answer_randomization}
+                    onChange={e => onChange('configuration',  {
+                        ...game.configuration,
+                        answer_randomization: e.target.value === true
                     })}
                     disabled={saving}
                 />
