@@ -38,8 +38,6 @@ const CreateGameForm = () => {
 
     const onChange = async (key, value) => {
         const changed = { ...game, [key]: value };
-
-        console.log(changed);
         setValidations(await validate(changed));
         setGame(changed);
     };
