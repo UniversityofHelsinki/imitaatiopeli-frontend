@@ -23,7 +23,6 @@ const AitoMessenger = ({
             setAskedQuestion(question);
             setCurrentState('answer');
         } else {
-            setAskedQuestion(question);
             setCurrentState('wait');
         }
     }, [question]);
