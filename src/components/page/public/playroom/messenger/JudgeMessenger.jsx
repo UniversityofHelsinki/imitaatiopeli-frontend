@@ -11,6 +11,7 @@ import { useNotification } from '../../../../notification/NotificationContext.js
 import { useSocket } from '../../../../../contexts/SocketContext.jsx';
 import FinalReview from './FinalReview';
 import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js';
+import useEndJudging from '../../../../../hooks/useEndJudging';
 
 const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
     const { isConnected, emit } = useSocket();
@@ -20,6 +21,7 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
     const [questionInput, setQuestionInput] = useState('');
     const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
     const { setNotification } = useNotification();
+    const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging();
 
     useEffect(() => {
         console.log('received answers:', answers);
@@ -66,39 +68,16 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
         }
     };
 
+    const endJudging = async (data) => {
+      handleRatingSubmit(data)
+      await stopJudging(game);
+      setCurrentState('final-review');
+    };
+
     const finalReview = (() => {
-      const mockMessages = [
-        {
-          question: 'AAAAA?',
-          answers: [
-            'OoO?',
-            'EEEE?'
-          ],
-          selectedAnswer: 0,
-          justification: 'Joo hyvä meno.'
-        },
-        {
-          question: 'BBBBB?',
-          answers: [
-            'KKAKAKAKAKAKAKAKAKAK?',
-            'HEHEHEHEHEHEHEHEH?'
-          ],
-          selectedAnswer: 1,
-          justification: 'Joo hyvä meno.'
-        },
-        {
-          question: 'CCCCCC?',
-          answers: [
-            'Vastaus joo?',
-            'Hehe?'
-          ],
-          selectedAnswer: 1,
-          justification: 'Perustelut koska joo'
-        }
-      ];
-      if (currentState === 'final-review') {
+      if (currentState === 'final-review' && summaryQuestions) {
         return (
-          <FinalReview messages={mockMessages} onSubmit={console.log} />
+          <FinalReview messages={summaryQuestions} onSubmit={console.log} />
         );
       }
       return <></>;
@@ -122,6 +101,7 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
                     question={askedQuestion}
                     answers={ answers }
                     onSubmit={handleRatingSubmit}
+                    onEndGame={endJudging}
                 />}
 
         </Messenger>

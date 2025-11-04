@@ -47,14 +47,14 @@ ConfidenceMeter.propTypes = {
 const RatingForm = ({
                         question,
                         answers,
-                        onSubmit
+                        onSubmit,
+                        onEndGame
                     }) => {
     const { t } = useTranslation();
 
     const [selected, setSelected] = useState(null);
     const [confidence, setConfidence] = useState(2);
     const [justifications, setJustifications] = useState('');
-    const [ratingCount, setRatingCount] = useState(0);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -66,7 +66,6 @@ const RatingForm = ({
             justifications: justifications
         });
 
-        setRatingCount(ratingCount + 1);
     };
 
     const handleChange = (event) => {
@@ -77,6 +76,17 @@ const RatingForm = ({
             const selectedAnswerObject = answers[answerIndex];
             setSelected(selectedAnswerObject);
         }
+    };
+
+    const handleEndGame = (event) => {
+      event.preventDefault();
+      if (onEndGame) {
+        onEndGame({
+          selectedAnswer: selected,
+          confidence,
+          justifications
+        });
+      }
     };
 
     const isFormDisabled = () => {
@@ -120,7 +130,7 @@ const RatingForm = ({
                     <span className="rating-form-justifications-character-count">{justifications.length} / 500</span>
                 </div>
                 <Button type="submit" label={t('rating_form_submit_rating')}  disabled={isFormDisabled()} />
-                {ratingCount > 2 && <Button variant="secondary" label={t('rating_form_end_game')} />}
+                {answers[0]?.content?.questionCount >= 3 && <Button onClick={handleEndGame} variant="secondary" label={t('rating_form_end_game')} disabled={isFormDisabled()} />}
             </form>
         </div>
     );
@@ -131,6 +141,7 @@ RatingForm.propTypes = {
     question: PropTypes.object,
     answers: PropTypes.array,
     onSubmit: PropTypes.func,
+    onEndGame: PropTypes.func,
 };
 
 export default RatingForm;
