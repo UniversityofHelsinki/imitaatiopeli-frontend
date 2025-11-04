@@ -9,6 +9,8 @@ import { InstructionMessage } from './Message';
 const FinalReview = ({ messages, onSubmit }) => {
   const { t } = useTranslation();
 
+  console.log('messages final review', messages);
+
   return (
    <div className="final-review">
     <div className="final-review-instructions">
@@ -16,10 +18,10 @@ const FinalReview = ({ messages, onSubmit }) => {
     </div>
     <hr />
     <div className="final-review-message-reviews">
-      {messages.map((message, i) => (
+      {Object.entries(messages).map(([id, question], i) => (
         <>
           <h3>{i+1}. {t('final_review_question_heading')}</h3>
-          <MessageReview key={i + message.question} message={message} />
+          <MessageReview key={id} message={question} />
           <hr />
         </>
       ))}
