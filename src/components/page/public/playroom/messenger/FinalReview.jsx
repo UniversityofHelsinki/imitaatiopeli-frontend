@@ -9,8 +9,6 @@ import { InstructionMessage } from './Message';
 const FinalReview = ({ messages, onSubmit }) => {
   const { t } = useTranslation();
 
-  console.log('messages final review', messages);
-
   return (
    <div className="final-review">
     <div className="final-review-instructions">
