@@ -35,7 +35,6 @@ WaitingAnnouncement.propTypes = {
 
 const Playroom = () => {
     const [judgeState, setJudgeState] = React.useState('ask'); // persists
-    const [activeTab, setActiveTab] = useState(0);
     const { code } = useParams();
     const { t } = useTranslation();
     let { question, clearQuestion } = useWaitQuestion();
