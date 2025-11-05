@@ -5,7 +5,6 @@ export const useWaitEndJudging = () => {
   const { on } = useSocket();
   const [judgingEnded, setJudgingEnded] = useState(false);
 
-  
   useEffect(() => {
     on('no-more-answers', () => {
       setJudgingEnded(true);
@@ -52,12 +51,12 @@ const useEndJudging = () => {
       });
       setQuestions(questions);
     });
-  }, [on, questions]);
+  }, [isConnected, on, questions]);
   
 
-  const endJudging = async (game) => {
+  const endJudging = async (game, rating) => {
     if (isConnected) {
-      await emit('end-judging', { game });
+      await emit('end-judging', { game, rating });
     }
   };
 
@@ -65,8 +64,6 @@ const useEndJudging = () => {
     endJudging,
     questions,
   }), [questions]);
-
-  console.log('questions', questions);
 
   return memoed;
 
