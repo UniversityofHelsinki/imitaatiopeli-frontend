@@ -13,6 +13,7 @@ import useWaitAnswers from "../../../../hooks/useWaitAnswers.js";
 import localStorage from "../../../../utilities/localStorage.js";
 import useGetInitialQuestion from '../../../../hooks/useGetInitialQuestion.js';
 import useGetInitialAnswers from '../../../../hooks/useGetInitialAnswers.js';
+import i18n from "i18next";
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
   return (
@@ -41,6 +42,16 @@ const Playroom = () => {
     const {initialQuestion, clearInitialQuestion} = useGetInitialQuestion(code);
     const {initialAnswers, clearInitialAnswers} = useGetInitialAnswers(code);
     const player = getPlayer();
+
+    useEffect(() => {
+        const player = localStorage.get('player');
+        const languageUsed = player?.language_used;
+
+        if (languageUsed && i18n.language !== languageUsed) {
+            i18n.changeLanguage(languageUsed);
+            document.documentElement.lang = languageUsed;
+        }
+    }, [i18n]);
 
     if (!question && initialQuestion && Object.keys(initialQuestion).length > 0) {
         question = {};
