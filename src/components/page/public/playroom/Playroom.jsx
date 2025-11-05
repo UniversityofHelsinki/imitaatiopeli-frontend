@@ -32,7 +32,7 @@ WaitingAnnouncement.propTypes = {
 };
 
 const Playroom = () => {
-
+    const [aitoState, setAitoState] = React.useState('wait'); // persists
     const [activeTab, setActiveTab] = useState(0);
     const { code } = useParams();
     const { t } = useTranslation();
@@ -91,7 +91,8 @@ const Playroom = () => {
             active: activeTab  === 1,
             notification: question && activeTab !== 1 ? t('playroom_notification_new_messages') : null,
             children: (
-                <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered}  />
+                <AitoMessenger currentState={aitoState} setCurrentState={setAitoState}
+                               game={code} question={question} onQuestionAnswered={onQuestionAnswered}  />
             )
         }
   ];
