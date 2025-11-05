@@ -33,7 +33,7 @@ WaitingAnnouncement.propTypes = {
 };
 
 const Playroom = () => {
-
+    const [judgeState, setJudgeState] = React.useState('ask'); // persists
     const [activeTab, setActiveTab] = useState(0);
     const { code } = useParams();
     const { t } = useTranslation();
@@ -94,7 +94,7 @@ const Playroom = () => {
             active: activeTab  === 0,
             notification: answers?.length > 0 && activeTab !== 0 ? t('playroom_notification_new_messages') : null,
             children: (
-                <JudgeMessenger game={code} answers={answers} onRateSubmitted={onRateSubmitted} />
+                <JudgeMessenger currentState={judgeState} setCurrentState={setJudgeState} game={code} answers={answers} onRateSubmitted={onRateSubmitted} />
             )
         },
         {

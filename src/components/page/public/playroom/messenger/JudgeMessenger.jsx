@@ -13,11 +13,11 @@ import FinalReview from './FinalReview';
 import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js';
 import useEndJudging from '../../../../../hooks/useEndJudging';
 
-const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
+const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted }) => {
     const { isConnected, emit } = useSocket();
     const { t } = useTranslation();
     const { askQuestion } = useAskQuestion(game);
-    const [currentState, setCurrentState] = useState('ask');
+    //const [currentState, setCurrentState] = useState('ask');
     const [questionInput, setQuestionInput] = useState('');
     const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
     const { setNotification } = useNotification();
@@ -26,7 +26,9 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
     useEffect(() => {
         console.log('received answers:', answers);
         console.log('asked question:', askedQuestion);
-        if (answers && answers.length > 0 && askedQuestion) {
+        if (currentState === 'rate' || currentState === 'final-review') {
+            console.log('currentState', currentState);
+        } else if (answers && answers.length > 0 && askedQuestion) {
             setCurrentState('rate');
             console.log('rate');
         } else if (answers.length === 0 && askedQuestion) {
