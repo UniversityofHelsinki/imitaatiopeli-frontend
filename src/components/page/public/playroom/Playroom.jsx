@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Playroom.css';
 import PublicPage from '../PublicPage';
@@ -14,6 +14,7 @@ import localStorage from "../../../../utilities/localStorage.js";
 import useGetInitialQuestion from '../../../../hooks/useGetInitialQuestion.js';
 import useGetInitialAnswers from '../../../../hooks/useGetInitialAnswers.js';
 import i18n from "i18next";
+import useEndJudging from '../../../../hooks/useEndJudging';
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
   return (
@@ -42,6 +43,7 @@ const Playroom = () => {
     const {initialQuestion, clearInitialQuestion} = useGetInitialQuestion(code);
     const {initialAnswers, clearInitialAnswers} = useGetInitialAnswers(code);
     const player = getPlayer();
+    const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging();
 
     useEffect(() => {
         const player = localStorage.get('player');
@@ -91,30 +93,20 @@ const Playroom = () => {
   const tabs = [
         {
             heading: t('playroom_heading_judge'),
-            active: activeTab  === 0,
-            notification: answers?.length > 0 && activeTab !== 0 ? t('playroom_notification_new_messages') : null,
-            children: (
-                <JudgeMessenger currentState={judgeState} setCurrentState={setJudgeState} game={code} answers={answers} onRateSubmitted={onRateSubmitted} />
-            )
+            notification: answers?.length > 0 ? t('playroom_notification_new_messages') : null,
+            children: <JudgeMessenger currentState={judgeState} setCurrentState={setJudgeState} game={code} answers={answers} onRateSubmitted={onRateSubmitted} stopJudging={stopJudging} summaryQuestions={summaryQuestions} />,
         },
         {
             heading: t('playroom_heading_aito'),
-            active: activeTab  === 1,
-            notification: question && activeTab !== 1 ? t('playroom_notification_new_messages') : null,
-            children: (
-                <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered}  />
-            )
+            notification: question ? t('playroom_notification_new_messages') : null,
+            children: <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered}  />,
         }
   ];
-
-    const switchTab = (heading) => {
-    setActiveTab(tabs.findIndex(t => t.heading === heading));
-  };
 
   return (
     <PublicPage heading={player?.theme_description} >
       <div className="playroom">
-        <Tabs tabs={tabs} onTabSwitch={switchTab} />
+        <Tabs tabs={tabs} />
       </div>
     </PublicPage>
   );
