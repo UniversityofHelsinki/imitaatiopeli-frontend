@@ -15,7 +15,6 @@ import useGetInitialQuestion from '../../../../hooks/useGetInitialQuestion.js';
 import useGetInitialAnswers from '../../../../hooks/useGetInitialAnswers.js';
 import i18n from "i18next";
 import useEndJudging, { useWaitEndJudging } from '../../../../hooks/useEndJudging';
-import game from "../../../game/all/Game.jsx";
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
   return (
@@ -44,7 +43,7 @@ const Playroom = () => {
     const {initialAnswers, clearInitialAnswers} = useGetInitialAnswers(code);
     const player = getPlayer();
     const judgingEnded = useWaitEndJudging();
-    const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging(game);
+    const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging();
 
     const [judgeState, setJudgeState] = React.useState(() => {
         try {

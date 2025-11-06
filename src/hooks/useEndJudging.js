@@ -16,10 +16,10 @@ export const useWaitEndJudging = () => {
   return judgingEnded;
 };
 
-const useEndJudging = (game) => {
+const useEndJudging = () => {
   const { isConnected, emit, on } = useSocket();
 
-      const storageKey = game ? `judging-summary:${game}` : 'judging-summary';
+      const storageKey = 'judging-summary';
       const [questions, setQuestions] = useState(() => {
           try {
               return localStorage.get(storageKey) || null;
