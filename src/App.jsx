@@ -29,6 +29,7 @@ import translations from './translations';
 import EndOfGame from "./components/page/public/EndOfGame.jsx";
 import AdminMonitor from "./components/page/admin/AdminMonitor.jsx";
 import Playroom from './components/page/public/playroom/Playroom';
+import localStorageUtil from './utilities/localStorage';
 
 defineCustomElements(window);
 
@@ -37,7 +38,7 @@ const store = createStore(reducer, applyMiddleware(thunk));
 
 const defaultLanguage = () => {
     try {
-        const savedLanguage = localStorage.getItem('language');
+        const savedLanguage = localStorageUtil.get('language');
         if (savedLanguage) {
             document.documentElement.lang = savedLanguage;
             return savedLanguage;

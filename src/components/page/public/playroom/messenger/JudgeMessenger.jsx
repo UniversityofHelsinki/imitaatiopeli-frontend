@@ -13,7 +13,7 @@ import FinalReview from './FinalReview';
 import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js';
 import useEndJudging from '../../../../../hooks/useEndJudging';
 
-const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
+const JudgeMessenger = ({ game, answers, onRateSubmitted, stopJudging, summaryQuestions }) => {
     const { isConnected, emit } = useSocket();
     const { t } = useTranslation();
     const { askQuestion } = useAskQuestion(game);
@@ -21,22 +21,21 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
     const [questionInput, setQuestionInput] = useState('');
     const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
     const { setNotification } = useNotification();
-    const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging();
+
+    console.log('judge', currentState, summaryQuestions);
 
     useEffect(() => {
-        console.log('received answers:', answers);
-        console.log('asked question:', askedQuestion);
-        if (answers && answers.length > 0 && askedQuestion) {
+        console.log('judge useEffect');
+        if (summaryQuestions) {
+          setCurrentState('final-review');
+        } else if (answers && answers.length > 0 && askedQuestion) {
             setCurrentState('rate');
-            console.log('rate');
         } else if (answers.length === 0 && askedQuestion) {
             setCurrentState('wait');
-            console.log('wait');
         } else {
             setCurrentState('ask');
-            console.log('ask');
         }
-    }, [answers, askedQuestion]);
+    }, [answers, askedQuestion, summaryQuestions]);
 
     const handleAskQuestion = async (questionText) => {
         try {
@@ -69,8 +68,11 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
     };
 
     const endJudging = async (data) => {
-      handleRatingSubmit(data)
-      await stopJudging(game);
+      await stopJudging(game, {
+        answerId: data.selectedAnswer.content.answer_id,
+        confidence: data.confidence,
+        argument: data.justifications
+      });
       setCurrentState('final-review');
     };
 
