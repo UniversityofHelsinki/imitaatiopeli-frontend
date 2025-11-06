@@ -42,8 +42,23 @@ const Playroom = () => {
     const {initialQuestion, clearInitialQuestion} = useGetInitialQuestion(code);
     const {initialAnswers, clearInitialAnswers} = useGetInitialAnswers(code);
     const player = getPlayer();
-    const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging();
     const judgingEnded = useWaitEndJudging();
+    const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging();
+
+    const [judgeState, setJudgeState] = React.useState(() => {
+        try {
+            return localStorage.get(`judgeState:${code}`) || '';
+        } catch {
+            return '';
+        }
+    });
+    useEffect(() => {
+        try {
+            if (code) localStorage.set(`judgeState:${code}`, judgeState);
+        } catch {
+            // ignore write failures (e.g., private mode)
+        }
+    }, [code, judgeState]);
 
     useEffect(() => {
         const player = localStorage.get('player');
@@ -94,7 +109,7 @@ const Playroom = () => {
         {
             heading: t('playroom_heading_judge'),
             notification: answers?.length > 0 ? t('playroom_notification_new_messages') : null,
-            children: <JudgeMessenger game={code} answers={answers} onRateSubmitted={onRateSubmitted} stopJudging={stopJudging} summaryQuestions={summaryQuestions} />, 
+            children: <JudgeMessenger currentState={judgeState} setCurrentState={setJudgeState} game={code} answers={answers} onRateSubmitted={onRateSubmitted} stopJudging={stopJudging} summaryQuestions={summaryQuestions} />,
         },
         {
             heading: t('playroom_heading_aito'),

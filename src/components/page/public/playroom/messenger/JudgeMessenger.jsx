@@ -11,13 +11,12 @@ import { useNotification } from '../../../../notification/NotificationContext.js
 import { useSocket } from '../../../../../contexts/SocketContext.jsx';
 import FinalReview from './FinalReview';
 import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js';
-import useEndJudging from '../../../../../hooks/useEndJudging';
 
-const JudgeMessenger = ({ game, answers, onRateSubmitted, stopJudging, summaryQuestions }) => {
+const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions }) => {
     const { isConnected, emit } = useSocket();
     const { t } = useTranslation();
     const { askQuestion } = useAskQuestion(game);
-    const [currentState, setCurrentState] = useState('ask');
+    //const [currentState, setCurrentState] = useState('ask');
     const [questionInput, setQuestionInput] = useState('');
     const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
     const { setNotification } = useNotification();
@@ -26,7 +25,9 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted, stopJudging, summaryQu
 
     useEffect(() => {
         console.log('judge useEffect');
-        if (summaryQuestions) {
+        if (currentState === 'rate' || currentState === 'final-review') {
+            console.log('currentState', currentState);
+        } else if (summaryQuestions) {
           setCurrentState('final-review');
         } else if (answers && answers.length > 0 && askedQuestion) {
             setCurrentState('rate');
