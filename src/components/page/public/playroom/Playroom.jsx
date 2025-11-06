@@ -14,7 +14,7 @@ import localStorage from "../../../../utilities/localStorage.js";
 import useGetInitialQuestion from '../../../../hooks/useGetInitialQuestion.js';
 import useGetInitialAnswers from '../../../../hooks/useGetInitialAnswers.js';
 import i18n from "i18next";
-import useEndJudging from '../../../../hooks/useEndJudging';
+import useEndJudging, { useWaitEndJudging } from '../../../../hooks/useEndJudging';
 import game from "../../../game/all/Game.jsx";
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
@@ -35,7 +35,7 @@ WaitingAnnouncement.propTypes = {
 };
 
 const Playroom = () => {
-    //  initialJudgeState === 'rate' ? 'rate' : initialJudgeState === 'wait' ? 'wait' : 'ask');
+
     const { code } = useParams();
     const { t } = useTranslation();
     let { question, clearQuestion } = useWaitQuestion();
@@ -43,6 +43,7 @@ const Playroom = () => {
     const {initialQuestion, clearInitialQuestion} = useGetInitialQuestion(code);
     const {initialAnswers, clearInitialAnswers} = useGetInitialAnswers(code);
     const player = getPlayer();
+    const judgingEnded = useWaitEndJudging();
     const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging(game);
 
     const [judgeState, setJudgeState] = React.useState(() => {
@@ -114,7 +115,7 @@ const Playroom = () => {
         {
             heading: t('playroom_heading_aito'),
             notification: question ? t('playroom_notification_new_messages') : null,
-            children: <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered}  />,
+            children: <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered} judgingEnded={judgingEnded} />,
         }
   ];
 
