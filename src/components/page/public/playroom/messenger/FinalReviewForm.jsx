@@ -19,12 +19,25 @@ const FinalReviewForm = ({
         justification: ''
     });
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
     const { t } = useTranslation();
 
-    const handleSubmit = (event) => {
+    // Check if form is valid (radio button selected and justification provided)
+    const isFormValid = value.selection !== null && value.justification.trim() !== '';
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        if (onSubmit) {
-            onSubmit(value);
+        if (onSubmit && !isSubmitting && isFormValid && !isSubmitted) {
+            setIsSubmitting(true);
+            try {
+                await onSubmit(value);
+                setIsSubmitted(true);
+            } catch (error) {
+                // If submission fails, re-enable the button
+                setIsSubmitting(false);
+            }
         }
     };
 
@@ -40,6 +53,16 @@ const FinalReviewForm = ({
             ...value,
             [property]: v
         });
+    };
+
+    const getButtonLabel = () => {
+        if (isSubmitted) {
+            return t('final_review_form_actions_submitted');
+        }
+        if (isSubmitting) {
+            return t('final_review_form_actions_submitting');
+        }
+        return t('final_review_form_actions_submit');
     };
 
     return (
@@ -62,18 +85,32 @@ const FinalReviewForm = ({
                             label={t(`final_review_form_options_label_${option.index + 1}`)}
                             onChange={() => handleChange('selection', String(option.answerId))}
                             checked={value.selection === String(option.answerId)}
+                            disabled={isSubmitting || isSubmitted}
                         />
                     ))}
                 </RadioButtonGroup>
             </div>
             <div className="final-review-form-confidence rating-form-confidence">
-                <ConfidenceMeter value={value.confidence} onChange={c => handleChange('confidence', parseInt(c))} />
+                <ConfidenceMeter
+                    value={value.confidence}
+                    onChange={c => handleChange('confidence', parseInt(c))}
+                    disabled={isSubmitting || isSubmitted}
+                />
             </div>
             <div className="final-review-form-justification">
-                <TextArea value={value.justification} onChange={e => handleChange('justification', e.target.value)} label={t('final_review_form_justification_label')} />
+                <TextArea
+                    value={value.justification}
+                    onChange={e => handleChange('justification', e.target.value)}
+                    label={t('final_review_form_justification_label')}
+                    disabled={isSubmitting || isSubmitted}
+                />
             </div>
             <div className="final-review-form-actions">
-                <Button type="submit" label={t('final_review_form_actions_submit')} />
+                <Button
+                    type="submit"
+                    label={getButtonLabel()}
+                    disabled={!isFormValid || isSubmitting || isSubmitted}
+                />
             </div>
         </form>
     );
@@ -81,7 +118,7 @@ const FinalReviewForm = ({
 
 FinalReviewForm.propTypes = {
     onSubmit: PropTypes.func,
-    answers: PropTypes.array,
+    answerOptions: PropTypes.array,
 };
 
 export default FinalReviewForm;
