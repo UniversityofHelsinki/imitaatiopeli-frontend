@@ -11,7 +11,6 @@ import { useNotification } from '../../../../notification/NotificationContext.js
 import { useSocket } from '../../../../../contexts/SocketContext.jsx';
 import FinalReview from './FinalReview';
 import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js';
-import useEndJudging from '../../../../../hooks/useEndJudging';
 
 const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions }) => {
     const { isConnected, emit } = useSocket();
