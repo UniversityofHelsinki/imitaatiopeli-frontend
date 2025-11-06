@@ -12,7 +12,7 @@ import { useSocket } from '../../../../../contexts/SocketContext.jsx';
 import FinalReview from './FinalReview';
 import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js';
 
-const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions }) => {
+const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId }) => {
     const { isConnected, emit } = useSocket();
     const { t } = useTranslation();
     const { askQuestion } = useAskQuestion(game);
@@ -28,7 +28,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
         if (currentState === 'rate' || currentState === 'final-review') {
             console.log('currentState', currentState);
         } else if (summaryQuestions) {
-          setCurrentState('final-review');
+            setCurrentState('final-review');
         } else if (answers && answers.length > 0 && askedQuestion) {
             setCurrentState('rate');
         } else if (answers.length === 0 && askedQuestion) {
@@ -69,21 +69,25 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
     };
 
     const endJudging = async (data) => {
-      await stopJudging(game, {
-        answerId: data.selectedAnswer.content.answer_id,
-        confidence: data.confidence,
-        argument: data.justifications
-      });
-      setCurrentState('final-review');
+        await stopJudging(game, {
+            answerId: data.selectedAnswer.content.answer_id,
+            confidence: data.confidence,
+            argument: data.justifications
+        });
+        setCurrentState('final-review');
     };
 
     const finalReview = (() => {
-      if (currentState === 'final-review' && summaryQuestions) {
-        return (
-          <FinalReview messages={summaryQuestions} onSubmit={console.log} />
-        );
-      }
-      return <></>;
+        if (currentState === 'final-review' && summaryQuestions) {
+            return (
+                <FinalReview
+                    messages={summaryQuestions}
+                    gameId={gameId}
+                    judgeId={judgeId}
+                />
+            );
+        }
+        return <></>;
     })();
 
     return (
@@ -115,6 +119,12 @@ JudgeMessenger.propTypes = {
     game: PropTypes.string,
     answers: PropTypes.array,
     onRateSubmitted: PropTypes.func,
+    currentState: PropTypes.string,
+    setCurrentState: PropTypes.func,
+    stopJudging: PropTypes.func,
+    summaryQuestions: PropTypes.object,
+    gameId: PropTypes.number.isRequired,
+    judgeId: PropTypes.number.isRequired,
 };
 
 export default JudgeMessenger;
