@@ -9,10 +9,10 @@ import Message, { InstructionMessage } from './Message';
 import { useWaitEndJudging } from '../../../../../hooks/useEndJudging';
 
 const AitoMessenger = ({
-                           currentState, setCurrentState, game, question, onQuestionAnswered
+                           game, question, onQuestionAnswered
                        }) => {
-    const restored = React.useRef(false);
     const { t } = useTranslation();
+    const [currentState, setCurrentState] = useState('wait');
     const [answer, setAnswer] = useState('');
     const [askedQuestion, setAskedQuestion] = useState('');
     const [messages, setMessages] = useState([]);
@@ -22,7 +22,7 @@ const AitoMessenger = ({
 
     useEffect(() => {
         console.log('Question changed:', question);
-        if (judgingEnded || currentState === 'judging-ended') {
+        if (judgingEnded) {
           setCurrentState('judging-ended');
         } else if (question) {
             setAskedQuestion(question);
@@ -56,7 +56,7 @@ const AitoMessenger = ({
 
     const disabledAnnouncements = {
         wait: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />,
-        'judging-ended': <WaitingAnnouncement content={t('playroom_no_more_answers_accepted')} showSpinner={false} />
+        'judging-ended': <WaitingAnnouncement content={t('playroom_no_more_answers_accepted')} />
     };
 
   return (
