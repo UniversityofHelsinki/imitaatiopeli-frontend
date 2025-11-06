@@ -34,7 +34,7 @@ WaitingAnnouncement.propTypes = {
 };
 
 const Playroom = () => {
-    const [judgeState, setJudgeState] = React.useState('ask'); // persists
+    //  initialJudgeState === 'rate' ? 'rate' : initialJudgeState === 'wait' ? 'wait' : 'ask');
     const { code } = useParams();
     const { t } = useTranslation();
     let { question, clearQuestion } = useWaitQuestion();
@@ -43,6 +43,21 @@ const Playroom = () => {
     const {initialAnswers, clearInitialAnswers} = useGetInitialAnswers(code);
     const player = getPlayer();
     const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging();
+
+    const [judgeState, setJudgeState] = React.useState(() => {
+        try {
+            return localStorage.get(`judgeState:${code}`) || '';
+        } catch {
+            return '';
+        }
+    });
+    useEffect(() => {
+        try {
+            if (code) localStorage.set(`judgeState:${code}`, judgeState);
+        } catch {
+            // ignore write failures (e.g., private mode)
+        }
+    }, [code, judgeState]);
 
     useEffect(() => {
         const player = localStorage.get('player');
