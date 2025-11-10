@@ -5,6 +5,9 @@ import { useTranslation } from 'react-i18next';
 
 const MessageReview = ({ message }) => {
 
+   console.log("Message: " , message);
+
+
   const { t } = useTranslation();
 
   const question = message.question_text;
