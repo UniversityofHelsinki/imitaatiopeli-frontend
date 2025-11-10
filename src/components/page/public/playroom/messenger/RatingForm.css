@@ -1,104 +1,156 @@
-.rating-form {
-  display: flex;
-  flex-direction: column;
-  padding: var(--ds-spacing-base);
-  gap: var(--ds-spacing-2xSmall);
-  list-style: none;
-  margin: unset;
-}
-
-.rating-form-heading {
-  padding: var(--ds-spacing-2xSmall);
-}
-
-.rating-form-question {
-    padding: var(--ds-spacing-2xSmall);
-}
-
-.rating-form-answers {
-  padding: var(--ds-spacing-2xSmall);
-}
-
-.rating-form-form ds-button {
-  padding: var(--ds-spacing-2xSmall);
-}
-
-.rating-form-justifications {
-  display: flex;
-  flex-direction: column;
-  padding: var(--ds-spacing-2xSmall);
-}
-
-.rating-form-justifications-character-count {
-  margin-top: var(--ds-spacing-2xSmall);
-}
-
-.rating-form-confidence {
-  display: flex;
-  flex-direction: column;
-  padding: var(--ds-spacing-2xSmall);
-}
-
-.rating-form-confidence datalist {
-  display: flex;
-  justify-content: space-between;
-  margin: 0.5rem;
-}
-
-.rating-form-confidence datalist option {
-  flex-basis: 25%;
-  max-width: 25%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.confidence-values-odd::after {
-  display: inline-block;
-  content: "";
-  width: 33%;
-}
-
-.confidence-values-odd {
-  text-align: center;
-  flex-basis: 66%;
-}
-
-.confidence-values-even::before {
-  display: inline-block;
-  content: "";
-  width: 33%;
-}
-
-.confidence-values-even {
-  text-align: center;
-}
-
-.confidence-values-last {
-  text-align: end;
-}
-
 .confidence-meter-container {
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 20px;
 }
 
-.confidence-meter-labels {
+.confidence-meter-container label {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+/* Range input styling */
+.confidence-meter-container input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(to right, #e0e0e0 0%, #e0e0e0 100%);
+    border-radius: 3px;
+    outline: none;
+    margin: 0.5rem 0 0.25rem 0;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+.confidence-meter-container input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    background: transparent;
+}
+
+.confidence-meter-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--ds-color-primary, #007bff);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-top: -7px; /* (thumb height - track height) / 2 */
+}
+
+.confidence-meter-container input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 8px rgba(0, 123, 255, 0.1);
+}
+
+.confidence-meter-container input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 12px rgba(0, 123, 255, 0.15);
+}
+
+/* Firefox */
+.confidence-meter-container input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--ds-color-primary, #007bff);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.confidence-meter-container input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 8px rgba(0, 123, 255, 0.1);
+}
+
+.confidence-meter-container input[type="range"]::-moz-range-thumb:active {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 12px rgba(0, 123, 255, 0.15);
+}
+
+.confidence-meter-container input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: #e0e0e0;
+    border-radius: 3px;
+}
+
+/* Focus styles for accessibility */
+.confidence-meter-container input[type="range"]:focus {
+    outline: none;
+}
+
+.confidence-meter-container input[type="range"]:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+}
+
+.confidence-meter-container input[type="range"]:focus-visible::-moz-range-thumb {
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+}
+
+/* Tick marks - using flexbox with margin */
+.confidence-meter-ticks {
     display: flex;
     justify-content: space-between;
-    margin-top: 0.5rem;
+    position: relative;
+    height: 8px;
+    margin: -0.25rem 10px 0.25rem 10px; /* 10px = half of 20px thumb width */
+    pointer-events: none;
+}
+
+.confidence-meter-ticks .tick {
+    width: 2px;
+    height: 8px;
+    background-color: #666;
+    border-radius: 1px;
+}
+
+/* Labels - wrapper with same margin as ticks */
+.confidence-meter-labels {
+    position: relative;
     font-size: 0.875rem;
+    color: #666;
+    height: 2.5em; /* Space for labels */
+    margin: 0 10px; /* Same 10px margin as ticks */
 }
 
 .confidence-meter-labels span {
-    flex: 1;
-    text-align: center;
+    position: absolute;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.confidence-meter-labels span:first-child {
+.confidence-meter-labels span:nth-child(1) {
+    left: 0;
     text-align: left;
+    max-width: 30%;
+    transform: translateX(0);
 }
 
-.confidence-meter-labels span:last-child {
+.confidence-meter-labels span:nth-child(2) {
+    left: 33.33%;
+    text-align: center;
+    max-width: 25%;
+    transform: translateX(-50%);
+}
+
+.confidence-meter-labels span:nth-child(3) {
+    left: 66.67%;
+    text-align: center;
+    max-width: 25%;
+    transform: translateX(-50%);
+}
+
+.confidence-meter-labels span:nth-child(4) {
+    right: 0;
     text-align: right;
+    max-width: 30%;
+    transform: translateX(0);
 }
