@@ -21,14 +21,26 @@ export const ConfidenceMeter = ({
 
     return (
         <div className="confidence-meter-container">
-            <label htmlFor="confidence">{t('rating_form_confidence_meter_label')}</label>
-            <input type="range" name="confidence" value={(value - 1) * 33} id={id} step="33" max="99" list="confidence-values" onChange={handleChange} />
-            <datalist id="confidence-values">
-                <option value="0" />
-                <option value="33" />
-                <option value="66" />
-                <option value="99" />
-            </datalist>
+            <label htmlFor={id}>{t('rating_form_confidence_meter_label')}</label>
+            <input
+                type="range"
+                name="confidence"
+                value={(value - 1) * 33}
+                id={id}
+                step="33"
+                min="0"
+                max="99"
+                onChange={handleChange}
+                aria-valuemin="1"
+                aria-valuemax="4"
+                aria-valuenow={value}
+            />
+            <div className="confidence-meter-ticks">
+                <span className="tick"></span>
+                <span className="tick"></span>
+                <span className="tick"></span>
+                <span className="tick"></span>
+            </div>
             <div className="confidence-meter-labels">
                 <span>{t('confidence_meter_value_1')}</span>
                 <span>{t('confidence_meter_value_2')}</span>
