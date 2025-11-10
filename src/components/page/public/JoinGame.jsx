@@ -6,8 +6,11 @@ import JoinGameForm from '../../game/form/JoinGameForm';
 import './JoinGame.css';
 import localStorage from '../../../utilities/localStorage';
 import PublicPage from "./PublicPage.jsx";
+import useJudgeAskedQuestion from "../../../hooks/useJudgeAskedQuestion.js";
+import {useSocket} from "../../../contexts/SocketContext.jsx";
 
 const JoinGame = () => {
+    const { isConnected, emit, on, off } = useSocket();
     const { t } = useTranslation();
     const { code } = useParams();
     const [loading, setLoading] = useState(true);
@@ -15,6 +18,8 @@ const JoinGame = () => {
     const [alreadyJoined, setAlreadyJoined] = useState(false);
     const [playerConfiguration, setPlayerConfiguration] = useState(null);
     const navigate = useNavigate();
+    const [_askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
+    const [cookieExists, setCookieExists] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -22,9 +27,11 @@ const JoinGame = () => {
                 path: `/public/games/${code}`,
                 tag: `GAME_${code}`
             });
+            setAskedQuestion(null);
             setGame(response.body);
             setPlayerConfiguration(response.body.configuration?.[0]);
             setAlreadyJoined(localStorage.get('player')?.game_id === response.body.game_id);
+            setCookieExists(localStorage.get('player')?.session_token !== null);
             setLoading(false);
         })();
     }, [code]);
@@ -32,6 +39,21 @@ const JoinGame = () => {
     const gameAlreadyStarted = () => {
         return <div className="join-game-font-size">{t('join_game_player_cant_joined')} </div>
     }
+
+    useEffect(() => {
+        if (localStorage.get('player')?.session_token) {
+            if (localStorage.get('player').game_id && localStorage.get('player').player_id) {
+                console.log('Player isConnected', localStorage.get('player').game_id, " ", localStorage.get('player').player_id);
+                emit('join-game', {
+                    userId: localStorage.get('player').player_id,
+                    gameId: localStorage.get('player').game_id,
+                    nickname: localStorage.get('player').nickname,
+                    session_token: localStorage.get('player').session_token.toString(),
+                });
+            }
+            navigate(`/games/${localStorage.get('player').game_id}/play`, { replace: true });
+        }
+    }, [cookieExists]);
 
     useEffect(() => {
         if (!game) return; // wait until game is set

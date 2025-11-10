@@ -39,7 +39,7 @@ const MessageField = ({
         <div className="messenger-message-field-announcement" aria-live="assertive">{announcement}</div>
       }
       <form onSubmit={handleSubmit}>
-        <textarea aria-label={t('message_field_message')} disabled={disabled} value={message} rows={2} cols={1} onChange={handleChange} onKeyDown={onEnterDown} />
+        <textarea aria-label={t('message_field_message')} disabled={disabled} value={message} rows={3} cols={1} onChange={handleChange} onKeyDown={onEnterDown} />
           {msglength && <span className="messenger-message-field-character-count">{message.length} / {msglength}</span>}
         <Button disabled={disabled} type="submit" icon="send-fill" label={t('messenger_message_form_submit_button')} aria-label={t('messenger_message_form_submit_button')} />
       </form>

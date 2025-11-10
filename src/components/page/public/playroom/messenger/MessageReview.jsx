@@ -7,10 +7,10 @@ const MessageReview = ({ message }) => {
 
   const { t } = useTranslation();
 
-  const question = message.question;
+  const question = message.question_text;
   const answers = message.answers;
   const selectedAnswer = message.selectedAnswer;
-  const justification = message.justification;
+  const justification = message.argument;
 
   const selectedAnswerClass = i => i === selectedAnswer ? 'message-review-answer-selected' : '';
 
@@ -21,9 +21,9 @@ const MessageReview = ({ message }) => {
       </div>
       <div className="message-review-answers">
         {answers.map((answer, i) => (
-          <div key={`${answer}-${i}`} className={`message-review-answer ${selectedAnswerClass(i)}`}>
+          <div key={`${answer.answer_id}`} className={`message-review-answer ${selectedAnswerClass(i)}`}>
             <h4>{i+1}. {t('message_review_nth_answer')}</h4>
-            <p>{answer}</p>
+            <p>{answer.answer_text}</p>
           </div>
         ))}
       </div>

@@ -16,10 +16,10 @@ const FinalReview = ({ messages, onSubmit }) => {
     </div>
     <hr />
     <div className="final-review-message-reviews">
-      {messages.map((message, i) => (
+      {Object.entries(messages).map(([id, question], i) => (
         <>
           <h3>{i+1}. {t('final_review_question_heading')}</h3>
-          <MessageReview key={i + message.question} message={message} />
+          <MessageReview key={id} message={question} />
           <hr />
         </>
       ))}
