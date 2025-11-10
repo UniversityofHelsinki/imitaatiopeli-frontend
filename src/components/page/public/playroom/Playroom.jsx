@@ -1,4 +1,5 @@
-import React, { memo, useEffect, useMemo, useState } from 'react';
+
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Playroom.css';
 import PublicPage from '../PublicPage';
@@ -17,20 +18,20 @@ import i18n from "i18next";
 import useEndJudging, { useWaitEndJudging } from '../../../../hooks/useEndJudging';
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
-  return (
-    <div className="playroom-waiting-announcement">
-      {showSpinner
-        && <Spinner text={content} position="right" />
-        || <span>{content}</span>}
-    </div>
-  )
+    return (
+        <div className="playroom-waiting-announcement">
+            {showSpinner
+                && <Spinner text={content} position="right" />
+                || <span>{content}</span>}
+        </div>
+    )
 };
 
 const getPlayer = () => localStorage.get('player');
 
 WaitingAnnouncement.propTypes = {
-  content: PropTypes.string,
-  showSpinner: PropTypes.bool,
+    content: PropTypes.string,
+    showSpinner: PropTypes.bool,
 };
 
 const Playroom = () => {
@@ -39,8 +40,8 @@ const Playroom = () => {
     const { t } = useTranslation();
     let { question, clearQuestion } = useWaitQuestion();
     let { answers, clearAnswers, changeAnswers } = useWaitAnswers();
-    const {initialQuestion, clearInitialQuestion} = useGetInitialQuestion(code);
-    const {initialAnswers, clearInitialAnswers} = useGetInitialAnswers(code);
+    const {initialQuestion} = useGetInitialQuestion(code);
+    const {initialAnswers} = useGetInitialAnswers(code);
     const player = getPlayer();
     const judgingEnded = useWaitEndJudging();
     const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging();
@@ -94,37 +95,51 @@ const Playroom = () => {
     }, [answers, initialAnswers]);
 
 
-  const onQuestionAnswered = () => {
-      console.log('clearing question');
-      clearQuestion();
-  };
+    const onQuestionAnswered = () => {
+        console.log('clearing question');
+        clearQuestion();
+    };
 
-  const onRateSubmitted = () => {
-      console.log('HIT');
-      clearAnswers();
-      console.log(answers);
-  }
+    const onRateSubmitted = () => {
+        console.log('HIT');
+        clearAnswers();
+        console.log(answers);
+    }
 
-  const tabs = [
+    // Get gameId and judgeId
+    const gameId = question?.gameId || initialQuestion?.game_id || player?.game_id;
+    const judgeId = question?.judgeId || initialQuestion?.judge_id || player?.player_id;
+
+    const tabs = [
         {
             heading: t('playroom_heading_judge'),
             notification: answers?.length > 0 ? t('playroom_notification_new_messages') : null,
-            children: <JudgeMessenger currentState={judgeState} setCurrentState={setJudgeState} game={code} answers={answers} onRateSubmitted={onRateSubmitted} stopJudging={stopJudging} summaryQuestions={summaryQuestions} />,
+            children: <JudgeMessenger
+                currentState={judgeState}
+                setCurrentState={setJudgeState}
+                game={code}
+                answers={answers}
+                onRateSubmitted={onRateSubmitted}
+                stopJudging={stopJudging}
+                summaryQuestions={summaryQuestions}
+                gameId={gameId}
+                judgeId={judgeId}
+            />,
         },
         {
             heading: t('playroom_heading_aito'),
             notification: question ? t('playroom_notification_new_messages') : null,
             children: <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered} judgingEnded={judgingEnded} />,
         }
-  ];
+    ];
 
-  return (
-    <PublicPage heading={player?.theme_description} >
-      <div className="playroom">
-        <Tabs tabs={tabs} />
-      </div>
-    </PublicPage>
-  );
+    return (
+        <PublicPage heading={player?.theme_description} >
+            <div className="playroom">
+                <Tabs tabs={tabs} />
+            </div>
+        </PublicPage>
+    );
 
 };
 
