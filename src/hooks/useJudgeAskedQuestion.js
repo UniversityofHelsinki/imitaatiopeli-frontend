@@ -11,7 +11,6 @@ const useJudgeAskedQuestion = () => {
 
     // Save to localStorage whenever it changes
     useEffect(() => {
-        console.log("question:" , question);
         if (question !== null) {
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(question));
         } else {

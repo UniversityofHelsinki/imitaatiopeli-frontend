@@ -6,9 +6,10 @@ import useAnswerQuestion from '../../../../../hooks/useAnswerQuestion';
 import { WaitingAnnouncement } from '../Playroom';
 import { useTranslation } from 'react-i18next';
 import Message, { InstructionMessage } from './Message';
+import { useWaitEndJudging } from '../../../../../hooks/useEndJudging';
 
 const AitoMessenger = ({
-                           game, question, onQuestionAnswered
+                           game, question, onQuestionAnswered, judgingEnded
                        }) => {
     const { t } = useTranslation();
     const [currentState, setCurrentState] = useState('wait');
@@ -16,17 +17,19 @@ const AitoMessenger = ({
     const [askedQuestion, setAskedQuestion] = useState('');
     const [messages, setMessages] = useState([]);
     const { sendAnswer } = useAnswerQuestion(game);
+    console.log('judgingEnded', judgingEnded);
 
     useEffect(() => {
         console.log('Question changed:', question);
-        if (question) {
+        if (judgingEnded) {
+          setCurrentState('judging-ended');
+        } else if (question) {
             setAskedQuestion(question);
             setCurrentState('answer');
         } else {
-            setAskedQuestion(question);
             setCurrentState('wait');
         }
-    }, [question]);
+    }, [question, judgingEnded]);
 
     const answerQuestion = async (answerContent) => {
         console.log('current state:', currentState);
@@ -51,7 +54,8 @@ const AitoMessenger = ({
     };
 
     const disabledAnnouncements = {
-        wait: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />
+        wait: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />,
+        'judging-ended': <WaitingAnnouncement content={t('playroom_no_more_answers_accepted')} showSpinner={false} />
     };
 
   return (

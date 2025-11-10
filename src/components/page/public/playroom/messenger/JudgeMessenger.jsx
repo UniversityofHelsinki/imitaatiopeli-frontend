@@ -12,29 +12,31 @@ import { useSocket } from '../../../../../contexts/SocketContext.jsx';
 import FinalReview from './FinalReview';
 import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js';
 
-const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
+const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions }) => {
     const { isConnected, emit } = useSocket();
     const { t } = useTranslation();
     const { askQuestion } = useAskQuestion(game);
-    const [currentState, setCurrentState] = useState('ask');
+    //const [currentState, setCurrentState] = useState('ask');
     const [questionInput, setQuestionInput] = useState('');
     const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
     const { setNotification } = useNotification();
 
+    console.log('judge', currentState, summaryQuestions);
+
     useEffect(() => {
-        console.log('received answers:', answers);
-        console.log('asked question:', askedQuestion);
-        if (answers && answers.length > 0 && askedQuestion) {
+        console.log('judge useEffect');
+        if (currentState === 'rate' || currentState === 'final-review') {
+            console.log('currentState', currentState);
+        } else if (summaryQuestions) {
+          setCurrentState('final-review');
+        } else if (answers && answers.length > 0 && askedQuestion) {
             setCurrentState('rate');
-            console.log('rate');
         } else if (answers.length === 0 && askedQuestion) {
             setCurrentState('wait');
-            console.log('wait');
         } else {
             setCurrentState('ask');
-            console.log('ask');
         }
-    }, [answers, askedQuestion]);
+    }, [answers, askedQuestion, summaryQuestions]);
 
     const handleAskQuestion = async (questionText) => {
         try {
@@ -66,39 +68,19 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
         }
     };
 
+    const endJudging = async (data) => {
+      await stopJudging(game, {
+        answerId: data.selectedAnswer.content.answer_id,
+        confidence: data.confidence,
+        argument: data.justifications
+      });
+      setCurrentState('final-review');
+    };
+
     const finalReview = (() => {
-      const mockMessages = [
-        {
-          question: 'AAAAA?',
-          answers: [
-            'OoO?',
-            'EEEE?'
-          ],
-          selectedAnswer: 0,
-          justification: 'Joo hyvä meno.'
-        },
-        {
-          question: 'BBBBB?',
-          answers: [
-            'KKAKAKAKAKAKAKAKAKAK?',
-            'HEHEHEHEHEHEHEHEH?'
-          ],
-          selectedAnswer: 1,
-          justification: 'Joo hyvä meno.'
-        },
-        {
-          question: 'CCCCCC?',
-          answers: [
-            'Vastaus joo?',
-            'Hehe?'
-          ],
-          selectedAnswer: 1,
-          justification: 'Perustelut koska joo'
-        }
-      ];
-      if (currentState === 'final-review') {
+      if (currentState === 'final-review' && summaryQuestions) {
         return (
-          <FinalReview messages={mockMessages} onSubmit={console.log} />
+          <FinalReview messages={summaryQuestions} onSubmit={console.log} />
         );
       }
       return <></>;
@@ -122,6 +104,7 @@ const JudgeMessenger = ({ game, answers, onRateSubmitted }) => {
                     question={askedQuestion}
                     answers={ answers }
                     onSubmit={handleRatingSubmit}
+                    onEndGame={endJudging}
                 />}
 
         </Messenger>

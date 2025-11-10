@@ -6,6 +6,7 @@ import JoinGameForm from '../../game/form/JoinGameForm';
 import './JoinGame.css';
 import localStorage from '../../../utilities/localStorage';
 import PublicPage from "./PublicPage.jsx";
+import useJudgeAskedQuestion from "../../../hooks/useJudgeAskedQuestion.js";
 
 const JoinGame = () => {
     const { t } = useTranslation();
@@ -15,6 +16,7 @@ const JoinGame = () => {
     const [alreadyJoined, setAlreadyJoined] = useState(false);
     const [playerConfiguration, setPlayerConfiguration] = useState(null);
     const navigate = useNavigate();
+    const [_askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
 
     useEffect(() => {
         (async () => {
@@ -22,6 +24,7 @@ const JoinGame = () => {
                 path: `/public/games/${code}`,
                 tag: `GAME_${code}`
             });
+            setAskedQuestion(null);
             setGame(response.body);
             setPlayerConfiguration(response.body.configuration?.[0]);
             setAlreadyJoined(localStorage.get('player')?.game_id === response.body.game_id);
