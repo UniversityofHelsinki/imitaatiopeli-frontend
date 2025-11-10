@@ -52,7 +52,7 @@ const useEndJudging = () => {
             delete answer.quess_id;
 
             questions[o.question_id].answers.push(answer);
-            questions[o.question_id].answers.sort(a => a.is_pretender ? 1 : -1);
+            questions[o.question_id].answers.sort(a => a.answer_order === 1 ? -1 : 1);
 
             questions[o.question_id].selectedAnswer = questions[o.question_id].answers.findIndex(a => a.guess_created);
 
