@@ -5,16 +5,16 @@ import { get, invalidate } from '../../../hooks/useHttp';
 import './AdminMonitor.css'
 import AdminMonitorTable from "./AdminMonitorTable.jsx";
 import {Row} from "react-bootstrap";
-import useJudgePlayerPairs from "../../../hooks/useJudgePlayerPairs.js";
 import Page from "../Page.jsx";
 import CopyGameUrlButton from "./CopyGameUrlButton.jsx";
+import usePlayroomJudgePlayerPairs from "../../../hooks/usePlayroomJudgePlayerPairs.js";
 
 const AdminMonitor = () => {
     const { id: gameId } = useParams();
     const { t} = useTranslation();
     const [loading, setLoading] = useState(true);
     const [game, setGame] = useState(null);
-    const [gamePlayers, error, reload] = useJudgePlayerPairs(gameId);
+    const [gamePlayers, error, reload] = usePlayroomJudgePlayerPairs(gameId);
 
     const ASCENDING = 1;
     const DESCENDING = -1;
@@ -49,7 +49,7 @@ const AdminMonitor = () => {
 
     // Force-refresh gamePlayers whenever the monitor is opened (or gameId changes)
     useEffect(() => {
-        invalidate([`JUDGE_PLAYER_PAIRS_${gameId}`]);
+        invalidate([`PLAYROOM_JUDGE_PLAYER_PAIRS_${gameId}`]);
         reload();
     }, [gameId]);
 

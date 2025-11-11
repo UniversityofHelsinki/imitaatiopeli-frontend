@@ -3,6 +3,8 @@ import {useTranslation} from "react-i18next";
 import React, { useState } from "react";
 import Button from '../../misc/ds/Button';
 import PropTypes from 'prop-types';
+import Icon from '../../misc/ds/Icon';
+
 
 const AdminMonitorTable = ({gamePlayers = [], onSortCriteria}) => {
     const { t } = useTranslation();
@@ -16,6 +18,15 @@ const AdminMonitorTable = ({gamePlayers = [], onSortCriteria}) => {
         setSortDirection(newDirection);
         onSortCriteria?.(newDirection);
     };
+
+    const readyForJudge = (player) => {
+        const allAnswered = player.player_answer_count === player.player_question_count;
+        if (allAnswered) {
+            return <Icon className="admin-monitor-table-check-small"  name="ds-check-small" aria-hidden="true" />;
+        } else {
+            return <Icon name="close-small" aria-hidden="true" />;
+        }
+    }
 
     return (
         <div className="admin-monitor-table-container small-margin">
@@ -44,7 +55,19 @@ const AdminMonitorTable = ({gamePlayers = [], onSortCriteria}) => {
                         </div>
                     </th>
                     <th scope="col">
+                        {t('admin_monitor_table_judge_ready')}
+                    </th>
+                    <th scope="col">
+                        {t('admin_monitor_table_made_questions')}
+                    </th>
+                    <th scope="col">
                         {t('admin_monitor_table_real')}
+                    </th>
+                    <th scope="col">
+                        {t('admin_monitor_table_answered_questions')}
+                    </th>
+                    <th scope="col">
+                        {t('admin_monitor_table_final_estimate')}
                     </th>
                 </tr>
                 </thead>
@@ -52,7 +75,11 @@ const AdminMonitorTable = ({gamePlayers = [], onSortCriteria}) => {
                 {Array.isArray(gamePlayers) && gamePlayers?.map((player, i) => (
                         <tr key={`${player.judge_nickname}-${i}`}>
                             <td>{player.judge_nickname}</td>
+                            <td>{readyForJudge(player)}</td>
+                            <td>{player.player_question_count}</td>
                             <td>{player.player_nickname}</td>
+                            <td>{player.player_answer_count}</td>
+                            <td>{player.player_answer_count === player.player_question_count}</td>
                         </tr>
                     ))
                 }
