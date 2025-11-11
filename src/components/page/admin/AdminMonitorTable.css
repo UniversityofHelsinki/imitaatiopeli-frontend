@@ -41,7 +41,7 @@
 .admin-monitor-table-check-small {
     display: inline-flex;
     /* Rectangular shape */
-    padding: 1px 4px;       /* tweak for table density */
-    border-radius: 2px;     /* small rounding; set to 0 for sharp corners */
+    padding: 1px 1px;       /* tweak for table density */
+    border-radius: 1px;     /* small rounding; set to 0 for sharp corners */
     background-color: lightgreen; /* Bootstrap success green */
 }
