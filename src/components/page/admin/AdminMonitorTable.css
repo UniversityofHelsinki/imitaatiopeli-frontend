@@ -35,31 +35,8 @@
 /* Green rectangular badge with white check */
 .admin-monitor-table-check-small {
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
     /* Rectangular shape */
-    padding: 2px 6px;       /* tweak for table density */
-    border-radius: 4px;     /* small rounding; set to 0 for sharp corners */
-
+    padding: 1px 4px;       /* tweak for table density */
+    border-radius: 2px;     /* small rounding; set to 0 for sharp corners */
     background-color: lightgreen; /* Bootstrap success green */
-    color: #fff;               /* icon color via currentColor */
-    line-height: 1;
-}
-
-/* Size the icon nicely inside */
-.admin-monitor-table-check-small .ds-icon,
-.admin-monitor-table-check-small svg,
-.admin-monitor-table-check-small i {
-    width: 14px;
-    height: 14px;
-}
-
-/* Force SVG icons to inherit white color */
-.admin-monitor-table-check-small svg,
-.admin-monitor-table-check-small svg *,
-.admin-monitor-table-check-small .ds-icon svg,
-.admin-monitor-table-check-small .ds-icon svg * {
-    fill: currentColor !important;
-    stroke: currentColor !important; /* covers stroke-based icons */
 }

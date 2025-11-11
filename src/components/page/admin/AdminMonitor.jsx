@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import React, {useEffect, useState} from "react";
 import { get, invalidate } from '../../../hooks/useHttp';
@@ -8,9 +8,11 @@ import {Row} from "react-bootstrap";
 import Page from "../Page.jsx";
 import CopyGameUrlButton from "./CopyGameUrlButton.jsx";
 import usePlayroomJudgePlayerPairs from "../../../hooks/usePlayroomJudgePlayerPairs.js";
+import Button from "../../misc/ds/Button.jsx";
 
 const AdminMonitor = () => {
     const { id: gameId } = useParams();
+    const navigate = useNavigate();
     const { t} = useTranslation();
     const [loading, setLoading] = useState(true);
     const [game, setGame] = useState(null);
@@ -113,6 +115,11 @@ const AdminMonitor = () => {
             <Row>
                 <div>{content}</div>
             </Row>
+            <div className="admin-monitor-game-button">
+                <Button type="button" label={t('admin_monitor_end_game_move_summary')}
+                        onClick={() => navigate('')}
+                />
+            </div>
         </Page>
     )
 }

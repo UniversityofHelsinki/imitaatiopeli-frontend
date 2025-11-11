@@ -19,9 +19,8 @@ const AdminMonitorTable = ({gamePlayers = [], onSortCriteria}) => {
         onSortCriteria?.(newDirection);
     };
 
-    const readyForJudge = (player) => {
-        const allAnswered = player.player_answer_count === player.player_question_count;
-        if (allAnswered) {
+    const finalGuess = (player) => {
+        if (player.final_guess) {
             return <Icon className="admin-monitor-table-check-small"  name="ds-check-small" aria-hidden="true" />;
         } else {
             return <Icon name="close-small" aria-hidden="true" />;
@@ -66,20 +65,16 @@ const AdminMonitorTable = ({gamePlayers = [], onSortCriteria}) => {
                     <th scope="col">
                         {t('admin_monitor_table_answered_questions')}
                     </th>
-                    <th scope="col">
-                        {t('admin_monitor_table_final_estimate')}
-                    </th>
                 </tr>
                 </thead>
                 <tbody>
                 {Array.isArray(gamePlayers) && gamePlayers?.map((player, i) => (
                         <tr key={`${player.judge_nickname}-${i}`}>
                             <td>{player.judge_nickname}</td>
-                            <td>{readyForJudge(player)}</td>
-                            <td>{player.player_question_count}</td>
+                            <td>{finalGuess(player)}</td>
+                            <td>{player.judge_question_count}</td>
                             <td>{player.player_nickname}</td>
                             <td>{player.player_answer_count}</td>
-                            <td>{player.player_answer_count === player.player_question_count}</td>
                         </tr>
                     ))
                 }
