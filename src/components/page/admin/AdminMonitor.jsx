@@ -1,20 +1,22 @@
-import {useParams} from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import React, {useEffect, useState} from "react";
 import { get, invalidate } from '../../../hooks/useHttp';
 import './AdminMonitor.css'
 import AdminMonitorTable from "./AdminMonitorTable.jsx";
 import {Row} from "react-bootstrap";
-import useJudgePlayerPairs from "../../../hooks/useJudgePlayerPairs.js";
 import Page from "../Page.jsx";
 import CopyGameUrlButton from "./CopyGameUrlButton.jsx";
+import usePlayroomJudgePlayerPairs from "../../../hooks/usePlayroomJudgePlayerPairs.js";
+import Button from "../../misc/ds/Button.jsx";
 
 const AdminMonitor = () => {
     const { id: gameId } = useParams();
+    const navigate = useNavigate();
     const { t} = useTranslation();
     const [loading, setLoading] = useState(true);
     const [game, setGame] = useState(null);
-    const [gamePlayers, error, reload] = useJudgePlayerPairs(gameId);
+    const [gamePlayers, error, reload] = usePlayroomJudgePlayerPairs(gameId);
 
     const ASCENDING = 1;
     const DESCENDING = -1;
@@ -49,7 +51,7 @@ const AdminMonitor = () => {
 
     // Force-refresh gamePlayers whenever the monitor is opened (or gameId changes)
     useEffect(() => {
-        invalidate([`JUDGE_PLAYER_PAIRS_${gameId}`]);
+        invalidate([`PLAYROOM_JUDGE_PLAYER_PAIRS_${gameId}`]);
         reload();
     }, [gameId]);
 
@@ -113,6 +115,11 @@ const AdminMonitor = () => {
             <Row>
                 <div>{content}</div>
             </Row>
+            <div className="admin-monitor-game-button">
+                <Button type="button" label={t('admin_monitor_end_game_move_summary')}
+                        onClick={() => navigate('')}
+                />
+            </div>
         </Page>
     )
 }
