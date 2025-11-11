@@ -23,7 +23,7 @@ const AdminMonitorTable = ({gamePlayers = [], onSortCriteria}) => {
         if (player.final_guess) {
             return <Icon name="ds-check-small" colour='ds-palette-green-50' aria-hidden="true" />;
         } else {
-            return <Icon name="close-small" colour='ds-palette-red-50' aria-hidden="true" />;
+            return <Icon name="close" colour='ds-palette-red-50' aria-hidden="true" />;
         }
     }
 
