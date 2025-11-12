@@ -67,14 +67,13 @@ const Playroom = () => {
 
             const socketGameId = String(gameId);
             const currentGameId = String(code);
+            localStorage.clear();
 
             if (socketGameId === currentGameId) {
                 setGameEnded(true);
                 navigate(`/games/${gameId}/endbyadmin`);
             }
         };
-
-        localStorage.clear();
 
         const handleMessage = (data) => {
             console.log('Message from backend:', data);
