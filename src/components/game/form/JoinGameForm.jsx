@@ -72,7 +72,7 @@ const JoinGameForm = ({ game }) => {
           }
 
           const playerData = await response.json();
-          localStorage.set("player", playerData);
+          localStorage.set("player", { ...playerData, code: game.game_code });
 
           console.log(playerData.player_id);
           console.log(game.game_id);
