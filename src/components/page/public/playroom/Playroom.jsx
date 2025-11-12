@@ -6,7 +6,7 @@ import PublicPage from '../PublicPage';
 import Tabs from './tab/Tabs';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../../misc/ds/Spinner';
-import {useNavigate, useParams} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import JudgeMessenger from './messenger/JudgeMessenger';
 import AitoMessenger from './messenger/AitoMessenger';
 import useWaitQuestion from "../../../../hooks/useWaitQuestion.js";
@@ -87,6 +87,15 @@ const Playroom = () => {
             off('message', handleMessage);
         };
     }, [on, off, isConnected, code]);
+
+
+    useEffect(() => {
+        if (code && (!player || player.game_id !== parseInt(code))) {
+            localStorage.remove(`judgeState:${code}`);
+            localStorage.remove('player');
+            navigate(`/`);
+        }
+    }, [code, player, navigate]);
 
     useEffect(() => {
         try {
