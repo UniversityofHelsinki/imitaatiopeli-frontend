@@ -21,9 +21,9 @@ const AdminMonitorTable = ({gamePlayers = [], onSortCriteria}) => {
 
     const finalGuess = (player) => {
         if (player.final_guess) {
-            return <Icon className="admin-monitor-table-check-small"  name="ds-check-small" aria-hidden="true" />;
+            return <Icon name="ds-check-small" colour='ds-palette-green-50' aria-hidden="true" />;
         } else {
-            return <Icon name="close-small" aria-hidden="true" />;
+            return <Icon name="close" colour='ds-palette-red-50' aria-hidden="true" />;
         }
     }
 

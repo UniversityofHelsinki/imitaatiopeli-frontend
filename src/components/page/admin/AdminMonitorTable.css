@@ -32,6 +32,11 @@
 
 }
 
+.admin-monitor table-close-icon-red {
+    color: red;
+}
+
+
 /* Green rectangular badge with white check */
 .admin-monitor-table-check-small {
     display: inline-flex;

@@ -172,13 +172,14 @@ const Content = ({ game, reload }) => {
 const Game = ({ game, reload }) => {
 
   return (
-      <div className="game">
+      <li className="game">
         <Accordion
+            id={`game-accordion-${game.game_id}`}
             header={<Header game={game} />}
             content={<Content game={game} reload={reload} />}
             variant="compact"
         />
-      </div>
+      </li>
   );
 };
 
