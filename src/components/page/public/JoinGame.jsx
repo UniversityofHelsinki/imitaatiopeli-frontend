@@ -43,15 +43,16 @@ const JoinGame = () => {
     useEffect(() => {
         if (localStorage.get('player')?.session_token) {
             if (localStorage.get('player').game_id && localStorage.get('player').player_id) {
-                console.log('Player isConnected', localStorage.get('player').game_id, " ", localStorage.get('player').player_id);
-                emit('join-game', {
-                    userId: localStorage.get('player').player_id,
-                    gameId: localStorage.get('player').game_id,
-                    nickname: localStorage.get('player').nickname,
-                    session_token: localStorage.get('player').session_token.toString(),
-                });
+                if (localStorage.get('player').code === code) {
+                    emit('join-game', {
+                        userId: localStorage.get('player').player_id,
+                        gameId: localStorage.get('player').game_id,
+                        nickname: localStorage.get('player').nickname,
+                        session_token: localStorage.get('player').session_token.toString(),
+                    });
+                    navigate(`/games/${localStorage.get('player').game_id}/play`, { replace: true });
+                }
             }
-            navigate(`/games/${localStorage.get('player').game_id}/play`, { replace: true });
         }
     }, [cookieExists]);
 

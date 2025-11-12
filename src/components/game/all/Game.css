@@ -79,3 +79,7 @@
 .game-tag {
     padding-left: var(--ds-spacing-base);
 }
+
+.game {
+    list-style: none;
+}

@@ -14,3 +14,11 @@
     align-items: baseline;
     gap: 0.5rem;
 }
+
+.admin-monitor-game-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem; /* similar to Bootstrap mt-3 */
+    gap: 0.5rem;
+
+}

@@ -16,6 +16,14 @@ const set = (key, value) => {
     }
 };
 
+const remove = (key) => {
+    try {
+        localStorage.removeItem(key);
+    } catch (error) {
+        console.error(error.message);
+    }
+};
+
 export default {
-    get, set
+    get, set, remove
 };
