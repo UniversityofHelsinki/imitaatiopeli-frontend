@@ -91,8 +91,7 @@ const Playroom = () => {
 
     useEffect(() => {
         if (code && (!player || player.game_id !== parseInt(code))) {
-            localStorage.remove(`judgeState:${code}`);
-            localStorage.remove('player');
+            localStorage.clear();
             navigate(`/`);
         }
     }, [code, player, navigate]);
