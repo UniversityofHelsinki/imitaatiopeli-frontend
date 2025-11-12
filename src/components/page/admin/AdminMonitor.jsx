@@ -117,7 +117,7 @@ const AdminMonitor = () => {
             </Row>
             <div className="admin-monitor-game-button">
                 <Button type="button" label={t('admin_monitor_end_game_move_summary')}
-                        onClick={() => navigate('')}
+                        onClick={() => navigate(`/admin/games/${gameId}/summary`)}
                 />
             </div>
         </Page>
