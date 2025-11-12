@@ -95,7 +95,7 @@ const Playroom = () => {
             localStorage.clear();
             navigate(`/`);
         }
-    }, [code, player]);
+    }, []);
 
     useEffect(() => {
         try {
