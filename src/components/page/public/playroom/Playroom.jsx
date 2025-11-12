@@ -74,6 +74,8 @@ const Playroom = () => {
             }
         };
 
+        localStorage.clear();
+
         const handleMessage = (data) => {
             console.log('Message from backend:', data);
         };
@@ -94,7 +96,7 @@ const Playroom = () => {
             localStorage.clear();
             navigate(`/`);
         }
-    }, [code, player, navigate]);
+    }, [code, player]);
 
     useEffect(() => {
         try {
