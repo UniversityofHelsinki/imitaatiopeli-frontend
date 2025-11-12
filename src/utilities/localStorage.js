@@ -16,6 +16,8 @@ const set = (key, value) => {
     }
 };
 
+const clear = () => localStorage.clear();
+
 export default {
-    get, set
+    get, set, clear
 };

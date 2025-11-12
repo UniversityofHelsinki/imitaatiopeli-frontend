@@ -1,9 +1,6 @@
 import {useParams} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import Page from "../Page.jsx";
-import {Row} from "react-bootstrap";
-import React from "react";
-import AdminMonitorTable from "./AdminMonitorTable.jsx";
 
 const AdminGameSummary = () => {
     const { id } = useParams();
@@ -21,21 +18,10 @@ const AdminGameSummary = () => {
         }
     ]
 
-    const content = (() => {
-        return (
-            gamePlayers && <AdminMonitorTable gamePlayers={gamePlayers}
-                                              sortOpts={sortOpts}
-                                              onSortCriteria={setSortOptsCriteria}
-            />
-        );
-    })();
-
     return (
         <Page  heading={t('admin_game_summary_page_heading')} crumbs={crumbs}>
             <p>Game ID: {id}</p>
-            <Row>
-                <div>{content}</div>
-            </Row>
+            <p>Tämä on testausta varten. Joonas tekee oikean sivun</p>
         </Page>
     );
 };

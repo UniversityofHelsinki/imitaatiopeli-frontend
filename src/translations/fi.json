@@ -72,6 +72,7 @@
   "start_game_page_success_notification": "Peli käynnistetty!",
   "end_game_page_success_notification": "Peli lopetettu!",
   "end_of_game_page_heading": "Peli on päättynyt",
+  "end_of_game_by_admin_heading": "Pelin järjestäjä päätti pelin, voit sulkea selaimen",
   "bread_crumb_admin": "Valvoja",
   "bread_crumb_home": "Etusivu",
   "bread_crumb_admin_games": "Pelit",
