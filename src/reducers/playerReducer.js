@@ -25,6 +25,12 @@ const playerReducer = (state = initialState, action) => {
                 judgeplayerpairs: action.payload,
                 loadingPlayer: false
             };
+        case 'GET_PLAYROOM_JUDGE_PLAYER_PAIRS':
+            return {
+                ...state,
+                playroomjudgeplayerpairs: action.payload,
+                loadingPlayer: false
+            };
         case 'SET_LOADING':
             return {
                 ...state,

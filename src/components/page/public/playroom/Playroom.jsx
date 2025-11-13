@@ -6,7 +6,7 @@ import PublicPage from '../PublicPage';
 import Tabs from './tab/Tabs';
 import { useTranslation } from 'react-i18next';
 import Spinner from '../../../misc/ds/Spinner';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import JudgeMessenger from './messenger/JudgeMessenger';
 import AitoMessenger from './messenger/AitoMessenger';
 import useWaitQuestion from "../../../../hooks/useWaitQuestion.js";
@@ -45,6 +45,7 @@ const Playroom = () => {
     const player = getPlayer();
     const judgingEnded = useWaitEndJudging();
     const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging();
+    const navigate = useNavigate();
 
     const [judgeState, setJudgeState] = React.useState(() => {
         try {
@@ -53,6 +54,15 @@ const Playroom = () => {
             return '';
         }
     });
+
+    useEffect(() => {
+        if (code && (!player || player.game_id !== parseInt(code))) {
+            localStorage.remove(`judgeState:${code}`);
+            localStorage.remove('player');
+            navigate(`/`);
+        }
+    }, [code, player, navigate]);
+
     useEffect(() => {
         try {
             if (code) localStorage.set(`judgeState:${code}`, judgeState);
