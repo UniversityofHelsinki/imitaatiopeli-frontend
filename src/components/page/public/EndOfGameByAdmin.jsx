@@ -10,10 +10,10 @@ const EndOfGameByAdmin = () => {
 
     return (
         <Page  heading={t('end_of_game_by_admin_heading')} >
-            EndOfGameByAdmin.js ja EndOfGameByAdmin.css voi poistaa.
-            Oikean sivu tehdään tiketissä IM-197.
-            App.jsx pitää riville {` <Route path=":id/endbyadmin" element={<EndOfGameByAdmin />} /> `} pitää muuttaa tuo
-            IM-197 tehty sivu.
+            <p>EndOfGameByAdmin.js ja EndOfGameByAdmin.css voi poistaa.</p>
+            <p>Oikea sivu tehdään tiketissä IM-197.</p>
+            <p>App.jsx pitää riville {` <Route path=":id/endbyadmin" element={<EndOfGameByAdmin />} /> `} pitää muuttaa tuo
+            IM-197 tehty sivu, jolle siirrytään.</p>
         </Page>
     );
 };
