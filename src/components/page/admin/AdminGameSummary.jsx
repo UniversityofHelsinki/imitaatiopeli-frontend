@@ -21,7 +21,7 @@ const AdminGameSummary = () => {
     return (
         <Page  heading={t('admin_game_summary_page_heading')} crumbs={crumbs}>
             <p>Game ID: {id}</p>
-            <p>Tämä on testausta varten. Joonas tekee oikean sivun</p>
+            <p>Tämä on testausta varten. Oikean sivu tehdään tiketissä IM-181.</p>
         </Page>
     );
 };
