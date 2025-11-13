@@ -32,8 +32,6 @@ const MessageField = ({
         }
     };
 
-    console.log(message.length)
-
     return (
         <div className="messenger-message-field">
             {disabled && announcement &&
