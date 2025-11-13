@@ -14,7 +14,6 @@ const GameSummaryPage = () => {
     const [loading, setLoading] = useState(true);
     const [summaryData, setSummaryData] = useState(null);
     const [error, setError] = useState(null);
-    const { eppn } = useUser();
 
     useEffect(() => {
         const fetchSummaryData = async () => {
@@ -60,24 +59,22 @@ const GameSummaryPage = () => {
         return summaryData && <GameSummaryTable summaryData={summaryData}/>;
     })();
 
-    console.log('summaryData', summaryData);
-
     return (
         <Page
             className="page-heading"
             loading={loading}
-            heading={t('game_summary_title')}
+            heading={t('summary_heading')}
             crumbs={crumbs}
         >
             <ul className="game-summary-data-list-container list-unstyled">
                 <li className="li-1">
-                    Osallistujien määrä:
+                    {t('summary_page_number_of_participants')}
                 </li>
                 <li className="li-2">
-                    Esitetyt kysymykset:
+                    {t('summary_page_total_questions_asked')}
                 </li>
                 <li className="li-3">
-                    Arvioiden onnistumisprosentti:
+                    {t('summary_page_correct_guesses_percentage')}
                 </li>
             </ul>
             <Row>
