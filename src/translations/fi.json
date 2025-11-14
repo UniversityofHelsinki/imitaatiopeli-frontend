@@ -200,8 +200,6 @@
   "join_game_cookies_announcement": "???",
   "playroom_instructions_judge": "???",
   "playroom_instructions_aito": "???",
-  "game_form_randomization_field_legend" : "???",
-  "game_form_randomization_field_assistive_text": "???",
   "bread_crumb_game_summary": "Yhteenveto",
   "summary_heading": "Pelin yhteenveto",
   "summary_participants": "Osallistujat",
@@ -210,6 +208,7 @@
   "summary_page_number_of_participants": "Osallistujien määrä:",
   "summary_page_total_questions_asked": "Esitettyjen kysymysten määrä:",
   "summary_page_correct_guesses_percentage": "Arvioiden onnistumisprosentti:",
-  "summary_page_download_summary_link_label": "Lataa pelin yhteenveto (.xls):"
-
+  "summary_page_download_summary_link_label": "Lataa pelin yhteenveto (.xls):",
+  "game_form_randomization_field_legend" : "???game_form_randomization_field_legend???",
+  "game_form_randomization_field_assistive_text": "???game_form_randomization_field_assistive_text???"
 }

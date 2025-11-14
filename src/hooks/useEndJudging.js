@@ -11,7 +11,7 @@ export const useWaitEndJudging = () => {
       setJudgingEnded(true);
     });
   }, [on]);
-  
+
 
   return judgingEnded;
 };
@@ -53,7 +53,6 @@ const useEndJudging = () => {
 
             questions[o.question_id].answers.push(answer);
             questions[o.question_id].answers.sort(a => a.is_pretender ? 1 : -1);
-
             questions[o.question_id].selectedAnswer = questions[o.question_id].answers.findIndex(a => a.guess_created);
 
           });
@@ -66,7 +65,7 @@ const useEndJudging = () => {
           }
         });
   }, [isConnected, on, storageKey]);
-  
+
 
   const endJudging = async (game, rating) => {
     if (isConnected) {
