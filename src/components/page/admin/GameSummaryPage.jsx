@@ -6,6 +6,7 @@ import './GameSummaryPage.css'
 import GameSummaryTable from "./GameSummaryTable.jsx";
 import {Row} from "react-bootstrap";
 import Page from "../Page.jsx";
+import Link from "../../misc/ds/Link.jsx";
 
 const GameSummaryPage = () => {
     const { id: gameId } = useParams();
@@ -80,9 +81,15 @@ const GameSummaryPage = () => {
             crumbs={crumbs}
         >
             <div className="game-summary-download-link-container mb-3 mt-2">
-                <span>
-                    {t('summary_page_download_summary_link_label')}
-                </span>
+                <Link
+                    label={t('summary_page_download_summary_link_label')}
+                    variant="standalone"
+                    icon="download"
+                    size="medium"
+                    colour="black"
+                    href={`/api/game/${gameId}/gameDataToExcel`}
+                    internal
+                />
             </div>
             <ul className="game-summary-data-list-container list-unstyled">
                 <li className="li-1">

@@ -186,13 +186,13 @@
   "join_game_cookies_announcement": "???",
   "playroom_instructions_judge": "???",
   "playroom_instructions_aito": "???",
-  "bread_crumb_game_summary": "bread_crumb_game_summary",
-  "summary_heading": "summary_heading",
-  "summary_participants": "summary_participants",
-  "summary_questions_asked": "summary_questions_asked",
-  "summary_correct_guesses": "summary_correct_guesses",
-  "summary_page_number_of_participants": "summary_page_number_of_participants",
-  "summary_page_total_questions_asked": "summary_page_total_questions_asked",
-  "summary_page_correct_guesses_percentage": "summary_page_correct_guesses_percentage",
-  "summary_page_download_summary_link_label": "summary_page_download_summary_link_label"
+  "bread_crumb_game_summary": "?bread_crumb_game_summary",
+  "summary_heading": "?summary_heading",
+  "summary_participants": "?summary_participants",
+  "summary_questions_asked": "?summary_questions_asked",
+  "summary_correct_guesses": "?summary_correct_guesses",
+  "summary_page_number_of_participants": "?summary_page_number_of_participants",
+  "summary_page_total_questions_asked": "?summary_page_total_questions_asked",
+  "summary_page_correct_guesses_percentage": "?summary_page_correct_guesses_percentage",
+  "summary_page_download_summary_link_label": "?summary_page_download_summary_link_label"
 }
