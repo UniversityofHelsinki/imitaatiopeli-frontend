@@ -97,7 +97,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             announcement={disabledAnnouncements[currentState]}
             message={questionInput}
             onMessageChange={m => setQuestionInput(m)}
-            msglength={255}>
+            msglength={500}>
             {currentState !== 'final-review' && <ul className="message-area-messages">
                 <li className="message-area-instructions message-area-item">
                     <InstructionMessage content={t('playroom_instructions_judge')} />
