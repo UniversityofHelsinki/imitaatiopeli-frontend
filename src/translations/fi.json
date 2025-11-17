@@ -206,5 +206,5 @@
   "game_form_randomization_field_legend" : "???game_form_randomization_field_legend???",
   "game_form_randomization_field_assistive_text": "???game_form_randomization_field_assistive_text???",
   "game_end_reason_by_judge": "Tuomari päätti pelin",
-  "game_end_reason_by_admin": "Admin päätti pelin"
+  "game_end_reason_by_admin": "Ylläpitäjä päätti pelin"
 }
