@@ -11,6 +11,7 @@ import { useNotification } from '../../../../notification/NotificationContext.js
 import { useSocket } from '../../../../../contexts/SocketContext.jsx';
 import FinalReview from './FinalReview';
 import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js';
+import GameEnd from './GameEnd';
 
 const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId }) => {
     const { isConnected, emit } = useSocket();
@@ -27,13 +28,13 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
         console.log('judge useEffect');
         if (currentState === 'rate' || currentState === 'final-review') {
             console.log('currentState', currentState);
-        } else if (summaryQuestions) {
+        } else if (summaryQuestions && currentState !== 'end') {
             setCurrentState('final-review');
         } else if (answers && answers.length > 0 && askedQuestion) {
             setCurrentState('rate');
-        } else if (answers.length === 0 && askedQuestion) {
+        } else if (answers.length === 0 && askedQuestion && currentState !== 'end') {
             setCurrentState('wait');
-        } else {
+        } else if (currentState !== 'end') {
             setCurrentState('ask');
         }
     }, [answers, askedQuestion, summaryQuestions]);
@@ -84,10 +85,19 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
                     messages={summaryQuestions}
                     gameId={gameId}
                     judgeId={judgeId}
+                    setCurrentState={setCurrentState}
                 />
             );
         }
         return <></>;
+    })();
+
+    const end = (() => {
+      if (currentState === 'end') {
+        return (
+          <GameEnd reason={'game_ended'} />
+        )
+      }
     })();
 
     return (
@@ -110,6 +120,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
                     onSubmit={handleRatingSubmit}
                     onEndGame={endJudging}
                 />}
+            {currentState === 'end' && end}
 
         </Messenger>
     );
