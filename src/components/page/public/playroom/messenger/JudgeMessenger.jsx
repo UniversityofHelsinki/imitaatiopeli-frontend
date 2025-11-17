@@ -107,6 +107,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             announcement={disabledAnnouncements[currentState]}
             message={questionInput}
             onMessageChange={m => setQuestionInput(m)}
+            messageFieldHidden={['final-review', 'end'].includes(currentState)}
             msglength={500}>
             {currentState !== 'final-review' && <ul className="message-area-messages">
                 <li className="message-area-instructions message-area-item">

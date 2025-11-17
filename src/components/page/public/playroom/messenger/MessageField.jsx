@@ -10,7 +10,8 @@ const MessageField = ({
                           disabled = false,
                           announcement = <></>,
                           message,
-                          msglength = null
+                          msglength = null,
+                          hidden = false,
                       }) => {
     const { t } = useTranslation();
 
@@ -33,7 +34,7 @@ const MessageField = ({
     };
 
     return (
-        <div className="messenger-message-field">
+        !hidden && <div className="messenger-message-field">
             {disabled && announcement &&
                 <div className="messenger-message-field-announcement" aria-live="assertive">{announcement}</div>
             }
@@ -53,6 +54,7 @@ MessageField.propTypes = {
     announcement: PropTypes.node,
     msglength: PropTypes.number,
     message: PropTypes.string,
+    hidden: PropTypes.bool,
 };
 
 export default MessageField;
