@@ -24,7 +24,13 @@ const remove = (key) => {
     }
 };
 
-const clear = () => localStorage.clear();
+const clear = (key) => {
+    try {
+        localStorage.clear();
+    } catch (error) {
+        console.error(error.message);
+    }
+};
 
 export default {
     get, set, remove, clear
