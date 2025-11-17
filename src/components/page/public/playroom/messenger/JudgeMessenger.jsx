@@ -95,8 +95,8 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
     const end = (() => {
       if (currentState === 'end') {
         return (
-          <GameEnd reason={'game_ended'} />
-        )
+            navigate(`/games/${gameId}/gameend`, { state: { reason } })
+      )
       }
     })();
 
