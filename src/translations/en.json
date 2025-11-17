@@ -195,7 +195,7 @@
   "summary_page_correct_guesses_percentage": "?summary_page_correct_guesses_percentage",
   "summary_page_download_summary_link_label": "?summary_page_download_summary_link_label",
   "summary_page_move_to_game_list": "?summary_page_move_to_game_list",
-  "game_content_move_to_summary_link_label": "?game_content_move_to_summary_link_label"
+  "game_content_move_to_summary_link_label": "?game_content_move_to_summary_link_label",
   "playroom_instructions_judge": "As the judge, your task is to ask a question that allows you to determine which respondent is the group member and which is the AI pretender",
   "playroom_instructions_aito": "As the respondent, your task is to answer the questions as yourself.",
   "game_form_randomization_field_legend" : "Randomize answer order",
