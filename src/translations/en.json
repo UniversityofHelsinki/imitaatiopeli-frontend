@@ -196,5 +196,6 @@
   "summary_page_total_questions_asked": "?summary_page_total_questions_asked",
   "summary_page_correct_guesses_percentage": "?summary_page_correct_guesses_percentage",
   "summary_page_download_summary_link_label": "?summary_page_download_summary_link_label",
-  "summary_page_move_to_game_list": "?summary_page_move_to_game_list"
+  "summary_page_move_to_game_list": "?summary_page_move_to_game_list",
+  "game_content_move_to_summary_link_label": "?game_content_move_to_summary_link_label"
 }

@@ -212,5 +212,6 @@
   "summary_page_download_summary_link_label": "Lataa pelin yhteenveto (.xls)",
   "summary_page_move_to_game_list": "Siirry pelilistaan",
   "game_form_randomization_field_legend" : "???game_form_randomization_field_legend???",
-  "game_form_randomization_field_assistive_text": "???game_form_randomization_field_assistive_text???"
+  "game_form_randomization_field_assistive_text": "???game_form_randomization_field_assistive_text???",
+  "game_content_move_to_summary_link_label": "Siirry pelin yhteenvetoon"
 }

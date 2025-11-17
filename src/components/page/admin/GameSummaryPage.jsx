@@ -95,7 +95,7 @@ const GameSummaryPage = () => {
                 <Link
                     label={t('summary_page_download_summary_link_label')}
                     variant="standalone"
-                    icon="download"
+                    icon="file_save"
                     size="medium"
                     colour="black"
                     href={`${baseUrl}/api/games/${gameId}/gameDataToExcel`}

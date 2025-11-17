@@ -137,7 +137,6 @@ const Content = ({ game, reload }) => {
           <div className="game-content-actions">
             {stateLink}
             {gameWaiting && game.playerCount === 0 && (
-                <>
                   <Link
                       label={t('game_content_edit_game_link_label')}
                       variant="standalone"
@@ -147,10 +146,22 @@ const Content = ({ game, reload }) => {
                       href={`/admin/games/${game.game_id}`}
                       internal
                   />
-                </>
             )}
+              {gameEnded && (
+                  <div>
+                      <Link
+                          label={t('game_content_move_to_summary_link_label')}
+                          variant="standalone"
+                          icon="view_list_fill"
+                          size="2xLarge"
+                          colour="black"
+                          href={`/admin/games/${game.game_id}/summary`}
+                          internal
+                      />
+                  </div>
+              )}
               {gameEnded &&  (
-                  <>
+                  <div>
                       <Button
                           icon="delete"
                           label={t('game_content_delete_game_link_label')}
@@ -159,7 +170,7 @@ const Content = ({ game, reload }) => {
                           size="small"
                       />
                       {renderDeleteConfirm()}
-                  </>
+                  </div>
               )}
           </div>
         </div>
