@@ -12,6 +12,7 @@ const GameSummaryTable = ({ summaryData }) => {
             <tr>
                 <th>{t('summary_participants')}</th>
                 <th>{t('summary_questions_asked')}</th>
+                <th>{t('summary_guesses_sent')}</th>
                 <th>{t('summary_correct_guesses')}</th>
             </tr>
             </thead>
@@ -20,6 +21,7 @@ const GameSummaryTable = ({ summaryData }) => {
                 <tr key={index}>
                     <td>{player.nickname}</td>
                     <td>{player.questions_asked}</td>
+                    <td>{player.guesses_sent}</td>
                     <td>{player.correct_guesses}</td>
                 </tr>
             ))}
@@ -32,6 +34,7 @@ GameSummaryTable.propTypes = {
     summaryData: PropTypes.arrayOf(PropTypes.shape({
         nickname: PropTypes.string.isRequired,
         questions_asked: PropTypes.number.isRequired,
+        guesses_sent: PropTypes.number.isRequired,
         correct_guesses: PropTypes.number.isRequired,
     })).isRequired
 };

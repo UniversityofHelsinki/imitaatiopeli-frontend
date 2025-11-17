@@ -191,8 +191,10 @@
   "summary_participants": "?summary_participants",
   "summary_questions_asked": "?summary_questions_asked",
   "summary_correct_guesses": "?summary_correct_guesses",
+  "summary_guesses_sent": "?summary_guesses_sent",
   "summary_page_number_of_participants": "?summary_page_number_of_participants",
   "summary_page_total_questions_asked": "?summary_page_total_questions_asked",
   "summary_page_correct_guesses_percentage": "?summary_page_correct_guesses_percentage",
-  "summary_page_download_summary_link_label": "?summary_page_download_summary_link_label"
+  "summary_page_download_summary_link_label": "?summary_page_download_summary_link_label",
+  "summary_page_move_to_game_list": "?summary_page_move_to_game_list"
 }

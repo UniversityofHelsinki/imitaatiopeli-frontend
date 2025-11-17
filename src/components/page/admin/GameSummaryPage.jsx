@@ -7,6 +7,7 @@ import GameSummaryTable from "./GameSummaryTable.jsx";
 import {Row} from "react-bootstrap";
 import Page from "../Page.jsx";
 import Link from "../../misc/ds/Link.jsx";
+import BottomRow from "../../game/form/BottomRow.jsx";
 
 const GameSummaryPage = () => {
     const { id: gameId } = useParams();
@@ -14,6 +15,7 @@ const GameSummaryPage = () => {
     const [loading, setLoading] = useState(true);
     const [summaryData, setSummaryData] = useState(null);
     const [error, setError] = useState(null);
+    const baseUrl = import.meta.env.VITE_APP_IMITATION_BACKEND_SERVER || '';
 
     useEffect(() => {
         const fetchSummaryData = async () => {
@@ -52,18 +54,27 @@ const GameSummaryPage = () => {
     ];
 
     const rows = Array.isArray(summaryData) ? summaryData : [];
+
     const totalParticipants = rows.length;
+
     const totalQuestions = rows.reduce((sum, r) => {
         const n = Number(r?.questions_asked);
         return sum + (Number.isFinite(n) ? n : 0);
     }, 0);
-    const totalCorrectGuesses = rows.reduce((sum, r) => {
-        const n = Number(r?.correct_guesses);
+
+    const totalGuesses = rows.reduce((sum, r) => {
+        const n = Number(r?.guesses_sent);
         return sum + (Number.isFinite(n) ? n : 0);
     }, 0);
-    const correctGuessesPercentage = totalQuestions > 0
-        ? Math.round((totalCorrectGuesses / totalQuestions) * 100)
-        : 0;
+
+    const totalCorrectGuesses = rows.reduce((sum, r) => {
+     const n = Number(r?.correct_guesses);
+     return sum + (Number.isFinite(n) ? n : 0);
+     }, 0);
+
+    const correctGuessesPercentage = totalCorrectGuesses> 0
+     ? Math.round((totalCorrectGuesses / totalGuesses) * 100)
+     : 0;
 
     const content = (() => {
         if (error) {
@@ -87,8 +98,7 @@ const GameSummaryPage = () => {
                     icon="download"
                     size="medium"
                     colour="black"
-                    href={`/api/game/${gameId}/gameDataToExcel`}
-                    internal
+                    href={`${baseUrl}/api/games/${gameId}/gameDataToExcel`}
                 />
             </div>
             <ul className="game-summary-data-list-container list-unstyled">
@@ -105,6 +115,17 @@ const GameSummaryPage = () => {
             <Row>
                 <div>{content}</div>
             </Row>
+                <BottomRow className="bottom-row">
+                    <Link
+                        label={t('summary_page_move_to_game_list')}
+                        variant="standalone"
+                        icon="home"
+                        size="medium"
+                        colour="black"
+                        href={`/admin/games`}
+                        internal
+                    />
+                </BottomRow>
         </Page>
     );
 };
