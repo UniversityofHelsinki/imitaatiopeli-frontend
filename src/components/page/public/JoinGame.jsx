@@ -30,6 +30,9 @@ const JoinGame = () => {
             setAskedQuestion(null);
             setGame(response.body);
             setPlayerConfiguration(response.body.configuration?.[0]);
+            if (!!localStorage.get('player')?.game_id && localStorage.get('player')?.game_id !== response.body.game_id) {
+                localStorage.clear();
+            }
             setAlreadyJoined(localStorage.get('player')?.game_id === response.body.game_id);
             setCookieExists(localStorage.get('player')?.session_token !== null);
             setLoading(false);

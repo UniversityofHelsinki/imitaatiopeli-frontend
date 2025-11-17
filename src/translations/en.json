@@ -184,8 +184,6 @@
   "confidence_meter_value_4": "Very confident",
   "game_started_notification": "Game successfully started!",
   "join_game_cookies_announcement": "???",
-  "playroom_instructions_judge": "???",
-  "playroom_instructions_aito": "???",
   "bread_crumb_game_summary": "?bread_crumb_game_summary",
   "summary_heading": "?summary_heading",
   "summary_participants": "?summary_participants",
@@ -198,4 +196,9 @@
   "summary_page_download_summary_link_label": "?summary_page_download_summary_link_label",
   "summary_page_move_to_game_list": "?summary_page_move_to_game_list",
   "game_content_move_to_summary_link_label": "?game_content_move_to_summary_link_label"
+  "playroom_instructions_judge": "As the judge, your task is to ask a question that allows you to determine which respondent is the group member and which is the AI pretender",
+  "playroom_instructions_aito": "As the respondent, your task is to answer the questions as yourself.",
+  "game_form_randomization_field_legend" : "Randomize answer order",
+  "game_form_randomization_field_assistive_text": "If enabled, the Pretender and Non-Pretender answers will be shown to the judge in a random order for each question. If disabled, the Pretender (AI) answer will always appear second."
+
 }
