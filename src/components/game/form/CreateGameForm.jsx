@@ -36,11 +36,11 @@ const CreateGameForm = () => {
         validate(game).then(setValidations);
     }, []);
 
-    const onChange = useCallback(async (key, value) => {
+    const onChange = async (key, value) => {
         const changed = { ...game, [key]: value };
         setGame(changed);
         setValidations(await validate(changed));
-    }, [game]);
+    };
 
     const onReset = async () => {
         setValidations({});

@@ -25,14 +25,14 @@ const EditGameForm = ({
         })();
     }, [game]);
 
-    const onChange = useCallback(async (key, value) => {
+    const onChange = async (key, value) => {
         const changed = {
             ...modifiedGame,
             [key]: value
         };
         setModifiedGame(changed);
         setValidations(await validate(changed));
-    }, [modifiedGame]);
+    };
 
     if (!modifiedGame) {
         return <></>;
