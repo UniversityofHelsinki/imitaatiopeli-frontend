@@ -154,7 +154,16 @@ const GameForm = ({
                     openByDefault={false}
                 />
             </div>
-
+            <div className="form-field game-form-field">
+                <RandomizationField
+                    value={game.configuration.answer_randomization}
+                    onChange={e => onChange('configuration',  {
+                        ...game.configuration,
+                        answer_randomization: e.target.value === true
+                    })}
+                    disabled={saving}
+                />
+            </div>
             <div className="form-field game-form-field">
                 <InstructionsField
                     value={game.configuration.instructions_for_players}
@@ -172,16 +181,6 @@ const GameForm = ({
                     onChange={e => onChange('configuration',  {
                         ...game.configuration,
                         is_research_game: e.target.value === true
-                    })}
-                    disabled={saving}
-                />
-            </div>
-            <div className="form-field game-form-field">
-                <RandomizationField
-                    value={game.configuration.answer_randomization}
-                    onChange={e => onChange('configuration',  {
-                        ...game.configuration,
-                        answer_randomization: e.target.value === true
                     })}
                     disabled={saving}
                 />
