@@ -71,6 +71,7 @@ const Playroom = () => {
 
             if (socketGameId === currentGameId) {
                 setGameEnded(true);
+                let reason = 'game_end_reason_by_admin';
                 navigate(`/games/${gameId}/gameend`, { state: { reason } })
             }
         };

@@ -11,7 +11,7 @@ import { useNotification } from '../../../../notification/NotificationContext.js
 import { useSocket } from '../../../../../contexts/SocketContext.jsx';
 import FinalReview from './FinalReview';
 import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js';
-import GameEnd from './GameEnd';
+import {useNavigate} from "react-router-dom";
 
 const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId }) => {
     const { isConnected, emit } = useSocket();
@@ -21,6 +21,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
     const [questionInput, setQuestionInput] = useState('');
     const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
     const { setNotification } = useNotification();
+    const navigate = useNavigate();
 
     console.log('judge', currentState, summaryQuestions);
 
@@ -78,6 +79,13 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
         setCurrentState('final-review');
     };
 
+    useEffect(() => {
+        if (currentState === 'end') {
+            const reason = 'game_end_reason_by_judge';
+            navigate(`/games/${gameId}/gameend`, { state: { reason } });
+        }
+    }, [currentState, gameId, navigate]);
+
     const finalReview = (() => {
         if (currentState === 'final-review' && summaryQuestions) {
             return (
@@ -90,14 +98,6 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             );
         }
         return <></>;
-    })();
-
-    const end = (() => {
-      if (currentState === 'end') {
-        return (
-            navigate(`/games/${gameId}/gameend`, { state: { reason } })
-      )
-      }
     })();
 
     return (
@@ -120,8 +120,6 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
                     onSubmit={handleRatingSubmit}
                     onEndGame={endJudging}
                 />}
-            {currentState === 'end' && end}
-
         </Messenger>
     );
 };
