@@ -12,6 +12,7 @@ import { useSocket } from '../../../../../contexts/SocketContext.jsx';
 import FinalReview from './FinalReview';
 import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js';
 import {useNavigate} from "react-router-dom";
+import localStorage from "../../../../../utilities/localStorage.js";
 
 const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId }) => {
     const { isConnected, emit } = useSocket();
@@ -81,6 +82,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
 
     useEffect(() => {
         if (currentState === 'end') {
+            localStorage.clear();
             const reason = 'game_end_reason_by_judge';
             navigate(`/games/${gameId}/gameend`, { state: { reason } });
         }
