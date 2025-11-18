@@ -30,7 +30,7 @@ import EndOfGame from "./components/page/public/EndOfGame.jsx";
 import AdminMonitor from "./components/page/admin/AdminMonitor.jsx";
 import Playroom from './components/page/public/playroom/Playroom';
 import localStorageUtil from './utilities/localStorage';
-import AdminGameSummary from "./components/page/admin/AdminGameSummary.jsx";
+import GameSummaryPage from "./components/page/admin/GameSummaryPage.jsx";
 import GameEnd from "./components/page/public/playroom/messenger/GameEnd.jsx";
 
 defineCustomElements(window);
@@ -90,7 +90,7 @@ const App = () => {
                       <Route path=":id/end" element={<EndGame />} />
                       <Route path=":id/lobby" element={<AdminGameLobby />} />
                       <Route path=":id/monitor" element={<AdminMonitor />} />
-                      <Route path=":id/summary" element={<AdminGameSummary />} />
+                      <Route path=":id/summary" element={<GameSummaryPage />} />
                     </Route>
                 </Route>
             </Route>
