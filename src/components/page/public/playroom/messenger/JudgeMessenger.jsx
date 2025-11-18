@@ -11,7 +11,9 @@ import { useNotification } from '../../../../notification/NotificationContext.js
 import { useSocket } from '../../../../../contexts/SocketContext.jsx';
 import FinalReview from './FinalReview';
 import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js';
-import GameEnd from './GameEnd';
+import {useNavigate} from "react-router-dom";
+import localStorage from "../../../../../utilities/localStorage.js";
+import GameEnd from "./GameEnd.jsx";
 
 const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId }) => {
     const { isConnected, emit } = useSocket();
@@ -21,6 +23,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
     const [questionInput, setQuestionInput] = useState('');
     const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
     const { setNotification } = useNotification();
+    const navigate = useNavigate();
 
     console.log('judge', currentState, summaryQuestions);
 
@@ -95,7 +98,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
     const end = (() => {
       if (currentState === 'end') {
         return (
-          <GameEnd reason={'game_ended'} />
+          <GameEnd reason={'game_end_reason_by_judge'} />
         )
       }
     })();

@@ -31,6 +31,7 @@ import AdminMonitor from "./components/page/admin/AdminMonitor.jsx";
 import Playroom from './components/page/public/playroom/Playroom';
 import localStorageUtil from './utilities/localStorage';
 import GameSummaryPage from "./components/page/admin/GameSummaryPage.jsx";
+import GameEnd from "./components/page/public/playroom/messenger/GameEnd.jsx";
 
 defineCustomElements(window);
 
@@ -69,6 +70,7 @@ const App = () => {
                   <Route path=":code/play" element={<Playroom />} />
                   <Route path=":code/join" element={<JoinGame />} />
                   <Route path=":id/end" element={<EndOfGame />} />
+                  <Route path=":id/gameend" element={<GameEnd />} />
                 </Route>
 
                 <Route path="admin/*" element={
