@@ -54,6 +54,8 @@ const JoinGame = () => {
                         session_token: localStorage.get('player').session_token.toString(),
                     });
                     navigate(`/games/${localStorage.get('player').game_id}/play`, { replace: true });
+                } else {
+                    localStorage.clear();
                 }
             }
         }

@@ -9,14 +9,20 @@ import Page from "../Page.jsx";
 import CopyGameUrlButton from "./CopyGameUrlButton.jsx";
 import usePlayroomJudgePlayerPairs from "../../../hooks/usePlayroomJudgePlayerPairs.js";
 import Button from "../../misc/ds/Button.jsx";
+import useEndGame from "../../../hooks/useEndGame.js";
+import {useNotification} from "../../notification/NotificationContext.jsx";
+import {useSocket} from "../../../contexts/SocketContext.jsx";
 
 const AdminMonitor = () => {
+    const { isConnected, on, off, emit } = useSocket();
     const { id: gameId } = useParams();
     const navigate = useNavigate();
     const { t} = useTranslation();
     const [loading, setLoading] = useState(true);
     const [game, setGame] = useState(null);
     const [gamePlayers, error, reload] = usePlayroomJudgePlayerPairs(gameId);
+    const endOngoingGame = useEndGame(gameId);
+    const { setNotification } = useNotification();
 
     const ASCENDING = 1;
     const DESCENDING = -1;
@@ -92,6 +98,17 @@ const AdminMonitor = () => {
         );
     })();
 
+    const endGame = async () => {
+        if (isConnected && game.game_id) {
+            emit('end-game', {
+                gameId: game.game_id,
+            });
+            await endOngoingGame();
+            setNotification(t('end_game_page_success_notification'), 'success', true);
+            navigate(`/admin/games/${gameId}/summary`);
+        }
+    }
+
     return (
         <Page className="page-heading"
                     loading={loading}
@@ -117,7 +134,7 @@ const AdminMonitor = () => {
             </Row>
             <div className="admin-monitor-game-button">
                 <Button type="button" label={t('admin_monitor_end_game_move_summary')}
-                        onClick={() => navigate('')}
+                        onClick={endGame}
                 />
             </div>
         </Page>

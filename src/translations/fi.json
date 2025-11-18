@@ -213,5 +213,7 @@
   "summary_page_move_to_game_list": "Siirry pelilistaan",
   "game_form_randomization_field_legend" : "???game_form_randomization_field_legend???",
   "game_form_randomization_field_assistive_text": "???game_form_randomization_field_assistive_text???",
+  "game_end_reason_by_judge": "Kiitos loppuarviosta, pelisi jatkuu aidon roolissa",
+  "game_end_reason_by_admin": "Pelin järjestäjä päätti pelin, voit sulkea selaimen",
   "game_content_move_to_summary_link_label": "Siirry pelin yhteenvetoon"
 }

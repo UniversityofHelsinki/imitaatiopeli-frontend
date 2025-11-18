@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import './Playroom.css';
 import PublicPage from '../PublicPage';
@@ -16,6 +16,8 @@ import useGetInitialQuestion from '../../../../hooks/useGetInitialQuestion.js';
 import useGetInitialAnswers from '../../../../hooks/useGetInitialAnswers.js';
 import i18n from "i18next";
 import useEndJudging, { useWaitEndJudging } from '../../../../hooks/useEndJudging';
+import {useSocket} from "../../../../contexts/SocketContext.jsx";
+import GameEnd from "./messenger/GameEnd.jsx";
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
     return (
@@ -36,6 +38,7 @@ WaitingAnnouncement.propTypes = {
 
 const Playroom = () => {
 
+    const { isConnected, on, off } = useSocket();
     const { code } = useParams();
     const { t } = useTranslation();
     let { question, clearQuestion } = useWaitQuestion();
@@ -45,6 +48,7 @@ const Playroom = () => {
     const player = getPlayer();
     const judgingEnded = useWaitEndJudging();
     const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging();
+    const [gameEnded, setGameEnded] = useState(false);
     const navigate = useNavigate();
 
     const [judgeState, setJudgeState] = React.useState(() => {
@@ -55,13 +59,45 @@ const Playroom = () => {
         }
     });
 
+    // Listen for game-ended event from Socket.IO
+    useEffect(() => {
+        const handleGameEnded = (data) => {
+            const { gameId, message } = data;
+            console.log('Game ended event received:', data);
+            console.log('Current game ID:', code);
+
+            const socketGameId = String(gameId);
+            const currentGameId = String(code);
+            localStorage.clear();
+
+            if (socketGameId === currentGameId) {
+                setGameEnded(true);
+                let reason = 'game_end_reason_by_admin';
+                navigate(`/games/${gameId}/gameend`, { state: { reason } })
+            }
+        };
+
+        const handleMessage = (data) => {
+            console.log('Message from backend:', data);
+        };
+
+        // Listen for socket events
+        on('game-ended', handleGameEnded);
+        on('message', handleMessage);
+
+        return () => {
+            off('game-ended', handleGameEnded);
+            off('message', handleMessage);
+        };
+    }, [on, off, isConnected, code]);
+
+
     useEffect(() => {
         if (code && (!player || player.game_id !== parseInt(code))) {
-            localStorage.remove(`judgeState:${code}`);
-            localStorage.remove('player');
+            localStorage.clear();
             navigate(`/`);
         }
-    }, [code, player, navigate]);
+    }, []);
 
     useEffect(() => {
         try {
