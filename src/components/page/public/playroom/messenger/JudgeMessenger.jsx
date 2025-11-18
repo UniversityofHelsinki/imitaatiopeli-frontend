@@ -13,6 +13,7 @@ import FinalReview from './FinalReview';
 import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js';
 import {useNavigate} from "react-router-dom";
 import localStorage from "../../../../../utilities/localStorage.js";
+import GameEnd from "./GameEnd.jsx";
 
 const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId }) => {
     const { isConnected, emit } = useSocket();
@@ -80,14 +81,6 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
         setCurrentState('final-review');
     };
 
-    useEffect(() => {
-        if (currentState === 'end') {
-            localStorage.clear();
-            const reason = 'game_end_reason_by_judge';
-            navigate(`/games/${gameId}/gameend`, { state: { reason } });
-        }
-    }, [currentState, gameId, navigate]);
-
     const finalReview = (() => {
         if (currentState === 'final-review' && summaryQuestions) {
             return (
@@ -100,6 +93,14 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             );
         }
         return <></>;
+    })();
+
+    const end = (() => {
+      if (currentState === 'end') {
+        return (
+          <GameEnd reason={'game_end_reason_by_judge'} />
+        )
+      }
     })();
 
     return (
@@ -122,6 +123,8 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
                     onSubmit={handleRatingSubmit}
                     onEndGame={endJudging}
                 />}
+            {currentState === 'end' && end}
+
         </Messenger>
     );
 };
