@@ -9,11 +9,10 @@ import Message, { InstructionMessage } from './Message';
 import { useWaitEndJudging } from '../../../../../hooks/useEndJudging';
 
 const AitoMessenger = ({
-                           game, question, onQuestionAnswered, judgingEnded
+                           game, question, onQuestionAnswered, judgingEnded, input, onInputChange
                        }) => {
     const { t } = useTranslation();
     const [currentState, setCurrentState] = useState('wait');
-    const [answer, setAnswer] = useState('');
     const [askedQuestion, setAskedQuestion] = useState('');
     const [messages, setMessages] = useState([]);
     const { sendAnswer } = useAnswerQuestion(game);
@@ -33,7 +32,7 @@ const AitoMessenger = ({
 
     const answerQuestion = async (answerContent) => {
         console.log('current state:', currentState);
-        setAnswer('');
+        onInputChange('');
         setAskedQuestion(null);
         setCurrentState('wait');
         try {
@@ -63,8 +62,8 @@ const AitoMessenger = ({
       onMessageSubmit={answerQuestion}
       messageFieldDisabled={currentState !== 'answer'}
       announcement={disabledAnnouncements[currentState]}
-      message={answer}
-      onMessageChange={m => setAnswer(m)}
+      message={input}
+      onMessageChange={onInputChange}
       msglength={500}
     >
       <ul className="message-area-messages">
@@ -85,6 +84,8 @@ AitoMessenger.propTypes = {
     game: PropTypes.string,
     question: PropTypes.object,
     onQuestionAnswered: PropTypes.func,
+    input: PropTypes.string,
+    onInputChange: PropTypes.func,
 };
 
 export default AitoMessenger;

@@ -15,12 +15,11 @@ import {useNavigate} from "react-router-dom";
 import localStorage from "../../../../../utilities/localStorage.js";
 import GameEnd from "./GameEnd.jsx";
 
-const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId }) => {
+const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId, input, onInputChange }) => {
     const { isConnected, emit } = useSocket();
     const { t } = useTranslation();
     const { askQuestion } = useAskQuestion(game);
     //const [currentState, setCurrentState] = useState('ask');
-    const [questionInput, setQuestionInput] = useState('');
     const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
     const { setNotification } = useNotification();
     const navigate = useNavigate();
@@ -108,8 +107,8 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             onMessageSubmit={handleAskQuestion}
             messageFieldDisabled={currentState !== 'ask'}
             announcement={disabledAnnouncements[currentState]}
-            message={questionInput}
-            onMessageChange={m => setQuestionInput(m)}
+            message={input}
+            onMessageChange={onInputChange}
             msglength={500}>
             {currentState !== 'final-review' && <ul className="message-area-messages">
                 <li className="message-area-instructions message-area-item">
@@ -139,6 +138,8 @@ JudgeMessenger.propTypes = {
     summaryQuestions: PropTypes.object,
     gameId: PropTypes.number.isRequired,
     judgeId: PropTypes.number.isRequired,
+    input: PropTypes.string,
+    onInputChange: PropTypes.func,
 };
 
 export default JudgeMessenger;

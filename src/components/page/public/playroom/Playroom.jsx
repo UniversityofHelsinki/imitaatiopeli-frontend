@@ -50,6 +50,10 @@ const Playroom = () => {
     const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging();
     const [gameEnded, setGameEnded] = useState(false);
     const navigate = useNavigate();
+    const [messageFields, setMessageFields] = useState({
+      judge: '',
+      aito: ''
+    });
 
     const [judgeState, setJudgeState] = React.useState(() => {
         try {
@@ -170,12 +174,14 @@ const Playroom = () => {
                 summaryQuestions={summaryQuestions}
                 gameId={gameId}
                 judgeId={judgeId}
+                input={messageFields.judge}
+                onInputChange={(v) => setMessageFields({ ...messageFields, judge: v })}
             />,
         },
         {
             heading: t('playroom_heading_aito'),
             notification: question ? t('playroom_notification_new_messages') : null,
-            children: <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered} judgingEnded={judgingEnded} />,
+            children: <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered} judgingEnded={judgingEnded} input={messageFields.aito} onInputChange={v => setMessageFields({ ...messageFields, aito: v })} />,
         }
     ];
 
