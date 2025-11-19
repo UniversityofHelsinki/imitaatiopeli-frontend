@@ -41,6 +41,12 @@ export const ConfidenceMeter = ({
                 <span className="tick"></span>
                 <span className="tick"></span>
             </div>
+            <div className="confidence-meter-numbers">
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+            </div>
             <div className="confidence-meter-labels">
                 <span>{t('confidence_meter_value_1')}</span>
                 <span>{t('confidence_meter_value_2')}</span>

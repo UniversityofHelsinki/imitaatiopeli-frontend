@@ -15,7 +15,7 @@ import {useNavigate} from "react-router-dom";
 import localStorage from "../../../../../utilities/localStorage.js";
 import GameEnd from "./GameEnd.jsx";
 
-const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId, input, onInputChange }) => {
+const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId, judgingEnded, input, onInputChange }) => {
     const { isConnected, emit } = useSocket();
     const { t } = useTranslation();
     const { askQuestion } = useAskQuestion(game);
@@ -27,19 +27,30 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
     console.log('judge', currentState, summaryQuestions);
 
     useEffect(() => {
-        console.log('judge useEffect');
-        if (currentState === 'rate' || currentState === 'final-review') {
-            console.log('currentState', currentState);
-        } else if (summaryQuestions && currentState !== 'end') {
-            setCurrentState('final-review');
-        } else if (answers && answers.length > 0 && askedQuestion) {
-            setCurrentState('rate');
-        } else if (answers.length === 0 && askedQuestion && currentState !== 'end') {
-            setCurrentState('wait');
-        } else if (currentState !== 'end') {
-            setCurrentState('ask');
+        if (currentState !== 'end') {
+            console.log('judge useEffect');
+            if (currentState === 'rate' || currentState === 'final-review') {
+                console.log('currentState', currentState);
+            } else if (summaryQuestions && currentState !== 'end') {
+                setCurrentState('final-review');
+            } else if (answers && answers.length > 0 && askedQuestion) {
+                setCurrentState('rate');
+            } else if (answers.length === 0 && askedQuestion && currentState !== 'end') {
+                setCurrentState('wait');
+            } else if (currentState !== 'end') {
+                setCurrentState('ask');
+            }
         }
     }, [answers, askedQuestion, summaryQuestions]);
+
+    useEffect(() => {
+        if (judgingEnded && currentState === 'end') {
+            setTimeout(() => {
+                localStorage.clear();
+                navigate(`/games/${gameId}/gameend`, { state: { reason: 'game_end_reason_game_ended' } });
+            }, 0);
+        }
+    }, [judgingEnded, currentState, gameId, navigate]);
 
     const handleAskQuestion = async (questionText) => {
         try {
@@ -95,11 +106,11 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
     })();
 
     const end = (() => {
-      if (currentState === 'end') {
-        return (
-          <GameEnd reason={'game_end_reason_by_judge'} />
-        )
-      }
+        if (currentState === 'end') {
+            return (
+              <GameEnd reason={'game_end_reason_by_judge'} />
+            )
+       }
     })();
 
     return (
