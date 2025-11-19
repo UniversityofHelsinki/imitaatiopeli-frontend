@@ -7,9 +7,11 @@ import { WaitingAnnouncement } from '../Playroom';
 import { useTranslation } from 'react-i18next';
 import Message, { InstructionMessage } from './Message';
 import { useWaitEndJudging } from '../../../../../hooks/useEndJudging';
+import {useNavigate} from "react-router-dom";
+import localStorage from "../../../../../utilities/localStorage.js";
 
 const AitoMessenger = ({
-                           game, question, onQuestionAnswered, judgingEnded
+                           game, question, onQuestionAnswered, judgingEnded, judgeState, gameId
                        }) => {
     const { t } = useTranslation();
     const [currentState, setCurrentState] = useState('wait');
@@ -17,10 +19,16 @@ const AitoMessenger = ({
     const [askedQuestion, setAskedQuestion] = useState('');
     const [messages, setMessages] = useState([]);
     const { sendAnswer } = useAnswerQuestion(game);
+    const navigate = useNavigate();
+
     console.log('judgingEnded', judgingEnded);
 
     useEffect(() => {
         console.log('Question changed:', question);
+        if (judgeState === 'end' && judgingEnded) {
+            localStorage.clear();
+            navigate(`/games/${gameId}/gameend`, { state: { reason: 'game_end_reason_game_ended' } });
+        }
         if (judgingEnded) {
           setCurrentState('judging-ended');
         } else if (question) {
