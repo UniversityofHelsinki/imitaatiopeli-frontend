@@ -42,7 +42,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
                 setCurrentState('ask');
             }
         }
-    }, [answers, askedQuestion, summaryQuestions, judgingEnded]);
+    }, [answers, askedQuestion, summaryQuestions]);
 
     useEffect(() => {
         if (judgingEnded && currentState === 'end') {

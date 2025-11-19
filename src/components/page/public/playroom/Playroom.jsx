@@ -17,7 +17,6 @@ import useGetInitialAnswers from '../../../../hooks/useGetInitialAnswers.js';
 import i18n from "i18next";
 import useEndJudging, { useWaitEndJudging } from '../../../../hooks/useEndJudging';
 import {useSocket} from "../../../../contexts/SocketContext.jsx";
-import GameEnd from "./messenger/GameEnd.jsx";
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
     return (
