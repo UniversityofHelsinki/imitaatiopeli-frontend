@@ -12,7 +12,7 @@ const useGetInitialAnswers = (gameId = null) => {
     const requestOptions = useMemo(() => {
         if (!gameId || !judge) return { path: null };
         return {
-            path: `/public/games/${gameId}/player/${judge.player_id}/answersForRatingForm`,
+            path: `/public/games/${gameId}/player/${judge.player_id}/notAnswersForRatingForm`,
             tag: `initial-answers-${gameId}-${judge.player_id}`,
         };
     }, [gameId, judge?.player_id]);
