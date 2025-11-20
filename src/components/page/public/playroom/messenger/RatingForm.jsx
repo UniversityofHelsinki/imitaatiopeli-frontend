@@ -66,49 +66,43 @@ const RatingForm = ({
                         question,
                         answers,
                         onSubmit,
-                        onEndGame
+                        onEndGame,
+                        justifications,
+                        onJustificationsChange,
+                        selectedIndex,
+                        onSelectedIndexChange,
+                        confidence,
+                        onConfidenceChange
                     }) => {
     const { t } = useTranslation();
 
-    const [selected, setSelected] = useState(null);
-    const [confidence, setConfidence] = useState(2);
-    const [justifications, setJustifications] = useState('');
+    const handleSelect = (i) => {
+        onSelectedIndexChange?.(i);
+    };
+
+    const selectedAnswer = Number.isInteger(selectedIndex) ? answers[selectedIndex] : null;
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('rating submit', event);
-
-        onSubmit({
-            selectedAnswer: selected,
+        if (!selectedAnswer) return;
+        const payload = {
+            selectedAnswer: selectedAnswer,
             confidence: confidence,
-            justifications: justifications
-        });
-
-    };
-
-    const handleChange = (event) => {
-        const button = event.target.closest('.rating-message');
-
-        if (button) {
-            const answerIndex = parseInt(button.getAttribute('data-index'));
-            const selectedAnswerObject = answers[answerIndex];
-            setSelected(selectedAnswerObject);
-        }
+            justifications: justifications ?? ''
+        };
+        onSubmit?.(payload);
     };
 
     const handleEndGame = (event) => {
       event.preventDefault();
       if (onEndGame) {
         onEndGame({
-          selectedAnswer: selected,
-          confidence,
-          justifications
+          selectedAnswer: selectedAnswer,
+          confidence: confidence ?? 0,
+          justifications: justifications ?? ''
         });
       }
-    };
-
-    const isFormDisabled = () => {
-        return selected === null || confidence === 0 || justifications.length === 0;
     };
 
     return (
@@ -121,38 +115,45 @@ const RatingForm = ({
             <div className="rating-form-heading">
                 {t('rating_form_instructive_heading')}
             </div>
-            <form onSubmit={handleSubmit} className="rating-form-form" onClick={handleChange}>
+            <form onSubmit={handleSubmit} className="rating-form-form" >
                 {answers.map((answer, i) => (
                     <div key={`${answer.type}-${i}`} className="message-area-item message-area-item-received rating-form-answers">
                         <RatingMessage
                             i={i}
                             name="rating-answers"
-                            isSelected={selected && answers.indexOf(selected) === i}
+                            isSelected={selectedIndex === i}
+                            onClick={() => handleSelect(i)}
                         >
                             {answer.content}
                         </RatingMessage>
                     </div>
                 ))}
                 <div className="rating-form-confidence">
-                    <ConfidenceMeter value={confidence} onChange={v => setConfidence(v)} />
+                    <ConfidenceMeter value={confidence ?? 0} onChange={(...args) => {
+                            // Support both signatures:
+                            // 1) onChange(value)
+                            // 2) onChange(event, value)
+                            const val = args.length === 1 ? args[0] : args[1];
+                            if (val != null) onConfidenceChange?.(Number(val));
+                        }}
+                    />
                 </div>
                 <div className="rating-form-justifications">
                     <TextArea
                         label={t('rating_form_justifications_label')}
                         assistiveText={t('rating_form_justifications_assistive_text')}
                         placeholder={t('rating_form_justifications_placeholder')}
-                        value={justifications}
-                        onChange={e => setJustifications(e.target.value?.substring(0, 500))}
+                        value={justifications ?? ''}
+                        onChange={e => onJustificationsChange?.(e.target.value?.substring(0, 500))}
                         autocomplete="off"
                     />
                     <span className="rating-form-justifications-character-count">{justifications.length} / 500</span>
                 </div>
-                <Button type="submit" label={t('rating_form_submit_rating')}  disabled={isFormDisabled()} />
-                {answers[0]?.content?.questionCount >= 3 && <Button onClick={handleEndGame} variant="secondary" label={t('rating_form_end_game')} disabled={isFormDisabled()} />}
+                <Button type="submit" label={t('rating_form_submit_rating')} />
+                {answers[0]?.content?.questionCount >= 3 && <Button onClick={handleEndGame} variant="secondary" label={t('rating_form_end_game')} />}
             </form>
         </div>
     );
-
 };
 
 RatingForm.propTypes = {
