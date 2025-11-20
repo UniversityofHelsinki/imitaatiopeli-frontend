@@ -53,6 +53,9 @@ const Playroom = () => {
       judge: '',
       aito: ''
     });
+    const [ratingDraft, setRatingDraft] = useState('');
+    const [ratingSelectedIndex, setRatingSelectedIndex] = useState(null);
+    const [ratingConfidence, setRatingConfidence] = useState(null);
 
     const [judgeState, setJudgeState] = React.useState(() => {
         try {
@@ -177,6 +180,12 @@ const Playroom = () => {
                 input={messageFields.judge}
                 onInputChange={(v) => setMessageFields({ ...messageFields, judge: v })}
                 judgingEnded={judgingEnded}
+                ratingJustifications={ratingDraft}
+                onRatingJustificationsChange={setRatingDraft}
+                ratingSelectedIndex={ratingSelectedIndex}
+                onRatingSelectedIndexChange={setRatingSelectedIndex}
+                ratingConfidence={ratingConfidence}
+                onRatingConfidenceChange={setRatingConfidence}
             />,
         },
         {
