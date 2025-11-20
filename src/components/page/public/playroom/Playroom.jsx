@@ -159,6 +159,7 @@ const Playroom = () => {
         {
             heading: t('playroom_heading_judge'),
             notification: answers?.length > 0 ? t('playroom_notification_new_messages') : null,
+            judgeState: judgeState === 'end',
             children: <JudgeMessenger
                 currentState={judgeState}
                 setCurrentState={setJudgeState}

@@ -5,6 +5,7 @@ import './Tabs.css'
 const TabHeading = ({ 
   heading, 
   notification = null,
+  judgeState = false,
   active = false,
   onClick
 }) => {
@@ -26,7 +27,7 @@ const TabHeading = ({
   };
 
   const activeClass = active ? 'tab-heading-active' : '';
-  const notificationClass = notification && !notificationCleared && !active ? 'tab-heading-notify' : '';
+  const notificationClass = notification && !judgeState && !notificationCleared && !active ? 'tab-heading-notify' : '';
   const showNotification = notificationClass;
 
   return (
@@ -61,8 +62,9 @@ const Tabs = ({
     <TabHeading 
       key={tab.heading} 
       heading={tab.heading} 
-      notification={tab.notification} 
-      active={activeTab === i} 
+      notification={tab.notification}
+      judgeState={tab.judgeState}
+      active={activeTab === i}
       onClick={() => switchTab(i)}
     />
   ));
