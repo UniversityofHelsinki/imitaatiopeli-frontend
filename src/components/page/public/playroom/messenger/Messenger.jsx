@@ -11,7 +11,8 @@ const Messenger = ({
   message,
   onMessageChange,
   children,
-  msglength = null
+  msglength = null,
+  messageFieldHidden = false,
 }) => {
 
   const handleMessageSubmit = (message) => {
@@ -33,6 +34,7 @@ const Messenger = ({
           announcement={announcement}
           message={message}
           msglength={msglength}
+          hidden={messageFieldHidden}
         />
       </div>
   );
@@ -48,6 +50,7 @@ Messenger.propTypes = {
     content: PropTypes.string,
     type: PropTypes.oneOf(['received', 'sent'])
   })),
+  messageFieldHidden: PropTypes.bool
 };
 
 export default Messenger;

@@ -118,6 +118,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             onMessageSubmit={handleAskQuestion}
             messageFieldDisabled={currentState !== 'ask'}
             announcement={disabledAnnouncements[currentState]}
+            messageFieldHidden={['final-review', 'end'].includes(currentState)}
             message={input}
             onMessageChange={onInputChange}
             msglength={500}>
