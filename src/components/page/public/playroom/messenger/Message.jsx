@@ -15,7 +15,7 @@ InstructionMessage.propTypes = {
     content: PropTypes.node,
 }
 
-export const RatingMessage = ({ i, name, children, isSelected }) => {
+export const RatingMessage = ({ i, name, children, isSelected, onClick }) => {
     const content = typeof children === 'object' && children?.answer_text
         ? children.answer_text
         : children;
@@ -28,6 +28,7 @@ export const RatingMessage = ({ i, name, children, isSelected }) => {
             className="messenger-message rating-message"
             data-index={i}
             name={name}
+            onClick={onClick}
         >
             <div>
                 {i+1}. {content}
@@ -41,6 +42,7 @@ RatingMessage.propTypes = {
     name: PropTypes.string,
     children: PropTypes.node,
     isSelected: PropTypes.bool,
+    onClick: PropTypes.func,
 };
 
 export const QuestionMessage = ({ children }) => {

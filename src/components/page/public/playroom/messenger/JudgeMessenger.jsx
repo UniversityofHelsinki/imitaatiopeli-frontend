@@ -15,12 +15,11 @@ import {useNavigate} from "react-router-dom";
 import localStorage from "../../../../../utilities/localStorage.js";
 import GameEnd from "./GameEnd.jsx";
 
-const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId, judgingEnded }) => {
+const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId, judgingEnded, input, onInputChange, ratingJustifications, onRatingJustificationsChange, ratingSelectedIndex, onRatingSelectedIndexChange, ratingConfidence, onRatingConfidenceChange
+                        }) => {
     const { isConnected, emit } = useSocket();
     const { t } = useTranslation();
     const { askQuestion } = useAskQuestion(game);
-    //const [currentState, setCurrentState] = useState('ask');
-    const [questionInput, setQuestionInput] = useState('');
     const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
     const { setNotification } = useNotification();
     const navigate = useNavigate();
@@ -79,6 +78,9 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             });
             setAskedQuestion(null);
             setCurrentState('ask');
+            onRatingJustificationsChange?.('');
+            onRatingSelectedIndexChange?.(null);
+            onRatingConfidenceChange?.(null);
             onRateSubmitted();
         }
     };
@@ -89,6 +91,9 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             confidence: data.confidence,
             argument: data.justifications
         });
+        onRatingJustificationsChange?.('');
+        onRatingSelectedIndexChange?.(null);
+        onRatingConfidenceChange?.(null);
         setCurrentState('final-review');
     };
 
@@ -119,9 +124,9 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             onMessageSubmit={handleAskQuestion}
             messageFieldDisabled={currentState !== 'ask'}
             announcement={disabledAnnouncements[currentState]}
-            message={questionInput}
-            onMessageChange={m => setQuestionInput(m)}
             messageFieldHidden={['final-review', 'end'].includes(currentState)}
+            message={input}
+            onMessageChange={onInputChange}
             msglength={500}>
             {currentState !== 'final-review' && <ul className="message-area-messages">
                 <li className="message-area-instructions message-area-item">
@@ -134,6 +139,12 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
                     answers={ answers }
                     onSubmit={handleRatingSubmit}
                     onEndGame={endJudging}
+                    justifications={ratingJustifications}
+                    onJustificationsChange={onRatingJustificationsChange}
+                    selectedIndex={ratingSelectedIndex}
+                    onSelectedIndexChange={onRatingSelectedIndexChange}
+                    confidence={ratingConfidence}
+                    onConfidenceChange={onRatingConfidenceChange}
                 />}
             {currentState === 'end' && end}
 
@@ -151,6 +162,14 @@ JudgeMessenger.propTypes = {
     summaryQuestions: PropTypes.object,
     gameId: PropTypes.number.isRequired,
     judgeId: PropTypes.number.isRequired,
+    input: PropTypes.string,
+    onInputChange: PropTypes.func,
+    ratingJustifications: PropTypes.string,
+    onRatingJustificationsChange: PropTypes.func,
+    ratingSelectedIndex: PropTypes.number,
+    onRatingSelectedIndexChange: PropTypes.func,
+    ratingConfidence: PropTypes.number,
+    onRatingConfidenceChange: PropTypes.func,
 };
 
 export default JudgeMessenger;
