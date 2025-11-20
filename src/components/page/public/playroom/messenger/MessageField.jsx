@@ -40,8 +40,20 @@ const MessageField = ({
             }
             <form onSubmit={handleSubmit}>
                 <textarea aria-label={t('message_field_message')} disabled={disabled} value={message} rows={3} cols={1} onChange={handleChange} onKeyDown={onEnterDown} />
-                {msglength && <span className="messenger-message-field-character-count">{message.length} / {msglength}</span>}
-                <Button disabled={message?.trim().length === 0 || disabled} type="submit" icon="send-fill" label={t('messenger_message_form_submit_button')} aria-label={t('messenger_message_form_submit_button')} />
+                <div className="messenger-message-field-bottom-row">
+                    {msglength && (
+                        <span className="messenger-message-field-character-count">
+                            {message.length} / {msglength}
+                        </span>
+                    )}
+                    <Button
+                        disabled={message?.trim().length === 0 || disabled}
+                        type="submit"
+                        icon="send-fill"
+                        variant="supplementary"
+                        aria-label={t('messenger_message_form_submit_button')}
+                    />
+                </div>
             </form>
         </div>
     );

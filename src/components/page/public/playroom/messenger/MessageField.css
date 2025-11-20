@@ -1,41 +1,99 @@
 .messenger-message-field {
-  display: flex;
-  padding: var(--ds-spacing-2xSmall);
-
-  position: relative;
-  max-width: 100%;
+    display: flex;
+    padding: var(--ds-spacing-2xSmall);
+    position: relative;
+    max-width: 100%;
 }
 
+/* Form container (rounded group) */
 .messenger-message-field form {
-  display: flex;
-  flex-basis: 100%;
-  align-items: center;
-  gap: var(--ds-spacing-2xSmall);
-  margin-right: var(--ds-spacing-2xSmall);
-  justify-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+    align-items: flex-start;
+    gap: var(--ds-spacing-2xSmall);
+
+    padding: 6px 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
 }
 
+/* Textarea styling */
 .messenger-message-field textarea {
-  resize: none;
-  flex-grow: 1;
+    resize: none;
+    flex-grow: 1;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
 }
 
+/* Announcement overlay */
 .messenger-message-field-announcement {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(230, 230, 230, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(230, 230, 230, 0.5);
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  max-height: 100%;
-  overflow-y: auto;
+    max-height: 100%;
+    overflow-y: auto;
 }
 
 .messenger-message-field-character-count {
+    margin: 0;
+    font-size: 12px;
+    color: var(--ds-textColor-secondary);
+    white-space: nowrap;
+}
+
+/* Button styling */
+.messenger-message-field button {
+    background: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s ease;
+}
+
+.messenger-message-field button:hover {
+    background: #f5f5f5;
+}
+
+.messenger-message-field button:active {
+    background: #ebebeb;
+}
+
+/* Mobile mode */
+@media (max-width: 600px) {
+    .messenger-message-field form {
+        flex-direction: column;      /* stack vertically */
+        align-items: stretch;
+    }
+
+    .messenger-message-field textarea {
+        width: 100%;
+    }
+}
+
+/* Bottom row (counter + button) */
+.messenger-message-field-bottom-row {
+    display: flex;
+    justify-content: flex-end;     /* align to the right */
+    align-items: center;
+    gap: 10px;
     margin-top: var(--ds-spacing-2xSmall);
+    width: 100%;
 }
