@@ -14,7 +14,7 @@ import {useNotification} from "../../notification/NotificationContext.jsx";
 import {useSocket} from "../../../contexts/SocketContext.jsx";
 
 const AdminMonitor = () => {
-    const { isConnected, on, off, emit } = useSocket();
+    const { isConnected, emit } = useSocket();
     const { id: gameId } = useParams();
     const navigate = useNavigate();
     const { t} = useTranslation();
@@ -60,6 +60,16 @@ const AdminMonitor = () => {
         invalidate([`PLAYROOM_JUDGE_PLAYER_PAIRS_${gameId}`]);
         reload();
     }, [gameId]);
+
+    // Polling: refresh every 60 seconds
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            invalidate([`PLAYROOM_JUDGE_PLAYER_PAIRS_${gameId}`]);
+            reload();
+        }, 60000);
+
+        return () => clearInterval(intervalId);
+    }, [reload]);
 
     const crumbs = [
         {
