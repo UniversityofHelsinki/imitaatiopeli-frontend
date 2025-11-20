@@ -200,10 +200,7 @@
   "game_end_reason_by_judge": "Thank you for your final review; your game continues in the Genuine role",
   "game_end_reason_game_ended": "The game has ended. You may close your browser",
   "game_end_reason_by_admin": "The game organizer ended the game; you may close your browser",
-  "game_content_move_to_summary_link_label": "Go to game summary"
+  "game_content_move_to_summary_link_label": "Go to game summary",
   "playroom_instructions_judge": "As the judge, your task is to ask a question that allows you to determine which respondent is the group member and which is the AI pretender",
-  "playroom_instructions_aito": "As the respondent, your task is to answer the questions as yourself.",
-  "game_form_randomization_field_legend" : "Randomize answer order",
-  "game_form_randomization_field_assistive_text": "If enabled, the Pretender and Non-Pretender answers will be shown to the judge in a random order for each question. If disabled, the Pretender (AI) answer will always appear second."
-
+  "playroom_instructions_aito": "As the respondent, your task is to answer the questions as yourself."
 }
