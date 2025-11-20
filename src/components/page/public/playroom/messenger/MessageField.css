@@ -8,9 +8,9 @@
 /* Form container (rounded group) */
 .messenger-message-field form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;      /* stack textarea + bottom row */
     flex-basis: 100%;
-    align-items: flex-start;
+    align-items: stretch;        /* full width children */
     gap: var(--ds-spacing-2xSmall);
 
     padding: 6px 10px;
@@ -24,10 +24,11 @@
     resize: none;
     flex-grow: 1;
     width: 100%;
+    min-height: 80px;            /* optional for desktop height */
     border: none;
     outline: none;
     background: transparent;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 /* Announcement overlay */
@@ -47,9 +48,19 @@
     overflow-y: auto;
 }
 
+/* Bottom row (counter + button) */
+.messenger-message-field-bottom-row {
+    display: flex;
+    justify-content: flex-end;    /* align to right */
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Character count */
 .messenger-message-field-character-count {
     margin: 0;
-    font-size: 12px;
+    font-size: 16px;
     color: var(--ds-textColor-secondary);
     white-space: nowrap;
 }
@@ -76,24 +87,14 @@
     background: #ebebeb;
 }
 
-/* Mobile mode */
+/* Mobile adjustments */
 @media (max-width: 600px) {
     .messenger-message-field form {
-        flex-direction: column;      /* stack vertically */
+        flex-direction: column;      /* already stacked on desktop too */
         align-items: stretch;
     }
 
     .messenger-message-field textarea {
         width: 100%;
     }
-}
-
-/* Bottom row (counter + button) */
-.messenger-message-field-bottom-row {
-    display: flex;
-    justify-content: flex-end;     /* align to the right */
-    align-items: center;
-    gap: 10px;
-    margin-top: var(--ds-spacing-2xSmall);
-    width: 100%;
 }
