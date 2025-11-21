@@ -50,6 +50,10 @@ const CreateGameForm = () => {
     const onSubmit = async () => {
         setSaving(true);
         const finalValidations = await validate(game);
+        if (finalValidations?.isValid !== true) {
+            setSaving(false);
+            return;
+        }
         setValidations(finalValidations);
         try {
             const saved = await save(game);
