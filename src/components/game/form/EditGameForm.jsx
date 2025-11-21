@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import validate from '../../../utilities/validation/game/gameValidation';
 import { useNotification } from '../../notification/NotificationContext';
@@ -52,6 +52,12 @@ const EditGameForm = ({
     };
 
     const onSubmit = async () => {
+        const finalValidations = await validate(modifiedGame);
+        if (finalValidations?.isValid !== true) {
+            setSaving(false);
+            return;
+        }
+        setValidations(finalValidations);
         try {
             setSaving(true);
             await saveGame(modifiedGame);
