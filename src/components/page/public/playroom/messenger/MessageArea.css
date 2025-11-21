@@ -7,11 +7,6 @@
   margin: unset;
 }
 
-.message-area-item {
-  min-width: 60%;
-  max-width: 60%;
-}
-
 .message-area-item-sent {
   align-self: flex-end;
 }
