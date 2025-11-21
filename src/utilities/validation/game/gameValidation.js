@@ -7,12 +7,12 @@ const validate = async (game, t) => {
     canEdit: () => {
       if (game.playerCount > 0) {
         return {
-          valid: false,
+            isValid: false,
           message: 'edit_game_player_joined_validation'
         };
       }
       return {
-        valid: true,
+          isValid: true,
         message: null
       };
     }
