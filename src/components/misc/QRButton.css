@@ -1,0 +1,18 @@
+.qr-button {
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+    border: none;
+    border-radius: 4px;
+    background-color: transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.qr-button.hover,
+.qr-button:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* light blue hover */
+}
