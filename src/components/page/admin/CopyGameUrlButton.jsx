@@ -4,8 +4,14 @@ import './CopyGameUrlButton.css';
 import {useTranslation} from "react-i18next";
 import {useNotification} from "../../notification/NotificationContext.jsx";
 import PropTypes from "prop-types";
+import QRButton from '../../misc/QRButton.jsx';
+import QRDialog from './QRDialog.jsx';
+import React, { useState } from 'react';
 
 const CopyGameUrlButton = ({ game }) => {
+    const [isQRDialogOpen, setIsQRDialogOpen] = useState(false);
+    const openQR = () => setIsQRDialogOpen(true);
+    const closeQR = () => setIsQRDialogOpen(false);
     const {t} = useTranslation();
     const joinUrl = `${window.location.origin}/games/${game.game_code}/join`;
     const { setNotification } = useNotification();
@@ -32,6 +38,15 @@ const CopyGameUrlButton = ({ game }) => {
                     name="link"
                 />
             </Button>
+            <QRButton
+                size={32}
+                onClick={() => setIsQRDialogOpen(true)}
+            />
+            <QRDialog
+                isOpen={isQRDialogOpen}
+                onClose={closeQR}
+                game={game}
+            />
         </div>
     );
 };
