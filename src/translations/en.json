@@ -202,5 +202,7 @@
   "game_end_reason_by_admin": "The game organizer ended the game; you may close your browser",
   "game_content_move_to_summary_link_label": "Go to game summary",
   "playroom_instructions_judge": "As the judge, your task is to ask a question that allows you to determine which respondent is the group member and which is the AI pretender",
-  "playroom_instructions_aito": "As the respondent, your task is to answer the questions as yourself."
+  "playroom_instructions_aito": "As the respondent, your task is to answer the questions as yourself.",
+  "qr_code_dialog_title": "The QR code to join the game",
+  "qr_code_button_title": "Show the QR code used to join the game"
 }
