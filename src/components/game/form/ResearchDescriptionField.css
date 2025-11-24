@@ -1,0 +1,5 @@
+.page .research-description-field textarea {
+    word-break: keep-all;   /* do not break words within words */
+    overflow-wrap: normal;  /* no forced wrapping of long words */
+    hyphens: manual;        /* only break at explicit hyphens */
+}
