@@ -41,7 +41,7 @@ const ResearchPermissionForm = ({ onSubmit, saving, configuration }) => {
         />
         <div className="research-permission-form-bottom-row">
           <BottomRow saving={saving}>
-            <FormButtons disabled={saving} />
+            <FormButtons disabled={saving || !checked} />
           </BottomRow>
         </div>
       </form>
