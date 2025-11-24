@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import QRCode from "qrcode";
 import Dialog from "../../dialog/Dialog.jsx";
 import PropTypes from "prop-types";
+import {useTranslation} from "react-i18next";
 
 const QRDialog = ({ isOpen, onClose, game }) => {
     const [qrSrc, setQrSrc] = useState("");
+    const { t } = useTranslation();
 
     const joinUrl = `${window.location.origin}/games/${game.game_code}/join`;
 
@@ -18,7 +20,7 @@ const QRDialog = ({ isOpen, onClose, game }) => {
         <Dialog
             isOpen={isOpen}
             onClose={onClose}
-            title="QR Code"
+            title={t('qr_code_dialog_title')}
             size="large"
             showFooter={false}
             className="qr-dialog"
@@ -40,8 +42,8 @@ const styles = {
         padding: "20px",
     },
     qr: {
-        width: "70vmin",
-        height: "70vmin",
+        width: "60vmin",
+        height: "60vmin",
         objectFit: "contain",
     },
 };
