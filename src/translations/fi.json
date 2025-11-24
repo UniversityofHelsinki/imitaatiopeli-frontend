@@ -146,7 +146,7 @@
   "error_loading_data": "Virhe tietojen lataamisessa",
   "game_url_copy_button_aria_label": "Kopioi pelin liittymislinkki",
   "game_url_copy_button_title": "Kopioi pelin liittymislinkki",
-  "game_listing_page_show_ended_games": "Näytä päättyneet pelit",
+  "game_listing_page_show_ended_games": "Näytä vain päättyneet pelit",
   "research_permission_page_heading": "Tutkimusluvan hyväksyminen",
   "research_permission_form_acceptance_label": "Hyväksyn tietojeni käyttämisen tutkimukseen",
   "research_permission_form_acceptance_is_required": "Tutkimuslupa on annettava",

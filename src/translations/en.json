@@ -145,7 +145,7 @@
   "error_loading_data": "Failed to load data",
   "game_url_copy_button_aria_label": "Copy invitation link",
   "game_url_copy_button_title": "Copy invitation link",
-  "game_listing_page_show_ended_games": "Show completed games",
+  "game_listing_page_show_ended_games": "Show only completed games",
   "research_permission_page_heading": "Research Consent Form",
   "research_permission_form_acceptance_label": "I agree that my data may be used for research purposes",
   "research_permission_form_acceptance_is_required": "Research consent is required",
