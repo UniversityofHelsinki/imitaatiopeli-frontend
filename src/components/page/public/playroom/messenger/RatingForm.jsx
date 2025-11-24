@@ -99,7 +99,7 @@ const RatingForm = ({
       if (onEndGame) {
         onEndGame({
           selectedAnswer: selectedAnswer,
-          confidence: confidence ?? 0,
+          confidence: confidence ?? 2,
           justifications: justifications ?? ''
         });
       }

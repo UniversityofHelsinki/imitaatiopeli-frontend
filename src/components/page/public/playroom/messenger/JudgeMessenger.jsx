@@ -80,7 +80,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             setCurrentState('ask');
             onRatingJustificationsChange?.('');
             onRatingSelectedIndexChange?.(null);
-            onRatingConfidenceChange?.(null);
+            onRatingConfidenceChange?.(2);
             onRateSubmitted();
         }
     };
@@ -93,7 +93,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
         });
         onRatingJustificationsChange?.('');
         onRatingSelectedIndexChange?.(null);
-        onRatingConfidenceChange?.(null);
+        onRatingConfidenceChange?.(2);
         setCurrentState('final-review');
     };
 
