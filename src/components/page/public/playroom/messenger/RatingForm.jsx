@@ -149,8 +149,8 @@ const RatingForm = ({
                     />
                     <span className="rating-form-justifications-character-count">{justifications.length} / 500</span>
                 </div>
-                <Button type="submit" label={t('rating_form_submit_rating')} />
-                {answers[0]?.content?.questionCount >= 3 && <Button onClick={handleEndGame} variant="secondary" label={t('rating_form_end_game')} />}
+                <Button disabled={!justifications || (selectedIndex === null)} type="submit" label={t('rating_form_submit_rating')} />
+                {answers[0]?.content?.questionCount >= 3 && <Button disabled={!justifications || (selectedIndex === null)} onClick={handleEndGame} variant="secondary" label={t('rating_form_end_game')} />}
             </form>
         </div>
     );
