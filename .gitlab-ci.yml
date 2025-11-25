@@ -38,18 +38,6 @@ setup:
     paths:
       - node_modules
 
-test:
-  stage: test
-  image: node:22-alpine
-  tags:
-    - ohtu-build-3
-  script:
-    - npm run test:coverage
-  extends: .dependencies_cache
-  artifacts:
-    name: coverage-test
-    paths:
-      - coverage/
 
 build_stage_dev:
   stage: build
