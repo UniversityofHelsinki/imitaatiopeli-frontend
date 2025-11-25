@@ -145,7 +145,7 @@
   "error_loading_data": "Failed to load data",
   "game_url_copy_button_aria_label": "Copy invitation link",
   "game_url_copy_button_title": "Copy invitation link",
-  "game_listing_page_show_ended_games": "Show completed games",
+  "game_listing_page_show_ended_games": "Show only completed games",
   "research_permission_page_heading": "Research Consent Form",
   "research_permission_form_acceptance_label": "I agree that my data may be used for research purposes",
   "research_permission_form_acceptance_is_required": "Research consent is required",
@@ -202,5 +202,7 @@
   "game_end_reason_by_admin": "The game organizer ended the game; you may close your browser",
   "game_content_move_to_summary_link_label": "Go to game summary",
   "playroom_instructions_judge": "As the judge, your task is to ask a question that allows you to determine which respondent is the group member and which is the AI pretender",
-  "playroom_instructions_aito": "As the respondent, your task is to answer the questions as yourself."
+  "playroom_instructions_aito": "As the respondent, your task is to answer the questions as yourself.",
+  "qr_code_dialog_title": "The QR code to join the game",
+  "qr_code_button_title": "Show the QR code used to join the game"
 }

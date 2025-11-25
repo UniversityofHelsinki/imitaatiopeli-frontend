@@ -146,7 +146,7 @@
   "error_loading_data": "Virhe tietojen lataamisessa",
   "game_url_copy_button_aria_label": "Kopioi pelin liittymislinkki",
   "game_url_copy_button_title": "Kopioi pelin liittymislinkki",
-  "game_listing_page_show_ended_games": "Näytä päättyneet pelit",
+  "game_listing_page_show_ended_games": "Näytä vain päättyneet pelit",
   "research_permission_page_heading": "Tutkimusluvan hyväksyminen",
   "research_permission_form_acceptance_label": "Hyväksyn tietojeni käyttämisen tutkimukseen",
   "research_permission_form_acceptance_is_required": "Tutkimuslupa on annettava",
@@ -216,5 +216,7 @@
   "game_end_reason_by_judge": "Kiitos loppuarviosta, pelisi jatkuu aidon roolissa",
   "game_end_reason_game_ended": "Peli päättyi. Voit sulkea selaimen",
   "game_end_reason_by_admin": "Pelin järjestäjä päätti pelin, voit sulkea selaimen",
-  "game_content_move_to_summary_link_label": "Siirry pelin yhteenvetoon"
+  "game_content_move_to_summary_link_label": "Siirry pelin yhteenvetoon",
+  "qr_code_dialog_title": "Peliin liittymisen QR-koodi",
+  "qr_code_button_title": "Näytä peliin liittymisen QR-koodi"
 }

@@ -55,7 +55,7 @@ const Playroom = () => {
     });
     const [ratingDraft, setRatingDraft] = useState('');
     const [ratingSelectedIndex, setRatingSelectedIndex] = useState(null);
-    const [ratingConfidence, setRatingConfidence] = useState(null);
+    const [ratingConfidence, setRatingConfidence] = useState(2);
 
     const [judgeState, setJudgeState] = React.useState(() => {
         try {
