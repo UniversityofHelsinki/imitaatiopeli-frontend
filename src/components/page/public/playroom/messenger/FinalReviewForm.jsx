@@ -15,7 +15,7 @@ const FinalReviewForm = ({
 
     const [value, setValue] = useState({
         selection: null,
-        confidence: 2,
+        confidence: null,
         justification: ''
     });
 
