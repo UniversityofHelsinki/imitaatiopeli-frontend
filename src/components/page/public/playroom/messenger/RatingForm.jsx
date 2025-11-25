@@ -5,6 +5,8 @@ import Message, {QuestionMessage, RatingMessage} from './Message';
 import Button from '../../../../misc/ds/Button';
 import { useTranslation } from 'react-i18next';
 import TextArea from '../../../../misc/ds/TextArea';
+import RadioButtonGroup from "../../../../misc/ds/RadioButtonGroup.jsx";
+import RadioButton from "../../../../misc/ds/RadioButton.jsx";
 
 export const ConfidenceMeter = ({
                              value,
@@ -13,46 +15,26 @@ export const ConfidenceMeter = ({
     const id = useId();
     const { t } = useTranslation();
 
-    const handleChange = (event) => {
-        if (onChange) {
-            onChange(event.target.value / 33 + 1);
-        }
-    }
+    const levels = [1, 2, 3, 4];
 
     return (
         <div className="confidence-meter-container">
-            <label htmlFor={id}>{t('rating_form_confidence_meter_label')}</label>
-            <input
-                type="range"
-                name="confidence"
-                value={(value - 1) * 33}
-                id={id}
-                step="33"
-                min="0"
-                max="99"
-                onChange={handleChange}
-                aria-valuemin="1"
-                aria-valuemax="4"
-                aria-valuenow={value}
-            />
-            <div className="confidence-meter-ticks">
-                <span className="tick"></span>
-                <span className="tick"></span>
-                <span className="tick"></span>
-                <span className="tick"></span>
-            </div>
-            <div className="confidence-meter-numbers">
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-            </div>
-            <div className="confidence-meter-labels">
-                <span>{t('confidence_meter_value_1')}</span>
-                <span>{t('confidence_meter_value_2')}</span>
-                <span>{t('confidence_meter_value_3')}</span>
-                <span>{t('confidence_meter_value_4')}</span>
-            </div>
+            <RadioButtonGroup
+                label={t('rating_form_confidence_meter_label')}
+                value={String(value)}
+            >
+                {levels.map((level) => (
+                    <RadioButton
+                        key={level}
+                        id={`confidence_level_${level}`}
+                        name="confidence_level"
+                        value={String(level)}
+                        label={`${level} ${t(`confidence_meter_value_${level}`)}`}
+                        onChange={() => onChange?.(level)}
+                        checked={String(value) === String(level)}
+                    />
+                ))}
+            </RadioButtonGroup>
         </div>
     );
 };
