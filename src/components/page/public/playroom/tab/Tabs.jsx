@@ -7,7 +7,8 @@ const TabHeading = ({
   notification = null,
   judgeState = false,
   active = false,
-  onClick
+  onClick,
+  gamingStateForJudge
 }) => {
 
   const [notificationCleared, setNotificationCleared] = useState(false);
@@ -27,7 +28,7 @@ const TabHeading = ({
   };
 
   const activeClass = active ? 'tab-heading-active' : '';
-  const notificationClass = notification && !judgeState && !notificationCleared && !active ? 'tab-heading-notify' : '';
+  const notificationClass = notification && !judgeState && !notificationCleared && !active && gamingStateForJudge !== 'final-review' ? 'tab-heading-notify' : '';
   const showNotification = notificationClass;
 
   return (
@@ -66,6 +67,7 @@ const Tabs = ({
       judgeState={tab.judgeState}
       active={activeTab === i}
       onClick={() => switchTab(i)}
+      gamingStateForJudge = {tab.children?.props?.currentState}
     />
   ));
 
