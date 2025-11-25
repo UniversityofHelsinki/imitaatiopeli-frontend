@@ -2,7 +2,6 @@ image: quay.io/tike/alpine-oc-node
 
 stages:
   - setup
-  - test
   - dependency-track-sbom
   - dependency-track-submit
   - sonarqube-check
