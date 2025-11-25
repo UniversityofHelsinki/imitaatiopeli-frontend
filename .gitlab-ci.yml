@@ -26,6 +26,7 @@ variables:
 
 setup:
   stage: setup
+  image: node:22-alpine
   tags:
     - ohtu-build-3
   script:
