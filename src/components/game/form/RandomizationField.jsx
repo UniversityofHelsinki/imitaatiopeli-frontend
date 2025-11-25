@@ -3,6 +3,7 @@ import './ResearchField.css';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import CheckBox from "../../misc/ds/CheckBox.jsx";
+import './RandomizationField.css';
 
 const RandomizationField = ({ value, onChange, disabled, validation }) => {
     const { t } = useTranslation();
