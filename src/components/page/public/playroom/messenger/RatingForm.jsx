@@ -17,11 +17,15 @@ export const ConfidenceMeter = ({
 
     const levels = [1, 2, 3, 4];
 
+    console.log("Confidence Meter: ", value);
+
     return (
         <div className="confidence-meter-container">
             <RadioButtonGroup
                 label={t('rating_form_confidence_meter_label')}
                 value={String(value)}
+                dsDirection='horizontal'
+                dsRequired='true'
             >
                 {levels.map((level) => (
                     <RadioButton
@@ -131,7 +135,7 @@ const RatingForm = ({
                     />
                     <span className="rating-form-justifications-character-count">{justifications.length} / 500</span>
                 </div>
-                <Button disabled={!justifications || (selectedIndex === null)} type="submit" label={t('rating_form_submit_rating')} />
+                <Button disabled={!justifications || !confidence || (selectedIndex === null)} type="submit" label={t('rating_form_submit_rating')} />
                 {answers[0]?.content?.questionCount >= 3 && <Button disabled={!justifications || (selectedIndex === null)} onClick={handleEndGame} variant="secondary" label={t('rating_form_end_game')} />}
             </form>
         </div>
