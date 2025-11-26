@@ -55,7 +55,7 @@ const StartGame = () => {
             });
             await start();
             setNotification(t('start_game_page_success_notification'), 'success', true);
-            navigate('/admin/games');
+            navigate(`/admin/games/${id}/monitor`);
         }
     };
 
