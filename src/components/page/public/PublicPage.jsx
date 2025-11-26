@@ -48,7 +48,7 @@ const PublicPage = ({
                     {headingExtras}
                 </div>
             </div>
-            <div className="page-content">
+            <div className="page-content public-page">
                 {children}
             </div>
         </div>
