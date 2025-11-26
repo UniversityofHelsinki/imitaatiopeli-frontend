@@ -9,6 +9,10 @@
   margin-bottom: var(--ds-spacing-small);
 }
 
+.game-form-instructions-field {
+    background-color: #007bff;
+}
+
 .form-field-text-field {
   display: flex;
   font-size: 18px;

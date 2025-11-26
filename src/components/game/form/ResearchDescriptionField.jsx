@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import TextArea from '../../misc/ds/TextArea';
 import { useTranslation } from 'react-i18next';
 import './InstructionsField.css';
+import './ResearchDescriptionField.css'
 
 const ResearchDescriptionField = ({ value, onChange, disabled, validation }) => {
     const { t } = useTranslation();

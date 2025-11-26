@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextArea from '../../misc/ds/TextArea';
 import { useTranslation } from 'react-i18next';
+import './PromptField.css'
 
 const PromptField = ({ value, onChange, disabled, validation }) => {
   const { t } = useTranslation();
