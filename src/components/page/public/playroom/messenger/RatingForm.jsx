@@ -132,6 +132,7 @@ const RatingForm = ({
                         value={justifications ?? ''}
                         onChange={e => onJustificationsChange?.(e.target.value?.substring(0, 500))}
                         autocomplete="off"
+                        required={true}
                     />
                     <span className="rating-form-justifications-character-count">{justifications.length} / 500</span>
                 </div>

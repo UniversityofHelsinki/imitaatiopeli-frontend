@@ -23,6 +23,8 @@ export const RatingMessage = ({ i, name, children, isSelected, onClick }) => {
     return (
         <Button
             variant='secondary'
+            dsColour="black"
+            dsSize="medium"
             icon={isSelected ? 'check_box_fill' : 'check_box_outline_blank'}
             type="button"
             className="messenger-message rating-message"

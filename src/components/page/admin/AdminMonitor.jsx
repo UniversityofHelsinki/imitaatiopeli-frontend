@@ -93,9 +93,20 @@ const AdminMonitor = () => {
 
     const formatDate = (releaseDate) => {
         if (!releaseDate) return '';
-        const formattedDate = new Intl.DateTimeFormat('fi-FI', {
+        const d = new Date(releaseDate);
+        const dateStr = new Intl.DateTimeFormat('fi-FI', {
             day: '2-digit', month: '2-digit', year: 'numeric'
-        }).format(new Date(releaseDate));
+        }).format(new Date(d));
+
+        const timeStr = new Intl.DateTimeFormat('fi-FI', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hourCycle: 'h23', // 24h, no AM/PM
+        }).format(d);
+
+        const formattedDate = `${dateStr} ${timeStr}`;
+
         return formattedDate;
     };
 

@@ -100,10 +100,13 @@ const FinalReviewForm = ({
             <div className="final-review-form-justification">
                 <TextArea
                     value={value.justification}
-                    onChange={e => handleChange('justification', e.target.value)}
+                    onChange={e => handleChange('justification', e.target.value?.substring(0, 500))}
                     label={t('final_review_form_justification_label')}
                     disabled={isSubmitting || isSubmitted}
                 />
+                <span className="rating-form-justifications-character-count">
+                    {value.justification.length} / 500
+                </span>
             </div>
             <div className="final-review-form-actions">
                 <Button
