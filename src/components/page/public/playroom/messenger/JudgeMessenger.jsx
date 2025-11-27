@@ -124,10 +124,11 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             onMessageSubmit={handleAskQuestion}
             messageFieldDisabled={currentState !== 'ask'}
             announcement={disabledAnnouncements[currentState]}
-            messageFieldHidden={['final-review', 'end'].includes(currentState)}
+            messageFieldHidden={['final-review', 'end', 'rate'].includes(currentState)}
             message={input}
             onMessageChange={onInputChange}
-            msglength={500}>
+            msglength={500}
+        >
             {currentState !== 'final-review' && <ul className="message-area-messages">
                 <li className="message-area-instructions message-area-item">
                     <InstructionMessage content={t('playroom_instructions_judge')} />
