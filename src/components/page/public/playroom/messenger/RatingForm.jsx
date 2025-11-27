@@ -34,7 +34,7 @@ export const ConfidenceMeter = ({
                         name="confidence_level"
                         value={String(level)}
                         label={`${level} ${t(`confidence_meter_value_${level}`)}`}
-                        onChange={() => onChange?.(level)}
+                        onClick={e => { e.preventDefault(); onChange?.(level)}}
                         checked={String(value) === String(level)}
                     />
                 ))}

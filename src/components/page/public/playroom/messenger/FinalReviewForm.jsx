@@ -83,7 +83,7 @@ const FinalReviewForm = ({
                             name="final_review_form_options"
                             value={String(option.answerId)}
                             label={t(`final_review_form_options_label_${option.index + 1}`)}
-                            onChange={() => handleChange('selection', String(option.answerId))}
+                            onClick={(e) => e.preventDefault() || handleChange('selection', String(option.answerId))}
                             checked={value.selection === String(option.answerId)}
                             disabled={isSubmitting || isSubmitted}
                         />
