@@ -34,7 +34,7 @@ export const ConfidenceMeter = ({
                         name="confidence_level"
                         value={String(level)}
                         label={`${level} ${t(`confidence_meter_value_${level}`)}`}
-                        onChange={() => onChange?.(level)}
+                        onClick={e => { e.preventDefault(); onChange?.(level)}}
                         checked={String(value) === String(level)}
                     />
                 ))}
@@ -132,6 +132,7 @@ const RatingForm = ({
                         value={justifications ?? ''}
                         onChange={e => onJustificationsChange?.(e.target.value?.substring(0, 500))}
                         autocomplete="off"
+                        required={true}
                     />
                     <span className="rating-form-justifications-character-count">{justifications.length} / 500</span>
                 </div>
