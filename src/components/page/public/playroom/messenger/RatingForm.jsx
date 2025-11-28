@@ -101,7 +101,7 @@ const RatingForm = ({
             <div className="rating-form-heading">
                 {t('rating_form_instructive_heading')}
             </div>
-            <form onSubmit={handleSubmit} className="rating-form-form" >
+            <form className="rating-form-form" >
                 {answers.map((answer, i) => (
                     <div key={`${answer.type}-${i}`} className="message-area-item message-area-item-received rating-form-answers">
                         <RatingMessage
@@ -136,8 +136,8 @@ const RatingForm = ({
                     />
                     <span className="rating-form-justifications-character-count">{justifications.length} / 500</span>
                 </div>
-                <Button disabled={!justifications || !confidence || (selectedIndex === null)} onClick={handleSubmit} type="submit" label={t('rating_form_submit_rating')} />
-                {answers[0]?.content?.questionCount >= 3 && <Button disabled={!justifications || (selectedIndex === null)} onClick={handleEndGame} variant="secondary" label={t('rating_form_end_game')} />}
+                <Button disabled={!justifications || !confidence || (selectedIndex === null)} onClick={handleSubmit} type="button" label={t('rating_form_submit_rating')} />
+                {answers[0]?.content?.questionCount >= 3 && <Button disabled={!justifications || (selectedIndex === null)} onClick={handleEndGame} type="button" variant="secondary" label={t('rating_form_end_game')} />}
             </form>
         </div>
     );
