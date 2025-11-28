@@ -178,4 +178,3 @@ RatingForm.propTypes = {
 };
 
 export default RatingForm;
-
