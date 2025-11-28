@@ -101,7 +101,7 @@ const RatingForm = ({
             <div className="rating-form-heading">
                 {t('rating_form_instructive_heading')}
             </div>
-            <form onSubmit={handleSubmit} className="rating-form-form" >
+            <form className="rating-form-form" >
                 {answers.map((answer, i) => (
                     <div key={`${answer.type}-${i}`} className="message-area-item message-area-item-received rating-form-answers">
                         <RatingMessage
