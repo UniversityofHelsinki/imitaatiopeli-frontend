@@ -9,9 +9,9 @@ import RadioButtonGroup from "../../../../misc/ds/RadioButtonGroup.jsx";
 import RadioButton from "../../../../misc/ds/RadioButton.jsx";
 
 export const ConfidenceMeter = ({
-                             value,
-                             onChange
-                         }) => {
+                                    value,
+                                    onChange
+                                }) => {
     const id = useId();
     const { t } = useTranslation();
 
@@ -81,21 +81,21 @@ const RatingForm = ({
     };
 
     const handleEndGame = (event) => {
-      event.preventDefault();
-      if (onEndGame) {
-        onEndGame({
-          selectedAnswer: selectedAnswer,
-          confidence: confidence ?? 2,
-          justifications: justifications ?? ''
-        });
-      }
+        event.preventDefault();
+        if (onEndGame) {
+            onEndGame({
+                selectedAnswer: selectedAnswer,
+                confidence: confidence ?? 2,
+                justifications: justifications ?? ''
+            });
+        }
     };
 
     return (
         <div className="rating-form">
             <div className="message-area-item message-area-item-sent rating-form-question">
                 <QuestionMessage>
-                  {question.content}
+                    {question.content}
                 </QuestionMessage>
             </div>
             <div className="rating-form-heading">
@@ -116,12 +116,12 @@ const RatingForm = ({
                 ))}
                 <div className="rating-form-confidence">
                     <ConfidenceMeter value={confidence ?? 0} onChange={(...args) => {
-                            // Support both signatures:
-                            // 1) onChange(value)
-                            // 2) onChange(event, value)
-                            const val = args.length === 1 ? args[0] : args[1];
-                            if (val != null) onConfidenceChange?.(Number(val));
-                        }}
+                        // Support both signatures:
+                        // 1) onChange(value)
+                        // 2) onChange(event, value)
+                        const val = args.length === 1 ? args[0] : args[1];
+                        if (val != null) onConfidenceChange?.(Number(val));
+                    }}
                     />
                 </div>
                 <div className="rating-form-justifications">
@@ -130,11 +130,11 @@ const RatingForm = ({
                         assistiveText={t('rating_form_justifications_assistive_text')}
                         placeholder={t('rating_form_justifications_placeholder')}
                         value={justifications ?? ''}
-                        onChange={e => onJustificationsChange?.(e.target.value?.substring(0, 500))}
+                        onChange={e => onJustificationsChange?.(e.target.value?.substring(0, 2000))}
                         autocomplete="off"
                         required={true}
                     />
-                    <span className="rating-form-justifications-character-count">{justifications.length} / 500</span>
+                    <span className="rating-form-justifications-character-count">{justifications.length} / 2000</span>
                 </div>
                 <Button disabled={!justifications || !confidence || (selectedIndex === null)} onClick={handleSubmit} type="button" label={t('rating_form_submit_rating')} />
                 {answers[0]?.content?.questionCount >= 3 && <Button disabled={!justifications || !confidence || (selectedIndex === null)} onClick={handleEndGame} type="button" variant="secondary" label={t('rating_form_end_game')} />}
