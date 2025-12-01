@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React, {useId, useState} from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { LANGUAGE_OPTIONS } from '../../../Constants';
@@ -8,8 +8,9 @@ import ErrorText from "../../misc/ds/ErrorText.jsx";
 const LanguageField = ({ value, onChange, disabled, validation, languages = LANGUAGE_OPTIONS }) => {
     const { t } = useTranslation();
     const id = useId();
+    const [touched, setTouched] = useState(false);
 
-    const errorText = (validation && !validation.isValid && t(validation.message)) || '';
+    const errorText = (touched && validation && !validation.isValid && t(validation.message)) || '';
     const name = `language-${id}`;
 
     const handleChange = (e) => {
@@ -41,6 +42,7 @@ const LanguageField = ({ value, onChange, disabled, validation, languages = LANG
                                     value={opt.value}
                                     checked={value === opt.value}
                                     onChange={handleChange}
+                                    onBlur={() => setTouched(true)}
                                     disabled={disabled}
                                     required={index === 0}
                                 />
@@ -51,9 +53,7 @@ const LanguageField = ({ value, onChange, disabled, validation, languages = LANG
                         );
                     })}
                 </div>
-                {errorText && (
-                    <ErrorText text={errorText} />
-                )}
+                {errorText ? <ErrorText text={errorText}/> : undefined }
             </fieldset>
         </div>
     );
