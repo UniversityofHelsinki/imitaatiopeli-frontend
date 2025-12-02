@@ -1,3 +1,20 @@
+.messenger-message-instructions {
+    padding: 1rem 1.25rem;
+    font-weight: 500;
+    max-width: 95%;
+    word-wrap: break-word;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    margin: 0.5rem 0;
+    position: relative;
+}
+
+.messenger-message-instructions::before {
+    content: "ℹ️";                        /* info emoji icon */
+    margin-right: 0.5rem;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 /* ========== Message Area Items ========== */
 .message-area-item {
     animation: slideIn 0.3s ease-out;
