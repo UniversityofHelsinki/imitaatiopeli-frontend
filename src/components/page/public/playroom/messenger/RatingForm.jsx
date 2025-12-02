@@ -1,12 +1,12 @@
-import React, { useId, useState } from 'react';
+import React, { useId } from 'react';
 import PropTypes from 'prop-types';
 import './RatingForm.css';
-import Message, {QuestionMessage, RatingMessage} from './Message';
+import { QuestionMessage, RatingMessage } from './Message';
 import Button from '../../../../misc/ds/Button';
 import { useTranslation } from 'react-i18next';
 import TextArea from '../../../../misc/ds/TextArea';
-import RadioButtonGroup from "../../../../misc/ds/RadioButtonGroup.jsx";
-import RadioButton from "../../../../misc/ds/RadioButton.jsx";
+import RadioButtonGroup from '../../../../misc/ds/RadioButtonGroup.jsx';
+import RadioButton from '../../../../misc/ds/RadioButton.jsx';
 
 export const ConfidenceMeter = ({
                                     value,
@@ -99,27 +99,28 @@ const RatingForm = ({
                 </QuestionMessage>
             </div>
 
-            <div className="rating-form-heading">
-                {t('rating_form_instructive_heading')}
-            </div>
-
             <form onSubmit={handleSubmit} className="rating-form-form">
-                <div className="rating-form-answers-container">
-                    {answers.map((answer, i) => (
-                        <div
-                            key={`${answer.type}-${i}`}
-                            className="message-area-item  rating-form-answers"
-                        >
-                            <RatingMessage
-                                i={i}
-                                name="rating-answers"
-                                isSelected={selectedIndex === i}
-                                onClick={() => handleSelect(i)}
-                            >
-                                {answer.content}
-                            </RatingMessage>
+                <div className="rating-form-block">
+                    <div className="rating-form-answers-container">
+                        <div className="rating-form-heading">
+                            {t('rating_form_instructive_heading')}
                         </div>
-                    ))}
+                        {answers.map((answer, i) => (
+                            <div
+                                key={`${answer.type}-${i}`}
+                                className="message-area-item  rating-form-answers"
+                            >
+                                <RatingMessage
+                                    i={i}
+                                    name="rating-answers"
+                                    isSelected={selectedIndex === i}
+                                    onClick={() => handleSelect(i)}
+                                >
+                                    {answer.content}
+                                </RatingMessage>
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 <div className="rating-form-confidence">
