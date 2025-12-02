@@ -5,58 +5,77 @@
     font-family: 'Inter', sans-serif;
 }
 
+/* ===== HEADINGS WRAPPER ===== */
 .tabs-headings {
     display: flex;
     gap: 0.5rem;
-    background-color: #e5e7eb; /* light neutral, accessible background */
+    background-color: var(--ds-bgColor-neutralLight);
     padding: 0.25rem;
-    border-radius: 9999px; /* pill shape */
+    border-radius: 9999px; /* pill container */
     overflow: hidden;
 }
 
+/* ===== TAB BUTTON ===== */
 .tab-heading {
     all: unset;
     flex: 1;
     text-align: center;
     padding: 0.6rem 1.25rem;
-    border-radius: 9999px; /* pill shape */
+    border-radius: 9999px;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+
     font-weight: 500;
-    color: #1f2937; /* dark gray, accessible contrast */
+    color: var(--ds-textColor-primary);
+
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     background-color: transparent;
 }
 
-.tab-heading:hover {
-    background-color: #dbeafe; /* light blue for hover */
-    color: #1e40af; /* darker blue text for contrast */
+/* Hover — only when NOT active */
+.tab-heading:hover:not(.tab-heading-active) {
+    background-color: var(--ds-bgColor-secondary-hover);
+    color: var(--ds-borderColor-primary);
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+/* Keyboard focus */
 .tab-heading:focus-visible {
-    outline: 3px solid #2563eb; /* high-contrast focus ring */
+    outline: 3px solid var(--ds-borderColor-primary);
     outline-offset: 2px;
 }
 
+/* ===== ACTIVE TAB ===== */
 .tab-heading-active {
-    background-color: #1e40af; /* accessible blue */
-    color: #ffffff; /* white text, high contrast */
+    background-color: var(--ds-bgColor-primary);
+    color: var(--ds-bgColor-neutralLight); /* readable */
     font-weight: 600;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
+/* Active hover = same color (no flicker) */
+.tab-heading-active:hover {
+    background-color: var(--ds-bgColor-primary);
+    color: var(--ds-bgColor-neutralLight);
+    transform: none;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+/* ===== RED PULSE NOTIFICATION ===== */
 .tab-heading-notify::after {
     content: '';
     position: absolute;
     top: 6px;
     right: 10px;
+
     width: 12px;
     height: 12px;
-    background-color: #ff4d4f; /* bright red */
     border-radius: 50%;
-    box-shadow: 0 0 6px rgba(255, 77, 79, 0.7); /* stronger glow */
+
+    background-color: var(--ds-textColor-danger);
+    box-shadow: 0 0 6px rgba(255, 77, 79, 0.7);
+
     animation: pulse-red 1.2s infinite ease-in-out;
 }
 
@@ -78,18 +97,20 @@
     }
 }
 
+/* ===== CONTENT AREA ===== */
 .tabs-active-tab {
     flex: 1;
-    border: 1px solid #d1d5db; /* light gray border */
+    border: 1px solid #d1d5db;
     border-radius: 12px;
     padding: 1rem;
     margin-top: 0.5rem;
     background-color: #ffffff;
+
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     overflow-y: auto;
 }
 
-/* Responsive adjustments */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
     .tab-heading {
         padding: 0.5rem 0.75rem;
