@@ -77,6 +77,19 @@ const GameLobby = () => {
                     } else {
                         const hasJoined = playerResponse.body.gameId === gameResponse.body.game_id;
                         setJoined(hasJoined);
+
+                        const now = new Date();
+                        const start = gameResponse.body.start_time ? new Date(gameResponse.body.start_time) : null;
+                        const end = gameResponse.body.end_time ? new Date(gameResponse.body.end_time) : null;
+
+                        const hasStarted = start && start <= now;
+                        const notEnded = !end || end > now;
+
+                        if (hasStarted && notEnded) {
+                            navigate(`/games/${gameResponse.body.game_id}/play`, { replace: true });
+                            return;
+                        }
+
                     }
                 } else {
                     console.log("No player found in localStorage");
