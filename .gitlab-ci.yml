@@ -73,7 +73,6 @@ build_stage_test:
   image: node:22-alpine
   only:
     - test
-    #- IM-248
   tags:
     - ohtu-build-3
   extends: .dependencies_cache
@@ -193,7 +192,6 @@ deploy_test:
     name: test
   only:
     - test
-    #- IM-248
   except:
     # Skip deploy when scheduled npm audit and outdated scans are executed.
     - schedules
