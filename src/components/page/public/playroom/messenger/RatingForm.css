@@ -204,13 +204,12 @@
     padding: 0.75rem 1.25rem;
 }
 
-/* ========== Confidence Meter Container (Chat Element) ========== */
+/* ========== Confidence Meter Container ========== */
 .confidence-meter-container {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     padding: 1.75rem;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     border-radius: 20px;
     border: 2px solid #e2e8f0;
     box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.02);

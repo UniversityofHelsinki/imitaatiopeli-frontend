@@ -67,29 +67,31 @@ const FinalReviewForm = ({
 
     return (
         <form className="final-review-form" onSubmit={handleSubmit}>
-            <div className="final-review-form-heading">
-                <h4>{t('final_review_form_heading')}</h4>
-            </div>
-            <div className="final-review-form-options">
-                <RadioButtonGroup
-                    label={t('final_review_form_options_legend')}
-                    assistiveText={t('final_review_form_options_assistive_text')}
-                    value={value.selection}
-                    dsDirection='horizontal'
-                >
-                    {answerOptions.map((option) => (
-                        <RadioButton
-                            key={option.answerId}
-                            id={`final_review_option_${option.answerId}`}
-                            name="final_review_form_options"
-                            value={String(option.answerId)}
-                            label={t(`final_review_form_options_label_${option.index + 1}`)}
-                            onClick={(e) => e.preventDefault() || handleChange('selection', String(option.answerId))}
-                            checked={value.selection === String(option.answerId)}
-                            disabled={isSubmitting || isSubmitted}
-                        />
-                    ))}
-                </RadioButtonGroup>
+            <div className="final-review-form-container">
+                <div className="final-review-form-heading">
+                    <h4>{t('final_review_form_heading')}</h4>
+                </div>
+                <div className="final-review-form-options">
+                    <RadioButtonGroup
+                        label={t('final_review_form_options_legend')}
+                        assistiveText={t('final_review_form_options_assistive_text')}
+                        value={value.selection}
+                        dsDirection='horizontal'
+                    >
+                        {answerOptions.map((option) => (
+                            <RadioButton
+                                key={option.answerId}
+                                id={`final_review_option_${option.answerId}`}
+                                name="final_review_form_options"
+                                value={String(option.answerId)}
+                                label={t(`final_review_form_options_label_${option.index + 1}`)}
+                                onClick={(e) => e.preventDefault() || handleChange('selection', String(option.answerId))}
+                                checked={value.selection === String(option.answerId)}
+                                disabled={isSubmitting || isSubmitted}
+                            />
+                        ))}
+                    </RadioButtonGroup>
+                </div>
             </div>
             <div className="final-review-form-confidence rating-form-confidence">
                 <ConfidenceMeter
