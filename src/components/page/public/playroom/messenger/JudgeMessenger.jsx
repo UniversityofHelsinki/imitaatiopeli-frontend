@@ -33,7 +33,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
                 console.log('currentState', currentState);
             } else if (summaryQuestions && currentState !== 'end') {
                 setCurrentState('final-review');
-            } else if (answers && answers.length > 0 && askedQuestion) {
+            } else if (answers && answers?.length > 0 && askedQuestion) {
                 setCurrentState('rate');
             } else if (answers.length === 0 && askedQuestion && currentState !== 'end') {
                 setCurrentState('wait');
@@ -41,7 +41,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
                 setCurrentState('ask');
             }
         }
-    }, [answers, askedQuestion, summaryQuestions]);
+    }, [answers, askedQuestion, summaryQuestions, currentState]);
 
     useEffect(() => {
         if (judgingEnded && currentState === 'end') {
