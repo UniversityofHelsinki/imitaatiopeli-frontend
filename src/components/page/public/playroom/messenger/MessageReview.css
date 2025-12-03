@@ -1,48 +1,61 @@
-
 .message-review {
-  display: flex;
-  flex: 1 1 0;
-  flex-direction: column;
-  gap: var(--ds-spacing-base);
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: var(--ds-spacing-base);
 }
 
 .message-review h4 {
-  font-size: 1.1rem;
+    font-size: 1.1rem;
 }
 
+/* ===== QUESTION BOX ===== */
 .message-review-question {
-  flex-basis: 100%;
-  border: 1px solid var(--ds-borderColor-light);
-  padding: var(--ds-spacing-base);
+    flex-basis: 100%;
+    border: 1px solid var(--ds-borderColor-light);
+    padding: var(--ds-spacing-base);
+    border-radius: 12px; /* rounded */
+    background: var(--ds-bgColor-white);
 }
 
+/* ===== ANSWERS CONTAINER ===== */
 .message-review-answers {
-  display: flex;
-  flex: 1 1 0;
-  gap: var(--ds-spacing-base);
+    display: flex;
+    flex: 1 1 0;
+    gap: var(--ds-spacing-base);
 }
 
+/* ===== ANSWER BOXES ===== */
 .message-review-answer {
-  flex-basis: 100%;
-  border: 1px solid var(--ds-borderColor-light);
-  padding: var(--ds-spacing-base);
+    flex-basis: 100%;
+    border: 1px solid var(--ds-borderColor-light);
+    padding: var(--ds-spacing-base);
+    border-radius: 12px; /* rounded */
+    background: var(--ds-bgColor-white);
 }
 
+/* Wrap answers on tablet/mobile */
 @media (max-width: 50rem) {
-  .message-review-answers {
-    flex-wrap: wrap;
-  }
+    .message-review-answers {
+        flex-wrap: wrap;
+    }
 }
 
+/* ===== SELECTED ANSWER ===== */
 .message-review-answer-selected {
-  border: 4px solid var(--ds-borderColor-primary);
+    border: 4px solid var(--ds-borderColor-primary);
+    border-radius: 12px; /* keep shape when highlighted */
 }
 
+/* ===== JUSTIFICATION BOX ===== */
 .message-review-justification {
-  border: 1px solid var(--ds-borderColor-light);
-  padding: var(--ds-spacing-base);
+    border: 1px solid var(--ds-borderColor-light);
+    padding: var(--ds-spacing-base);
+    border-radius: 12px; /* rounded */
+    background: var(--ds-bgColor-white);
 }
 
+/* Text resets */
 .message-review p {
-  margin-bottom: unset;
+    margin-bottom: unset;
 }
