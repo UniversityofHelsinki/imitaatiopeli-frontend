@@ -12,7 +12,6 @@
 /* ===== QUESTION BOX ===== */
 .message-review-question {
     flex-basis: 100%;
-    border: 1px solid var(--ds-borderColor-light);
     padding: var(--ds-spacing-base);
     border-radius: 12px; /* rounded */
     background: var(--ds-bgColor-white);

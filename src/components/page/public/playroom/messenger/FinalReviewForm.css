@@ -5,3 +5,16 @@
   gap: var(--ds-spacing-base);
 }
 
+.final-review-form-justification textarea {
+    border-radius: 16px;
+    border: 2px solid #e2e8f0;
+    padding: 1rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #0f172a;
+    resize: vertical;
+    min-height: 120px;
+    transition: all 0.35s ease;
+    background: white;
+    line-height: 1.6;
+}

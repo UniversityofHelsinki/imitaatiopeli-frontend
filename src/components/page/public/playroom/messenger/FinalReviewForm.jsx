@@ -75,6 +75,7 @@ const FinalReviewForm = ({
                     label={t('final_review_form_options_legend')}
                     assistiveText={t('final_review_form_options_assistive_text')}
                     value={value.selection}
+                    dsDirection='horizontal'
                 >
                     {answerOptions.map((option) => (
                         <RadioButton
