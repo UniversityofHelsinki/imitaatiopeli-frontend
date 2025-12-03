@@ -48,6 +48,7 @@ const AdminMonitorTable = ({gamePlayers = [], onSortCriteria}) => {
                 </caption>
                 <thead>
                 <tr>
+                    <th scope="col">#</th>
                     <th scope="col">
                         <div>
                             <span> {t('admin_monitor_table_judge')} </span>
@@ -70,6 +71,7 @@ const AdminMonitorTable = ({gamePlayers = [], onSortCriteria}) => {
                 <tbody>
                 {Array.isArray(gamePlayers) && gamePlayers?.map((player, i) => (
                         <tr key={`${player.judge_nickname}-${i}`}>
+                            <td>{sortDirection === ASCENDING ? (i + 1) : (gamePlayers.length - i)}</td>
                             <td>{player.judge_nickname}</td>
                             <td>{finalGuess(player)}</td>
                             <td>{player.judge_question_count}</td>
