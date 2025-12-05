@@ -219,6 +219,7 @@
   "game_content_move_to_summary_link_label": "Siirry pelin yhteenvetoon",
   "qr_code_dialog_title": "Peliin liittymisen QR-koodi",
   "qr_code_button_title": "Näytä peliin liittymisen QR-koodi",
+  "nickname_too_long": "Nimimerkin pituus saa olla maksimissaan 100 merkkiä",
   "selected_language_model": "Valittu kielimalli",
   "answer_sent_success_notification": "Vastaus lähetetty!",
   "answer_sent_error_notification": "Virhe vastauksen lähettämisessä",
