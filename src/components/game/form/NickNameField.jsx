@@ -8,12 +8,7 @@ const NickNameField = ({ value, disabled, onChange, validation }) => {
   const { t } = useTranslation();
   const id = useId();
 
-
-  console.log(validation?.message);
-
   const errorText = validation && !validation.isValid && validation.message || '';
-
-  console.log(errorText);
 
   return (
     <div className="nickname-field">
