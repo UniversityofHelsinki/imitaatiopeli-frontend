@@ -30,30 +30,42 @@ const JoinGameForm = ({ game }) => {
     const onChange = (key, value) => {
         setPlayer({ ...player, [key]: value });
         if (key === 'nickname') {
-            const nicknameExists = players?.some(p => {
-                return p.nickname.toLowerCase() === value.toLowerCase();
-            });
-            if (nicknameExists && value.trim() !== '') {
-                setNicknameError(t('nickname_already_in_use'));
-            } else {
+            if (value.length > 100) {
+                setNicknameError(t('nickname_too_long'));
+            } else if (value.trim() === '') {
                 setNicknameError('');
+            } else {
+                const nicknameExists = players?.some(p => {
+                    return p.nickname.toLowerCase() === value.toLowerCase();
+                });
+                if (nicknameExists) {
+                    setNicknameError(t('nickname_already_in_use'));
+                } else {
+                    setNicknameError('');
+                }
             }
         }
     };
 
     const isFormDisabled = () => {
         const nicknameEmpty = !player.nickname || player?.nickname.trim() === '';
+        const nicknameTooLong = player?.nickname?.length > 100;
         const nicknameExists = players?.some(p =>
             p.nickname.toLowerCase() === player.nickname.toLowerCase()
         );
-        return saving || nicknameEmpty || nicknameExists;
+        return saving || nicknameEmpty || nicknameExists || nicknameTooLong;
     };
 
   const handleSubmit = async (event) => {
       event.preventDefault();
       const nicknameExists = players.some(p => p.nickname.toLowerCase() === player.nickname.toLowerCase());
+      const nicknameTooLong = player?.nickname?.length > 100;
       if (nicknameExists) {
           setNicknameError(t('nickname_already_in_use'));
+          return;
+      }
+      if (nicknameTooLong) {
+          setNicknameError(t('nickname_too_long'));
           return;
       }
       const researchPermissionRequired = phase === 'nickname' && game.configuration[0].is_research_game;

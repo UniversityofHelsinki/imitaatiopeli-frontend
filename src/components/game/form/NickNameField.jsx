@@ -8,18 +8,24 @@ const NickNameField = ({ value, disabled, onChange, validation }) => {
   const { t } = useTranslation();
   const id = useId();
 
+
+  console.log(validation?.message);
+
   const errorText = validation && !validation.isValid && validation.message || '';
+
+  console.log(errorText);
 
   return (
     <div className="nickname-field">
-      <TextInput 
+      <TextInput
         id={id}
-        label={t('nickname_field_label')} 
-        placeholder={t('nickname_field_placeholder')} 
+        label={t('nickname_field_label')}
+        placeholder={t('nickname_field_placeholder')}
         onInput={event => onChange(event.target.value)}
         disabled={disabled}
-        value={value} 
-        errorText={errorText} 
+        value={value}
+        errorText={errorText}
+        maxLength={100}
         required
       />
     </div>
