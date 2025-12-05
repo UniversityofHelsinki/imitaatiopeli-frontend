@@ -19,6 +19,7 @@ const createEmptyGame = (t) => ({
         language_model: null,
         model_temperature: 0.7,
         answer_randomization: false,
+        show_result: true,
     }
 });
 
