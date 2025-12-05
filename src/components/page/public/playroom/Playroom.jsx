@@ -160,7 +160,7 @@ const Playroom = () => {
 
     // Get gameId and judgeId
     const gameId = question?.gameId || initialQuestion?.game_id || player?.game_id;
-    const judgeId = question?.judgeId || initialQuestion?.judge_id || player?.player_id;
+    const judgeId = player?.player_id;
 
     const tabs = [
         {

@@ -1,12 +1,12 @@
-import React, { useId, useState } from 'react';
+import React, { useId } from 'react';
 import PropTypes from 'prop-types';
 import './RatingForm.css';
-import Message, {QuestionMessage, RatingMessage} from './Message';
+import { QuestionMessage, RatingMessage } from './Message';
 import Button from '../../../../misc/ds/Button';
 import { useTranslation } from 'react-i18next';
 import TextArea from '../../../../misc/ds/TextArea';
-import RadioButtonGroup from "../../../../misc/ds/RadioButtonGroup.jsx";
-import RadioButton from "../../../../misc/ds/RadioButton.jsx";
+import RadioButtonGroup from '../../../../misc/ds/RadioButtonGroup.jsx';
+import RadioButton from '../../../../misc/ds/RadioButton.jsx';
 
 export const ConfidenceMeter = ({
                                     value,
@@ -98,32 +98,44 @@ const RatingForm = ({
                     {question.content}
                 </QuestionMessage>
             </div>
-            <div className="rating-form-heading">
-                {t('rating_form_instructive_heading')}
-            </div>
-            <form className="rating-form-form" >
-                {answers.map((answer, i) => (
-                    <div key={`${answer.type}-${i}`} className="message-area-item message-area-item-received rating-form-answers">
-                        <RatingMessage
-                            i={i}
-                            name="rating-answers"
-                            isSelected={selectedIndex === i}
-                            onClick={() => handleSelect(i)}
-                        >
-                            {answer.content}
-                        </RatingMessage>
+
+            <form onSubmit={handleSubmit} className="rating-form-form">
+                <div className="rating-form-block">
+                    <div className="rating-form-answers-container">
+                        <div className="rating-form-heading">
+                            {t('rating_form_instructive_heading')}
+                        </div>
+                        {answers.map((answer, i) => (
+                            <div
+                                key={`${answer.type}-${i}`}
+                                className="message-area-item  rating-form-answers"
+                            >
+                                <RatingMessage
+                                    i={i}
+                                    name="rating-answers"
+                                    isSelected={selectedIndex === i}
+                                    onClick={() => handleSelect(i)}
+                                >
+                                    {answer.content}
+                                </RatingMessage>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </div>
+
                 <div className="rating-form-confidence">
-                    <ConfidenceMeter value={confidence ?? 0} onChange={(...args) => {
-                        // Support both signatures:
-                        // 1) onChange(value)
-                        // 2) onChange(event, value)
-                        const val = args.length === 1 ? args[0] : args[1];
-                        if (val != null) onConfidenceChange?.(Number(val));
-                    }}
+                    <ConfidenceMeter
+                        value={confidence ?? 0}
+                        onChange={(...args) => {
+                            // Support both signatures:
+                            // 1) onChange(value)
+                            // 2) onChange(event, value)
+                            const val = args.length === 1 ? args[0] : args[1];
+                            if (val != null) onConfidenceChange?.(Number(val));
+                        }}
                     />
                 </div>
+
                 <div className="rating-form-justifications">
                     <TextArea
                         label={t('rating_form_justifications_label')}
@@ -136,8 +148,22 @@ const RatingForm = ({
                     />
                     <span className="rating-form-justifications-character-count">{justifications.length} / 2000</span>
                 </div>
-                <Button disabled={!justifications || !confidence || (selectedIndex === null)} onClick={handleSubmit} type="button" label={t('rating_form_submit_rating')} />
-                {answers[0]?.content?.questionCount >= 3 && <Button disabled={!justifications || !confidence || (selectedIndex === null)} onClick={handleEndGame} type="button" variant="secondary" label={t('rating_form_end_game')} />}
+
+                <div className="rating-form-buttons">
+                    <Button
+                        disabled={!justifications || !confidence || (selectedIndex === null)}
+                        type="submit"
+                        label={t('rating_form_submit_rating')}
+                    />
+                    {answers[0]?.content?.questionCount >= 3 && (
+                        <Button
+                            disabled={!justifications || (selectedIndex === null)}
+                            onClick={handleEndGame}
+                            variant="secondary"
+                            label={t('rating_form_end_game')}
+                        />
+                    )}
+                </div>
             </form>
         </div>
     );

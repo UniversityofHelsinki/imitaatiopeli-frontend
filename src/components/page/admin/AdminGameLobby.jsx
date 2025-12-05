@@ -65,11 +65,11 @@ const AdminGameLobby = () => {
                             </div>
                             <p>
                                 <strong>{t('admin_game_lobby_details_name')}: </strong>
-                                {game.configuration?.theme_description || ''}
+                                {game.configuration?.game_name || ''}
                             </p>
                             <p>
                                 <strong>{t('admin_game_lobby_details_theme')}: </strong>
-                                {game.configuration?.game_name || ''}
+                                {game.configuration?.theme_description || ''}
                             </p>
                         </div>
                     <div className="admin-game-lobby-players-container">
