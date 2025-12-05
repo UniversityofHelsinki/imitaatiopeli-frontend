@@ -142,13 +142,11 @@ const RatingForm = ({
                         assistiveText={t('rating_form_justifications_assistive_text')}
                         placeholder={t('rating_form_justifications_placeholder')}
                         value={justifications ?? ''}
-                        onChange={e => onJustificationsChange?.(e.target.value?.substring(0, 500))}
+                        onChange={e => onJustificationsChange?.(e.target.value?.substring(0, 2000))}
                         autocomplete="off"
                         required={true}
                     />
-                    <span className="rating-form-justifications-character-count">
-                        {justifications.length} / 500
-                    </span>
+                    <span className="rating-form-justifications-character-count">{justifications.length} / 2000</span>
                 </div>
 
                 <div className="rating-form-buttons">

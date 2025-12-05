@@ -29,7 +29,7 @@ const AitoMessenger = ({
             navigate(`/games/${gameId}/gameend`, { state: { reason: 'game_end_reason_game_ended' } });
         }
         if (judgingEnded) {
-          setCurrentState('judging-ended');
+            setCurrentState('judging-ended');
         } else if (question) {
             setAskedQuestion(question);
             setCurrentState('answer');
@@ -65,27 +65,27 @@ const AitoMessenger = ({
         'judging-ended': <WaitingAnnouncement content={t('playroom_no_more_answers_accepted')} showSpinner={false} />
     };
 
-  return (
-    <Messenger
-      onMessageSubmit={answerQuestion}
-      messageFieldDisabled={currentState !== 'answer'}
-      announcement={disabledAnnouncements[currentState]}
-      message={input}
-      onMessageChange={onInputChange}
-      msglength={500}
-    >
-      <ul className="message-area-messages">
-        <li className="message-area-instructions message-area-item">
-          <InstructionMessage content={t('playroom_instructions_aito')} />
-        </li>
-          {askedQuestion && (
-              <li key={`question-0`} className={`message-area-item message-area-item-${askedQuestion.type}`}>
-                  <Message>{askedQuestion.content}</Message>
-              </li>
-          )}
-      </ul>
-    </Messenger>
-  );
+    return (
+        <Messenger
+            onMessageSubmit={answerQuestion}
+            messageFieldDisabled={currentState !== 'answer'}
+            announcement={disabledAnnouncements[currentState]}
+            message={input}
+            onMessageChange={onInputChange}
+            msglength={2000}
+        >
+            <ul className="message-area-messages">
+                <li className="message-area-instructions message-area-item">
+                    <InstructionMessage content={t('playroom_instructions_aito')} />
+                </li>
+                {askedQuestion && (
+                    <li key={`question-0`} className={`message-area-item message-area-item-${askedQuestion.type}`}>
+                        <Message>{askedQuestion.content}</Message>
+                    </li>
+                )}
+            </ul>
+        </Messenger>
+    );
 };
 
 AitoMessenger.propTypes = {
