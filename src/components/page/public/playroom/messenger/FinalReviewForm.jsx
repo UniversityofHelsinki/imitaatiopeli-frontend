@@ -7,6 +7,7 @@ import RadioButton from '../../../../misc/ds/RadioButton';
 import TextArea from '../../../../misc/ds/TextArea';
 import Button from '../../../../misc/ds/Button';
 import { ConfidenceMeter } from './RatingForm';
+import { useNotification } from "../../../../notification/NotificationContext.jsx";
 
 const FinalReviewForm = ({
                              onSubmit,
@@ -21,6 +22,7 @@ const FinalReviewForm = ({
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const { setNotification } = useNotification();
 
     const { t } = useTranslation();
 
@@ -34,8 +36,10 @@ const FinalReviewForm = ({
             try {
                 await onSubmit(value);
                 setIsSubmitted(true);
+                setNotification(t('final_review_submit_success_notification'), 'success', true);
             } catch (error) {
-                // If submission fails, re-enable the button
+                console.error('Failed to submit final review', error);
+                setNotification(t('final_review_submit_error_notification'), 'error', true);
                 setIsSubmitting(false);
             }
         }

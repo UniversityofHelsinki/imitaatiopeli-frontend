@@ -56,6 +56,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
         try {
             await askQuestion(questionText);
             setAskedQuestion({ content: questionText, type: 'sent' });
+            setNotification(t('question_sent_success_notification'), 'success', true);
             setCurrentState('wait');
         } catch (error) {
             console.error('Failed to ask question:', error);
