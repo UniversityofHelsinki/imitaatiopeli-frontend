@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React, {useId, useState} from 'react';
 import PropTypes from 'prop-types';
 import './RatingForm.css';
 import { QuestionMessage, RatingMessage } from './Message';
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import TextArea from '../../../../misc/ds/TextArea';
 import RadioButtonGroup from '../../../../misc/ds/RadioButtonGroup.jsx';
 import RadioButton from '../../../../misc/ds/RadioButton.jsx';
+import ConfirmDialog from "../../../../../utilities/ConfirmDialog.jsx";
 
 export const ConfidenceMeter = ({
                                     value,
@@ -61,6 +62,7 @@ const RatingForm = ({
                         onConfidenceChange
                     }) => {
     const { t } = useTranslation();
+    const [confirmOpen, setConfirmOpen] = useState(false);
 
     const handleSelect = (i) => {
         onSelectedIndexChange?.(i);
@@ -88,8 +90,23 @@ const RatingForm = ({
                 confidence: confidence ?? 2,
                 justifications: justifications ?? ''
             });
+            setConfirmOpen(false);
         }
     };
+
+    const renderEndGameConfirm = () => (
+        <div className="confirm-dialog-container" id="end-game-dialog-container" aria-live="assertive">
+            <ConfirmDialog
+                id="end-game-dialog"
+                open={confirmOpen}
+                message={t('rating_form_end_game_confirm_message')}
+                confirmLabel={t('rating_form_end_game_confirm')}
+                cancelLabel={t('rating_form_end_game_cancel')}
+                onCancel={() => setConfirmOpen(false)}
+                onConfirm={handleEndGame}
+            />
+        </div>
+    );
 
     return (
         <div className="rating-form">
@@ -156,12 +173,15 @@ const RatingForm = ({
                         label={t('rating_form_submit_rating')}
                     />
                     {answers[0]?.content?.questionCount >= 3 && (
-                        <Button
-                            disabled={!justifications || (selectedIndex === null)}
-                            onClick={handleEndGame}
-                            variant="secondary"
-                            label={t('rating_form_end_game')}
-                        />
+                        <div>
+                            <Button
+                                disabled={!justifications || (selectedIndex === null)}
+                                onClick={() => setConfirmOpen(true)}
+                                variant="secondary"
+                                label={t('rating_form_end_game')}
+                            />
+                            {renderEndGameConfirm()}
+                        </div>
                     )}
                 </div>
             </form>
