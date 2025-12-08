@@ -183,6 +183,9 @@
   "rating_form_confidence_meter_label": "Kuinka varma olet vastauksestasi?",
   "rating_form_submit_rating": "Tallenna",
   "rating_form_end_game": "Tallenna ja päätä peli",
+  "rating_form_end_game_confirm_message": "Haluatko varmasti päättää pelin?",
+  "rating_form_end_game_confirm": "Päätä peli",
+  "rating_form_end_game_cancel": "Peruuta",
   "confidence_meter_value_1": "Epävarma",
   "confidence_meter_value_2": "Varmahko",
   "confidence_meter_value_3": "Varma",
@@ -218,5 +221,6 @@
   "game_end_reason_by_admin": "Pelin järjestäjä päätti pelin, voit sulkea selaimen",
   "game_content_move_to_summary_link_label": "Siirry pelin yhteenvetoon",
   "qr_code_dialog_title": "Peliin liittymisen QR-koodi",
-  "qr_code_button_title": "Näytä peliin liittymisen QR-koodi"
+  "qr_code_button_title": "Näytä peliin liittymisen QR-koodi",
+  "nickname_too_long": "Nimimerkin pituus saa olla maksimissaan 100 merkkiä"
 }
