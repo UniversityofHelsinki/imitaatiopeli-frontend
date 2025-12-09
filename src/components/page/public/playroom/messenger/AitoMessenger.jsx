@@ -6,9 +6,9 @@ import useAnswerQuestion from '../../../../../hooks/useAnswerQuestion';
 import { WaitingAnnouncement } from '../Playroom';
 import { useTranslation } from 'react-i18next';
 import Message, { InstructionMessage } from './Message';
-import { useWaitEndJudging } from '../../../../../hooks/useEndJudging';
 import {useNavigate} from "react-router-dom";
 import localStorage from "../../../../../utilities/localStorage.js";
+import useFinalGuessResult from "../../../../../hooks/useFinalGuessResult.js";
 
 const AitoMessenger = ({
                            game, question, onQuestionAnswered, judgingEnded, judgeState, gameId, input, onInputChange
@@ -19,24 +19,39 @@ const AitoMessenger = ({
     const [messages, setMessages] = useState([]);
     const { sendAnswer } = useAnswerQuestion(game);
     const navigate = useNavigate();
-
-    console.log('judgingEnded', judgingEnded);
+    const playerId = localStorage.get('player')?.player_id;
+    const { response, error, fetchFinalGuessResult } = useFinalGuessResult(gameId, playerId);
+    const hasFetchedFinalResultRef = React.useRef(false);
 
     useEffect(() => {
-        console.log('Question changed:', question);
-        if (judgeState === 'end' && judgingEnded) {
-            localStorage.clear();
-            navigate(`/games/${gameId}/gameend`, { state: { reason: 'game_end_reason_game_ended' } });
+        const handleFetch = async () => {
+        if (judgeState === 'end' && judgingEnded && !hasFetchedFinalResultRef.current) {
+            hasFetchedFinalResultRef.current = true;
+            console.log('Question changed:', question);
+            try {
+                const result = await fetchFinalGuessResult({ waitForResult: true, timeoutMs: 7000, intervalMs: 400 }); // short-bounded wait
+                //console.log('RESPONSE_AITO:', JSON.stringify(result, null, 2));
+                const finalResult = result?.show_result === true ? result?.final_was_correct : null;
+                const finalGuessResult = finalResult ?? null;
+                const finalGuessText = finalGuessResult === true ? 'game_final_guess_correct' : finalGuessResult === false ? 'game_final_guess_incorrect' : null;
+                localStorage.clear();
+                navigate(`/games/${gameId}/gameend`, { state: { reason: 'game_end_reason_game_ended',  gameresult: finalGuessText } });
+            } catch (err) {
+                console.error('Error fetching final guess result:', err);
+                hasFetchedFinalResultRef.current = false;
+            }
         }
         if (judgingEnded) {
-          setCurrentState('judging-ended');
-        } else if (question) {
-            setAskedQuestion(question);
-            setCurrentState('answer');
-        } else {
-            setCurrentState('wait');
+                setCurrentState('judging-ended');
+            } else if (question) {
+                setAskedQuestion(question);
+                setCurrentState('answer');
+            } else {
+                setCurrentState('wait');
+            }
         }
-    }, [question, judgingEnded]);
+        handleFetch();
+    }, [question, judgingEnded, fetchFinalGuessResult, navigate]);
 
     const answerQuestion = async (answerContent) => {
         console.log('current state:', currentState);

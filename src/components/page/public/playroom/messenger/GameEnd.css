@@ -28,6 +28,8 @@
     /* Prevents text from exceeding screen width */
     max-width: 90%;
     word-wrap: inherit;
+
+    margin-top: 0.25em;
 }
 
 /* ------- MOBILE BREAKPOINTS ------- */
