@@ -47,10 +47,7 @@ const FinalReviewForm = ({
 
     const handleChange = (property, v) => {
         if (property === 'selection') {
-            const selectedOption = answerOptions.find(opt => String(opt.answerId) === v);
-            console.log('Selected answer ID:', v);
-            console.log('Is pretender?', selectedOption?.isPretender);
-            console.log('Selected option:', selectedOption);
+            answerOptions.find(opt => String(opt.answerId) === v);
         }
 
         setValue({

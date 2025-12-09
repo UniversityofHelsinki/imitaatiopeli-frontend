@@ -74,7 +74,6 @@ const RatingForm = ({
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('rating submit', event);
         if (!selectedAnswer) return;
         try {
             const payload = {
