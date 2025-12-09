@@ -11,8 +11,11 @@
     gap: 0.5rem;
     background-color: var(--ds-bgColor-neutralLight);
     padding: 0.25rem;
-    border-radius: 9999px; /* pill container */
+    border-radius: 9999px;
     overflow: hidden;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 /* ===== TAB BUTTON ===== */
