@@ -9,6 +9,7 @@ import Message, { InstructionMessage } from './Message';
 import { useWaitEndJudging } from '../../../../../hooks/useEndJudging';
 import {useNavigate} from "react-router-dom";
 import localStorage from "../../../../../utilities/localStorage.js";
+import {useNotification} from "../../../../notification/NotificationContext.jsx";
 
 const AitoMessenger = ({
                            game, question, onQuestionAnswered, judgingEnded, judgeState, gameId, input, onInputChange
@@ -19,6 +20,7 @@ const AitoMessenger = ({
     const [messages, setMessages] = useState([]);
     const { sendAnswer } = useAnswerQuestion(game);
     const navigate = useNavigate();
+    const { setNotification } = useNotification();
 
     console.log('judgingEnded', judgingEnded);
 
@@ -46,6 +48,7 @@ const AitoMessenger = ({
         try {
             const result = await sendAnswer(answerContent, question);
             console.log('Answer sent successfully:', result);
+            setNotification(t('answer_sent_success_notification'), 'success', true);
             if (result) {
                 setMessages(prev => [...prev, {
                     content: result,
@@ -56,6 +59,7 @@ const AitoMessenger = ({
                 console.log(askedQuestion);
             }
         } catch (error) {
+            setNotification(error.cause?.status, 'error', true);
             console.error('Error sending answer:', error);
         }
     };

@@ -205,5 +205,15 @@
   "playroom_instructions_aito": "As the respondent, your task is to answer the questions as yourself.",
   "qr_code_dialog_title": "The QR code to join the game",
   "qr_code_button_title": "Show the QR code used to join the game",
-  "nickname_too_long": "???"
+  "nickname_too_long": "???",
+  "selected_language_model": "Selected language model",
+  "answer_sent_success_notification": "Answer submitted!",
+  "answer_sent_error_notification": "Error submitting answer",
+  "question_sent_success_notification": "Question submitted!",
+  "rating_form_submit_success_notification": "Review submitted!",
+  "rating_form_submit_error_notification": "Error submitting review",
+  "rating_form_end_game_submit_success_notification": "Review submitted!",
+  "rating_form_end_game_submit_error_notification": "Error submitting review",
+  "final_review_submit_success_notification": "Final review submitted!",
+  "final_review_submit_error_notification": "Error submitting final review"
 }
