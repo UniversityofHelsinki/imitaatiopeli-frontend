@@ -51,11 +51,8 @@ const FinalReview = ({ messages, gameId, judgeId, setCurrentState }) => {
             argument: formValues.justification
         };
 
-        console.log('Submitting final guess:', dataToSend);
-
         try {
             const result = await save(dataToSend);
-            console.log('Final guess saved successfully:', result);
             setCurrentState('end');
             // Handle success (e.g., show success message, navigate to next screen)
         } catch (err) {

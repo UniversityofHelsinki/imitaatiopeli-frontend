@@ -11,7 +11,6 @@ const useWaitAnswers = () => {
 
     useEffect(() => {
         const handleReceiveAnswers = (data) => {
-            console.log('Received answers:', data);
             // Transform the answers array from backend to match your format
             const formattedAnswers = data.answers.map(answer => ({
                 content: answer,

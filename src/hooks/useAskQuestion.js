@@ -7,10 +7,7 @@ export const useAskQuestion = (gameId) => {
 
     const askQuestion = useCallback((content) => {
         return new Promise((resolve, reject) => {
-            console.log('askQuestion called with content:', content);
-
             const judge = localStorage.get('player');
-            console.log('judge object:', judge);
 
             if (!judge || !judge.player_id) {
                 reject(new Error('No judge data found'));

@@ -20,17 +20,10 @@ const GameLobby = () => {
     const [gameStarted, setGameStarted] = useState(false);
     const navigate = useNavigate();
 
-    console.log(isConnected);
-    console.log(on);
-    console.log(off);
-
     // Listen for game-started event from Socket.IO
     useEffect(() => {
         const handleGameStarted = (data) => {
             const { gameId, message } = data;
-            console.log('Game started event received:', data);
-            console.log('Current game ID:', game?.game_id);
-
             const socketGameId = String(gameId);
             const currentGameId = String(game?.game_id);
 
@@ -40,17 +33,12 @@ const GameLobby = () => {
             }
         };
 
-        const handleMessage = (data) => {
-            console.log('Message from backend:', data);
-        };
-
         // Listen for socket events
         on('game-started', handleGameStarted);
-        on('message', handleMessage);
 
         return () => {
             off('game-started', handleGameStarted);
-            off('message', handleMessage);
+            off('message');
         };
     }, [on, off, isConnected, game]);
 
@@ -92,14 +80,12 @@ const GameLobby = () => {
 
                     }
                 } else {
-                    console.log("No player found in localStorage");
                     setJoined(false);
                 }
 
                 setLoading(false);
 
             } catch (error) {
-                console.error('Error loading game/player:', error);
                 setLoading(false);
             }
         })();

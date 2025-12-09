@@ -25,8 +25,6 @@ export const SocketProvider = ({ children }) => {
     const serverUrl = baseUrl || window.location.origin;
 
     useEffect(() => {
-        console.log('Connecting to Socket.IO server:', serverUrl);
-
         // Initialize socket connection
         const socket = io(serverUrl, {
             transports: ['websocket', 'polling'],
@@ -45,7 +43,6 @@ export const SocketProvider = ({ children }) => {
         // Connection event handlers
         socket.on('connect', () => {
             setIsConnected(false);
-            console.log('Connected to server with ID:', socket.id);
             setIsConnected(true);
             setConnectionError(null);
             const Player = getPlayer();
@@ -60,25 +57,17 @@ export const SocketProvider = ({ children }) => {
         });
 
         socket.on('disconnect', (reason) => {
-            console.log('Disconnected from server:', reason);
             setIsConnected(false);
         });
 
         socket.on('connect_error', (error) => {
-            console.error('Connection error:', error);
             setConnectionError(error.message);
             setIsConnected(false);
         });
 
-        socket.on('reconnect', (attemptNumber) => {
-            console.log('Reconnected after', attemptNumber, 'attempts');
+        socket.on('reconnect', () => {
             setIsConnected(true);
             setConnectionError(null);
-        });
-
-        // Global error handler
-        socket.on('error', (error) => {
-            console.error('Socket error:', error);
         });
 
         // Cleanup on unmount

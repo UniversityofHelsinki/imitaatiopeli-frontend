@@ -45,8 +45,6 @@ const cache = (() => {
 
 const client = async (path, tag, options = {}) => {
     const player = getPlayer();
-    console.log("HIT");
-    console.log(player);
 
     const fetchOptions = {
         ...options,
