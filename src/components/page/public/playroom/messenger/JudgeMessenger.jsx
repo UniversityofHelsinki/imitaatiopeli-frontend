@@ -14,6 +14,7 @@ import useJudgeAskedQuestion from '../../../../../hooks/useJudgeAskedQuestion.js
 import {useNavigate} from "react-router-dom";
 import localStorage from "../../../../../utilities/localStorage.js";
 import GameEnd from "./GameEnd.jsx";
+import useFinalGuessResult from "../../../../../hooks/useFinalGuessResult.js";
 
 const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId, judgingEnded, input, onInputChange, ratingJustifications, onRatingJustificationsChange, ratingSelectedIndex, onRatingSelectedIndexChange, ratingConfidence, onRatingConfidenceChange
                         }) => {
@@ -23,6 +24,9 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
     const [askedQuestion, setAskedQuestion] = useJudgeAskedQuestion();
     const { setNotification } = useNotification();
     const navigate = useNavigate();
+    const playerId = localStorage.get('player')?.player_id;
+    const { response, error, fetchFinalGuessResult } = useFinalGuessResult(gameId, playerId);
+    const hasFetchedFinalResultRef = React.useRef(false);
 
     useEffect(() => {
         if (currentState !== 'end') {
@@ -39,13 +43,27 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
     }, [answers, askedQuestion, summaryQuestions, currentState]);
 
     useEffect(() => {
-        if (judgingEnded && currentState === 'end') {
-            setTimeout(() => {
-                localStorage.clear();
-                navigate(`/games/${gameId}/gameend`, { state: { reason: 'game_end_reason_game_ended' } });
-            }, 0);
+        const handleFetch = async () => {
+            if (judgingEnded && currentState === 'end' && !hasFetchedFinalResultRef.current) {
+                hasFetchedFinalResultRef.current = true;
+                try {
+                    const result = await fetchFinalGuessResult({ waitForResult: true, timeoutMs: 7000, intervalMs: 400 });
+                    //console.log('RESPONSE_JUDGE:', JSON.stringify(result, null, 2));
+                    const finalResult = result?.show_result === true ? result?.final_was_correct : null;
+                    const finalGuessResult = finalResult ?? null;
+                    const finalGuessText = finalGuessResult === true ? 'game_final_guess_correct' : finalGuessResult === false ? 'game_final_guess_incorrect' : null;
+                    localStorage.clear();
+                    navigate(`/games/${gameId}/gameend`, { state: { reason: 'game_end_reason_game_ended',  gameresult: finalGuessText } });
+                } catch (err) {
+                    console.error('Error fetching final guess result:', err);
+                    // Allow retry if it failed
+                    hasFetchedFinalResultRef.current = false;
+                }
+            }
         }
-    }, [judgingEnded, currentState, gameId, navigate]);
+        handleFetch();
+    }, [judgingEnded, currentState, gameId, fetchFinalGuessResult, navigate]);
+
 
     const handleAskQuestion = async (questionText) => {
         try {
