@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import Message, { InstructionMessage } from './Message';
 import {useNavigate} from "react-router-dom";
 import localStorage from "../../../../../utilities/localStorage.js";
+import {useNotification} from "../../../../notification/NotificationContext.jsx";
 import useFinalGuessResult from "../../../../../hooks/useFinalGuessResult.js";
 
 const AitoMessenger = ({
@@ -19,6 +20,9 @@ const AitoMessenger = ({
     const [messages, setMessages] = useState([]);
     const { sendAnswer } = useAnswerQuestion(game);
     const navigate = useNavigate();
+    const { setNotification } = useNotification();
+
+    console.log('judgingEnded', judgingEnded);
     const playerId = localStorage.get('player')?.player_id;
     const { response, error, fetchFinalGuessResult } = useFinalGuessResult(gameId, playerId);
     const hasFetchedFinalResultRef = React.useRef(false);
@@ -61,6 +65,7 @@ const AitoMessenger = ({
         try {
             const result = await sendAnswer(answerContent, question);
             console.log('Answer sent successfully:', result);
+            setNotification(t('answer_sent_success_notification'), 'success', true);
             if (result) {
                 setMessages(prev => [...prev, {
                     content: result,
@@ -71,6 +76,7 @@ const AitoMessenger = ({
                 console.log(askedQuestion);
             }
         } catch (error) {
+            setNotification(error.cause?.status, 'error', true);
             console.error('Error sending answer:', error);
         }
     };
@@ -80,27 +86,27 @@ const AitoMessenger = ({
         'judging-ended': <WaitingAnnouncement content={t('playroom_no_more_answers_accepted')} showSpinner={false} />
     };
 
-  return (
-    <Messenger
-      onMessageSubmit={answerQuestion}
-      messageFieldDisabled={currentState !== 'answer'}
-      announcement={disabledAnnouncements[currentState]}
-      message={input}
-      onMessageChange={onInputChange}
-      msglength={500}
-    >
-      <ul className="message-area-messages">
-        <li className="message-area-instructions message-area-item">
-          <InstructionMessage content={t('playroom_instructions_aito')} />
-        </li>
-          {askedQuestion && (
-              <li key={`question-0`} className={`message-area-item message-area-item-${askedQuestion.type}`}>
-                  <Message>{askedQuestion.content}</Message>
-              </li>
-          )}
-      </ul>
-    </Messenger>
-  );
+    return (
+        <Messenger
+            onMessageSubmit={answerQuestion}
+            messageFieldDisabled={currentState !== 'answer'}
+            announcement={disabledAnnouncements[currentState]}
+            message={input}
+            onMessageChange={onInputChange}
+            msglength={2000}
+        >
+            <ul className="message-area-messages">
+                <li className="message-area-instructions message-area-item">
+                    <InstructionMessage content={t('playroom_instructions_aito')} />
+                </li>
+                {askedQuestion && (
+                    <li key={`question-0`} className={`message-area-item message-area-item-${askedQuestion.type}`}>
+                        <Message>{askedQuestion.content}</Message>
+                    </li>
+                )}
+            </ul>
+        </Messenger>
+    );
 };
 
 AitoMessenger.propTypes = {

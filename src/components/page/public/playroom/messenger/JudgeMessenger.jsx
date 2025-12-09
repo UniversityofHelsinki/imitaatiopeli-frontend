@@ -72,6 +72,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
         try {
             await askQuestion(questionText);
             setAskedQuestion({ content: questionText, type: 'sent' });
+            setNotification(t('question_sent_success_notification'), 'success', true);
             setCurrentState('wait');
         } catch (error) {
             console.error('Failed to ask question:', error);
@@ -130,9 +131,9 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
     const end = (() => {
         if (currentState === 'end') {
             return (
-              <GameEnd reason={'game_end_reason_by_judge'} />
+                <GameEnd reason={'game_end_reason_by_judge'} />
             )
-       }
+        }
     })();
 
     return (
@@ -143,7 +144,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             messageFieldHidden={['final-review', 'end', 'rate'].includes(currentState)}
             message={input}
             onMessageChange={onInputChange}
-            msglength={500}
+            msglength={2000}
         >
             {currentState !== 'final-review' && <ul className="message-area-messages">
                 <li className="message-area-instructions message-area-item">
