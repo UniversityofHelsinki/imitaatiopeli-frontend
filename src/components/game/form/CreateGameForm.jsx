@@ -60,7 +60,7 @@ const CreateGameForm = () => {
             navigate(`/admin/games/${saved.game_id}`);
             setNotification(t('create_game_form_game_created_notification'), 'success', true);
         } catch (error) {
-            setNotification(error.cause?.status, 'error');
+            setNotification(error.cause?.status, 'error', true);
         }
         setSaving(false);
     };

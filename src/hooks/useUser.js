@@ -23,7 +23,6 @@ const getUser = async () => {
 };
 
 const logout = (url = '/Shibboleth.sso/Logout') => {
-    console.log("HIT");
     window.location.replace(url);
 };
 

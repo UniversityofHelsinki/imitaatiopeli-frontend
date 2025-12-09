@@ -9,6 +9,7 @@ import Message, { InstructionMessage } from './Message';
 import { useWaitEndJudging } from '../../../../../hooks/useEndJudging';
 import {useNavigate} from "react-router-dom";
 import localStorage from "../../../../../utilities/localStorage.js";
+import {useNotification} from "../../../../notification/NotificationContext.jsx";
 
 const AitoMessenger = ({
                            game, question, onQuestionAnswered, judgingEnded, judgeState, gameId, input, onInputChange
@@ -19,11 +20,9 @@ const AitoMessenger = ({
     const [messages, setMessages] = useState([]);
     const { sendAnswer } = useAnswerQuestion(game);
     const navigate = useNavigate();
-
-    console.log('judgingEnded', judgingEnded);
+    const { setNotification } = useNotification();
 
     useEffect(() => {
-        console.log('Question changed:', question);
         if (judgeState === 'end' && judgingEnded) {
             localStorage.clear();
             navigate(`/games/${gameId}/gameend`, { state: { reason: 'game_end_reason_game_ended' } });
@@ -39,23 +38,21 @@ const AitoMessenger = ({
     }, [question, judgingEnded]);
 
     const answerQuestion = async (answerContent) => {
-        console.log('current state:', currentState);
         onInputChange('');
         setAskedQuestion(null);
         setCurrentState('wait');
         try {
             const result = await sendAnswer(answerContent, question);
-            console.log('Answer sent successfully:', result);
+            setNotification(t('answer_sent_success_notification'), 'success', true);
             if (result) {
                 setMessages(prev => [...prev, {
                     content: result,
                     type: 'received'
                 }]);
                 onQuestionAnswered();
-                console.log(currentState);
-                console.log(askedQuestion);
             }
         } catch (error) {
+            setNotification(error.cause?.status, 'error', true);
             console.error('Error sending answer:', error);
         }
     };
