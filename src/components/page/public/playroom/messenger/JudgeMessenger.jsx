@@ -30,10 +30,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
 
     useEffect(() => {
         if (currentState !== 'end') {
-            console.log('judge useEffect');
-            if (currentState === 'rate' || currentState === 'final-review') {
-                console.log('currentState', currentState);
-            } else if (summaryQuestions && currentState !== 'end') {
+            if (summaryQuestions && currentState !== 'end') {
                 setCurrentState('final-review');
             } else if (answers && answers?.length > 0 && askedQuestion) {
                 setCurrentState('rate');

@@ -58,13 +58,11 @@ const AitoMessenger = ({
     }, [question, judgingEnded, fetchFinalGuessResult, navigate]);
 
     const answerQuestion = async (answerContent) => {
-        console.log('current state:', currentState);
         onInputChange('');
         setAskedQuestion(null);
         setCurrentState('wait');
         try {
             const result = await sendAnswer(answerContent, question);
-            console.log('Answer sent successfully:', result);
             setNotification(t('answer_sent_success_notification'), 'success', true);
             if (result) {
                 setMessages(prev => [...prev, {
@@ -72,8 +70,6 @@ const AitoMessenger = ({
                     type: 'received'
                 }]);
                 onQuestionAnswered();
-                console.log(currentState);
-                console.log(askedQuestion);
             }
         } catch (error) {
             setNotification(error.cause?.status, 'error', true);
