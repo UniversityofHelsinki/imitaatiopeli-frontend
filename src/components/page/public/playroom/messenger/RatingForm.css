@@ -323,8 +323,8 @@
 /* ========== Button Container ========== */
 .rating-form-buttons {
     display: flex;
+    flex-direction: column;
     gap: 1rem;
-    flex-wrap: wrap;
 }
 
 .rating-form-buttons button {
