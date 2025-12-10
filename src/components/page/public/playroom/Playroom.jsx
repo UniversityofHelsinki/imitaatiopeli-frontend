@@ -69,8 +69,6 @@ const Playroom = () => {
     useEffect(() => {
         const handleGameEnded = (data) => {
             const { gameId, message } = data;
-            console.log('Game ended event received:', data);
-            console.log('Current game ID:', code);
 
             const socketGameId = String(gameId);
             const currentGameId = String(code);
@@ -83,17 +81,13 @@ const Playroom = () => {
             }
         };
 
-        const handleMessage = (data) => {
-            console.log('Message from backend:', data);
-        };
-
         // Listen for socket events
         on('game-ended', handleGameEnded);
-        on('message', handleMessage);
+        on('message');
 
         return () => {
             off('game-ended', handleGameEnded);
-            off('message', handleMessage);
+            off('message');
         };
     }, [on, off, isConnected, code]);
 
@@ -134,33 +128,27 @@ const Playroom = () => {
     }
 
     useEffect(() => {
-        console.log(answers);
-        console.log(initialAnswers);
         if ((!answers || answers.length === 0) && initialAnswers?.length > 0) {
             const newAnswers = initialAnswers.map(initialAnswer => ({
                 ...answers,
                 content: initialAnswer
             }));
             changeAnswers(newAnswers);
-            console.log(answers);
         }
     }, [answers, initialAnswers]);
 
 
     const onQuestionAnswered = () => {
-        console.log('clearing question');
         clearQuestion();
     };
 
     const onRateSubmitted = () => {
-        console.log('HIT');
         clearAnswers();
-        console.log(answers);
-    }
+    };
 
     // Get gameId and judgeId
     const gameId = question?.gameId || initialQuestion?.game_id || player?.game_id;
-    const judgeId = question?.judgeId || initialQuestion?.judge_id || player?.player_id;
+    const judgeId = player?.player_id;
 
     const tabs = [
         {

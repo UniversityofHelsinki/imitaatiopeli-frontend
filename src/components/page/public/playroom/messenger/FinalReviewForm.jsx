@@ -7,6 +7,7 @@ import RadioButton from '../../../../misc/ds/RadioButton';
 import TextArea from '../../../../misc/ds/TextArea';
 import Button from '../../../../misc/ds/Button';
 import { ConfidenceMeter } from './RatingForm';
+import { useNotification } from "../../../../notification/NotificationContext.jsx";
 
 const FinalReviewForm = ({
                              onSubmit,
@@ -21,6 +22,7 @@ const FinalReviewForm = ({
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const { setNotification } = useNotification();
 
     const { t } = useTranslation();
 
@@ -34,8 +36,10 @@ const FinalReviewForm = ({
             try {
                 await onSubmit(value);
                 setIsSubmitted(true);
+                setNotification(t('final_review_submit_success_notification'), 'success', true);
             } catch (error) {
-                // If submission fails, re-enable the button
+                console.error('Failed to submit final review', error);
+                setNotification(t('final_review_submit_error_notification'), 'error', true);
                 setIsSubmitting(false);
             }
         }
@@ -43,10 +47,7 @@ const FinalReviewForm = ({
 
     const handleChange = (property, v) => {
         if (property === 'selection') {
-            const selectedOption = answerOptions.find(opt => String(opt.answerId) === v);
-            console.log('Selected answer ID:', v);
-            console.log('Is pretender?', selectedOption?.isPretender);
-            console.log('Selected option:', selectedOption);
+            answerOptions.find(opt => String(opt.answerId) === v);
         }
 
         setValue({
@@ -67,28 +68,31 @@ const FinalReviewForm = ({
 
     return (
         <form className="final-review-form" onSubmit={handleSubmit}>
-            <div className="final-review-form-heading">
-                <h4>{t('final_review_form_heading')}</h4>
-            </div>
-            <div className="final-review-form-options">
-                <RadioButtonGroup
-                    label={t('final_review_form_options_legend')}
-                    assistiveText={t('final_review_form_options_assistive_text')}
-                    value={value.selection}
-                >
-                    {answerOptions.map((option) => (
-                        <RadioButton
-                            key={option.answerId}
-                            id={`final_review_option_${option.answerId}`}
-                            name="final_review_form_options"
-                            value={String(option.answerId)}
-                            label={t(`final_review_form_options_label_${option.index + 1}`)}
-                            onClick={(e) => e.preventDefault() || handleChange('selection', String(option.answerId))}
-                            checked={value.selection === String(option.answerId)}
-                            disabled={isSubmitting || isSubmitted}
-                        />
-                    ))}
-                </RadioButtonGroup>
+            <div className="final-review-form-container">
+                <div className="final-review-form-heading">
+                    <h4>{t('final_review_form_heading')}</h4>
+                </div>
+                <div className="final-review-form-options">
+                    <RadioButtonGroup
+                        label={t('final_review_form_options_legend')}
+                        assistiveText={t('final_review_form_options_assistive_text')}
+                        value={value.selection}
+                        dsDirection='horizontal'
+                    >
+                        {answerOptions.map((option) => (
+                            <RadioButton
+                                key={option.answerId}
+                                id={`final_review_option_${option.answerId}`}
+                                name="final_review_form_options"
+                                value={String(option.answerId)}
+                                label={t(`final_review_form_options_label_${option.index + 1}`)}
+                                onClick={(e) => e.preventDefault() || handleChange('selection', String(option.answerId))}
+                                checked={value.selection === String(option.answerId)}
+                                disabled={isSubmitting || isSubmitted}
+                            />
+                        ))}
+                    </RadioButtonGroup>
+                </div>
             </div>
             <div className="final-review-form-confidence rating-form-confidence">
                 <ConfidenceMeter
@@ -100,12 +104,12 @@ const FinalReviewForm = ({
             <div className="final-review-form-justification">
                 <TextArea
                     value={value.justification}
-                    onChange={e => handleChange('justification', e.target.value?.substring(0, 500))}
+                    onChange={e => handleChange('justification', e.target.value?.substring(0, 2000))}
                     label={t('final_review_form_justification_label')}
                     disabled={isSubmitting || isSubmitted}
                 />
                 <span className="rating-form-justifications-character-count">
-                    {value.justification.length} / 500
+                    {value.justification.length} / 2000
                 </span>
             </div>
             <div className="final-review-form-actions">

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '../../../../misc/ds/Button';
 import './Message.css'
+
 
 export const InstructionMessage = ({ content }) => {
     return (
@@ -21,21 +21,32 @@ export const RatingMessage = ({ i, name, children, isSelected, onClick }) => {
         : children;
 
     return (
-        <Button
-            variant='secondary'
-            dsColour="black"
-            dsSize="medium"
-            icon={isSelected ? 'check_box_fill' : 'check_box_outline_blank'}
-            type="button"
-            className="messenger-message rating-message"
+        <div
+            className={`rating-message-container ${isSelected ? 'rating-message-selected' : ''}`}
             data-index={i}
-            name={name}
             onClick={onClick}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Enter' && onClick?.()}
+            name={name}
         >
-            <div>
-                {i+1}. {content}
+            <div className="rating-message-checkbox">
+                {isSelected && (
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path
+                            d="M13.5 3.5L6 11L2.5 7.5"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
+                )}
             </div>
-        </Button>
+            <div className="rating-message-content">
+                {i + 1}. {content}
+            </div>
+        </div>
     );
 };
 
@@ -76,3 +87,4 @@ Message.propTypes = {
 };
 
 export default Message;
+

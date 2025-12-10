@@ -8,7 +8,6 @@ const Player = (playerId) => {
 
     const savePlayer = (event) => {
         event.preventDefault();
-        console.log("savePlayer clicked");
         reload();
     }
 
