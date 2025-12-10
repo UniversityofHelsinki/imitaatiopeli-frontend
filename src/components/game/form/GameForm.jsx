@@ -149,6 +149,7 @@ const GameForm = ({
                             prompt={game.configuration.ai_prompt}
                             temperature={game.configuration.model_temperature}
                             languageModel={game.configuration.language_model}
+                            languageUsed={game.configuration.language_used}
                         />
                     }
                     variant="compact"
