@@ -63,7 +63,7 @@ const EditGameForm = ({
             await saveGame(modifiedGame);
             setNotification(t('edit_game_form_game_saved_notification'), 'success', true);
         } catch (error) {
-            setNotification(error?.cause.status, 'error');
+            setNotification(t(error?.message), 'error', true);
         }
         setSaving(false);
     };
