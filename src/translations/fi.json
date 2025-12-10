@@ -240,5 +240,6 @@
   "final_review_submit_success_notification": "Lopullinen arvio lähetetty!",
   "final_review_submit_error_notification": "Virhe lopullisen arvion lähettämisessä",
   "hide_instructions": "Piilota ohjeet",
-  "show_instructions": "Näytä ohjeet"
+  "show_instructions": "Näytä ohjeet",
+  "enter_message_placeholder": "enter_message_placeholder"
 }
