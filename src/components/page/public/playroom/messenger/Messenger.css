@@ -1,16 +1,30 @@
 .messenger {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .messenger > .messenger-message-area {
-  flex: 1 1 0;
-  scrollbar-width: thin;
+    flex: 1 1 0;
+    scrollbar-width: thin;
+}
+
+.instructions-toggle {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.instructions-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
 }
 
 @media (max-width: 20rem) {
-  .messenger > .messenger-message-area {
-    flex-basis: content;
-  }
+    .messenger > .messenger-message-area {
+        flex-basis: content;
+    }
 }
