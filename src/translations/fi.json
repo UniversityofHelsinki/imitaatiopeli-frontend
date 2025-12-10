@@ -183,6 +183,8 @@
   "rating_form_justifications_placeholder": "Kirjoita perustelut tähän",
   "rating_form_confidence_meter_label": "Kuinka varma olet vastauksestasi?",
   "rating_form_submit_rating": "Tallenna",
+  "rating_form_submit_rating_instructions": "Tallenna ja esitä uusi kysymys.",
+  "rating_form_end_game_instructions": "Jos uskot tunnistaneesi vastaajat, siirry loppuarvioon.",
   "rating_form_end_game": "Tallenna ja siirry loppuarvioon",
   "rating_form_end_game_confirm_message": "Haluatko varmasti siirtyä loppuarvioon? Tämän jälkeen et voi enää kysyä lisää kysymyksiä.",
   "rating_form_end_game_confirm": "Päätä peli",

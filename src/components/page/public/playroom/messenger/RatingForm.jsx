@@ -181,17 +181,20 @@ const RatingForm = ({
                 </div>
 
                 <div className="rating-form-buttons">
-                    <Button
-                        disabled={!justifications || !confidence || (selectedIndex === null)}
-                        type="submit"
-                        label={t('rating_form_submit_rating')}
-                    />
+                    <div>
+                      <p>{t('rating_form_submit_rating_instructions')}</p>
+                      <Button
+                          disabled={!justifications || !confidence || (selectedIndex === null)}
+                          type="submit"
+                          label={t('rating_form_submit_rating')}
+                      />
+                    </div>
                     {answers[0]?.content?.questionCount >= 3 && (
                         <div>
+                            <p>{t('rating_form_end_game_instructions')}</p>
                             <Button
                                 disabled={!justifications || (selectedIndex === null)}
                                 onClick={() => setConfirmOpen(true)}
-                                variant="secondary"
                                 label={t('rating_form_end_game')}
                             />
                             {renderEndGameConfirm()}
