@@ -7,7 +7,6 @@ import { createBrowserRouter, createRoutesFromElements, Outlet, Route, RouterPro
 import { applyMiddleware, createStore } from 'redux';
 import { thunk } from 'redux-thunk';
 import ErrorPage from '../src/Error.jsx';
-import Protected from '../src/Protected.jsx';
 import ProtectedRoute from '../src/ProtectedRoute.jsx';
 import { defineCustomElements } from '@uh-design-system/component-library/loader';
 import './App.css';
@@ -79,7 +78,6 @@ const App = () => {
                     </AuthProvider>
                 }>
                     {/* Protected routes under admin route here */}
-                    <Route index element={<Protected />} />
                     <Route path="games">
                       <Route index element={<GameListing />} />
                       <Route path="create" element={<CreateGame />} />
