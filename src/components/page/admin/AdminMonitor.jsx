@@ -12,6 +12,7 @@ import Button from "../../misc/ds/Button.jsx";
 import useEndGame from "../../../hooks/useEndGame.js";
 import {useNotification} from "../../notification/NotificationContext.jsx";
 import {useSocket} from "../../../contexts/SocketContext.jsx";
+import ConfirmModalDialog from "../../../utilities/ConfirmModalDialog.jsx";
 
 const AdminMonitor = () => {
     const { isConnected, emit } = useSocket();
@@ -23,6 +24,9 @@ const AdminMonitor = () => {
     const [gamePlayers, error, reload] = usePlayroomJudgePlayerPairs(gameId);
     const endOngoingGame = useEndGame(gameId);
     const { setNotification } = useNotification();
+    const [confirmOpen, setConfirmOpen] = useState(false);
+    const [displayPlayers, setDisplayPlayers] = useState([]);
+    const [allHaveFinalGuess, setAllHaveFinalGuess] = useState(false);
 
     const ASCENDING = 1;
     const DESCENDING = -1;
@@ -42,7 +46,7 @@ const AdminMonitor = () => {
             setSortOpts({ criteria: 'judge_nickname', direction: sortOpts.direction * -1 });
     };
 
-    const sorted = (gamePlayers || []).sort(comparators[sortOpts.criteria](sortOpts.direction));
+    const sorted = (displayPlayers || []).sort(comparators[sortOpts.criteria](sortOpts.direction));
 
     useEffect(() => {
         (async () => {
@@ -104,7 +108,7 @@ const AdminMonitor = () => {
 
     const content = (() => {
         return (
-            gamePlayers && <AdminMonitorTable gamePlayers={gamePlayers}
+            displayPlayers && <AdminMonitorTable gamePlayers={displayPlayers}
                sortOpts={sortOpts}
                onSortCriteria={setSortOptsCriteria}
             />
@@ -121,6 +125,36 @@ const AdminMonitor = () => {
             navigate(`/admin/games/${gameId}/summary`);
         }
     }
+
+    console.log("ALL:" + allHaveFinalGuess);
+
+    const renderEndGameConfirm = () => (
+        <div className="" id="end-game-dialog-container" aria-live="assertive">
+            <ConfirmModalDialog
+                id="end-game-dialog"
+                open={confirmOpen}
+                message=<>
+                        {t('admin_monitor_end_game_confirm_message')}{' '}
+                        {!allHaveFinalGuess && (<strong>{t('admin_monitor_end_game_all_not_finished')}</strong>)}
+                    </>
+            confirmLabel={t('rating_form_end_game_confirm')}
+                cancelLabel={t('rating_form_end_game_cancel')}
+                onCancel={() => setConfirmOpen(false)}
+                onConfirm={endGame}
+            />
+        </div>
+    );
+
+    useEffect(() => {
+        const arr = Array.isArray(gamePlayers) ? [...gamePlayers] : [];
+        if (arr.length && Object.prototype.hasOwnProperty.call(arr[arr.length - 1] || {}, 'all_have_final_guess')) {
+            const meta = arr.pop();
+            setAllHaveFinalGuess(Boolean(meta.all_have_final_guess));
+        } else {
+            setAllHaveFinalGuess(false);
+        }
+        setDisplayPlayers(arr);
+    }, [gamePlayers]);
 
     return (
         <Page className="page-heading"
@@ -147,8 +181,9 @@ const AdminMonitor = () => {
             </Row>
             <div className="admin-monitor-game-button">
                 <Button type="button" label={t('admin_monitor_end_game_move_summary')}
-                        onClick={endGame}
+                        onClick={() => setConfirmOpen(true)}
                 />
+                {confirmOpen && renderEndGameConfirm()}
             </div>
         </Page>
     )
