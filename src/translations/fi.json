@@ -249,5 +249,5 @@
   "default_system_prompt": "Pelin taustalla oleva prompt (ei muokattavissa):",
   "prompt_template_loading": "Ladataan pelin tausta-promptia...",
   "prompt_template_not_found": "Valitse ensin pelin kieli näyttääksesi tausta-promptin kielelle",
-  "no_model_selected": "Kielimallia ei valittu",
+  "no_model_selected": "Kielimallia ei valittu"
 }
