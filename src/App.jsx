@@ -26,7 +26,6 @@ import { DEFAULT_LANGUAGE } from './Constants.js';
 import Imitation from './Imitation';
 import reducer from './reducers';
 import translations from './translations';
-import EndOfGame from "./components/page/public/EndOfGame.jsx";
 import AdminMonitor from "./components/page/admin/AdminMonitor.jsx";
 import Playroom from './components/page/public/playroom/Playroom';
 import localStorageUtil from './utilities/localStorage';
@@ -69,7 +68,6 @@ const App = () => {
                   <Route path=":code" element={<GameLobby />} />
                   <Route path=":code/play" element={<Playroom />} />
                   <Route path=":code/join" element={<JoinGame />} />
-                  <Route path=":id/end" element={<EndOfGame />} />
                   <Route path=":id/gameend" element={<GameEnd />} />
                 </Route>
 
