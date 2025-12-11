@@ -8,7 +8,7 @@ import TextArea from '../../../../misc/ds/TextArea';
 import RadioButtonGroup from '../../../../misc/ds/RadioButtonGroup.jsx';
 import RadioButton from '../../../../misc/ds/RadioButton.jsx';
 import { useNotification } from '../../../../notification/NotificationContext.jsx';
-import ConfirmDialog from '../../../../../utilities/ConfirmDialog.jsx';
+import ConfirmModalDialog from "../../../../../utilities/ConfirmModalDialog.jsx";
 
 export const ConfidenceMeter = ({ value, onChange }) => {
     const id = useId();
@@ -110,7 +110,7 @@ const RatingForm = ({
 
     const renderEndGameConfirm = () => (
         <div className="confirm-dialog-container" id="end-game-dialog-container" aria-live="assertive">
-            <ConfirmDialog
+            <ConfirmModalDialog
                 id="end-game-dialog"
                 open={confirmOpen}
                 message={t('rating_form_end_game_confirm_message')}
@@ -197,7 +197,7 @@ const RatingForm = ({
                                 onClick={() => setConfirmOpen(true)}
                                 label={t('rating_form_end_game')}
                             />
-                            {renderEndGameConfirm()}
+                            {confirmOpen && renderEndGameConfirm()}
                         </div>
                     )}
                 </div>
