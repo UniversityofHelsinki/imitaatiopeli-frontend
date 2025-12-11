@@ -84,14 +84,6 @@ const StartGame = () => {
 
   const crumbs = [
     {
-      label: 'bread_crumb_home',
-      href: '/'
-    },
-    {
-      label: 'bread_crumb_admin',
-      href: '/admin/',
-    },
-    {
       label: 'bread_crumb_admin_games',
       href: '/admin/games/'
     },

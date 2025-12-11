@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import useLanguageModels from '../../../hooks/useLanguageModels.js';
@@ -7,6 +7,7 @@ import Select, { Option } from '../../../components/misc/ds/Select.jsx';
 const LanguageModelField = ({ value, onChange, disabled, validation}) => {
     const { t } = useTranslation();
     const { models, loading, error } = useLanguageModels();
+    const [touched, setTouched] = useState(false);
 
     // Normalize to strings for Select/Option matching
     const selectValue = value == null ? '' : String(value);
@@ -20,8 +21,7 @@ const LanguageModelField = ({ value, onChange, disabled, validation}) => {
         onChange?.(parseInt(model));
     };
 
-
-    const errorText = validation && !validation.isValid && t(validation.message) || '';
+    const errorText = touched && validation && !validation.isValid && t(validation.message) || '';
 
     return (
         <div className="form-field">
@@ -31,13 +31,14 @@ const LanguageModelField = ({ value, onChange, disabled, validation}) => {
                 placeholder={selectedLabel ? selectedLabel : t('select_language_model')}
                 value={selectValue}
                 onChange={handleChange}
+                onBlur={() => setTouched(true)}
                 disabled={disabled}
                 loading={loading}
                 loadingText={t('loading_models')}
                 optionsError={!!error}
                 optionsErrorText={error ? `${t('failed_to_load_models')}: ${error}` : undefined}
                 invalid={validation && !validation.isValid}
-                errorText={errorText}
+                errorText={errorText ? errorText  : undefined}
                 clearable={true}
             >
                 {models.map((model) => (
