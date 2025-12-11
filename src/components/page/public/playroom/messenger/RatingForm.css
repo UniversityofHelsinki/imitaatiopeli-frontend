@@ -282,7 +282,7 @@
 
 .rating-form-justifications textarea {
     border-radius: 16px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--ds-borderColor-default);
     padding: 1rem;
     font-family: inherit;
     font-size: 0.95rem;
