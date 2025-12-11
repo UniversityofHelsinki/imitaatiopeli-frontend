@@ -112,7 +112,7 @@
   "close": "Sulje",
   "temperature_setting": "lämpötila-asetus",
   "game_lobby_player_not_joined": "Pelaaja ei ole liittynyt peliin",
-  "game_lobby_player_joined": "Pelaaja on liittynyt peliin",
+  "game_lobby_player_joined": "Olet liittynyt peliin",
   "game_lobby_game_started": "Peli on käynnissä, liittyminen ei ole mahdollista",
   "spinner_awaiting_game_starting": "Odotetaan pelin alkua...",
   "temperature_conservative": "Konservatiivinen",
@@ -245,9 +245,9 @@
   "final_review_submit_error_notification": "Virhe lopullisen arvion lähettämisessä",
   "hide_instructions": "Piilota ohjeet",
   "show_instructions": "Näytä ohjeet",
-  "enter_message_placeholder": "enter_message_placeholder",
+  "enter_message_placeholder": "Kirjoita viesti...",
   "default_system_prompt": "Pelin taustalla oleva prompt (ei muokattavissa):",
   "prompt_template_loading": "Ladataan pelin tausta-promptia...",
   "prompt_template_not_found": "Valitse ensin pelin kieli näyttääksesi tausta-promptin kielelle",
-  "no_model_selected": "Kielimallia ei valittu"
+  "no_model_selected": "Kielimallia ei valittu",
 }
