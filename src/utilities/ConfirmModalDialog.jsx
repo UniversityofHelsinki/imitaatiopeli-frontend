@@ -23,9 +23,9 @@ const ConfirmModalDialog = ({ open, message, confirmLabel, cancelLabel, onConfir
                     <Button type="button" size="small" variant="secondary" onClick={onCancel}>
                         {cancelLabel}
                     </Button>
-                    <Button type="button" size="small" variant="primary" onClick={onConfirm}>
+                    { confirmLabel && <Button type="button" size="small" variant="primary" onClick={onConfirm}>
                         {confirmLabel}
-                    </Button>
+                    </Button> }
                 </div>
             </div>
         </div>

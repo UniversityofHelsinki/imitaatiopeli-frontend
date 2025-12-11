@@ -17,6 +17,8 @@ import useGetInitialAnswers from '../../../../hooks/useGetInitialAnswers.js';
 import i18n from "i18next";
 import useEndJudging, { useWaitEndJudging } from '../../../../hooks/useEndJudging';
 import {useSocket} from "../../../../contexts/SocketContext.jsx";
+import ConfirmModalDialog from "../../../../utilities/ConfirmModalDialog.jsx";
+import Button from '../../../misc/ds/Button.jsx';
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
     return (
@@ -56,6 +58,7 @@ const Playroom = () => {
     const [ratingDraft, setRatingDraft] = useState('');
     const [ratingSelectedIndex, setRatingSelectedIndex] = useState(null);
     const [ratingConfidence, setRatingConfidence] = useState(null);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     const [judgeState, setJudgeState] = React.useState(() => {
         try {
@@ -184,10 +187,20 @@ const Playroom = () => {
     ];
 
     return (
-        <PublicPage heading={player?.theme_description} >
+        <PublicPage heading={player?.theme_description} headingExtras={
+            <Button className="playroom-button" type="button" label={t('playroom_page_button_information')} onClick={() => setIsPopupOpen(true)}
+            />
+        }>
             <div className="playroom">
                 <Tabs tabs={tabs} />
             </div>
+            <ConfirmModalDialog
+                open={isPopupOpen}
+                message={t('playroom_page_information')}
+                cancelLabel={t('close')}
+                onCancel={() => setIsPopupOpen(false)}
+            />
+
         </PublicPage>
     );
 
