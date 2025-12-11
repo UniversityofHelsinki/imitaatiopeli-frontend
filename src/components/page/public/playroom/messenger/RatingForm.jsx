@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React, { useId, useState } from 'react';
 import PropTypes from 'prop-types';
 import './RatingForm.css';
 import { QuestionMessage, RatingMessage } from './Message';
@@ -7,17 +7,19 @@ import { useTranslation } from 'react-i18next';
 import TextArea from '../../../../misc/ds/TextArea';
 import RadioButtonGroup from '../../../../misc/ds/RadioButtonGroup.jsx';
 import RadioButton from '../../../../misc/ds/RadioButton.jsx';
+import { useNotification } from '../../../../notification/NotificationContext.jsx';
+import ConfirmDialog from '../../../../../utilities/ConfirmDialog.jsx';
 
-export const ConfidenceMeter = ({
-                                    value,
-                                    onChange
-                                }) => {
+export const ConfidenceMeter = ({ value, onChange }) => {
     const id = useId();
     const { t } = useTranslation();
 
     const levels = [1, 2, 3, 4];
 
-    console.log("Confidence Meter: ", value);
+    const handleChange = (event) => {
+        const newValue = event.target.value;
+        onChange?.(newValue);
+    };
 
     return (
         <div className="confidence-meter-container">
@@ -34,7 +36,7 @@ export const ConfidenceMeter = ({
                         name="confidence_level"
                         value={String(level)}
                         label={`${level} ${t(`confidence_meter_value_${level}`)}`}
-                        onClick={e => { e.preventDefault(); onChange?.(level)}}
+                        onClick={handleChange}
                         checked={String(value) === String(level)}
                     />
                 ))}
@@ -61,6 +63,8 @@ const RatingForm = ({
                         onConfidenceChange
                     }) => {
     const { t } = useTranslation();
+    const { setNotification } = useNotification();
+    const [confirmOpen, setConfirmOpen] = useState(false);
 
     const handleSelect = (i) => {
         onSelectedIndexChange?.(i);
@@ -70,26 +74,53 @@ const RatingForm = ({
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('rating submit', event);
         if (!selectedAnswer) return;
-        const payload = {
-            selectedAnswer: selectedAnswer,
-            confidence: confidence,
-            justifications: justifications ?? ''
-        };
-        onSubmit?.(payload);
+        try {
+            const payload = {
+                selectedAnswer: selectedAnswer,
+                confidence: confidence,
+                justifications: justifications ?? ''
+            };
+            onSubmit?.(payload);
+            setNotification(t('rating_form_submit_success_notification'), 'success', true);
+        } catch (error) {
+            console.error('Failed to submit rating:', error);
+            setNotification(t('rating_form_submit_error_notification'), 'error', true);
+        }
+
     };
 
     const handleEndGame = (event) => {
         event.preventDefault();
         if (onEndGame) {
-            onEndGame({
-                selectedAnswer: selectedAnswer,
-                confidence: confidence ?? 2,
-                justifications: justifications ?? ''
-            });
+            try {
+                onEndGame({
+                    selectedAnswer: selectedAnswer,
+                    confidence: confidence ?? 2,
+                    justifications: justifications ?? ''
+                });
+                setConfirmOpen(false);
+                setNotification(t('rating_form_end_game_submit_success_notification'), 'success', true);
+            } catch (error) {
+                console.error('Error sending final rating', error);
+                setNotification(t('rating_form_end_game_submit_error_notification'), 'error', true);
+            }
         }
     };
+
+    const renderEndGameConfirm = () => (
+        <div className="confirm-dialog-container" id="end-game-dialog-container" aria-live="assertive">
+            <ConfirmDialog
+                id="end-game-dialog"
+                open={confirmOpen}
+                message={t('rating_form_end_game_confirm_message')}
+                confirmLabel={t('rating_form_end_game_confirm')}
+                cancelLabel={t('rating_form_end_game_cancel')}
+                onCancel={() => setConfirmOpen(false)}
+                onConfirm={handleEndGame}
+            />
+        </div>
+    );
 
     return (
         <div className="rating-form">
@@ -142,28 +173,32 @@ const RatingForm = ({
                         assistiveText={t('rating_form_justifications_assistive_text')}
                         placeholder={t('rating_form_justifications_placeholder')}
                         value={justifications ?? ''}
-                        onChange={e => onJustificationsChange?.(e.target.value?.substring(0, 500))}
+                        onChange={e => onJustificationsChange?.(e.target.value?.substring(0, 2000))}
                         autocomplete="off"
                         required={true}
                     />
-                    <span className="rating-form-justifications-character-count">
-                        {justifications.length} / 500
-                    </span>
+                    <span className="rating-form-justifications-character-count">{justifications.length} / 2000</span>
                 </div>
 
                 <div className="rating-form-buttons">
-                    <Button
-                        disabled={!justifications || !confidence || (selectedIndex === null)}
-                        type="submit"
-                        label={t('rating_form_submit_rating')}
-                    />
+                    <div>
+                      <p>{t('rating_form_submit_rating_instructions')}</p>
+                      <Button
+                          disabled={!justifications || !confidence || (selectedIndex === null)}
+                          type="submit"
+                          label={t('rating_form_submit_rating')}
+                      />
+                    </div>
                     {answers[0]?.content?.questionCount >= 3 && (
-                        <Button
-                            disabled={!justifications || (selectedIndex === null)}
-                            onClick={handleEndGame}
-                            variant="secondary"
-                            label={t('rating_form_end_game')}
-                        />
+                        <div>
+                            <p>{t('rating_form_end_game_instructions')}</p>
+                            <Button
+                                disabled={!justifications || (selectedIndex === null)}
+                                onClick={() => setConfirmOpen(true)}
+                                label={t('rating_form_end_game')}
+                            />
+                            {renderEndGameConfirm()}
+                        </div>
                     )}
                 </div>
             </form>

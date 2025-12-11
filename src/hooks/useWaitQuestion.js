@@ -9,7 +9,6 @@ const useWaitQuestion = () => {
 
     useEffect(() => {
         const handleReceiveQuestion = (data) => {
-            console.log('Received question:', data);
             setQuestion({
                 questionId: data.questionId,
                 gameId: data.gameId,

@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import Button from '../../misc/ds/Button.jsx';
 import useAIPromptTest from '../../../hooks/useAIPromptTest.js';
 import useLanguageModels from '../../../hooks/useLanguageModels.js';
 import TextArea from '../../misc/ds/TextArea';
 import Spinner from '../../misc/ds/Spinner.jsx';
 import './AIPromptTest.css';
+import usePromptTemplates from "../../../hooks/usePromptTemplates.js";
 
-const AIPromptTest = ({ prompt, temperature, languageModel }) => {
+const AIPromptTest = ({ prompt, temperature, languageModel, languageUsed }) => {
     const { t } = useTranslation();
     const [question, setQuestion] = useState('');
     const { models } = useLanguageModels();
+    const { currentLanguageSuffix, loading: promptTemplateLoading} = usePromptTemplates(languageUsed);
 
     const {
         testPrompt,
@@ -47,6 +49,16 @@ const AIPromptTest = ({ prompt, temperature, languageModel }) => {
 
     return (
         <div className="ai-prompt-test">
+            <div className="form-field game-form-field">
+                <label>{t('default_system_prompt')}</label>
+                <div className="prompt-text">
+                    {promptTemplateLoading ?
+                        t('prompt_template_loading') :
+                        currentLanguageSuffix?.suffix_template || t('prompt_template_not_found')
+                    }
+                </div>
+            </div>
+
             <div className="form-field game-form-field">
                 <label>{t('current_prompt')}:</label>
                 <div className="prompt-text">{prompt || t('no_prompt_available')}</div>
@@ -147,6 +159,7 @@ AIPromptTest.propTypes = {
     prompt: PropTypes.string,
     temperature: PropTypes.number.isRequired,
     languageModel: PropTypes.number.isRequired,
+    languageUsed: PropTypes.string
 };
 
 export default AIPromptTest;

@@ -5,10 +5,9 @@
     min-height: 100vh;
     padding: 1.5rem;
     animation: fadeIn 0.8s ease-in-out;
-    justify-content: flex-start;
-
-    /* Makes sure content doesn't overflow on small screens */
+    justify-content: center;
     box-sizing: border-box;
+    width: 100%;
 }
 
 .game-end span {
@@ -28,6 +27,8 @@
     /* Prevents text from exceeding screen width */
     max-width: 90%;
     word-wrap: inherit;
+
+    margin: 1rem;
 }
 
 /* ------- MOBILE BREAKPOINTS ------- */

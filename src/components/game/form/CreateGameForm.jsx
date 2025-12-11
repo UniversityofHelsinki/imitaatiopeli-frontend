@@ -19,6 +19,7 @@ const createEmptyGame = (t) => ({
         language_model: null,
         model_temperature: 0.7,
         answer_randomization: false,
+        show_result: true,
     }
 });
 
@@ -60,7 +61,7 @@ const CreateGameForm = () => {
             navigate(`/admin/games/${saved.game_id}`);
             setNotification(t('create_game_form_game_created_notification'), 'success', true);
         } catch (error) {
-            setNotification(error.cause?.status, 'error');
+            setNotification(error.cause?.status, 'error', true);
         }
         setSaving(false);
     };

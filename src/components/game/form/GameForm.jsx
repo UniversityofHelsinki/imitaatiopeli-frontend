@@ -15,6 +15,7 @@ import ResearchDescriptionField from "./ResearchDescriptionField.jsx";
 import AIPromptTest from "../../game/form/AIPromptTest.jsx";
 import Accordion from "../../misc/ds/Accordion.jsx";
 import RandomizationField from './RandomizationField.jsx';
+import ShowResultField from "./ShowResultField.jsx";
 
 const GameForm = ({
                       game,
@@ -148,6 +149,7 @@ const GameForm = ({
                             prompt={game.configuration.ai_prompt}
                             temperature={game.configuration.model_temperature}
                             languageModel={game.configuration.language_model}
+                            languageUsed={game.configuration.language_used}
                         />
                     }
                     variant="compact"
@@ -198,6 +200,16 @@ const GameForm = ({
                         />
                 </div>
             }
+            <div className="form-field game-form-field">
+                <ShowResultField
+                    value={game?.configuration?.show_result ?? true}
+                    onChange={e => onChange('configuration',  {
+                        ...game.configuration,
+                        show_result: e.target.value === true
+                    })}
+                    disabled={saving}
+                />
+            </div>
                 <div className="horizontal-divider"></div>
                 <div className="game-form-bottom-row">
                     <BottomRow saving={saving}>
