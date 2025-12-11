@@ -247,5 +247,15 @@
   "default_system_prompt": "Pelin taustalla oleva prompt (ei muokattavissa):",
   "prompt_template_loading": "Ladataan pelin tausta-promptia...",
   "prompt_template_not_found": "Valitse ensin pelin kieli näyttääksesi tausta-promptin kielelle",
-  "no_model_selected": "Kielimallia ei valittu"
+  "no_model_selected": "Kielimallia ei valittu",
+  "footer_contact_information_hy": "Helsingin yliopisto",
+  "footer_contact_information_address_line_1": "PL 4 (Yliopistonkatu 3)",
+  "footer_contact_information_address_line_2": "00014 Helsingin yliopisto",
+  "footer_contact_information_phone_switchboard": "Puhelinvaihde: 02941 911",
+  "footer_external_link_contact_info_label": "Yhteystiedot",
+  "footer_external_link_contact_info_link": "https://helpdesk.it.helsinki.fi/ohjeet/tuki-ja-neuvonta/it-helpdesk/nain-saat-yhteyden-it-helpdeskiin",
+  "footer_external_link_terms_of_service_label": "Käyttösäännöt",
+  "footer_external_link_terms_of_service_link": "https://www.helsinki.fi/fi/tietotekniikkakeskus/tietoturva-yliopistolla/palvelujen-kayttosaannot/tietojarjestelmien-kayttosaannot",
+  "footer_external_link_accessibility_statement_label": "Saavutettavuusseloste",
+  "footer_external_link_accessibility_statement_link": "/saavutettavuusseloste.html"
 }
