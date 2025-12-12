@@ -83,14 +83,13 @@ const AitoMessenger = ({
 
     const disabledAnnouncements = {
         wait: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />,
-        'judging-ended': <WaitingAnnouncement content={t('playroom_no_more_answers_accepted')} showSpinner={false} />
+        'judging-ended': <WaitingAnnouncement content={<strong>{t('playroom_no_more_answers_accepted')}</strong>} showSpinner={false} />
     };
 
     return (
         <Messenger
             onMessageSubmit={answerQuestion}
             messageFieldDisabled={currentState !== 'answer'}
-            announcement={disabledAnnouncements[currentState]}
             message={input}
             onMessageChange={onInputChange}
             msglength={2000}
@@ -99,6 +98,11 @@ const AitoMessenger = ({
                 <li className="message-area-instructions message-area-item">
                     <InstructionMessage content={t('playroom_instructions_aito')} />
                 </li>
+                {(currentState !== 'answer' || judgeState === 'end') && (
+                    <li className="message-area-item">
+                        {disabledAnnouncements[currentState]}
+                    </li>
+                )}
                 {askedQuestion && (
                     <li key={`question-${askedQuestion.id}`} className={`message-area-item message-area-item-${askedQuestion.type}`}>
                         <Message>{askedQuestion.content}</Message>
