@@ -15,3 +15,10 @@
   margin: unset;
   padding: unset;
 }
+
+.footer-contact-information-maintenance {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  word-break: break-word;
+}

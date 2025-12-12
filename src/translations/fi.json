@@ -259,5 +259,6 @@
   "footer_external_link_terms_of_service_label": "Käyttösäännöt",
   "footer_external_link_terms_of_service_link": "https://www.helsinki.fi/fi/tietotekniikkakeskus/tietoturva-yliopistolla/palvelujen-kayttosaannot/tietojarjestelmien-kayttosaannot",
   "footer_external_link_accessibility_statement_label": "Saavutettavuusseloste",
-  "footer_external_link_accessibility_statement_link": "/saavutettavuusseloste.html"
+  "footer_external_link_accessibility_statement_link": "/saavutettavuusseloste.html",
+  "footer_maintenance_window": "Imitaatiopelin huoltokatko on joka tiistai klo 8:00 - 10:00. Palvelussa saattaa tuolloin esiintyä katkoja."
 }
