@@ -248,5 +248,15 @@
   "game_form_show_result_field_assistive_text": "Jos tämä asetus on käytössä, näytetään pelaajalle lopputulos.",
   "game_final_guess_correct": "Peli on päättynyt. Arvauksesi meni oikein.",
   "game_final_guess_incorrect": "Peli on päättynyt. Arvauksesi meni väärin.",
-  "enter_message_placeholder": "enter_message_placeholder"
+  "enter_message_placeholder": "enter_message_placeholder",
+  "footer_contact_information_hy": "University of Helsinki",
+  "footer_contact_information_address_line_1": "PO Box 4 (Yliopistonkatu 3)",
+  "footer_contact_information_address_line_2": "FI-00014 University of Helsinki",
+  "footer_contact_information_phone_switchboard": "Telephone exchange: +358 (0)2 941 911",
+  "footer_external_link_contact_info_label": "Contact information",
+  "footer_external_link_contact_info_link": "https://helpdesk.it.helsinki.fi/en/instructions/support-and-guidance/helpdesk/how-contact-it-helpdesk",
+  "footer_external_link_terms_of_service_label": "Terms of Use",
+  "footer_external_link_terms_of_service_link": "https://www.helsinki.fi/en/center-information-technology/it-security-university/terms-use-services",
+  "footer_external_link_accessibility_statement_label": "Accessibility statement",
+  "footer_external_link_accessibility_statement_link": "/accessibility_statement.html"
 }
