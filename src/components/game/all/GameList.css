@@ -5,3 +5,7 @@ ul.game-list {
   flex-direction: column;
   gap: var(--ds-spacing-base);
 }
+
+.no-games {
+  word-break: break-word;
+}
