@@ -1,0 +1,4 @@
+.judge-message-area-item {
+    animation: slideIn 0.3s ease-out;
+    padding: .5rem 0;
+}
