@@ -1,13 +1,21 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import './MessageArea.css'
+import './MessageArea.css';
 import { useTranslation } from 'react-i18next';
 import { DsIcon } from '@uh-design-system/component-library-react';
 
-
-const MessageArea = ({ children }) => {
+const MessageArea = ({ children, storageKey }) => {
     const { t } = useTranslation();
-    const [showInstructions, setShowInstructions] = useState(true);
+
+    const [showInstructions, setShowInstructions] = useState(() => {
+        try {
+            const saved = sessionStorage.getItem(storageKey);
+            return saved === null ? true : saved === 'true';
+        } catch {
+            return true;
+        }
+    });
+
     const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
 
     useEffect(() => {
@@ -18,6 +26,11 @@ const MessageArea = ({ children }) => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    useEffect(() => {
+        sessionStorage.setItem(storageKey, String(showInstructions));
+
+    }, [showInstructions, storageKey]);
 
     const shouldShowInstructions = isMobile ? showInstructions : true;
 
@@ -66,6 +79,7 @@ const MessageArea = ({ children }) => {
 
 MessageArea.propTypes = {
     children: PropTypes.node,
+    storageKey: PropTypes.string,
 };
 
 export default MessageArea;
