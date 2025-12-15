@@ -27,6 +27,9 @@ const ContactInformation = () => {
     <p>
       {t('footer_contact_information_phone_switchboard')}
     </p>
+    <p className="footer-contact-information-maintenance">
+      {t('footer_maintenance_window')}
+    </p>
   </div>
 };
 
