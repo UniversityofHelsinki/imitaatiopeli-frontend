@@ -19,6 +19,7 @@ import useEndJudging, { useWaitEndJudging } from '../../../../hooks/useEndJudgin
 import {useSocket} from "../../../../contexts/SocketContext.jsx";
 import ConfirmModalDialog from "../../../../utilities/ConfirmModalDialog.jsx";
 import IconHelpFill from "../../../misc/ds/IconHelpFill.jsx";
+import useGetGameConfiguration from "../../../../hooks/useGetGameConfiguration.js";
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
     return (
@@ -46,6 +47,7 @@ const Playroom = () => {
     let { answers, clearAnswers, changeAnswers } = useWaitAnswers();
     const {initialQuestion} = useGetInitialQuestion(code);
     const {initialAnswers} = useGetInitialAnswers(code);
+    const {gameConfiguration, error} = useGetGameConfiguration(code);
     const player = getPlayer();
     const judgingEnded = useWaitEndJudging();
     const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging();
@@ -140,6 +142,11 @@ const Playroom = () => {
         }
     }, [answers, initialAnswers]);
 
+    useEffect(() => {
+        if (!gameConfiguration) {
+            gameConfiguration;
+        }
+    }, [gameConfiguration]);
 
     const onQuestionAnswered = () => {
         clearQuestion();
@@ -196,7 +203,7 @@ const Playroom = () => {
             </div>
             <ConfirmModalDialog
                 open={isPopupOpen}
-                message={t('playroom_page_information')}
+                message={gameConfiguration?.instructions_for_players}
                 cancelLabel={t('close')}
                 onCancel={() => setIsPopupOpen(false)}
             />
