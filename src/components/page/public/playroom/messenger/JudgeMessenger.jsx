@@ -141,6 +141,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             message={input}
             onMessageChange={onInputChange}
             msglength={2000}
+            storageKey="messageArea.judgeMessenger.showInstructions"
         >
             {currentState !== 'final-review' && <ul className="message-area-messages">
                 <li className="message-area-instructions message-area-item">
