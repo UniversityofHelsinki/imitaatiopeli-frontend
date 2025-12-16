@@ -260,5 +260,6 @@
   "admin_monitor_end_game_confirm_message": "Är du säker på att du vill avsluta spelet?",
   "admin_monitor_end_game_all_not_finished": "Alla spelare har inte slutfört sin slutliga utvärdering!",
   "playroom_page_information": "-",
-  "footer_maintenance_window": "Underhållsfönstret för tjänsten är varje tisdag från kl. 8 till kl. 10. Underhållsarbete kan orsaka avbrott i tjänsten under denna tid."
+  "footer_maintenance_window": "Underhållsfönstret för tjänsten är varje tisdag från kl. 8 till kl. 10. Underhållsarbete kan orsaka avbrott i tjänsten under denna tid.",
+  "game_list_no_games": "Inga spel att visa. Välj 'visa endast avslutade spel' för att se avslutade spel."
 }
