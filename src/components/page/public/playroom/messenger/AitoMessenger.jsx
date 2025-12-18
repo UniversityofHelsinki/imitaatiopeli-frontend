@@ -93,6 +93,7 @@ const AitoMessenger = ({
             message={input}
             onMessageChange={onInputChange}
             msglength={2000}
+            storageKey="messageArea.aitoMessenger.showInstructions"
         >
             <ul className="message-area-messages">
                 <li className="message-area-instructions message-area-item">

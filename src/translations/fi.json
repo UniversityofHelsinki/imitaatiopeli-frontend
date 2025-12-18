@@ -231,8 +231,8 @@
   "game_end_reason_by_judge": "Kiitos loppuarviosta, pelisi jatkuu vastaajan roolissa, kunnes toinen pelaaja on siirtynyt loppuarvioon.",
   "game_end_reason_game_ended": "Peli päättyi. Voit sulkea selaimen",
   "game_end_reason_by_admin": "Pelin järjestäjä päätti pelin, voit sulkea selaimen",
-  "game_final_guess_correct": "Peli on päättynyt. Arvauksesi meni oikein.",
-  "game_final_guess_incorrect": "Peli on päättynyt. Arvauksesi meni väärin.",
+  "game_final_guess_correct": "Onneksi olkoon! Arvauksesi meni oikein.",
+  "game_final_guess_incorrect": "Tunnistus ei osunut oikein – ihmisen ja tekoälyn erottaminen ei ole aina helppoa.",
   "game_content_move_to_summary_link_label": "Siirry pelin yhteenvetoon",
   "qr_code_dialog_title": "Peliin liittymisen QR-koodi",
   "qr_code_button_title": "Näytä peliin liittymisen QR-koodi",
@@ -264,5 +264,6 @@
   "footer_external_link_terms_of_service_link": "https://www.helsinki.fi/fi/tietotekniikkakeskus/tietoturva-yliopistolla/palvelujen-kayttosaannot/tietojarjestelmien-kayttosaannot",
   "footer_external_link_accessibility_statement_label": "Saavutettavuusseloste",
   "footer_external_link_accessibility_statement_link": "/saavutettavuusseloste.html",
-  "footer_maintenance_window": "Imitaatiopelin huoltokatko on joka tiistai klo 8:00 - 10:00. Palvelussa saattaa tuolloin esiintyä katkoja."
+  "footer_maintenance_window": "Imitaatiopelin huoltokatko on joka tiistai klo 8:00 - 10:00. Palvelussa saattaa tuolloin esiintyä katkoja.",
+  "game_list_no_games": "Ei näytettäviä pelejä. Valitse 'näytä vain päättyneet pelit', jos haluat tarkastella päättyneitä pelejä."
 }

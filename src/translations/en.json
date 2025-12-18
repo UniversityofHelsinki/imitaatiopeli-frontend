@@ -260,5 +260,6 @@
   "admin_monitor_end_game_confirm_message": "Are you sure you want to end the game?",
   "admin_monitor_end_game_all_not_finished": "All players have not finished their games yet!",
   "playroom_page_information": "-",
-  "footer_maintenance_window": "The maintenance window for the service is every Tuesday from 8 AM to 10 AM. Breaks in the service may occur during that time."
+  "footer_maintenance_window": "The maintenance window for the service is every Tuesday from 8 AM to 10 AM. Breaks in the service may occur during that time.",
+  "game_list_no_games": "No games to display. Select 'show only completed games' to view completed games."
 }
