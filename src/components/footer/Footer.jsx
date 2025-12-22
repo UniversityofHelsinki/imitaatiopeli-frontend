@@ -42,8 +42,11 @@ const ExternalLinks = () => {
 
   return <div className="footer-external-links">
     <ul>
-      <li><ExternalLink label={t('footer_external_link_contact_info_label')} href={t('footer_external_link_contact_info_link')} /></li>
-      <li><ExternalLink label={t('footer_external_link_terms_of_service_label')} href={t('footer_external_link_terms_of_service_link')} /></li>
+        <li>
+            {t('footer_external_link_contact_info_label')}{' '}
+            <a href="mailto:imitationgame@helsinki.fi">imitationgame@helsinki.fi</a>
+        </li>
+        <li><ExternalLink label={t('footer_external_link_terms_of_service_label')} href={t('footer_external_link_terms_of_service_link')} /></li>
       <li><ExternalLink label={t('footer_external_link_accessibility_statement_label')} href={t('footer_external_link_accessibility_statement_link')} /></li>
     </ul>
   </div>
