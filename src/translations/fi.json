@@ -1,5 +1,6 @@
 {
   "imitation_game_logo_name": "Imitaatiopeli",
+  "imitation_game_instructions": "Tämä on peli, jota pelataan ...",
   "language_select_fi": "suomi",
   "language_select_sv": "ruotsi",
   "language_select_en": "englanti",
@@ -254,7 +255,7 @@
   "footer_contact_information_address_line_1": "PL 4 (Yliopistonkatu 3)",
   "footer_contact_information_address_line_2": "00014 Helsingin yliopisto",
   "footer_contact_information_phone_switchboard": "Puhelinvaihde: 02941 911",
-  "footer_external_link_contact_info_label": "Yhteystiedot",
+  "footer_external_link_contact_info_label": "Ota yhteyttä",
   "footer_external_link_contact_info_link": "https://helpdesk.it.helsinki.fi/ohjeet/tuki-ja-neuvonta/it-helpdesk/nain-saat-yhteyden-it-helpdeskiin",
   "footer_external_link_terms_of_service_label": "Käyttösäännöt",
   "footer_external_link_terms_of_service_link": "https://www.helsinki.fi/fi/tietotekniikkakeskus/tietoturva-yliopistolla/palvelujen-kayttosaannot/tietojarjestelmien-kayttosaannot",

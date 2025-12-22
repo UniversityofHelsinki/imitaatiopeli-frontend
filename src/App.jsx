@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import i18n from 'i18next';
 import React from 'react';
-import { initReactI18next } from 'react-i18next';
+import {initReactI18next, useTranslation} from 'react-i18next';
 import { Provider } from 'react-redux';
 import {
     createBrowserRouter,
@@ -65,11 +65,13 @@ i18n.use(initReactI18next).init({
 });
 
 const App = () => {
+    const { t } = useTranslation();
+
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/" element={<Imitation />} errorElement={<ErrorPage />}>
                 {/* Public routes here */}
-                <Route index element={<div></div>} />
+                <Route index element={<div className="app-instruction">{t('imitation_game_instructions')}</div>  } />
                 <Route path="games">
                     <Route path=":code" element={<GameLobby />} />
                     <Route path=":code/play" element={<Playroom />} />

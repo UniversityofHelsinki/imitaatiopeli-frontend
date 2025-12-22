@@ -135,7 +135,9 @@ const Content = ({ game, reload }) => {
             </div>
             <div className="game-content-data">
                 <div>{t('game_content_join_link_label')}
-                    <CopyGameUrlButton game={game} />
+                    <span className="game-padding" >
+                        <CopyGameUrlButton game={game} />
+                    </span>
                 </div>
             </div>
             <div className="game-content-divider"></div>
