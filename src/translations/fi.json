@@ -262,5 +262,8 @@
   "footer_external_link_accessibility_statement_label": "Saavutettavuusseloste",
   "footer_external_link_accessibility_statement_link": "/saavutettavuusseloste.html",
   "footer_maintenance_window": "Imitaatiopelin huoltokatko on joka tiistai klo 8:00 - 10:00. Palvelussa saattaa tuolloin esiintyä katkoja.",
-  "game_list_no_games": "Ei näytettäviä pelejä. Valitse 'näytä vain päättyneet pelit', jos haluat tarkastella päättyneitä pelejä."
+  "game_list_no_games": "Ei näytettäviä pelejä. Valitse 'näytä vain päättyneet pelit', jos haluat tarkastella päättyneitä pelejä.",
+  "game_confirm_start_game": "Haluatko varmasti käynnistää pelin?",
+  "game_confirm_start_confirm": "Käynnistä",
+  "game_confirm_start_cancel": "Peruuta"
 }
