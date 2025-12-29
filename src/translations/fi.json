@@ -269,5 +269,8 @@
   "game_list_no_games": "Ei näytettäviä pelejä. Valitse 'näytä vain päättyneet pelit', jos haluat tarkastella päättyneitä pelejä.",
   "game_confirm_start_game": "Haluatko varmasti käynnistää pelin?",
   "game_confirm_start_confirm": "Käynnistä",
-  "game_confirm_start_cancel": "Peruuta"
+  "game_confirm_start_cancel": "Peruuta",
+  "judge_messenger_missing_judge_guess": "Edellisen vastauksen arviointi puuttuu, lataa sivu uudelleen.",
+  "judge_messenger_missing_answer": "Vastaus edelliseen kysymykseen puuttuu, lataa sivu uudelleen.",
+  "judge_messenger_already_answered": "Olet jo vastannut tähän kysymykseen, lataa sivu uudelleen."
 }

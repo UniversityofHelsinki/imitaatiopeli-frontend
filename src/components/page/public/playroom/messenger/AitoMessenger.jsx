@@ -75,7 +75,7 @@ const AitoMessenger = ({
             setNotification(t('answer_sent_success_notification'), 'success', true);
             onQuestionAnswered();
         } catch (error) {
-            setNotification(error.cause?.status, 'error', true);
+            setNotification(t(error?.error ?? 'judge_messenger_send_answer_error_notification'), 'error', true);
             console.error('Error sending answer:', error);
             setAnsweredQuestionId(null);
         }
