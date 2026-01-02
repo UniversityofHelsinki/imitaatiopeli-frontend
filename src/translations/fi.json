@@ -272,5 +272,7 @@
   "game_confirm_start_cancel": "Peruuta",
   "judge_messenger_missing_judge_guess": "Edellisen vastauksen arviointi puuttuu, lataa sivu uudelleen.",
   "judge_messenger_missing_answer": "Vastaus edelliseen kysymykseen puuttuu, lataa sivu uudelleen.",
-  "judge_messenger_already_answered": "Olet jo vastannut tähän kysymykseen, lataa sivu uudelleen."
+  "judge_messenger_already_answered": "Olet jo vastannut tähän kysymykseen, lataa sivu uudelleen.",
+  "judge_messenger_missing_player": "Yhteys pelaajaan kadonnut, lähetä kysymys uudelleen.",
+  "judge_messenger_missing_judge": "Yhteys tuomariin kadonnut, lähetä vastaus uudelleen."
 }

@@ -31,6 +31,7 @@ const useEndJudging = () => {
     useEffect(() => {
         on('judging-summary', response => {
           const questions = {};
+            console.log("useEndJudging, FETCHING FINAL GUESS RESULT:");
           response.map(o => {
             if (!questions[o.question_id]) {
               questions[o.question_id] = {
