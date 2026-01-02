@@ -74,7 +74,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
         } catch (error) {
             console.error('Failed to ask question:', error);
             setCurrentState('ask');
-            setNotification(t('judge_messenger_send_question_error_notification'), 'error', true);
+            setNotification(t(error.error), 'error', false);
         }
     };
 

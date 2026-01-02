@@ -269,5 +269,6 @@
   "game_list_no_games": "Ei näytettäviä pelejä. Valitse 'näytä vain päättyneet pelit', jos haluat tarkastella päättyneitä pelejä.",
   "game_confirm_start_game": "Haluatko varmasti käynnistää pelin?",
   "game_confirm_start_confirm": "Käynnistä",
-  "game_confirm_start_cancel": "Peruuta"
+  "game_confirm_start_cancel": "Peruuta",
+  "no_sockets_found_for_judge": "Kysymystä ei voitu lähettää. Yritä hetken kuluttua uudelleen."
 }
