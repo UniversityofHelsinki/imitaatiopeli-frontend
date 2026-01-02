@@ -261,5 +261,6 @@
   "admin_monitor_end_game_all_not_finished": "Alla spelare har inte slutfört sin slutliga utvärdering!",
   "playroom_page_information": "-",
   "footer_maintenance_window": "Underhållsfönstret för tjänsten är varje tisdag från kl. 8 till kl. 10. Underhållsarbete kan orsaka avbrott i tjänsten under denna tid.",
-  "game_list_no_games": "Inga spel att visa. Välj 'visa endast avslutade spel' för att se avslutade spel."
+  "game_list_no_games": "Inga spel att visa. Välj 'visa endast avslutade spel' för att se avslutade spel.",
+  "no_sockets_found_for_judge": "Frågan kunde inte skickas. Försök igen om en stund."
 }

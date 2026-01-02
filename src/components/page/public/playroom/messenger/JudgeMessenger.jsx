@@ -73,12 +73,13 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             setNotification(t('question_sent_success_notification'), 'success', true);
             setCurrentState('wait');
         } catch (error) {
+            console.error('Failed to ask question:', error);
             if (error.error === 'judge_messenger_missing_judge_guess') {
                 setCurrentState('rate');
             } else {
                 setCurrentState('ask');
             }
-            setNotification(t(error?.error ?? 'judge_messenger_send_question_error_notification'), 'error', true);
+            setNotification(t(error?.error), 'error', true);
         }
     };
 
