@@ -32,6 +32,7 @@ const AitoMessenger = ({
             if (judgeState === 'end' && judgingEnded && !hasFetchedFinalResultRef.current) {
                 hasFetchedFinalResultRef.current = true;
                 try {
+                    console.log("FETCHING FINAL GUESS RESULT, AITO:");
                     const result = await fetchFinalGuessResult({ waitForResult: true, timeoutMs: 7000, intervalMs: 400 });
                     const finalResult = result?.show_result === true ? result?.final_was_correct : null;
                     const finalGuessText = finalResult === true ? 'game_final_guess_correct' : finalResult === false ? 'game_final_guess_incorrect' : null;
@@ -69,13 +70,14 @@ const AitoMessenger = ({
         onInputChange('');
         setAskedQuestion(null);
         setAnsweredQuestionId(question.id);
-        setCurrentState('wait');
         try {
             await sendAnswer(answerContent, question);
             setNotification(t('answer_sent_success_notification'), 'success', true);
+            setCurrentState('wait');
             onQuestionAnswered();
         } catch (error) {
-            setNotification(error.cause?.status, 'error', true);
+            setCurrentState('answer');
+            setNotification(t(error?.error ?? 'judge_messenger_send_answer_error_notification'), 'error', true);
             console.error('Error sending answer:', error);
             setAnsweredQuestionId(null);
         }
@@ -93,6 +95,7 @@ const AitoMessenger = ({
             message={input}
             onMessageChange={onInputChange}
             msglength={2000}
+            storageKey="messageArea.aitoMessenger.showInstructions"
         >
             <ul className="message-area-messages">
                 <li className="message-area-instructions message-area-item">

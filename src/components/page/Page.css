@@ -1,7 +1,7 @@
 .page {
   display: flex;
   flex-direction: column;
-  word-break: break-all;
+  word-break: break-word;
 
   min-width: 100%;
 }
@@ -50,10 +50,21 @@
   .page-heading {
     margin-left: var(--ds-spacing-layout-base);
     margin-right: var(--ds-spacing-layout-base);
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .page-content {
     margin-left: var(--ds-spacing-layout-base);
     margin-right: var(--ds-spacing-layout-base);
+  }
+
+  .page-heading h2 {
+    width: 100%;
+    margin-bottom: var(--ds-spacing-base);
+  }
+
+  .page-heading .page-heading-extras {
+    width: 100%;
   }
 }

@@ -47,6 +47,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             if (judgingEnded && currentState === 'end' && !hasFetchedFinalResultRef.current) {
                 hasFetchedFinalResultRef.current = true;
                 try {
+                    console.log("FETCHING FINAL GUESS RESULT, JUDGE:");
                     const result = await fetchFinalGuessResult({ waitForResult: true, timeoutMs: 7000, intervalMs: 400 });
                     //console.log('RESPONSE_JUDGE:', JSON.stringify(result, null, 2));
                     const finalResult = result?.show_result === true ? result?.final_was_correct : null;
@@ -73,8 +74,12 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             setCurrentState('wait');
         } catch (error) {
             console.error('Failed to ask question:', error);
-            setCurrentState('ask');
-            setNotification(t('judge_messenger_send_question_error_notification'), 'error', true);
+            if (error.error === 'judge_messenger_missing_judge_guess') {
+                setCurrentState('rate');
+            } else {
+                setCurrentState('ask');
+            }
+            setNotification(t(error?.error), 'error', true);
         }
     };
 
@@ -141,6 +146,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             message={input}
             onMessageChange={onInputChange}
             msglength={2000}
+            storageKey="messageArea.judgeMessenger.showInstructions"
         >
             {currentState !== 'final-review' && <ul className="message-area-messages">
                 <li className="message-area-instructions message-area-item">

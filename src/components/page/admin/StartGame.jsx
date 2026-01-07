@@ -20,7 +20,7 @@ const StartGame = () => {
   const { setNotification } = useNotification();
   const start = useStartGame(id);
   const validate = useStartGameValidation(players);
-    const { isConnected, emit } = useSocket();
+  const { isConnected, emit } = useSocket();
 
   useEffect(() => {
     const fetchData = async () => {

@@ -11,6 +11,7 @@ import BottomRow from "../../game/form/BottomRow.jsx";
 import CopyGameUrlButton from "./CopyGameUrlButton.jsx";
 import Link from '../../misc/ds/Link';
 import useStartGameValidation from "../../../hooks/useStartGameValidation.jsx";
+import StartGameDialog from './StartGameDialog';
 
 const AdminGameLobby = () => {
     const { id: gameId } = useParams();
@@ -88,16 +89,7 @@ const AdminGameLobby = () => {
                               internal
                           />
                           <div className="margin" />
-                          <Link
-                              label={t('admin_game_button_start_game')}
-                              variant="standalone"
-                              icon="play_arrow"
-                              size="2xLarge"
-                              colour="black"
-                              href={`/admin/games/${game.game_id}/start`}
-                              internal
-                              validation={validate()}
-                          />
+                          <StartGameDialog game={game.game_id} validation={validate()} />
                         </BottomRow>
                     </div>
                 </div>

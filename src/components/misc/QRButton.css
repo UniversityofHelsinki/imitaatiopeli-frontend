@@ -12,7 +12,23 @@
     transition: background-color 0.2s;
 }
 
+/* size modifiers */
+.qr-button.qr-button--24 {
+    width: 24px;
+    height: 24px;
+}
+
+.qr-button.qr-button--32 {
+    width: 32px;
+    height: 32px;
+}
+
 .qr-button.hover,
 .qr-button:hover {
     background-color: rgba(0, 123, 255, 0.1); /* light blue hover */
+}
+
+.qr-button:focus-visible {
+    outline: 2px solid rgba(0, 123, 255, 0.6);
+    outline-offset: 2px;
 }
