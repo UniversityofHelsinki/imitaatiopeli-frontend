@@ -1,0 +1,12 @@
+.end-game-form {
+    display: flex;
+    flex-direction: row;
+    word-break: break-word;
+}
+
+@media (max-width: 1200px) {
+    .end-game-form {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

@@ -71,6 +71,7 @@
   "end_game_page_already_ended": "Peli päättyi",
   "end_game_move_to_gamelist": "Palaa pelilistaan",
   "end_game_form_submit_button": "Lopeta",
+  "end_game_form_back_button": "Peruuta",
   "start_game_page_success_notification": "Peli käynnistetty!",
   "end_game_page_success_notification": "Peli lopetettu!",
   "end_of_game_page_heading": "Peli on päättynyt",

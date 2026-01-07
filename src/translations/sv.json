@@ -69,6 +69,7 @@
   "end_game_page_already_ended": "Spelet har redan avslutats",
   "end_game_move_to_gamelist": "Återgå till spellistan",
   "end_game_form_submit_button": "Avsluta spel",
+  "end_game_form_back_button": "Avbryta",
   "start_game_page_success_notification": "Spelet har startats!",
   "end_game_page_success_notification": "Spelet avslutades framgångsrikt!",
   "end_of_game_page_heading": "Spelet avslutat",
