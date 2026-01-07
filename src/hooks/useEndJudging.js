@@ -2,24 +2,29 @@ import { useEffect, useState } from 'react';
 import { useSocket } from '../contexts/SocketContext';
 import { get } from './useHttp';
 
-
 export const useWaitEndJudging = () => {
-    const { on } = useSocket();
+    const { on, off, isConnected } = useSocket();
     const [judgingEnded, setJudgingEnded] = useState(false);
 
-
     useEffect(() => {
-        on('no-more-answers', () => {
+        const handleNoMoreAnswers = () => {
             setJudgingEnded(true);
-        });
-    }, [on]);
+        };
 
+        // De-dup any previous handlers and (re)attach on connect/reconnect
+        off('no-more-answers', handleNoMoreAnswers);
+        on('no-more-answers', handleNoMoreAnswers);
+
+        return () => {
+            off('no-more-answers', handleNoMoreAnswers);
+        };
+    }, [on, off, isConnected]);
 
     return judgingEnded;
 };
 
 const useEndJudging = () => {
-    const { isConnected, emit, on } = useSocket();
+    const { isConnected, emit, on, off } = useSocket();
 
     const storageKey = 'judging-summary';
     const [questions, setQuestions] = useState(() => {
@@ -31,7 +36,7 @@ const useEndJudging = () => {
     });
 
     useEffect(() => {
-        on('judging-summary', response => {
+        const handleSummary = (response) => {
             const questions = {};
             response.map(o => {
                 if (!questions[o.question_id]) {
@@ -45,10 +50,7 @@ const useEndJudging = () => {
                     };
                 }
 
-                const answer = {
-                    ...o
-                };
-
+                const answer = { ...o };
                 delete answer.question_created;
                 delete answer.question_text;
                 delete answer.quess_id;
@@ -56,31 +58,38 @@ const useEndJudging = () => {
                 questions[o.question_id].answers.push(answer);
                 questions[o.question_id].answers.sort(a => a.is_pretender ? 1 : -1);
                 questions[o.question_id].selectedAnswer = questions[o.question_id].answers.findIndex(a => a.guess_created);
-
             });
+
             setQuestions(questions);
-            // Persist latest questions to localStorage
             try {
                 localStorage.set(storageKey, questions);
             } catch {
                 // ignore storage errors
             }
-        });
-    }, [isConnected, on, storageKey]);
+        };
 
+        // De-dup and attach
+        off('judging-summary', handleSummary);
+        on('judging-summary', handleSummary);
+
+        return () => {
+            off('judging-summary', handleSummary);
+        };
+    }, [isConnected, on, off, storageKey]);
 
     const endJudging = async (game, rating) => {
         await get({ path: '/public/judge/ready-for-final-review' });
-        if (isConnected) {
-            await emit('end-judging', { game, rating });
+        if (!isConnected) {
+            console.warn('Socket not connected; skipping end-judging emit');
+            return;
         }
+        emit('end-judging', { game, rating });
     };
-    // Return plain object; questions is persisted via localStorage
+
     return {
         endJudging,
         questions,
     };
-
 };
 
 export default useEndJudging;
