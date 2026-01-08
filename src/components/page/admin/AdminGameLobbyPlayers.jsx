@@ -42,9 +42,6 @@ const AdminGameLobbyPlayers = ({ game, onPlayersUpdate }) => {
                 <div className="player-list-players-info">
                     {t('lobby_player_start')}
                 </div>
-                <div className="player-list-players-info">
-                    {t('lobby_player_instructions')}
-                </div>
                 <div>
                     <span className="player-count">{t('lobby_player_count')}: {players.length}</span>
                     <ul className="player-list">
