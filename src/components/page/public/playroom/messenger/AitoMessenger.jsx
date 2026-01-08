@@ -10,10 +10,12 @@ import { useNavigate } from "react-router-dom";
 import localStorage from "../../../../../utilities/localStorage.js";
 import { useNotification } from "../../../../notification/NotificationContext.jsx";
 import useFinalGuessResult from "../../../../../hooks/useFinalGuessResult.js";
+import usePlayerStatus from "../../../../../hooks/usePlayerStatus.js";
 
 const AitoMessenger = ({
-                           game, question, onQuestionAnswered, judgingEnded, judgeState, gameId, input, onInputChange
-                       }) => {
+                           game, question, onQuestionAnswered, judgingEnded, judgeState, gameId, input, onInputChange, isActive }) =>
+ {
+    const { playerStatus, error, fetchNow } = usePlayerStatus();
     const { t } = useTranslation();
     const [currentState, setCurrentState] = useState('wait');
     const [askedQuestion, setAskedQuestion] = useState(null);
@@ -63,8 +65,17 @@ const AitoMessenger = ({
             setAskedQuestion(question);
             setAnsweredQuestionId(null);
             setCurrentState('answer');
+            fetchNow(); // fetch status related to the new question
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [question, judgingEnded]);
+
+    // Reflect backend status into UI state (ensures announcements render correctly)
+    useEffect(() => {
+        if (playerStatus?.status === 'judging-ended' && currentState !== 'judging-ended') {
+            setCurrentState('judging-ended');
+        }
+    }, [playerStatus?.status, currentState]);
 
     const answerQuestion = async (answerContent) => {
         onInputChange('');
@@ -75,6 +86,7 @@ const AitoMessenger = ({
             setNotification(t('answer_sent_success_notification'), 'success', true);
             setCurrentState('wait');
             onQuestionAnswered();
+            fetchNow(); // after sending an answer, pull latest status
         } catch (error) {
             setCurrentState('answer');
             setNotification(t(error?.error ?? 'judge_messenger_send_answer_error_notification'), 'error', true);
@@ -101,9 +113,13 @@ const AitoMessenger = ({
                 <li className="message-area-instructions message-area-item">
                     <InstructionMessage content={t('playroom_instructions_aito')} />
                 </li>
-                {(currentState !== 'answer' || judgeState === 'end') && (
+                {(currentState !== 'answer' || judgeState === 'end' || playerStatus?.status === 'judging-ended') && (
                     <li className="message-area-item">
-                        {disabledAnnouncements[currentState]}
+                        {disabledAnnouncements[
+                            currentState === 'answer' && playerStatus?.status === 'judging-ended'
+                                ? 'judging-ended'
+                                : currentState
+                            ]}
                     </li>
                 )}
                 {askedQuestion && (
