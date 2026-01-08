@@ -1,10 +1,10 @@
 import { useGET, invalidate } from './useHttp';
-import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import localStorage from "../utilities/localStorage.js";
 
-const usePlayerStatus = () => {
+const useJudgeStatus = () => {
     const player = localStorage.get('player');
-    const [playerStatus, setPlayerStatus] = useState(null);
+    const [judgeStatus, setJudgeStatus] = useState(null);
     const responseRef = useRef(null);
     const isMountedRef = useRef(true);
 
@@ -19,8 +19,8 @@ const usePlayerStatus = () => {
     const requestOptions = useMemo(() => {
         const hasIds = Boolean(player?.game_id && player?.player_id);
         return {
-            path: hasIds ? `/public/answerer/status` : null,
-            tag: hasIds ? `ANSWERER_${player?.game_id}-${player?.player_id}` : null,
+            path: hasIds ? `/public/judge/status` : null,
+            tag: hasIds ? `JUDGE_${player?.game_id}-${player?.player_id}` : null,
             fetchOnlyIf: hasIds,
         };
     }, [player?.game_id, player?.player_id]);
@@ -33,7 +33,7 @@ const usePlayerStatus = () => {
         reloadRef.current = reload;
     }, [reload]);
 
-    // Expose a manual fetch trigger you can call on Aito actions
+    // Expose a manual fetch trigger you can call on Judge actions
     const fetchNow = () => {
         const tag = requestOptions.tag;
         if (!tag) return;
@@ -45,11 +45,11 @@ const usePlayerStatus = () => {
     useEffect(() => {
         responseRef.current = response;
         if (isMountedRef.current) {
-            setPlayerStatus(response);
+            setJudgeStatus(response);
         }
     }, [response]);
 
-    return { playerStatus, error, fetchNow };
+    return { judgeStatus, error, fetchNow };
 };
 
-export default usePlayerStatus;
+export default useJudgeStatus;

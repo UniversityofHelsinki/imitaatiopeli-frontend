@@ -28,7 +28,14 @@ const AitoMessenger = ({
     const { fetchFinalGuessResult } = useFinalGuessResult(gameId, playerId);
     const hasFetchedFinalResultRef = React.useRef(false);
 
-    // Handle final guess result when judging ends
+     // Fetch when the Aito tab becomes active
+     useEffect(() => {
+         if (isActive) {
+             fetchNow();
+         }
+     }, [isActive]);
+
+     // Handle final guess result when judging ends
     useEffect(() => {
         const handleFetch = async () => {
             if (judgeState === 'end' && judgingEnded && !hasFetchedFinalResultRef.current) {
@@ -61,14 +68,14 @@ const AitoMessenger = ({
 
     // Handle incoming questions
     useEffect(() => {
-        if (question && !judgingEnded && (!askedQuestion || question.id !== askedQuestion.id)) {
+        if (question && !judgingEnded && (!askedQuestion || question.questionId !== askedQuestion.questionId)) {
             setAskedQuestion(question);
             setAnsweredQuestionId(null);
             setCurrentState('answer');
             fetchNow(); // fetch status related to the new question
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [question, judgingEnded]);
+    }, [question?.questionId, judgingEnded]);
 
     // Reflect backend status into UI state (ensures announcements render correctly)
     useEffect(() => {
@@ -80,7 +87,7 @@ const AitoMessenger = ({
     const answerQuestion = async (answerContent) => {
         onInputChange('');
         setAskedQuestion(null);
-        setAnsweredQuestionId(question.id);
+        setAnsweredQuestionId(question.questionId);
         try {
             await sendAnswer(answerContent, question);
             setNotification(t('answer_sent_success_notification'), 'success', true);
@@ -123,7 +130,7 @@ const AitoMessenger = ({
                     </li>
                 )}
                 {askedQuestion && (
-                    <li key={`question-${askedQuestion.id}`} className={`message-area-item message-area-item-${askedQuestion.type}`}>
+                    <li key={`question-${askedQuestion.questionId}`} className={`message-area-item message-area-item-${askedQuestion.type}`}>
                         <Message>{askedQuestion.content}</Message>
                     </li>
                 )}

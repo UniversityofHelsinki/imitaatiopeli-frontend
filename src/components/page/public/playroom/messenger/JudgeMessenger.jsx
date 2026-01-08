@@ -15,9 +15,11 @@ import {useNavigate} from "react-router-dom";
 import localStorage from "../../../../../utilities/localStorage.js";
 import GameEnd from "./GameEnd.jsx";
 import useFinalGuessResult from "../../../../../hooks/useFinalGuessResult.js";
+import useJudgeStatus from "../../../../../hooks/useJudgeStatus.js";
 
 const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSubmitted, stopJudging, summaryQuestions, gameId, judgeId, judgingEnded, input, onInputChange, ratingJustifications, onRatingJustificationsChange, ratingSelectedIndex, onRatingSelectedIndexChange, ratingConfidence, onRatingConfidenceChange
                         }) => {
+    const { judgeStatus, errorMsg, fetchNow } = useJudgeStatus();
     const { isConnected, emit } = useSocket();
     const { t } = useTranslation();
     const { askQuestion } = useAskQuestion(game);
@@ -32,12 +34,16 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
         if (currentState !== 'end') {
             if (summaryQuestions && currentState !== 'end') {
                 setCurrentState('final-review');
+                fetchNow();
             } else if (answers && answers?.length > 0 && askedQuestion) {
                 setCurrentState('rate');
+                fetchNow();
             } else if (answers.length === 0 && askedQuestion && currentState !== 'end') {
                 setCurrentState('wait');
+                fetchNow();
             } else if (currentState !== 'end') {
                 setCurrentState('ask');
+                fetchNow();
             }
         }
     }, [answers, askedQuestion, summaryQuestions, currentState]);
@@ -72,6 +78,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             setAskedQuestion({ content: questionText, type: 'sent' });
             setNotification(t('question_sent_success_notification'), 'success', true);
             setCurrentState('wait');
+            fetchNow();
         } catch (error) {
             console.error('Failed to ask question:', error);
             if (error.error === 'judge_messenger_missing_judge_guess') {
@@ -97,6 +104,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
             });
             setAskedQuestion(null);
             setCurrentState('ask');
+            fetchNow();
             onRatingJustificationsChange?.('');
             onRatingSelectedIndexChange?.(null);
             onRatingConfidenceChange?.(null);
@@ -114,6 +122,7 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
         onRatingSelectedIndexChange?.(null);
         onRatingConfidenceChange?.(null);
         setCurrentState('final-review');
+        fetchNow();
     };
 
     const finalReview = (() => {
