@@ -141,7 +141,6 @@
   "lobby_players_heading": "Players",
   "lobby_player_count": "Number of Players",
   "lobby_player_start": "Waiting for players",
-  "lobby_player_instructions": "Instruction text ...",
   "error_loading_data": "Failed to load data",
   "game_url_copy_button_aria_label": "Copy invitation link",
   "game_url_copy_button_title": "Copy invitation link",

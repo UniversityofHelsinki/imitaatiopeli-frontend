@@ -141,7 +141,6 @@
   "lobby_players_heading": "Spelare",
   "lobby_player_count": "Antal spelare",
   "lobby_player_start": "Väntar på spelare",
-  "lobby_player_instructions": "Instruktionstext ...",
   "error_loading_data": "Det gick inte att ladda data",
   "game_url_copy_button_aria_label": "Kopiera inbjudningslänk",
   "game_url_copy_button_title": "Kopiera inbjudningslänk",
