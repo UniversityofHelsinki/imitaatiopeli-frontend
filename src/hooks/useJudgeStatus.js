@@ -1,5 +1,5 @@
 import { useGET, invalidate } from './useHttp';
-import { useEffect, useMemo, useState, useRef } from 'react';
+import {useEffect, useMemo, useState, useRef, useCallback} from 'react';
 import localStorage from "../utilities/localStorage.js";
 
 const useJudgeStatus = () => {
@@ -33,23 +33,50 @@ const useJudgeStatus = () => {
         reloadRef.current = reload;
     }, [reload]);
 
-    // Expose a manual fetch trigger you can call on Judge actions
-    const fetchNow = () => {
-        const tag = requestOptions.tag;
-        if (!tag) return;
-        invalidate([tag]);
-        reloadRef.current?.();
-    };
-
-    // Always mirror the latest response, even if it's null
+    // Mirror the latest response so callers can read it synchronously after an async reload
     useEffect(() => {
         responseRef.current = response;
         if (isMountedRef.current) {
             setJudgeStatus(response);
         }
     }, [response]);
+// Wait for the next response change; retry a few times if nothing changes
+    const fetchNowAsync = useCallback(async (opts = {}) => {
+        const {
+            timeoutMs = 1200,      // per-attempt poll window
+            intervalMs = 120,      // poll interval
+            tries = 3,             // total attempts
+            backoffMs = 200        // wait between attempts
+        } = opts;
+        const tag = requestOptions.tag;
+        if (!tag) return null;
 
-    return { judgeStatus, error, fetchNow };
+        const startSnapshot = responseRef.current;
+
+        for (let attempt = 1; attempt <= tries; attempt++) {
+            // Invalidate and reload
+            invalidate([tag]);
+            await reloadRef.current?.();
+
+            const startedAt = Date.now();
+            // Poll until responseRef.current !== startSnapshot or timeout
+            while (Date.now() - startedAt < timeoutMs) {
+                await new Promise(r => setTimeout(r, intervalMs)); // yield for state/effects
+                if (responseRef.current !== startSnapshot) {
+                    return responseRef.current;
+                }
+            }
+
+            // If not changed and we still have attempts left, wait a bit and try again
+            if (attempt < tries) {
+                await new Promise(r => setTimeout(r, backoffMs));
+            }
+        }
+        // Gave up: return whatever we currently have
+        return responseRef.current;
+    }, [requestOptions.tag]);
+
+    return { judgeStatus, error, fetchNowAsync, setJudgeStatus };
 };
 
 export default useJudgeStatus;

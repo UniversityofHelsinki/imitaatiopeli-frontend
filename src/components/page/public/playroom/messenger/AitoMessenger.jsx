@@ -41,7 +41,6 @@ const AitoMessenger = ({
             if (judgeState === 'end' && judgingEnded && !hasFetchedFinalResultRef.current) {
                 hasFetchedFinalResultRef.current = true;
                 try {
-                    console.log("FETCHING FINAL GUESS RESULT, AITO:");
                     const result = await fetchFinalGuessResult({ waitForResult: true, timeoutMs: 7000, intervalMs: 400 });
                     const finalResult = result?.show_result === true ? result?.final_was_correct : null;
                     const finalGuessText = finalResult === true ? 'game_final_guess_correct' : finalResult === false ? 'game_final_guess_incorrect' : null;
@@ -56,19 +55,23 @@ const AitoMessenger = ({
         handleFetch();
     }, [judgingEnded, judgeState, fetchFinalGuessResult, navigate]);
 
+    const isJudgingEnded = judgingEnded || playerStatus?.status === 'judging-ended';
+    const notJudgingEnded = !judgingEnded && playerStatus?.status !== 'judging-ended';
+
     // Handle state changes based on judging status
     useEffect(() => {
-        if (judgingEnded) {
+        fetchNow();
+        if (isJudgingEnded) {
             setCurrentState('judging-ended');
             setAskedQuestion(null);
         } else {
             setCurrentState('wait');
         }
-    }, [judgingEnded]);
+    }, [playerStatus?.status, judgingEnded]);
 
     // Handle incoming questions
     useEffect(() => {
-        if (question && !judgingEnded && (!askedQuestion || question.questionId !== askedQuestion.questionId)) {
+        if (question && notJudgingEnded && (!askedQuestion || question.questionId !== askedQuestion.questionId)) {
             setAskedQuestion(question);
             setAnsweredQuestionId(null);
             setCurrentState('answer');
@@ -79,8 +82,8 @@ const AitoMessenger = ({
 
     // Reflect backend status into UI state (ensures announcements render correctly)
     useEffect(() => {
-        if (playerStatus?.status === 'judging-ended' && currentState !== 'judging-ended') {
-            setCurrentState('judging-ended');
+        if (playerStatus?.status !== currentState) {
+            setCurrentState(playerStatus?.status);
         }
     }, [playerStatus?.status, currentState]);
 
@@ -102,6 +105,8 @@ const AitoMessenger = ({
         }
     };
 
+    const notAnswerState = currentState !== 'answer' && playerStatus?.status !== 'answer';
+
     const disabledAnnouncements = {
         wait: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />,
         'judging-ended': <WaitingAnnouncement content={<strong>{t('playroom_no_more_answers_accepted')}</strong>} showSpinner={false} />
@@ -110,7 +115,7 @@ const AitoMessenger = ({
     return (
         <Messenger
             onMessageSubmit={answerQuestion}
-            messageFieldDisabled={currentState !== 'answer'}
+            messageFieldDisabled={notAnswerState}
             message={input}
             onMessageChange={onInputChange}
             msglength={2000}
