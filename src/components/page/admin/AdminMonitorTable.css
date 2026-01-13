@@ -45,3 +45,8 @@
     border-radius: 1px;     /* small rounding; set to 0 for sharp corners */
     background-color: lightgreen; /* Bootstrap success green */
 }
+
+.admin-monitor-table-judge-ready-column > * {
+  display: flex;
+  flex-direction: row;
+}
