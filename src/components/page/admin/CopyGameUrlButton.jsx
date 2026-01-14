@@ -34,12 +34,13 @@ const CopyGameUrlButton = ({ game }) => {
                 aria-label={t('game_url_copy_button_aria_label')}
                 title={t('game_url_copy_button_title')}
             >
-                <Icon
+                <Icon title={t('game_url_copy_button_aria_label')}
                     name="link"
                 />
             </Button>
             <QRButton
                 size={32}
+                aria-label={t('qr_code_button_title')}
                 onClick={() => setIsQRDialogOpen(true)}
             />
             <QRDialog

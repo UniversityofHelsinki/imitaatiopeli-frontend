@@ -40,7 +40,7 @@ const GameLobby = () => {
             off('game-started', handleGameStarted);
             off('message');
         };
-    }, [on, off, isConnected, game]);
+    }, [on, off, isConnected, game, navigate]);
 
     useEffect(() => {
         (async () => {
@@ -125,7 +125,7 @@ const GameLobby = () => {
         if (!hasJoined && notStarted && notEnded) {
             navigate(`/games/${code}/join`, { replace: true });
         }
-    }, [hasJoined, game, navigate]);
+    }, [hasJoined, game, gameStarted, navigate, code]);
 
     return (
         <PublicPage className="page-heading"

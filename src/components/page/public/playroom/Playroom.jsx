@@ -19,6 +19,7 @@ import useEndJudging, { useWaitEndJudging } from '../../../../hooks/useEndJudgin
 import {useSocket} from "../../../../contexts/SocketContext.jsx";
 import ConfirmModalDialog from "../../../../utilities/ConfirmModalDialog.jsx";
 import IconHelpFill from "../../../misc/ds/IconHelpFill.jsx";
+import useGetGameConfiguration from "../../../../hooks/useGetGameConfiguration.js";
 
 export const WaitingAnnouncement = ({ content, showSpinner = true }) => {
     return (
@@ -46,6 +47,7 @@ const Playroom = () => {
     let { answers, clearAnswers, changeAnswers } = useWaitAnswers();
     const {initialQuestion} = useGetInitialQuestion(code);
     const {initialAnswers} = useGetInitialAnswers(code);
+    const {gameConfiguration, error} = useGetGameConfiguration(code);
     const player = getPlayer();
     const judgingEnded = useWaitEndJudging();
     const { endJudging: stopJudging, questions: summaryQuestions } = useEndJudging();
@@ -59,6 +61,7 @@ const Playroom = () => {
     const [ratingSelectedIndex, setRatingSelectedIndex] = useState(null);
     const [ratingConfidence, setRatingConfidence] = useState(null);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState(0); // 0 = Judge, 1 = Aito
 
     const [judgeState, setJudgeState] = React.useState(() => {
         try {
@@ -140,6 +143,11 @@ const Playroom = () => {
         }
     }, [answers, initialAnswers]);
 
+    useEffect(() => {
+        if (!gameConfiguration) {
+            gameConfiguration;
+        }
+    }, [gameConfiguration]);
 
     const onQuestionAnswered = () => {
         clearQuestion();
@@ -182,7 +190,7 @@ const Playroom = () => {
         {
             heading: t('playroom_heading_aito'),
             notification: question ? t('playroom_notification_new_messages') : null,
-            children: <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered} judgingEnded={judgingEnded} judgeState={judgeState} gameId={gameId} input={messageFields.aito} onInputChange={v => setMessageFields({ ...messageFields, aito: v })} />,
+            children: <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered} judgingEnded={judgingEnded} judgeState={judgeState} gameId={gameId} input={messageFields.aito} onInputChange={v => setMessageFields({ ...messageFields, aito: v })} isActive={activeTab === 1} />,
         }
     ];
 
@@ -192,11 +200,11 @@ const Playroom = () => {
             />
         }>
             <div className="playroom">
-                <Tabs tabs={tabs} />
+                <Tabs tabs={tabs} activeIndex={activeTab} onChange={setActiveTab} />
             </div>
             <ConfirmModalDialog
                 open={isPopupOpen}
-                message={t('playroom_page_information')}
+                message={gameConfiguration?.instructions_for_players}
                 cancelLabel={t('close')}
                 onCancel={() => setIsPopupOpen(false)}
             />

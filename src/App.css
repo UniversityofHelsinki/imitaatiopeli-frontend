@@ -126,3 +126,14 @@
 .hidden {
   display: none !important;
 }
+
+.app-instruction {
+    margin-left: var(--ds-spacing-layout-base);
+    margin-right: var(--ds-spacing-layout-base);
+    margin-top: 1rem;
+    display: flex;
+    font-size: 15px;
+    line-height: 1.5;
+    word-break: keep-all;
+    margin-bottom: var(--ds-spacing-base);
+}

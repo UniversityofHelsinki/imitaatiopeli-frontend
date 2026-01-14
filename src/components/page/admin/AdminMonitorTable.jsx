@@ -21,9 +21,15 @@ const AdminMonitorTable = ({gamePlayers = [], onSortCriteria}) => {
 
     const finalGuess = (player) => {
         if (player.final_guess) {
-            return <Icon name="ds-check-small" colour='ds-palette-green-50' aria-hidden="true" />;
+            return <>
+                    <Icon name="ds-check-small" colour='ds-palette-green-50' title={t('admin_monitor_table_final_guess_screen_reader_label_ready')} />
+                    <span className="screenreader-only">{t('admin_monitor_table_final_guess_screen_reader_label_ready')}</span>
+                   </>;
         } else {
-            return <Icon name="close" colour='ds-palette-red-50' aria-hidden="true" />;
+            return <>
+                    <Icon name="close" colour='ds-palette-red-50' title={t('admin_monitor_table_final_guess_screen_reader_label_not_ready')} />
+                    <span className="screenreader-only">{t('admin_monitor_table_final_guess_screen_reader_label_not_ready')}</span>
+                   </>;
         }
     }
 
@@ -73,7 +79,7 @@ const AdminMonitorTable = ({gamePlayers = [], onSortCriteria}) => {
                         <tr key={`${player.judge_nickname}-${i}`}>
                             <td>{sortDirection === ASCENDING ? (i + 1) : (gamePlayers.length - i)}</td>
                             <td>{player.judge_nickname}</td>
-                            <td>{finalGuess(player)}</td>
+                            <td className="admin-monitor-table-judge-ready-column">{finalGuess(player)}</td>
                             <td>{player.judge_question_count}</td>
                             <td>{player.player_nickname}</td>
                             <td>{player.player_answer_count}</td>

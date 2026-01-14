@@ -1,7 +1,28 @@
 .playroom {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    min-width: 100%;
+}
+
+.playroom-waiting-announcement {
+    display: flex;
+    padding: 1rem 1.25rem;
+    font-weight: 500;
+    max-width: 95%;
+    align-items: center;
+    word-wrap: break-word;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    margin: 0.5rem 0;
+    position: relative;
+    justify-content: center; /* center spinner and text along main axis */
+    text-align: center;      /* center text within the container */
+    gap: 0.5rem;             /* spacing between spinner and text */
+}
+
+.playroom-waiting-announcement::before {
+    margin-right: 0.5rem;
+    display: inline-block;
+    vertical-align: middle;
 }

@@ -14,26 +14,45 @@ export const useAskQuestion = (gameId) => {
                 return;
             }
 
+            let settled = false;
+            const cleanup = (successHandler, errorHandler, timerId) => {
+                try {
+                    off('question-sent-success', successHandler);
+                    off('question-sent-error', errorHandler);
+                } finally {
+                    //if (timerId) clearTimeout(timerId);
+                }
+            };
+
             const handleSuccess = (data) => {
-                off('question-sent-success', handleSuccess);
-                off('question-sent-error', handleError);
+                if (settled) return;
+                settled = true;
+                cleanup(handleSuccess, handleError);
                 resolve(data);
             };
 
             const handleError = (error) => {
-                off('question-sent-success', handleSuccess);
-                off('question-sent-error', handleError);
+                if (settled) return;
+                settled = true;
+                cleanup(handleSuccess, handleError);
                 reject(error);
             };
 
             on('question-sent-success', handleSuccess);
             on('question-sent-error', handleError);
 
-            emit('send-question', {
-                judgeId: judge.player_id,
-                gameId: parseInt(gameId, 10),
-                questionText: content
-            });
+            try {
+                emit('send-question', {
+                    judgeId: judge.player_id,
+                    gameId: parseInt(gameId, 10),
+                    questionText: content
+                });
+            } catch (e) {
+                if (settled) return;
+                settled = true;
+                cleanup(handleSuccess, handleError);
+                reject(e);
+            }
         });
     }, [emit, on, off, gameId]);
 

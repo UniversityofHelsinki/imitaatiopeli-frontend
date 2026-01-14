@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Link from '../misc/ds/Link';
 import HyLogo from '../misc/HyLogo';
 import './Footer.css';
+import Feedback from "./Feedback.js";
 
 const FooterLogo = () => {
   return <div className="footer-logo">
@@ -27,6 +28,9 @@ const ContactInformation = () => {
     <p>
       {t('footer_contact_information_phone_switchboard')}
     </p>
+    <p className="footer-contact-information-maintenance">
+      {t('footer_maintenance_window')}
+    </p>
   </div>
 };
 
@@ -39,8 +43,8 @@ const ExternalLinks = () => {
 
   return <div className="footer-external-links">
     <ul>
-      <li><ExternalLink label={t('footer_external_link_contact_info_label')} href={t('footer_external_link_contact_info_link')} /></li>
-      <li><ExternalLink label={t('footer_external_link_terms_of_service_label')} href={t('footer_external_link_terms_of_service_link')} /></li>
+        <li><Feedback to="mailto:imitationgame@helsinki.fi" label={t('footer_external_link_contact_info_label')}/></li>
+        <li><ExternalLink label={t('footer_external_link_terms_of_service_label')} href={t('footer_external_link_terms_of_service_link')} /></li>
       <li><ExternalLink label={t('footer_external_link_accessibility_statement_label')} href={t('footer_external_link_accessibility_statement_link')} /></li>
     </ul>
   </div>

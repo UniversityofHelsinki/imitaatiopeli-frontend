@@ -10,10 +10,12 @@ import { useNavigate } from "react-router-dom";
 import localStorage from "../../../../../utilities/localStorage.js";
 import { useNotification } from "../../../../notification/NotificationContext.jsx";
 import useFinalGuessResult from "../../../../../hooks/useFinalGuessResult.js";
+import usePlayerStatus from "../../../../../hooks/usePlayerStatus.js";
 
 const AitoMessenger = ({
-                           game, question, onQuestionAnswered, judgingEnded, judgeState, gameId, input, onInputChange
-                       }) => {
+                           game, question, onQuestionAnswered, judgingEnded, judgeState, gameId, input, onInputChange, isActive }) =>
+ {
+    const { playerStatus, error, fetchNow } = usePlayerStatus();
     const { t } = useTranslation();
     const [currentState, setCurrentState] = useState('wait');
     const [askedQuestion, setAskedQuestion] = useState(null);
@@ -26,7 +28,14 @@ const AitoMessenger = ({
     const { fetchFinalGuessResult } = useFinalGuessResult(gameId, playerId);
     const hasFetchedFinalResultRef = React.useRef(false);
 
-    // Handle final guess result when judging ends
+     // Fetch when the Aito tab becomes active
+     useEffect(() => {
+         if (isActive) {
+             fetchNow();
+         }
+     }, [isActive]);
+
+     // Handle final guess result when judging ends
     useEffect(() => {
         const handleFetch = async () => {
             if (judgeState === 'end' && judgingEnded && !hasFetchedFinalResultRef.current) {
@@ -46,61 +55,87 @@ const AitoMessenger = ({
         handleFetch();
     }, [judgingEnded, judgeState, fetchFinalGuessResult, navigate]);
 
+    const isJudgingEnded = judgingEnded || playerStatus?.status === 'judging-ended';
+    const notJudgingEnded = !judgingEnded && playerStatus?.status !== 'judging-ended';
+
     // Handle state changes based on judging status
     useEffect(() => {
-        if (judgingEnded) {
+        fetchNow();
+        if (isJudgingEnded) {
             setCurrentState('judging-ended');
             setAskedQuestion(null);
         } else {
             setCurrentState('wait');
         }
-    }, [judgingEnded]);
+    }, [playerStatus?.status, judgingEnded]);
 
     // Handle incoming questions
     useEffect(() => {
-        if (question && !judgingEnded && (!askedQuestion || question.id !== askedQuestion.id)) {
+        if (question && notJudgingEnded && (!askedQuestion || question.questionId !== askedQuestion.questionId)) {
             setAskedQuestion(question);
             setAnsweredQuestionId(null);
             setCurrentState('answer');
+            fetchNow(); // fetch status related to the new question
         }
-    }, [question, judgingEnded]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [question?.questionId, judgingEnded]);
+
+    // Reflect backend status into UI state (ensures announcements render correctly)
+    useEffect(() => {
+        if (playerStatus?.status !== currentState) {
+            setCurrentState(playerStatus?.status);
+        }
+    }, [playerStatus?.status, currentState]);
 
     const answerQuestion = async (answerContent) => {
         onInputChange('');
         setAskedQuestion(null);
-        setAnsweredQuestionId(question.id);
-        setCurrentState('wait');
+        setAnsweredQuestionId(question.questionId);
         try {
             await sendAnswer(answerContent, question);
             setNotification(t('answer_sent_success_notification'), 'success', true);
+            setCurrentState('wait');
             onQuestionAnswered();
+            fetchNow(); // after sending an answer, pull latest status
         } catch (error) {
-            setNotification(error.cause?.status, 'error', true);
+            setCurrentState('answer');
+            setNotification(t(error?.error ?? 'judge_messenger_send_answer_error_notification'), 'error', true);
             console.error('Error sending answer:', error);
             setAnsweredQuestionId(null);
         }
     };
 
+    const notAnswerState = currentState !== 'answer' && playerStatus?.status !== 'answer';
+
     const disabledAnnouncements = {
         wait: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />,
-        'judging-ended': <WaitingAnnouncement content={t('playroom_no_more_answers_accepted')} showSpinner={false} />
+        'judging-ended': <WaitingAnnouncement content={<strong>{t('playroom_no_more_answers_accepted')}</strong>} showSpinner={false} />
     };
 
     return (
         <Messenger
             onMessageSubmit={answerQuestion}
-            messageFieldDisabled={currentState !== 'answer'}
-            announcement={disabledAnnouncements[currentState]}
+            messageFieldDisabled={notAnswerState}
             message={input}
             onMessageChange={onInputChange}
             msglength={2000}
+            storageKey="messageArea.aitoMessenger.showInstructions"
         >
             <ul className="message-area-messages">
                 <li className="message-area-instructions message-area-item">
                     <InstructionMessage content={t('playroom_instructions_aito')} />
                 </li>
+                {(currentState !== 'answer' || judgeState === 'end' || playerStatus?.status === 'judging-ended') && (
+                    <li className="message-area-item">
+                        {disabledAnnouncements[
+                            currentState === 'answer' && playerStatus?.status === 'judging-ended'
+                                ? 'judging-ended'
+                                : currentState
+                            ]}
+                    </li>
+                )}
                 {askedQuestion && (
-                    <li key={`question-${askedQuestion.id}`} className={`message-area-item message-area-item-${askedQuestion.type}`}>
+                    <li key={`question-${askedQuestion.questionId}`} className={`message-area-item message-area-item-${askedQuestion.type}`}>
                         <Message>{askedQuestion.content}</Message>
                     </li>
                 )}

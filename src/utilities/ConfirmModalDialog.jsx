@@ -1,10 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './ConfirmModalDialog.css';
 import Button from '../components/misc/ds/Button.jsx';
 
 const ConfirmModalDialog = ({ open, message, confirmLabel, cancelLabel, onConfirm, onCancel }) => {
+    const firstBtnRef = useRef(null);
+    const [firstBtn, setFirstBtn] = useState(null);
+    
+    useEffect(() => {
+      if (open && firstBtnRef.current) {
+        setFirstBtn(firstBtnRef.current);
+      }
+    }, [open]);
+
+    useEffect(() => {
+        const handler = (e) => {
+            if (e.key === 'Escape') onCancel?.();
+        };
+        document.addEventListener('keydown', handler);
+        return () => document.removeEventListener('keydown', handler);
+    }, [onCancel]);
+
     if (!open) return null;
+
+    const focusFirst = () => {
+      firstBtn?.buttonEl?.focus({ focusVisible: true });
+    };
+
+    if (firstBtn?.buttonEl) {
+      focusFirst();
+    }
 
     const modal = (
         <div
@@ -20,24 +45,16 @@ const ConfirmModalDialog = ({ open, message, confirmLabel, cancelLabel, onConfir
             >
                 <p>{message}</p>
                 <div className="confirm-dialog-actions">
-                    <Button type="button" size="small" variant="secondary" onClick={onCancel}>
+                    <Button ref={firstBtnRef} type="button" size="small" variant="secondary" onClick={onCancel}>
                         {cancelLabel}
                     </Button>
-                    { confirmLabel && <Button type="button" size="small" variant="primary" onClick={onConfirm}>
+                    { confirmLabel && <Button type="button" size="small" variant="primary" onClick={onConfirm} onBlur={e => e.preventDefault()} onKeyDown={e => { if (e.key === 'Tab') { e.preventDefault(); focusFirst(); }}}>
                         {confirmLabel}
                     </Button> }
                 </div>
             </div>
         </div>
     );
-
-    useEffect(() => {
-        const handler = (e) => {
-            if (e.key === 'Escape') onCancel?.();
-        };
-        document.addEventListener('keydown', handler);
-        return () => document.removeEventListener('keydown', handler);
-    }, [onCancel]);
 
     // Render as a popup via portal
     return typeof document !== 'undefined'

@@ -83,3 +83,7 @@
 .game {
     list-style: none;
 }
+
+.game-padding {
+    padding-left: 0.25rem;
+}
