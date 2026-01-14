@@ -126,8 +126,6 @@ const AdminMonitor = () => {
         }
     }
 
-    console.log("ALL:" + allHaveFinalGuess);
-
     const renderEndGameConfirm = () => (
         <div className="" id="end-game-dialog-container" aria-live="assertive">
             <ConfirmModalDialog

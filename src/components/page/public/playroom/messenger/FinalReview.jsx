@@ -8,7 +8,7 @@ import FinalReviewForm from './FinalReviewForm';
 import { InstructionMessage } from './Message';
 import useJudgeFinalGuess from '../../../../../hooks/userJudgeFinalGuess.js';
 
-const FinalReview = ({ messages, gameId, judgeId, setCurrentState }) => {
+const FinalReview = ({ messages, gameId, judgeId, setCurrentState, judgeStatusReload }) => {
     const { t } = useTranslation();
     const save = useJudgeFinalGuess();
 
@@ -53,7 +53,7 @@ const FinalReview = ({ messages, gameId, judgeId, setCurrentState }) => {
 
         try {
             const result = await save(dataToSend);
-            setCurrentState('end');
+            judgeStatusReload();
             // Handle success (e.g., show success message, navigate to next screen)
         } catch (err) {
             console.error('Error saving final guess:', err);
