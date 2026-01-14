@@ -277,5 +277,6 @@
   "judge_messenger_already_answered": "Olet jo vastannut tähän kysymykseen, lataa sivu uudelleen.",
   "judge_messenger_missing_player": "Yhteys pelaajaan kadonnut, lähetä kysymys hetken kuluttua uudelleen.",
   "judge_messenger_missing_judge": "Yhteys tuomariin kadonnut, lähetä vastaus hetken kuluttua uudelleen.",
-  "no_sockets_found_for_judge": "Kysymystä ei voitu lähettää. Yritä hetken kuluttua uudelleen."
+  "no_sockets_found_for_judge": "Kysymystä ei voitu lähettää. Yritä hetken kuluttua uudelleen.",
+  "opens_in_email_client": "Avautuu sähköpostiohjelmaan"
 }

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Link from '../misc/ds/Link';
 import HyLogo from '../misc/HyLogo';
 import './Footer.css';
+import Feedback from "./Feedback.js";
 
 const FooterLogo = () => {
   return <div className="footer-logo">
@@ -42,10 +43,7 @@ const ExternalLinks = () => {
 
   return <div className="footer-external-links">
     <ul>
-        <li>
-            {t('footer_external_link_contact_info_label')}{' '}
-            <a href="mailto:imitationgame@helsinki.fi">imitationgame@helsinki.fi</a>
-        </li>
+        <li><Feedback to="mailto:imitationgame@helsinki.fi" label={t('footer_external_link_contact_info_label')}/></li>
         <li><ExternalLink label={t('footer_external_link_terms_of_service_label')} href={t('footer_external_link_terms_of_service_link')} /></li>
       <li><ExternalLink label={t('footer_external_link_accessibility_statement_label')} href={t('footer_external_link_accessibility_statement_link')} /></li>
     </ul>
