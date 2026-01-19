@@ -1,14 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useSocket } from '../contexts/SocketContext';
 import { get } from './useHttp';
+import localStorage from '../utilities/localStorage';
 
 export const useWaitEndJudging = () => {
     const { on, off, isConnected } = useSocket();
-    const [judgingEnded, setJudgingEnded] = useState(false);
+    const [judgingEnded, setJudgingEnded] = useState(() => {
+        try {
+            return Boolean(localStorage.get('judging-ended')) || false;
+        } catch {
+            return false;
+        }
+    });
 
     useEffect(() => {
         const handleNoMoreAnswers = () => {
             setJudgingEnded(true);
+            try {
+                localStorage.set('judging-ended', true);
+            } catch {
+                // ignore storage errors
+            }
         };
 
         // De-dup any previous handlers and (re)attach on connect/reconnect
@@ -17,6 +29,43 @@ export const useWaitEndJudging = () => {
 
         return () => {
             off('no-more-answers', handleNoMoreAnswers);
+        };
+    }, [on, off, isConnected]);
+
+    // Bootstrap from backend on mount and reconnect so reloads work for any judge
+    useEffect(() => {
+        let cancelled = false;
+
+        const bootstrapFromBackend = async () => {
+            try {
+                const resp = await get({ path: '/public/judge/status' });
+                const status = resp?.status;
+                const ended = status === 'end' || status === 'final-review' || status === 'judging-ended';
+                if (!cancelled && ended) {
+                    setJudgingEnded(true);
+                    try {
+                        localStorage.set('judging-ended', true);
+                    } catch {
+                        // ignore storage errors
+                    }
+                }
+            } catch (e) {
+                // best-effort; keep current state
+                console.warn('Failed to bootstrap judge status after reload/reconnect', e);
+            }
+        };
+
+        // Run on mount
+        bootstrapFromBackend();
+
+        // Run again when socket reconnects
+        const onConnect = () => bootstrapFromBackend();
+        off('connect', onConnect);
+        on('connect', onConnect);
+
+        return () => {
+            cancelled = true;
+            off('connect', onConnect);
         };
     }, [on, off, isConnected]);
 

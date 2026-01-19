@@ -1,0 +1,21 @@
+.feedback-link {
+    padding-right: 8px;
+    display: inline-flex;
+    align-items: center;
+    color: white;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.feedback-link:visited,
+.feedback-link:hover,
+.feedback-link:active,
+.feedback-link:focus {
+    color: white;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.feedback-icon {
+    margin-left: 1px; /* icon is after the label */
+}

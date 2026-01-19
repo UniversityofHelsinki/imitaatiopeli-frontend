@@ -61,6 +61,7 @@ const Playroom = () => {
     const [ratingSelectedIndex, setRatingSelectedIndex] = useState(null);
     const [ratingConfidence, setRatingConfidence] = useState(null);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState(0); // 0 = Judge, 1 = Aito
 
     const [judgeState, setJudgeState] = React.useState(() => {
         try {
@@ -189,7 +190,7 @@ const Playroom = () => {
         {
             heading: t('playroom_heading_aito'),
             notification: question ? t('playroom_notification_new_messages') : null,
-            children: <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered} judgingEnded={judgingEnded} judgeState={judgeState} gameId={gameId} input={messageFields.aito} onInputChange={v => setMessageFields({ ...messageFields, aito: v })} />,
+            children: <AitoMessenger game={code} question={question} onQuestionAnswered={onQuestionAnswered} judgingEnded={judgingEnded} judgeState={judgeState} gameId={gameId} input={messageFields.aito} onInputChange={v => setMessageFields({ ...messageFields, aito: v })} isActive={activeTab === 1} />,
         }
     ];
 
@@ -199,7 +200,7 @@ const Playroom = () => {
             />
         }>
             <div className="playroom">
-                <Tabs tabs={tabs} />
+                <Tabs tabs={tabs} activeIndex={activeTab} onChange={setActiveTab} />
             </div>
             <ConfirmModalDialog
                 open={isPopupOpen}
