@@ -16,6 +16,9 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Copy the dist files into the working directory
 COPY dist /usr/share/nginx/html
 
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+
 # Create a non-root user and group, configure permissions for OpenShift
 RUN addgroup -S nginxgroup && \
     adduser -S nginxuser -G nginxgroup && \
@@ -24,14 +27,17 @@ RUN addgroup -S nginxgroup && \
     chmod -R 775 /app/logs /var/cache/nginx && \
     # Static files should be readable by all
     chmod -R 755 /usr/share/nginx/html && \
-    chmod 644 /etc/nginx/nginx.conf
-
+    chmod 644 /etc/nginx/nginx.conf && \
+    chmod +x /entrypoint.sh
 
 # Switch to the non-root user
 USER nginxuser
 
 # Expose port 8080
 EXPOSE 8080
+
+# Use entrypoint script to substitute env variables
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Define the command to run when the container starts
 CMD ["nginx", "-g", "daemon off;"]
