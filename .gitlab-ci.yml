@@ -178,6 +178,7 @@ deploy_dev:
       fi
     # list environment variables here
     - oc set env deploy/imitaatiopeli-frontend-dev TZ="Europe/Helsinki"
+    - oc set env deploy/imitaatiopeli-frontend-dev ALLOWED_IP=$ALLOWED_IP
     # start build process in OpenShift
     - oc start-build imitaatiopeli-frontend-dev --from-dir=. --follow
     # patch openshift buildConfig file
