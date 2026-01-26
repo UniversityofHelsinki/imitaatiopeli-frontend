@@ -3,8 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <title>Tillgänglighetsutlåtande - Imitationsspel</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .row {
+            margin: 25px 0;
+        }
+
+        .row .deficiency-section {
+            margin: 15px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 10px 0 5px;
+        }
+
+        .statement__section {
+            margin-bottom: 4em;
+        }
+
+        .statement__inaccessible {
+            margin-bottom: 2em;
+        }
+
+        .flaws {
+            padding-left: 0;
+        }
+
+        .flaw {
+            margin-bottom: 1em;
+            list-style: none;
+            background-color: #f0f0f0;
+            padding: 0.5em;
+        }
+
+        .flaw p {
+            margin-bottom: 1em;
+        }
+
+        .flaw ul {
+            margin-bottom: 1em;
+        }
+
+        .flaw__wcag li {
+            margin: 0;
+        }
+
+        .screen-reader-text {
+            position: absolute;
+            width: 1px;
+            clip: rect(0 0 0 0);
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    </style>
 </head>
 <body>
-    <h1>Tillgänglighetsutlåtandet publiceras inom den närmaste framtiden.</h1>
+<article>
+    <header>
+        <h1>Tillgänglighetsutlåtande</h1>
+    </header>
+    <section class="statement__section">
+        <p>
+            Detta tillgänglighetsutlåtande gäller Helsingfors universitets
+            webbplats Imitationsspel (https://competence-imitation-game.it.helsinki.fi/)
+            och har uppdaterats 23.1.2026. Tjänsten omfattas av lagen om
+            tillhandahållande av digitala tjänster och dess krav på att offentliga
+            webbplatser måste vara tillgängliga.
+        </p>
+        <p>Vi har själva granskat hur tillgänglig tjänsten är.</p>
+    </section>
+
+    <section class="statement__section">
+        <h2>Tillgänglighetsstatus för den digitala tjänsten</h2>
+        <p>Uppfyller delvis tillgänglighetskraven.</p>
+    </section>
+
+    <h2>Icke-tillgängligt innehåll</h2>
+
+    <section class="statement__section">
+        <section class="statement__inaccessible">
+            <h3>Webbplatsen uppfyller ännu inte alla krav</h3>
+
+            <ul class="flaws">
+                <li class="flaw">
+                    <h4 class="flaw__title">
+                        Spelsynen är inte helt tillgänglig för skärmläsare.
+                    </h4>
+                    <h5 class="flaw__subtitle">
+                        Innehåll som inte är tillgängligt och dess brister
+                    </h5>
+                    <p>
+                        I spelsynen är vissa funktioner inte helt tillgängliga med skärmläsare.
+                        Till exempel är meddelanden om fel och nya meddelanden som visas under
+                        spelet inte alltid läsbara med skärmläsare. Dessutom kan det vara
+                        utmanande för personer utan syn att uppfatta spelets visuella element,
+                        såsom att byta flikar och följa spelets framsteg.
+                    </p>
+                    <h5>Tillgänglighetskrav som inte uppfylls</h5>
+                    <ul class="flaw__wcag">
+                        <li>1.1.1 Innehåll som inte är text</li>
+                        <li>1.3.1 Information och relationer</li>
+                        <li>1.3.2 Meningsfull ordning</li>
+                        <li>1.3.3 Sensoriska kännetecken</li>
+                        <li>1.3.5 Märk upp vanliga formulärfält i koden (inofficiell översättning)</li>
+                        <li>1.4.1 Använding av färger</li>
+                        <li>3.3.1 Identifiering av fel</li>
+                        <li>3.3.2 Ledtexter/etiketter eller instruktioner</li>
+                        <li>4.1.3 Se till att hjälpmedel kan presentera meddelanden som inte är i fokus (inofficiell översättning)</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </section>
+
+    <section class="statement__section">
+        <h2>
+            Upptäckte du en tillgänglighetsbrist i vår digitala tjänst? Beskriv
+            den för oss och vi ska göra vårt bästa för att åtgärda den
+        </h2>
+
+        <h3>Per e-post</h3>
+        <p>
+            <a href="mailto:imitationgame@helsinki.fi">
+                imitationgame@helsinki.fi
+                <span class="screen-reader-text">Öppnas i e-postprogram</span>
+            </a>
+        </p>
+    </section>
+
+    <section class="statement__section">
+        <h2>Tillsynsmyndigheten</h2>
+        <p>
+            Kontakta oss om du vill påtala brister i tillgängligheten på vår
+            webbplats. Det kan ta 14 dagar innan du får ett svar. Om du inte är
+            nöjd med det svar du har fått eller inte får något svar alls inom två
+            veckor kan du lämna in en anmälan om bristande tillgänglighet till
+            Transport- och kommunikationsverket Traficom.
+            <a href="https://saavutettavuusvaatimukset.fi/sv/dina-rattigheter-0" rel="noopener" target="_blank">
+                På Traficoms webbplats<span class="screen-reader-text">Öppnas i ett nytt fönster</span></a>
+            finns det beskrivet hur du kan lämna in en anmälan och hur ärendet
+            behandlas.
+        </p>
+
+        <h2>Tillsynsmyndighetens kontaktuppgifter</h2>
+        <p>
+            Transport- och kommunikationsverket Traficom<br/>
+            Enheten för tillsyn över digital tillgänglighet<br/>
+            <a href="https://www.tillgänglighetskrav.fi" rel="noopener" target="_blank">
+                www.tillgänglighetskrav.fi
+                <span class="screen-reader-text">Öppnas i ett nytt fönster</span>
+            </a><br/>
+            <a href="mailto:tillganglighet@traficom.fi">
+                tillganglighet@traficom.fi
+                <span class="screen-reader-text">Öppnas i e-postprogram</span>
+            </a><br/>
+            telefonnummer växeln
+            <a href="tel:+358295345000">
+                029 534 5000
+                <span class="screen-reader-text">Öppna länk för att ringa</span>
+            </a>
+        </p>
+    </section>
 </body>
 </html>
