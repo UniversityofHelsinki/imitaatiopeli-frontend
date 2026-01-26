@@ -1,41 +1,29 @@
 import { useMemo, useState, useEffect } from 'react';
-import { useGET, invalidate } from './useHttp.js';
+import { useGET } from './useHttp.js';
 
 const useGetGameConfiguration = (gameId = null) => {
     const [gameConfiguration, setGameConfiguration] = useState(null);
-    const tag = `game-configuration-${gameId}`;
+
     const requestOptions = useMemo(() => {
-        if (!gameId) return { path: null, tag: null };
+        if (!gameId) return { path: null };
         return {
             path: `/api/games/${gameId}/gameConfiguration`,
-            tag: tag,
+            tag: `game-configuration-${gameId}`,
         };
     }, [gameId]);
 
     const [response, error, reload] = useGET(requestOptions);
 
-    // Keep local state in sync with the latest response
+    // ✅ update state once when response arrives
     useEffect(() => {
-        setGameConfiguration(response ?? null);
-    }, [response]);
-
-    // Reset local state when gameId changes
-    useEffect(() => {
-        setGameConfiguration(null);
-    }, [gameId]);
-
-    // Helper to invalidate cache for this tag and then reload
-    const invalidateAndReload = () => {
-        if (requestOptions.tag) {
-            invalidate([tag]);
+        if (gameConfiguration == null) {
+            setGameConfiguration(response);
         }
-        reload?.();
-    };
+    }, [response]);
 
     return {
         gameConfiguration,
-        error,
-        invalidateAndReload,    // convenience: invalidate then reload
+        error
     };
 };
 
