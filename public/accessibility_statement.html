@@ -3,8 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <title>Accessibility Statement – Imitation Game</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .row {
+            margin: 25px 0;
+        }
+
+        .row .deficiency-section {
+            margin: 15px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 10px 0 5px;
+        }
+
+        .statement__section {
+            margin-bottom: 4em;
+        }
+
+        .statement__inaccessible {
+            margin-bottom: 2em;
+        }
+
+        .flaws {
+            padding-left: 0;
+        }
+
+        .flaw {
+            margin-bottom: 1em;
+            list-style: none;
+            background-color: #f0f0f0;
+            padding: 0.5em;
+        }
+
+        .flaw p {
+            margin-bottom: 1em;
+        }
+
+        .flaw ul {
+            margin-bottom: 1em;
+        }
+
+        .flaw__wcag li {
+            margin: 0;
+        }
+
+        .screen-reader-text {
+            position: absolute;
+            width: 1px;
+            clip: rect(0 0 0 0);
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    </style>
 </head>
 <body>
-    <h1>Accessibility Statement will be published in the near future.</h1>
+<article>
+    <header>
+        <h1>Accessibility statement</h1>
+    </header>
+    <section class="statement__section">
+        <p>
+            This accessibility statement applies to the Imitation Game
+            (https://competence-imitation-game.it.helsinki.fi/) website.
+        </p>
+        <p>
+            This website is governed by the Act on the Provision of Digital
+            Services to provide an accessible website according to WCAG 2.1 A and
+            AA standards.
+        </p>
+        <p>The statement has been updated on 23.1.2026.</p>
+        <p>
+            The accessibility of this website has been audited by the University
+            of Helsinki.
+        </p>
+    </section>
+
+    <section class="statement__section">
+        <h2>Accessibility status of the digital service</h2>
+        <p>Partially meets the WCAG 2.1 A and AA accessibility requirements.</p>
+    </section>
+    <h2>Non-accessible digital service content</h2>
+
+    <section class="statement__section">
+        <section class="statement__inaccessible">
+            <h3>The website is not yet fully compliant with the requirements</h3>
+
+            <ul class="flaws">
+                <li class="flaw">
+                    <h4 class="flaw__title">
+                        The game view is not fully accessible to screen readers.
+                    </h4>
+                    <p>
+                        In the game view, some functions are not fully accessible with a screen
+                        reader. For example, notifications about error situations and new messages
+                        presented during the game are not always readable with a screen reader.
+                        Additionally, it can be challenging for individuals without vision to
+                        perceive the visual elements of the game, such as switching tabs and
+                        tracking the game's progress.
+                    </p>
+                    <h5>WCAG accessibility criteria not met</h5>
+                    <ul class="flaw__wcag">
+                        <li>1.1.1 Non-text content</li>
+                        <li>1.3.1 Info and Relationships</li>
+                        <li>1.3.2 Meaningfull Sequence</li>
+                        <li>1.3.3 Sensory Characteristics</li>
+                        <li>1.3.5 Identify Input Purpose</li>
+                        <li>1.4.1 Use of Color</li>
+                        <li>3.3.1 Error Identification</li>
+                        <li>3.3.2 Labels or Instructions</li>
+                        <li>4.1.3 Status Messages</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </section>
+
+    <section class="statement__section">
+        <h2>
+            If you have noticed any accessibility flaws in our service, please
+            contact us.
+        </h2>
+
+        <h3>E-mail contact address:</h3>
+        <p>
+            <a href="mailto:imitationgame@helsinki.fi">
+                imitationgame@helsinki.fi
+                <span class="screen-reader-text">Opens in e-mail client</span>
+            </a>
+        </p>
+    </section>
+
+    <section class="statement__section">
+        <h2>Supervisory authority</h2>
+        <p>
+            If you notice any accessibility issues on the website, please provide
+            feedback to us (the site administrator) first. We will reply within 14
+            days. If you are not satisfied with our response or do not receive any
+            response within two weeks, you can file a report with the Finnish Transport
+            and Communications Agency Traficom.
+            <a href="https://saavutettavuusvaatimukset.fi/en/user-rights" rel="noopener" target="_blank">
+                The page of the Finnish Transport and Communications Agency Traficom<span class="screen-reader-text">Opens in new window</span></a>
+            contains a detailed description of how the report can be filed and how
+            the matter will be processed.
+        </p>
+
+        <h2>Contact details of the supervisory authority</h2>
+        <p>
+            Finnish Transport and Communications Agency Traficom<br/>
+            Digital Accessibility Supervision Unit<br/>
+            <a href="https://www.webaccessibility.fi/" rel="noopener" target="_blank">
+                www.webaccessibility.fi
+                <span class="screen-reader-text">Opens in new window</span>
+            </a><br/>
+            <a href="mailto:saavutettavuus@traficom.fi">
+                saavutettavuus@traficom.fi
+                <span class="screen-reader-text">Opens in e-mail client</span>
+            </a><br/>
+            telephone (switchboard):
+            <a href="tel:+358295345000">
+                +358 29 534 5000
+                <span class="screen-reader-text">Open link to call</span>
+            </a>
+        </p>
+    </section>
+</article>
 </body>
 </html>
