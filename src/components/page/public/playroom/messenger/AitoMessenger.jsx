@@ -45,8 +45,9 @@ const AitoMessenger = ({
                 hasFetchedFinalResultRef.current = true;
                 try {
                     const result = await fetchFinalGuessResult({ waitForResult: true, timeoutMs: 7000, intervalMs: 400 });
-                    const finalResult = result?.show_result === true ? result?.final_was_correct : null;
-                    const finalGuessText = finalResult === true ? 'game_final_guess_correct' : finalResult === false ? 'game_final_guess_incorrect' : null;
+                    const userGuessedCorrectly = Boolean(result?.final_was_correct);
+                    const finalGuessText = userGuessedCorrectly && 'game_final_guess_correct' || 'game_final_guess_incorrect'; 
+                    console.log(`result`, result);
                     localStorage.clear();
                     navigate(`/games/${gameId}/gameend`, { state: { reason: 'game_end_reason_game_ended', gameresult: finalGuessText } });
                 } catch (err) {
@@ -98,8 +99,8 @@ const AitoMessenger = ({
         }
     };
 
-    const notAnswerState = currentState !== 'answer' && playerStatus?.status !== 'answer';
-    console.log(`currentState: ${currentState} playerStatus: ${playerStatus}`);
+    const notAnswerState = currentState !== 'answer' && playerStatus?.status !== 'answer' || (currentState == 'wait' && playerStatus?.status === 'answer') || (currentState === 'judging-ended' && playerStatus?.status === 'answer');
+    console.log(`currentState: ${currentState} playerStatus: ${playerStatus?.status}`);
 
     const disabledAnnouncements = {
         wait: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />,
