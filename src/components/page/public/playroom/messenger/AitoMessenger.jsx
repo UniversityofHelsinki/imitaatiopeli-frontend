@@ -98,8 +98,8 @@ const AitoMessenger = ({
         }
     };
 
-    const notAnswerState = currentState !== 'answer' && playerStatus?.status !== 'answer';
-    console.log(`currentState: ${currentState} playerStatus: ${playerStatus}`);
+    const notAnswerState = currentState !== 'answer' && playerStatus?.status !== 'answer' || (currentState == 'wait' && playerStatus?.status === 'answer') || (currentState === 'judging-ended' && playerStatus?.status === 'answer');
+    console.log(`currentState: ${currentState} playerStatus: ${playerStatus?.status}`);
 
     const disabledAnnouncements = {
         wait: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />,
