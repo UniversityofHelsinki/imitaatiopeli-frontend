@@ -213,11 +213,8 @@ const JudgeMessenger = ({ currentState, setCurrentState, game, answers, onRateSu
         (async () => {
             try {
                 const result = await fetchFinalGuessResultRef.current({waitForResult: true, timeoutMs: 7000, intervalMs: 400});
-                const finalResult = result?.show_result === true ? result?.final_was_correct : null;
-                const finalGuessText =
-                    finalResult === true ? 'game_final_guess_correct' :
-                        finalResult === false ? 'game_final_guess_incorrect' :
-                            null;
+                const userGuessedCorrectly = Boolean(result?.final_was_correct);
+                const finalGuessText = userGuessedCorrectly && 'game_final_guess_correct' || 'game_final_guess_incorrect'; 
                 if (!isMounted) return;
                 localStorage.clear();
                 navigateRef.current(`/games/${gameId}/gameend`, {
