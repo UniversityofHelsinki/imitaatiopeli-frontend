@@ -181,25 +181,33 @@ const RatingForm = ({
                 </div>
 
                 <div className="rating-form-buttons">
-                    <div>
-                      <p>{t('rating_form_submit_rating_instructions')}</p>
-                      <Button
-                          disabled={!justifications || !confidence || (selectedIndex === null)}
-                          type="submit"
-                          label={t('rating_form_submit_rating')}
-                      />
-                    </div>
-                    {answers[0]?.content?.questionCount >= 3 && (
-                        <div>
-                            <p>{t('rating_form_end_game_instructions')}</p>
+                    <div className="rating-form-instruction-grid">
+                        <p className="grid-col-1">{t('rating_form_submit_rating_instructions')}</p>
+                        {answers[0]?.content?.questionCount >= 3 && (
+                            <p className="rating-form-end-instructions grid-col-2">
+                                {t('rating_form_end_game_instructions')}
+                            </p>
+                        )}
+
+                        <div className="grid-col-1">
                             <Button
-                                disabled={!justifications || (selectedIndex === null)}
-                                onClick={() => setConfirmOpen(true)}
-                                label={t('rating_form_end_game')}
+                                disabled={!justifications || !confidence || (selectedIndex === null)}
+                                type="submit"
+                                label={t('rating_form_submit_rating')}
                             />
-                            {confirmOpen && renderEndGameConfirm()}
                         </div>
-                    )}
+
+                        {answers[0]?.content?.questionCount >= 3 && (
+                            <div className="grid-col-2">
+                                <Button
+                                    disabled={!justifications || (selectedIndex === null)}
+                                    onClick={() => setConfirmOpen(true)}
+                                    label={t('rating_form_end_game')}
+                                />
+                                {confirmOpen && renderEndGameConfirm()}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </form>
         </div>
