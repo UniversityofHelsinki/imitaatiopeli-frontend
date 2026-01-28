@@ -147,7 +147,7 @@ const Playroom = () => {
         if (!gameConfiguration) {
             gameConfiguration;
         }
-    }, [gameConfiguration]);
+    }, [gameConfiguration, gameConfiguration === null]);
 
     const onQuestionAnswered = () => {
         clearQuestion();

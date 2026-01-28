@@ -13,9 +13,10 @@ import useFinalGuessResult from "../../../../../hooks/useFinalGuessResult.js";
 import usePlayerStatus from "../../../../../hooks/usePlayerStatus.js";
 
 const AitoMessenger = ({
-                           game, question, onQuestionAnswered, judgingEnded, judgeState, gameId, input, onInputChange, isActive }) =>
+                           game, question, onQuestionAnswered, judgingEnded, judgeState, gameId, input, onInputChange, isActive 
+                        }) =>
  {
-    const { playerStatus, error, fetchNow } = usePlayerStatus();
+    const { playerStatus, fetchNow } = usePlayerStatus();
     const { t } = useTranslation();
     const [currentState, setCurrentState] = useState('wait');
     const [askedQuestion, setAskedQuestion] = useState(null);
@@ -27,6 +28,8 @@ const AitoMessenger = ({
     const playerId = localStorage.get('player')?.player_id;
     const { fetchFinalGuessResult } = useFinalGuessResult(gameId, playerId);
     const hasFetchedFinalResultRef = React.useRef(false);
+
+    console.log(`question: `, question);
 
      // Fetch when the Aito tab becomes active
      useEffect(() => {
@@ -56,18 +59,16 @@ const AitoMessenger = ({
     }, [judgingEnded, judgeState, fetchFinalGuessResult, navigate]);
 
     const isJudgingEnded = judgingEnded || playerStatus?.status === 'judging-ended';
-    const notJudgingEnded = !judgingEnded && playerStatus?.status !== 'judging-ended';
+    const notJudgingEnded = !isJudgingEnded;
 
-    // Handle state changes based on judging status
     useEffect(() => {
-        fetchNow();
         if (isJudgingEnded) {
             setCurrentState('judging-ended');
             setAskedQuestion(null);
         } else {
             setCurrentState('wait');
         }
-    }, [playerStatus?.status, judgingEnded]);
+    }, [judgingEnded]);
 
     // Handle incoming questions
     useEffect(() => {
@@ -75,22 +76,14 @@ const AitoMessenger = ({
             setAskedQuestion(question);
             setAnsweredQuestionId(null);
             setCurrentState('answer');
-            fetchNow(); // fetch status related to the new question
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [question?.questionId, judgingEnded]);
 
-    // Reflect backend status into UI state (ensures announcements render correctly)
-    useEffect(() => {
-        if (playerStatus?.status !== currentState) {
-            setCurrentState(playerStatus?.status);
-        }
-    }, [playerStatus?.status, currentState]);
-
     const answerQuestion = async (answerContent) => {
         onInputChange('');
         setAskedQuestion(null);
-        setAnsweredQuestionId(question.questionId);
+        setAnsweredQuestionId(question?.questionId);
         try {
             await sendAnswer(answerContent, question);
             setNotification(t('answer_sent_success_notification'), 'success', true);
@@ -106,6 +99,7 @@ const AitoMessenger = ({
     };
 
     const notAnswerState = currentState !== 'answer' && playerStatus?.status !== 'answer';
+    console.log(`currentState: ${currentState} playerStatus: ${playerStatus}`);
 
     const disabledAnnouncements = {
         wait: <WaitingAnnouncement content={t('playroom_waiting_for_questions')} />,
