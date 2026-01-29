@@ -5,7 +5,6 @@ stages:
   - test
   - dependency-track-sbom
   - dependency-track-submit
-  - sonarqube-check
   - build
   - deploy
 
@@ -130,26 +129,6 @@ submit-sbom:
     - "curl -X POST ${DTRACK_API_URL} -H 'Content-Type: multipart/form-data' -H 'X-Api-Key: '${DTRACK_API_KEY} -F 'projectName='${PROJECT_NAME} -F 'autoCreate=true' -F 'projectVersion='${PROJECT_VERSION} -F 'bom=@sbom.xml'"
 
 
-sonarqube-check:
-  stage: sonarqube-check
-  tags:
-    - ohtu-build-3
-  image:
-    name: sonarsource/sonar-scanner-cli:latest
-    entrypoint: [ "" ]
-  variables:
-    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
-    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
-  cache:
-    key: "${CI_JOB_NAME}"
-    paths:
-      - .sonar/cache
-  script:
-    - sonar-scanner
-  allow_failure: true
-  only:
-    - main
-
 deploy_dev:
   stage: deploy
   tags:
@@ -227,9 +206,44 @@ deploy_prod:
     name: prod
   only:
     - prod
+  when: manual
   except:
     # Skip deploy when scheduled npm audit and outdated scans are executed.
     - schedules
+  script:
+    # set home path for openshift 1001 user
+    - export HOME=/home/1001
+    - mv nginx-prod.conf nginx.conf
+    # before any action, I connect to the OpenShift server with the appropriate credentials
+    - oc login https://$OPENSHIFT_ADDR_PROD:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_PROD
+    - oc project imitaatiopeli
+    # create application if it does not exist
+    - |
+      if oc get deploy/imitaatiopeli-frontend-prod; then 
+        echo "The application already exists."
+      else 
+        oc new-app . --name=imitaatiopeli-frontend-prod --strategy=docker
+        echo "The application has been created."
+      fi
+    # list environment variables here
+    - oc set env deploy/imitaatiopeli-frontend-prod TZ="Europe/Helsinki"
+    # start build process in OpenShift
+    - oc start-build imitaatiopeli-frontend-prod --from-dir=. --follow
+    # patch openshift buildConfig file
+    - oc patch bc/imitaatiopeli-frontend-prod --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
+    - oc patch bc/imitaatiopeli-frontend-prod --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
+
+
+deploy_prod_periodically:
+  stage: deploy
+  tags:
+    - ohtu-build-3
+  environment:
+    name: prod
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_BRANCH == "prod"'
+      when: always
+    - when: never
   script:
     # set home path for openshift 1001 user
     - export HOME=/home/1001
