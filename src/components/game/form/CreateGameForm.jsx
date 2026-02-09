@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import useSaveGameConfiguration from '../../../hooks/useSaveGameConfiguration';
@@ -17,7 +17,6 @@ const createEmptyGame = (t) => ({
         is_research_game: false,
         research_description: '',
         language_model: null,
-        model_temperature: 0.7,
         answer_randomization: false,
         show_result: true,
     }
