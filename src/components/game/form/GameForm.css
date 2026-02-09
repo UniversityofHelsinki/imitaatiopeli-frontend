@@ -21,22 +21,3 @@
   margin-bottom: var(--ds-spacing-base);
 }
 
-.temperature-label {
-  margin-left: 8px;
-  font-size: 0.9em;
-  color: #666;
-}
-
-.temperature-slider {
-  width: 50%;
-  margin-top: 8px;
-}
-
-.temperature-slider-labels {
-  width: 50%;
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8em;
-  color: #666;
-  margin-top: 4px;
-}
