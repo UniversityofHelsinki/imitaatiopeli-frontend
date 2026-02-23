@@ -9,7 +9,7 @@ import Spinner from '../../misc/ds/Spinner.jsx';
 import './AIPromptTest.css';
 import usePromptTemplates from "../../../hooks/usePromptTemplates.js";
 
-const AIPromptTest = ({ prompt, temperature, languageModel, languageUsed }) => {
+const AIPromptTest = ({ prompt, languageModel, languageUsed }) => {
     const { t } = useTranslation();
     const [question, setQuestion] = useState('');
     const { models } = useLanguageModels();
@@ -34,7 +34,7 @@ const AIPromptTest = ({ prompt, temperature, languageModel, languageUsed }) => {
         e.stopPropagation();
         if (!question.trim() || !languageModel) return;
 
-        await testPrompt(prompt, question, temperature, languageModel);
+        await testPrompt(prompt, question, languageModel);
     };
 
     const handleClear = (e) => {
@@ -67,18 +67,6 @@ const AIPromptTest = ({ prompt, temperature, languageModel, languageUsed }) => {
             <div className="form-field game-form-field">
                 <label>{t('selected_language_model')}:</label>
                 <div className="model-display">{modelName}</div>
-            </div>
-
-            <div className="form-field game-form-field">
-                <label>{t('temperature_setting')}:</label>
-                <div className="temperature-display">
-                    {temperature}
-                    <span className="temperature-label">
-                        ({temperature < 0.3 ? t('temperature_conservative') :
-                        temperature > 0.7 ? t('temperature_creative') :
-                            t('temperature_balanced')})
-                    </span>
-                </div>
             </div>
 
             <div className="form-field game-form-field">
@@ -157,7 +145,6 @@ const AIPromptTest = ({ prompt, temperature, languageModel, languageUsed }) => {
 
 AIPromptTest.propTypes = {
     prompt: PropTypes.string,
-    temperature: PropTypes.number.isRequired,
     languageModel: PropTypes.number.isRequired,
     languageUsed: PropTypes.string
 };
