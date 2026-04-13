@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Link from '../misc/ds/Link';
 import HyLogo from '../misc/HyLogo';
 import './Footer.css';
-import Feedback from "./Feedback.js";
+import Feedback from "./Feedback.jsx";
 
 const FooterLogo = () => {
   return <div className="footer-logo">
@@ -14,7 +14,7 @@ const FooterLogo = () => {
 
 const ContactInformation = () => {
   const { t } = useTranslation();
-  
+
   return <div className="footer-contact-information">
     <p>
       {t('footer_contact_information_hy')}
