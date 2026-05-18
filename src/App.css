@@ -132,6 +132,7 @@
     margin-right: var(--ds-spacing-layout-base);
     margin-top: 1rem;
     display: flex;
+    flex-direction: column;
     font-size: 15px;
     line-height: 1.5;
     word-break: keep-all;

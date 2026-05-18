@@ -71,7 +71,13 @@ const App = () => {
         createRoutesFromElements(
             <Route path="/" element={<Imitation />} errorElement={<ErrorPage />}>
                 {/* Public routes here */}
-                <Route index element={<div className="app-instruction">{t('imitation_game_instructions')}</div>  } />
+                <Route index element={
+                  <div className="app-instruction">
+                    <p>{t('imitation_game_instructions')}</p>
+                    <p>{t('imitation_game_instructions_fi')}</p>
+                    <p>{t('imitation_game_instructions_sv')}</p>
+                  </div>
+                } />
                 <Route path="games">
                     <Route path=":code" element={<GameLobby />} />
                     <Route path=":code/play" element={<Playroom />} />
