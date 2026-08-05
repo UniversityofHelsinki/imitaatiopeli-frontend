@@ -133,8 +133,14 @@
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    align-items: center;
     font-size: 15px;
     line-height: 1.5;
     word-break: keep-all;
     margin-bottom: var(--ds-spacing-base);
+}
+
+.app-instruction p {
+  max-width: 600px;
 }

@@ -17,6 +17,11 @@
     width: calc(100% - 32px);
 }
 
+.confirm-dialog p {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
 .confirm-dialog-actions {
     display: flex;
     gap: 8px;
