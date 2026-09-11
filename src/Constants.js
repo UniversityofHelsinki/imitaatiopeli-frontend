@@ -14,4 +14,8 @@ export const LANGUAGE_OPTIONS = [
         label: 'option_english',
         value: 'en',
     },
+    {
+        label: 'option_global',
+        value: 'global'
+    }
 ];
