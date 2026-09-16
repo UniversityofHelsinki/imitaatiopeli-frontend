@@ -15,6 +15,7 @@
   "option_finnish": "suomi",
   "option_swedish": "ruotsi",
   "option_english": "englanti",
+  "option_global": "globaali",
   "game_form_theme_field_label": "Aihe",
   "game_form_theme_field_assistive_text": "Mistä aiheesta haluat keskustella?",
   "game_form_theme_field_placeholder": "Syötä aihe",

@@ -15,6 +15,7 @@
   "option_finnish": "Finnish",
   "option_swedish": "Swedish",
   "option_english": "English",
+  "option_global": "Global",
   "game_form_theme_field_label": "Topic",
   "game_form_theme_field_assistive_text": "What topic would you like to discuss?",
   "game_form_theme_field_placeholder": "Enter topic",

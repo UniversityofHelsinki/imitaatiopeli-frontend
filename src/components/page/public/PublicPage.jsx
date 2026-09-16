@@ -19,8 +19,11 @@ const PublicPage = ({
     useEffect(() => {
         const setLanguage = async () => {
             if (configuration?.language_used) {
-                await i18n.changeLanguage(configuration.language_used);
-                document.documentElement.lang = configuration.language_used;
+                const deriveLang = (used) => {
+                  return used === 'global' ? 'en' : used;
+                }
+                await i18n.changeLanguage(deriveLang(configuration.language_used));
+                document.documentElement.lang = deriveLang(configuration.language_used);
             }
         };
         setLanguage();
