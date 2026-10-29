@@ -7,12 +7,11 @@ import Tag from '../../misc/ds/Tag';
 import './Game.css';
 import { useNotification } from '../../notification/NotificationContext.jsx';
 import CopyGameUrlButton from '../../page/admin/CopyGameUrlButton.jsx';
-import QRDialog from '../../page/admin/QRDialog.jsx';
 import Button from '../../misc/ds/Button';
 import useDeleteGame from '../../../hooks/useDeleteGame.js';
 import ConfirmDialog from '../../../utilities/ConfirmDialog.jsx';
-import QRIcon from "../../misc/QRIcon.jsx";
-import QRButton from '../../misc/QRButton.jsx';
+import { get, usePUT } from '../../../hooks/useHttp.js'
+import {useNavigate} from "react-router-dom";
 
 const Header = ({ game }) => {
     const { t } = useTranslation();
@@ -29,11 +28,19 @@ const Header = ({ game }) => {
         <Tag className="game-tag" text={t('game_tag_ended')} colour="black" />
     );
 
+    const inactiveTag = (
+        <Tag className="game-tag" text={t('game_tag_inactive')} colour="default" />
+    )
+
     const tag = (() => {
         if (game.end_time) {
             return endTag;
-        } else if (game.start_time) {
+        }
+        if (game.start_time) {
             return startTag;
+        }
+        if (!game.is_active && !game.end_time) {
+            return inactiveTag;
         }
         return waitingTag;
     })();
@@ -53,15 +60,81 @@ const Header = ({ game }) => {
 const Content = ({ game, reload }) => {
     const { t } = useTranslation();
     const { setNotification } = useNotification();
-    const gameWaiting = !game.start_time && !game.end_time;
+    const navigate = useNavigate();
+
+    const gameWaiting = !game.start_time && !game.end_time && game.is_active;
     const gameEnded = (game.start_time && game.end_time) || (!game.start_time && game.end_time);
+
     const [removeGame, ] = useDeleteGame(game.game_id);
     const [confirmOpen, setConfirmOpen] = useState(false);
+    const [isActive, setIsActive] = useState(game.is_active);
+
+    React.useEffect(() => {
+        setIsActive(game.is_active);
+    }, [game.is_active]);
+
+    const activateGame = usePUT({
+        path: `/api/games/${game.game_id}/activate`,
+        invalidates: ['GAMES'],
+    });
+
+    const handleActivateAndGoToLobby = async (event) => {
+        event.preventDefault();
+        try {
+            if (isActive) {
+                navigate(`/admin/games/${game.game_id}/lobby`);
+                return;
+            }
+
+            const resp = await activateGame({});
+
+            if (!resp || (resp.status && resp.status >= 300)) {
+                setNotification(resp?.status ?? 'Error', 'error');
+                return;
+            }
+            setIsActive(true);
+
+            if (reload) reload();
+            navigate(`/admin/games/${game.game_id}/lobby`);
+
+        } catch (e) {
+            setNotification(e?.message ?? 'Error', 'error');
+        }
+    };
+
 
     const stateLink = (() => {
         const gameWaiting = !game.start_time && !game.end_time;
         const gameStarted = game.start_time && !game.end_time;
 
+        if (gameEnded) {
+            return (
+                <Link
+                    label={t('game_content_move_to_summary_link_label')}
+                    variant="standalone"
+                    icon="view_list_fill"
+                    size="2xLarge"
+                    colour="black"
+                    href={`/admin/games/${game.game_id}/summary`}
+                    internal
+                />
+            );
+        }
+
+        if (!isActive) {
+            return (
+                <Link
+                    label={t('game_content_activate_game_and_move_to_game_link_label')}
+                    variant="standalone"
+                    icon="play_arrow"
+                    size="2xLarge"
+                    colour="black"
+                    href={`/admin/games/${game.game_id}/lobby`}
+                    internal
+                    onClick={handleActivateAndGoToLobby}
+                />
+            );
+        }
         if (gameWaiting) {
             return (
                 <Link
@@ -74,6 +147,7 @@ const Content = ({ game, reload }) => {
                     internal
                 />
             );
+
         } else if (gameStarted) {
             return (
                 <Link
@@ -92,16 +166,6 @@ const Content = ({ game, reload }) => {
             );
         }
     })();
-
-    const truncate = (text, max = 80) => {
-        if (!text) {
-            return '';
-        }
-        if (text.length > max) {
-            return `${text.slice(0, max)}…`;
-        }
-        return text;
-    };
 
     const deleteGame = async () => {
         const resp = await removeGame(game);
@@ -144,7 +208,7 @@ const Content = ({ game, reload }) => {
             <div className="game-content-bottom-row">
                 <div className="game-content-actions">
                     {stateLink}
-                    {gameWaiting && game.playerCount === 0 && (
+                    {(!game.is_active && !gameEnded) && (
                         <Link
                             label={t('game_content_edit_game_link_label')}
                             variant="standalone"
@@ -154,19 +218,6 @@ const Content = ({ game, reload }) => {
                             href={`/admin/games/${game.game_id}`}
                             internal
                         />
-                    )}
-                    {gameEnded && (
-                        <div>
-                            <Link
-                                label={t('game_content_move_to_summary_link_label')}
-                                variant="standalone"
-                                icon="view_list_fill"
-                                size="2xLarge"
-                                colour="black"
-                                href={`/admin/games/${game.game_id}/summary`}
-                                internal
-                            />
-                        </div>
                     )}
                     {gameEnded &&  (
                         <div>
