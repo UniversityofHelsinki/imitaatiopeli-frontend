@@ -48,13 +48,16 @@
   "edit_game_form_details_game_code": "Pelin koodi: {{ game_code }}",
   "edit_game_form_game_saved_notification": "Tallennettu",
   "edit_game_form_error_notification": "Pelin tietoja ei voi enää muokata, koska peliin on jo liittynyt pelaajia",
+  "edit_game_not_allowed_error": "Vain ei-aktivoituja pelejä voi muokata",
   "loading_page": "Ladataan sivua",
   "game_listing_page_heading": "Pelit",
   "game_content_move_to_game_link_label": "Siirry pelin aulaan",
   "game_content_move_to_monitor_link_label": "Siirry valvomaan peliä",
+  "game_content_activate_game_and_move_to_game_link_label": "Aktivoi peli ja siirry pelin aulaan",
   "game_tag_waiting": "Odottaa",
   "game_tag_started": "Käynnissä",
   "game_tag_ended": "Päättynyt",
+  "game_tag_inactive": "Ei aktivoitu",
   "game_content_edit_game_link_label": "Muokkaa peliä",
   "game_content_delete_game_link_label": "Poista peli",
   "game_content_delete_confirm_message": "Haluatko varmasti poistaa pelin?",
@@ -277,5 +280,6 @@
   "judge_messenger_missing_player": "Yhteys pelaajaan kadonnut, lähetä kysymys hetken kuluttua uudelleen.",
   "judge_messenger_missing_judge": "Yhteys tuomariin kadonnut, lähetä vastaus hetken kuluttua uudelleen.",
   "no_sockets_found_for_judge": "Kysymystä ei voitu lähettää. Yritä hetken kuluttua uudelleen.",
-  "opens_in_email_client": "Avautuu sähköpostiohjelmaan"
+  "opens_in_email_client": "Avautuu sähköpostiohjelmaan",
+  "join_game_not_activated_error": "Peliin ei voi liittyä, koska se ei ole aktiivinen"
 }
