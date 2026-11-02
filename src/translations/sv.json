@@ -51,9 +51,11 @@
   "game_listing_page_heading": "Alla spel",
   "game_content_move_to_game_link_label": "Gå till spellobbyn",
   "game_content_move_to_monitor_link_label": "Gå till spelövervakningen",
+  "game_content_activate_game_and_move_to_game_link_label": "Aktivera spel och gå till spellobbyn",
   "game_tag_waiting": "Väntar på start",
   "game_tag_started": "Pågår",
   "game_tag_ended": "Avslutat",
+  "game_tag_inactive": "Ej aktiverat",
   "game_content_edit_game_link_label": "Redigera spelinställningar",
   "game_content_delete_game_link_label": "Ta bort spel",
   "game_content_delete_confirm_message": "Är du säker på att du vill ta bort detta spel?",
@@ -222,6 +224,7 @@
   "prompt_template_not_found": "Välj spelets språk för att visa standardsystemprompten",
   "no_model_selected": "Ingen språkmodell vald",
   "edit_game_form_error_notification": "Spelkonfigurationen kan inte ändras eftersom spelare redan har gått med",
+  "edit_game_not_allowed_error": "Välj en aktiv spelare för att redigera",
   "admin_monitor_table_judge_ready": "Redo",
   "admin_monitor_table_made_questions": "Ställda frågor",
   "admin_monitor_table_answered_questions": "Besvarade frågor",
@@ -274,5 +277,6 @@
   "summary_final_estimate": "Slutlig bedömning",
   "summary_final_estimate_right": "Rätt",
   "summary_final_estimate_wrong": "Fel",
-  "summary_final_estimate_missing": "Saknas"
+  "summary_final_estimate_missing": "Saknas",
+  "join_game_not_activated_error": "Det går inte att gå med i spelet eftersom det inte är aktivt"
 }

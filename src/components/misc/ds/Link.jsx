@@ -17,6 +17,7 @@ const Link = ({
     variant = '',
     internal = false,
     validation,
+    onClick: passedOnClick,
     ...rest
     }) => {
     const navigate = useNavigate();
@@ -28,6 +29,11 @@ const Link = ({
             setNotification(validation.message, 'error', true);
             return;
         }
+
+        if (passedOnClick) {
+            passedOnClick(event);
+        }
+
         if (internal) {
             event.preventDefault();
             navigate(href);

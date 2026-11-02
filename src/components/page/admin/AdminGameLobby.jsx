@@ -4,7 +4,7 @@ import './AdminGameLobby.css'
 import { useParams } from 'react-router-dom';
 import Page from '../Page';
 import { useTranslation } from 'react-i18next';
-import { get } from '../../../hooks/useHttp';
+import { get, usePUT } from '../../../hooks/useHttp';
 import AdminGameLobbyPlayers from './AdminGameLobbyPlayers';
 import {useNotification} from "../../notification/NotificationContext.jsx";
 import BottomRow from "../../game/form/BottomRow.jsx";
@@ -21,6 +21,11 @@ const AdminGameLobby = () => {
     const [loading, setLoading] = useState(true);
     const [players, setPlayers] = useState([]);
     const validate = useStartGameValidation(players);
+
+    const activateGame = usePUT({
+        path: `/api/games/${gameId}/activate`,
+        invalidates: ['GAMES', `GAME_${gameId}`],
+    });
 
     const fetchGame = async () => {
         try {
@@ -40,6 +45,26 @@ const AdminGameLobby = () => {
     useEffect(() => {
         fetchGame();
     }, []);
+
+    useEffect(() => {
+        (async () => {
+            if (!game || loading) return;
+            if (game.is_active) return;
+
+            try {
+                const resp = await activateGame({});
+                if (!resp || (resp.status && resp.status >= 300)) {
+                    setNotification(resp?.status ?? t('game_fetch_error'), 'error');
+                    return;
+                }
+
+                setLoading(true);
+                await fetchGame();
+            } catch (e) {
+                setNotification(e?.message ?? t('game_fetch_error'), 'error');
+            }
+        })();
+    }, [game, loading]);
 
     const crumbs = [
         {

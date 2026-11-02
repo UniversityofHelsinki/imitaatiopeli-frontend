@@ -1,17 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Error.css';
 import { useRouteError } from 'react-router-dom';
 
-const ErrorPage = () => {
+const ErrorPage = ({ children }) => {
     const error = useRouteError();
+    const message = children ?? (error?.message ?? 'Error page unknown error');
+
     return (
         <div className="error-page">
-            <p>{error.message}</p>
+            <p>{message}</p>
         </div>
     );
 };
 
-ErrorPage.propTypes = {};
+ErrorPage.propTypes = {
+    children: PropTypes.node,
+};
 
 export default ErrorPage;

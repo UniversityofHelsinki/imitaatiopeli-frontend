@@ -7,6 +7,7 @@ import EditGameForm from '../../game/form/EditGameForm';
 import { useParams } from 'react-router-dom';
 import { get } from '../../../hooks/useHttp';
 import useEditGame from '../../../hooks/useEditGame';
+import ErrorPage from "../../../Error.jsx";
 
 const EditGame = () => {
   const { t } = useTranslation();
@@ -14,6 +15,7 @@ const EditGame = () => {
   const save = useEditGame(gameId);
   const [loading, setLoading] = useState(true);
   const [game, setGame] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -26,6 +28,15 @@ const EditGame = () => {
         if (!gameResponse?.body) {
           throw new Error('Game data not found');
         }
+
+        const loadedGame = gameResponse.body;
+        const isActive = Boolean(loadedGame.is_active);
+
+        if (isActive) {
+          setErrorMessage(t('edit_game_not_allowed_error'));
+          return;
+        }
+
 
         try {
           const playersResponse = await get({
@@ -70,7 +81,11 @@ const EditGame = () => {
       href: `/admin/games/${gameId}`,
       current: true
     }
-  ]
+  ];
+
+  if (!loading && errorMessage) {
+    return <ErrorPage>{errorMessage}</ErrorPage>;
+  }
 
   return <Page 
     loading={loading}

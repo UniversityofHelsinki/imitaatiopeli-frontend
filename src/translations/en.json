@@ -51,9 +51,11 @@
   "game_listing_page_heading": "All Games",
   "game_content_move_to_game_link_label": "Go to Game Lobby",
   "game_content_move_to_monitor_link_label": "Go to Game Monitor",
+  "game_content_activate_game_and_move_to_game_link_label": "Activate game and go to Game Lobby",
   "game_tag_waiting": "Waiting to start",
   "game_tag_started": "In progress",
   "game_tag_ended": "Completed",
+  "game_tag_inactive": "Not activated",
   "game_content_edit_game_link_label": "Edit game settings",
   "game_content_delete_game_link_label": "Delete game",
   "game_content_delete_confirm_message": "Are you sure you want to delete this game?",
@@ -222,6 +224,7 @@
   "prompt_template_not_found": "Choose the game's language in order to display the default system prompt",
   "no_model_selected": "Language model not chosen",
   "edit_game_form_error_notification": "The game configuration cannot be changed, because players have already joined",
+  "edit_game_not_allowed_error": "Only 'not activated' games can be edited",
   "admin_monitor_table_judge_ready": "Ready",
   "admin_monitor_table_made_questions": "Asked questions",
   "admin_monitor_table_answered_questions": "Answered questions",
@@ -274,5 +277,6 @@
   "summary_final_estimate": "Final assessment",
   "summary_final_estimate_right": "Correct",
   "summary_final_estimate_wrong": "Incorrect",
-  "summary_final_estimate_missing": "Missing"
+  "summary_final_estimate_missing": "Missing",
+  "join_game_not_activated_error": "The game cannot be joined because it is not active"
 }

@@ -8,6 +8,7 @@ import localStorage from '../../../utilities/localStorage';
 import PublicPage from "./PublicPage.jsx";
 import useJudgeAskedQuestion from "../../../hooks/useJudgeAskedQuestion.js";
 import {useSocket} from "../../../contexts/SocketContext.jsx";
+import ErrorPage from "../../../Error.jsx";
 
 const JoinGame = () => {
     const { isConnected, emit, on, off } = useSocket();
@@ -65,6 +66,10 @@ const JoinGame = () => {
         if (!game) return; // wait until game is set
         !alreadyJoined && navigate(`/games/${code}/join`, { replace: true });
     }, [game, alreadyJoined]);
+
+    if (!loading && game && game.is_active === false) {
+        return <ErrorPage>{t('join_game_not_activated_error')}</ErrorPage>;
+    }
 
     return (
         <>
