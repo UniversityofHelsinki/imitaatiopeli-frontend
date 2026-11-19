@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Update packages, install dependencies, and configure directories
 RUN apk update && \
+    apk upgrade --no-cache && \
     apk add --no-cache tzdata && \
     mkdir -p /app/logs /var/cache/nginx /usr/share/nginx/html && \
     rm -rf /etc/nginx/conf.d/default.conf
